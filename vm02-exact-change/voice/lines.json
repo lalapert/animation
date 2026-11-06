@@ -1,0 +1,126 @@
+{
+ "model_id": "eleven_v4",
+ "cast": {
+  "PIP": {
+   "voice_id": "BiP91t4ozM9IZajOdSu2",
+   "name": "Win2",
+   "settings": {
+    "stability": 0.35,
+    "similarity_boost": 0.8,
+    "style": 0.45,
+    "speed": 1.05
+   }
+  },
+  "RAE": {
+   "voice_id": "oy557F0mOsPZZqdz8oK6",
+   "name": "Kar2",
+   "settings": {
+    "stability": 0.85,
+    "similarity_boost": 0.8,
+    "style": 0.0,
+    "speed": 0.9
+   },
+   "pitch": -1.5
+  },
+  "MAGS": {
+   "voice_id": "WkUURyKtbzB9IM50qGdP",
+   "name": "VM MAGS",
+   "settings": {
+    "stability": 0.7,
+    "similarity_boost": 0.8,
+    "style": 0.25,
+    "speed": 1.0
+   }
+  },
+  "CUST": {
+   "voice_id": "N2lVS1w4EtoT3dr4eOWO",
+   "name": "Callum (stock)",
+   "settings": {
+    "stability": 0.5,
+    "similarity_boost": 0.8,
+    "style": 0.35,
+    "speed": 1.0
+   }
+  }
+ },
+ "lines": [
+  {
+   "id": "L1",
+   "who": "CUST",
+   "text": "One coffee. Keep the change."
+  },
+  {
+   "id": "L2",
+   "who": "RAE",
+   "text": "We don't take stars."
+  },
+  {
+   "id": "L3",
+   "who": "CUST",
+   "text": "It's a small one."
+  },
+  {
+   "id": "L4",
+   "who": "PIP",
+   "text": "It's so warm! Rae, it's like holding a puppy!",
+   "sub": "It's so warm! Rae,\nit's like holding a puppy!",
+   "asr": "It's so warm! Ray, it's like holding a puppy!"
+  },
+  {
+   "id": "L5",
+   "who": "RAE",
+   "text": "Pip. Your hair is on fire."
+  },
+  {
+   "id": "L6",
+   "who": "PIP",
+   "text": "Only a little!"
+  },
+  {
+   "id": "L7",
+   "who": "MAGS",
+   "text": "Reminder: all currency must be cooler than the store.",
+   "sub": "Reminder: all currency must be\ncooler than the store."
+  },
+  {
+   "id": "L8",
+   "who": "CUST",
+   "text": "Fine. I'll pay with a moon."
+  },
+  {
+   "id": "L8a",
+   "who": "PIP",
+   "text": "Ooh! Can we keep it?"
+  },
+  {
+   "id": "L8b",
+   "who": "RAE",
+   "text": "No."
+  },
+  {
+   "id": "L9",
+   "who": "RAE",
+   "text": "Do you have anything... normal?"
+  },
+  {
+   "id": "L10",
+   "who": "CUST",
+   "text": "A coupon?"
+  },
+  {
+   "id": "L11",
+   "who": "RAE",
+   "text": "Expired."
+  },
+  {
+   "id": "L12",
+   "who": "CUST",
+   "text": "You didn't even look at it."
+  },
+  {
+   "id": "L13",
+   "who": "RAE",
+   "text": "Everything here is expired."
+  }
+ ]
+}
