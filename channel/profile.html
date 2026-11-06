@@ -1,0 +1,125 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Paper Almanac profile</title>
+<style>
+@font-face { font-family: "Cormorant Garamond"; src: url(fonts/cormorant-600.woff2) format("woff2"); font-weight: 600; font-style: normal; }
+@font-face { font-family: "Cormorant Garamond"; src: url(fonts/cormorant-500i.woff2) format("woff2"); font-weight: 500; font-style: italic; }
+html, body { margin: 0; background: #f2eadb; }
+canvas { display: block; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1600" height="1600"></canvas>
+<script src="../a-year-on-the-sill/engine.js"></script>
+<script>
+// Channel profile picture for "Paper Almanac", painted with the film's brush engine.
+// ?v=A lemon on a painted sky disc · ?v=B monogram with a lemon sprig · ?v=C a single leaf and a small lemon
+'use strict';
+const SZ = 1600, cv = document.getElementById('c'), c = cv.getContext('2d', { alpha: false });
+const INK = '#2e2622', INK2 = '#6b5546', PAPERC = '#f2eadb', LEMON = '#e9c23f';
+const V = new URLSearchParams(location.search).get('v') || 'A';
+let PAPER;
+
+function buildPaper() {
+  const p = document.createElement('canvas'); p.width = p.height = SZ;
+  const g = p.getContext('2d');
+  const oct = (n, seed) => {
+    const s = document.createElement('canvas'); s.width = s.height = n;
+    const sg = s.getContext('2d'), im = sg.createImageData(n, n), R = mulberry(seed);
+    for (let i = 0; i < n * n; i++) { const v = R() * 255; im.data[i * 4] = im.data[i * 4 + 1] = im.data[i * 4 + 2] = v; im.data[i * 4 + 3] = 255; }
+    sg.putImageData(im, 0, 0);
+    const b = document.createElement('canvas'); b.width = b.height = SZ;
+    const bg = b.getContext('2d'); bg.imageSmoothingQuality = 'high'; bg.drawImage(s, 0, 0, SZ, SZ);
+    return bg.getImageData(0, 0, SZ, SZ).data;
+  };
+  const n1 = oct(9, 1), n2 = oct(30, 2), n3 = oct(110, 3), base = hex(PAPERC), im = g.createImageData(SZ, SZ), d = im.data, R = mulberry(4);
+  for (let i = 0; i < SZ * SZ; i++) {
+    const k = 1 + .035 * (n1[i * 4] / 127.5 - 1) + .02 * (n2[i * 4] / 127.5 - 1) + .012 * (n3[i * 4] / 127.5 - 1) + .02 * (R() - .5);
+    d[i * 4] = base[0] * k; d[i * 4 + 1] = base[1] * k; d[i * 4 + 2] = base[2] * k; d[i * 4 + 3] = 255;
+  }
+  g.putImageData(im, 0, 0);
+  withSeed(5, () => {
+    for (let k = 0; k < 1400; k++) {
+      const P = polar(rnd(0, SZ), rnd(0, SZ), rnd(0, 6.28), rnd(10, 46), rnd(-7, 7), 6);
+      g.strokeStyle = RNG() < .5 ? `rgba(255,252,244,${rnd(.12, .3)})` : `rgba(150,130,105,${rnd(.05, .12)})`;
+      g.lineWidth = rnd(.8, 1.8); g.beginPath(); P.forEach(([x, y], i) => i ? g.lineTo(x, y) : g.moveTo(x, y)); g.stroke();
+    }
+  });
+  return p;
+}
+function paperClip(pathFn, a = 1) {
+  c.save(); pathFn(); c.clip(); c.globalCompositeOperation = 'source-over'; c.globalAlpha = a;
+  c.drawImage(PAPER, 0, 0); c.restore();
+}
+function lemonPath(x, y, r, rot = .14, wob = .03, seed = 7) {
+  const n = 60;
+  c.beginPath();
+  for (let i = 0; i <= n; i++) {
+    const a = i / n * Math.PI * 2;
+    const tipB = Math.exp(-Math.pow((a - Math.PI / 2) / .22, 2)) * .2, tipT = Math.exp(-Math.pow((a - 3 * Math.PI / 2) / .3, 2)) * .08;
+    const k = (1 + tipB + tipT) * (1 + wob * (2 * vnoise(i * .4 + seed, seed) - 1));
+    const px = Math.cos(a) * r * .8 * k, py = Math.sin(a) * r * k;
+    const X = x + px * Math.cos(rot) - py * Math.sin(rot), Y = y + px * Math.sin(rot) + py * Math.cos(rot);
+    i ? c.lineTo(X, Y) : c.moveTo(X, Y);
+  }
+  c.closePath();
+}
+function lemon(x, y, r, rot = .14) {
+  paperClip(() => lemonPath(x, y, r * 1.01, rot), .95);
+  for (let k = 0; k < 3; k++) { c.fillStyle = rgba(LEMON, .3); lemonPath(x, y, r * (1 - k * .03), rot, .03 + k * .012, 7 + k * 3); c.fill(); }
+  c.strokeStyle = rgba(shade(LEMON, .7), .45); c.lineWidth = r * .03; lemonPath(x, y, r, rot); c.stroke();
+  c.save(); lemonPath(x, y, r, rot); c.clip();
+  c.fillStyle = rgba(shade(mixc(LEMON, '#c08a3a', .3), .84), .3); c.beginPath(); c.ellipse(x + r * .52, y + r * .36, r * .6, r * .86, .3, 0, 6.283); c.fill();
+  c.fillStyle = rgba(shade(LEMON, .72), .1);
+  withSeed(9, () => { for (let k = 0; k < 60; k++) { const a = rnd(0, 6.28), d = rnd(.2, .85) * r; c.beginPath(); c.arc(x + Math.cos(a) * d * .8, y + Math.sin(a) * d, rnd(.6, 1.4) * r / 34, 0, 6.283); c.fill(); } });
+  c.restore();
+  paperClip(() => { c.beginPath(); c.ellipse(x - r * .3, y - r * .38, r * .2, r * .13, -.7, 0, 6.283); }, .85);
+  c.strokeStyle = rgba(INK, .32); c.lineWidth = r * .035; c.lineCap = 'round'; c.beginPath(); c.ellipse(x, y, r * .76, r * .95, rot, -.25, 1.75); c.stroke();
+}
+function leaf(x, y, ang, len, w, col, seed) {
+  withSeed(seed, () => {
+    const P = polar(x, y, ang, len, len * .06, 16);
+    drawS(c, mk(P, w, col, { prof: 'leaf', nb: 6, a: .82, rough: .14, rib: .72, bm: .55 }));
+    drawS(c, mk(P.slice(1, 13), w * .045, '#34492a', { prof: 'even', nb: 0, a: .38, rough: .3, rib: 1 }));
+  });
+}
+function stem(pts, w, seed) { withSeed(seed, () => drawS(c, mk(pts, w, '#6e5a45', { prof: 'tip', nb: 4, a: .9, rough: .2 }))); }
+function disc(col, r, seed, a = .5) { withSeed(seed, () => drawWash(c, mkWash(ellipsePts(800, 800, r, r, 60, 0, .025, seed), col, a, 10, 3, 18))); }
+
+function paint() {
+  c.globalCompositeOperation = 'source-over'; c.drawImage(PAPER, 0, 0);
+  c.globalCompositeOperation = 'multiply';
+  if (V === 'A') {                       // lemon on a painted sky disc (the film's December light)
+    disc('#b9c4cc', 690, 3, .55);
+    stem(qcurve(560, 360, 830, 560, -30, 20), 30, 11);
+    leaf(760, 520, -2.55, 380, 150, '#5f7f45', 12);
+    leaf(820, 540, -.42, 330, 132, '#4e6e3c', 13);
+    lemon(830, 905, 330, .14);
+  } else if (V === 'B') {                // monogram with a lemon sprig
+    disc('#e6d9c3', 700, 4, .42);
+    stem(qcurve(330, 1210, 640, 1290, 40, 20), 22, 21);
+    leaf(420, 1235, -2.2, 250, 100, '#5f7f45', 22);
+    leaf(520, 1265, -1.25, 230, 92, '#4e6e3c', 23);
+    lemon(1150, 1150, 140, -.35);
+    c.globalCompositeOperation = 'source-over';
+    c.font = 'italic 500 720px "Cormorant Garamond"'; c.textAlign = 'center'; c.textBaseline = 'alphabetic';
+    c.shadowColor = PAPERC; c.shadowBlur = 24;
+    c.fillStyle = rgba(INK, .9); c.fillText('PA', 800, 1040); c.fillText('PA', 800, 1040);
+  } else {                               // a single leaf and a small lemon, nothing else
+    stem(qcurve(420, 420, 760, 700, -40, 20), 34, 31);
+    leaf(700, 640, -2.75, 470, 190, '#58783f', 32);
+    leaf(740, 660, -1.05, 400, 165, '#4e6e3c', 33);
+    lemon(900, 1020, 300, .3);
+  }
+}
+(async () => {
+  await document.fonts.load('italic 500 120px "Cormorant Garamond"');
+  PAPER = buildPaper();
+  paint();
+  window.READY = true;
+})();
+</script>
+</body>
+</html>
