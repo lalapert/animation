@@ -1,0 +1,16 @@
+{
+  "space_swoosh": [2.5, "deep cosmic whoosh with a low shimmering swirl, sci-fi space ambience rushing forward, cinematic"],
+  "door_chime":   [2.0, "automatic sliding glass door opening with a soft pneumatic whoosh, then a cheerful two-tone electronic convenience store entry chime"],
+  "chime":        [1.5, "a cheerful two-tone electronic convenience store door chime, clean, no door noise"],
+  "store_hum":    [8.0, "quiet late-night convenience store ambience, fluorescent light hum and a soft refrigerator compressor drone, no people, no music"],
+  "scan_beep":    [0.6, "a single short barcode scanner beep at a store checkout, clean"],
+  "hand_glass":   [0.6, "a palm pressing flat against a glass window, a soft dull thump, close"],
+  "glass_squeak": [1.5, "a hand slowly peeling off a clean glass window, long rubbery squeak, close"],
+  "mags_blip":    [0.8, "friendly electronic notification blip from a ceiling speaker, two soft rising tones"],
+  "sip":          [1.2, "one long loud slurp of hot coffee from a mug, close"],
+  "flicker":      [2.0, "fluorescent tube lights flickering and buzzing, electrical crackle, short"],
+  "rumble":       [3.0, "a huge creature arriving at a doorway: deep low rumble and one heavy squelchy footstep, ominous but cartoonish"],
+  "flip":         [0.8, "a mechanical split-flap display flipping one card with a crisp clack"],
+  "sparkle":      [1.0, "a tiny cartoon sparkle twinkle"],
+  "whoosh":       [0.6, "a quick soft cartoon whoosh swish"]
+}

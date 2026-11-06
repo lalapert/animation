@@ -1,0 +1,112 @@
+{
+ "model_id": "eleven_v4",
+ "cast": {
+  "PIP": {
+   "voice_id": "BiP91t4ozM9IZajOdSu2",
+   "name": "Win2",
+   "settings": {
+    "stability": 0.35,
+    "similarity_boost": 0.8,
+    "style": 0.45,
+    "speed": 1.05
+   }
+  },
+  "RAE": {
+   "voice_id": "oy557F0mOsPZZqdz8oK6",
+   "name": "Kar2",
+   "settings": {
+    "stability": 0.85,
+    "similarity_boost": 0.8,
+    "style": 0.0,
+    "speed": 0.9
+   },
+   "pitch": -1.5
+  },
+  "MAGS": {
+   "voice_id": "WkUURyKtbzB9IM50qGdP",
+   "name": "VM MAGS",
+   "settings": {
+    "stability": 0.7,
+    "similarity_boost": 0.8,
+    "style": 0.25,
+    "speed": 1.0
+   }
+  }
+ },
+ "lines": [
+  {
+   "id": "L1",
+   "who": "PIP",
+   "text": "Hi! I'm Pip! First night!"
+  },
+  {
+   "id": "L2",
+   "who": "PIP",
+   "text": "Whoa. Is that... the edge of the universe?!",
+   "sub": "Whoa. Is that...\nthe edge of the universe?!"
+  },
+  {
+   "id": "L3",
+   "who": "RAE",
+   "text": "Yep. Don't lean on the glass."
+  },
+  {
+   "id": "L4",
+   "who": "PIP",
+   "text": "Why? What happens if I lean on the glass?",
+   "sub": "Why? What happens\nif I lean on the glass?"
+  },
+  {
+   "id": "L5",
+   "who": "RAE",
+   "text": "We hire someone new."
+  },
+  {
+   "id": "L6",
+   "who": "MAGS",
+   "text": "Welcome to Void Mart, Pip! We are open until the heat death of the universe.",
+   "sub": "Welcome to Void Mart, Pip!\nWe are open until\nthe heat death of the universe."
+  },
+  {
+   "id": "L7",
+   "who": "PIP",
+   "text": "Wow! So when does my shift end?",
+   "sub": "Wow! So when does\nmy shift end?"
+  },
+  {
+   "id": "L8",
+   "who": "MAGS",
+   "text": "Please see previous answer."
+  },
+  {
+   "id": "L9",
+   "who": "RAE",
+   "text": "Your customer."
+  },
+  {
+   "id": "L10",
+   "who": "PIP",
+   "text": "Welcome to Void Mart!",
+   "settings": {
+    "stability": 0.55,
+    "similarity_boost": 0.8,
+    "style": 0.2,
+    "speed": 0.95
+   },
+   "gain_db": -4
+  },
+  {
+   "id": "L11",
+   "who": "MAGS",
+   "text": "Psst. Pip. Upsell the large one.",
+   "settings": {
+    "stability": 0.6,
+    "similarity_boost": 0.8,
+    "style": 0.3,
+    "speed": 1.0
+   },
+   "gain_db": -3,
+   "sub": "Psst. Pip.\nUpsell the large one."
+  }
+ ]
+}

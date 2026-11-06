@@ -1,0 +1,20 @@
+{
+  "room_db": -60,
+  "voice_over_music_db": 12,
+  "beds": {},
+  "foley": {
+    "swoosh":  { "fx": "space_swoosh", "g": -12, "fin": 0.05, "fout": 0.6 },
+    "door":    { "fx": "door_chime", "g": -13, "fin": 0.02, "fout": 0.3 },
+    "whoosh":  { "fx": "whoosh", "g": -17, "fin": 0.01, "fout": 0.15 },
+    "sparkle": { "fx": "sparkle", "g": -18, "fin": 0.01, "fout": 0.3 },
+    "glass":   { "fx": "hand_glass", "g": -12, "align": true, "fin": 0.002, "fout": 0.15 },
+    "beep":    { "fx": "scan_beep", "g": -18, "align": true, "dur": 0.3, "fin": 0.002, "fout": 0.08 },
+    "squeak":  { "fx": "glass_squeak", "g": -12, "fin": 0.02, "fout": 0.3 },
+    "blip":    { "fx": "mags_blip", "g": -17, "align": true, "fin": 0.002, "fout": 0.15 },
+    "sip":     { "fx": "sip", "g": -12, "fin": 0.02, "fout": 0.2 },
+    "chime":   { "fx": "chime", "g": -12, "align": true, "fin": 0.002, "fout": 0.3 },
+    "flicker": { "fx": "flicker", "g": -17, "dur": 1.2, "fin": 0.01, "fout": 0.3 },
+    "rumble":  { "fx": "rumble", "g": -10, "fin": 0.05, "fout": 0.6 },
+    "flip":    { "fx": "flip", "g": -11, "align": true, "fin": 0.002, "fout": 0.15 }
+  }
+}

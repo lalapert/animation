@@ -251,8 +251,10 @@ function drawMags(c, x, y, s, o = {}) {
   tShade(c, dome, M.shellS, g => g.ellipse(26, 60, 30, 40, -.4, 0, 6.2832));
   const band = g => { g.moveTo(-46, 40); g.bezierCurveTo(-30, 50, 30, 50, 46, 40); g.bezierCurveTo(42, 56, 30, 66, 0, 67); g.bezierCurveTo(-30, 66, -42, 56, -46, 40); g.closePath(); };
   tShape(c, M.band, band, 3.4);
-  c.save(); c.shadowColor = M.eye; c.shadowBlur = (o.glow || 26) * 100 / s * (s / 100);
-  c.fillStyle = M.eye; c.beginPath(); c.arc(6, 54, 7.5, 0, 6.2832); c.fill(); c.fill(); c.restore();
+  const tk = o.talk || 0;
+  c.save(); c.shadowColor = M.eye; c.shadowBlur = (o.glow || 26) + 34 * tk;
+  c.fillStyle = M.eye; c.beginPath(); c.arc(6, 54, 7.5 * (1 + .35 * tk), 0, 6.2832); c.fill(); c.fill(); c.restore();
+  if (tk > .05) { c.save(); c.globalAlpha = .5 * tk; c.strokeStyle = M.eye; c.lineWidth = 2.4; c.beginPath(); c.arc(6, 54, 14 + 6 * tk, 0, 6.2832); c.stroke(); c.restore(); }
   c.fillStyle = '#ffd0d4'; c.beginPath(); c.arc(4, 52, 2.4, 0, 6.2832); c.fill();
   c.strokeStyle = 'rgba(255,255,255,.9)'; c.lineWidth = 3.4; c.lineCap = 'round';
   c.beginPath(); c.moveTo(-40, 26); c.quadraticCurveTo(-38, 33, -33, 37); c.stroke();
@@ -406,10 +408,10 @@ function drawLogo(c, x, y, cap, o = {}) {
   return total;
 }
 
-function toonFonts() {
+function toonFonts(base = 'fonts/') {
   return Promise.all([
-    new FontFace('Bungee', 'url(fonts/bungee-400.woff2)').load(),
-    new FontFace('Fredoka', 'url(fonts/fredoka-600.woff2)', { weight: '600' }).load(),
+    new FontFace('Bungee', `url(${base}bungee-400.woff2)`).load(),
+    new FontFace('Fredoka', `url(${base}fredoka-600.woff2)`, { weight: '600' }).load(),
   ]).then(fs => fs.forEach(f => document.fonts.add(f)));
 }
 
@@ -422,6 +424,24 @@ function drawStars(c, w, h, n, seed, x0 = 0, y0 = 0) {
     c.fillStyle = `rgba(255,246,230,${a})`; c.beginPath(); c.arc(x, y, r, 0, 6.2832); c.fill();
     if (r > 3) { c.strokeStyle = `rgba(255,246,230,${a * .8})`; c.lineWidth = r * .45; c.lineCap = 'round'; c.beginPath(); c.moveTo(x - r * 3, y); c.lineTo(x + r * 3, y); c.moveTo(x, y - r * 3); c.lineTo(x, y + r * 3); c.stroke(); }
   }
+}
+
+
+// ---------- animation helpers for the v2 rigs ----------
+// talking mouth: a = 0..1 open, shape 'a' | 'o' | 'e'
+function talkMouth(c, x, y, a, shape, k = 1) {
+  const rx = (shape === 'o' ? 4.5 + 2 * a : shape === 'e' ? 7 + 3 * a : 6.5 + 3.5 * a) * k;
+  const ry = (shape === 'o' ? 4 + 5 * a : shape === 'e' ? 1.8 + 4 * a : 2.5 + 7.5 * a) * k;
+  const m = g => g.ellipse(x, y + ry * .35, rx, ry, 0, 0, 6.2832);
+  tShape(c, '#4a1028', m, 3);
+  c.save(); c.beginPath(); m(c); c.clip();
+  if (shape !== 'o') { c.fillStyle = '#fff'; c.fillRect(x - rx, y + ry * .35 - ry, rx * 2, ry * .45); }
+  c.fillStyle = '#ff7f97'; c.beginPath(); c.ellipse(x, y + ry * 1.25, rx * .7, ry * .55, 0, 0, 6.2832); c.fill();
+  c.restore(); tShape(c, null, m, 3);
+}
+function closedEye(c, ex, ey, w, happy) {
+  if (happy) tCurve(c, ex - w, ey + 2, ex, ey - 8, ex + w, ey + 2, 4.6);
+  else tCurve(c, ex - w, ey - 3, ex, ey + 3, ex + w, ey - 3, 4.6);
 }
 
 // ======================= v2: Void Mart cast in the shared anime-flat look (same silhouettes, colours and outfits) =======================
@@ -454,6 +474,7 @@ function drawRae2(c, x, y, s, o = {}) {
   for (const sx of [-1, 1]) {
     const ex = sx * 16, ey = -222;
     if (expr === 'sigh') tCurve(c, ex - 10, ey - 4, ex, ey + 1, ex + 10, ey - 4, 4.4);
+    else if (o.blink) closedEye(c, ex, ey - 3, 11);
     else animeEye(c, ex, ey, sx, { ...IR, skin: R.skin, w: 12, h: 12.5, lid, look: o.look ?? 1.5 });
     if (expr === 'shocked') { c.fillStyle = '#fff'; c.beginPath(); c.arc(ex, ey - 4, 5.5, 0, 6.2832); c.fill(); c.fillStyle = TOON.ink; c.beginPath(); c.arc(ex, ey - 4, 2.6, 0, 6.2832); c.fill(); }
     if (expr !== 'shocked') tCurve(c, ex - 8, ey + 11, ex, ey + 13, ex + 8, ey + 10, 1.8, R.skinS);   // tired bags
@@ -465,7 +486,9 @@ function drawRae2(c, x, y, s, o = {}) {
     else tLine(c, [bi, -240, bo, -240], 3.6);
   }
   tLine(c, [2, -206, 0, -201], 2.6);
-  if (expr === 'smirk') tCurve(c, -8, -189, 2, -188, 10, -193, 3);
+  if (o.mug > .55) { /* mug covers the mouth */ }
+  else if (o.mouth && o.mouth.a > .06) talkMouth(c, 0, -191, o.mouth.a, o.mouth.shape, .9);
+  else if (expr === 'smirk') tCurve(c, -8, -189, 2, -188, 10, -193, 3);
   else if (expr === 'annoyed') tCurve(c, -8, -187, 0, -191, 8, -187, 3);
   else if (expr === 'shocked') tEllipse(c, 0, -188, 4, 5.5, '#4a1028', 2.8);
   else if (expr === 'sigh') { tEllipse(c, -2, -189, 3.4, 2.8, '#4a1028', 2.6); tCurve(c, -14, -186, -22, -182, -20, -176, 2.4, 'rgba(255,255,255,.8)'); }
@@ -487,6 +510,14 @@ function drawRae2(c, x, y, s, o = {}) {
       tShape(c, '#7a8098', g => { g.moveTo(14, -28); g.lineTo(24, -28); g.lineTo(21, -16); g.lineTo(13, -16); g.closePath(); }, 3.2);
     }
     tHand(c, 22, -19, 9.5, R.skin, R.skinS);
+  }
+  if (o.mug != null) {   // coffee mug: 0 = on the counter, 1 = at the mouth
+    const k = Math.min(1, Math.max(0, o.mug)), e = k * k * (3 - 2 * k), mx = 40 + (6 - 40) * e, my = -16 + (-176 + 16) * e;
+    tShape(c, '#fbf7ff', g => g.roundRect(mx - 15, my - 26, 30, 32, 5), 3.4);
+    tShape(c, '#fbf7ff', g => g.arc(mx + 17, my - 10, 8, -1.3, 1.3), 3.4);
+    tShape(c, TOON.orange, g => g.rect(mx - 15, my - 16, 30, 7), 2.2);
+    if (k > .05) tHand(c, mx - 4, my - 2, 9.5, R.skin, R.skinS);
+    if (k > .4) for (let i = 0; i < 2; i++) tCurve(c, mx - 6 + i * 10, my - 30, mx - 2 + i * 10, my - 42, mx - 7 + i * 10, my - 54, 2.4, 'rgba(255,255,255,.6)');
   }
   c.restore();
 }
@@ -517,6 +548,7 @@ function drawPip2(c, x, y, s, o = {}) {
   for (const sx of [-1, 1]) {
     const ex = sx * 18, ey = -170;
     if (expr === 'sheepish') { tCurve(c, ex - 10, ey - 2, ex, ey - 12, ex + 10, ey - 2, 4.6); continue; }
+    if (o.blink) { closedEye(c, ex, ey - 2, 11, expr === 'grin'); continue; }
     const big = expr === 'gasp' ? 1.12 : 1;
     animeEye(c, ex, ey + 2, sx, { ...IR, skin: P.skin, w: 12.5 * big, h: 19 * big, lid: expr === 'sad' ? .12 : 0, look: expr === 'worried' ? -sx * 1.5 : 0, tilt: -.1, round: true, flick: false });
     c.fillStyle = '#fff'; c.beginPath(); c.arc(ex + 3, ey - 2, 1.8, 0, 6.2832); c.fill();
@@ -524,8 +556,10 @@ function drawPip2(c, x, y, s, o = {}) {
   }
   tLine(c, [1, -158, 0, -155], 2.4);
   // mouth
-  if (expr === 'grin' || expr === 'sheepish') {
-    const k = expr === 'sheepish' ? .6 : 1, my = -150;
+  const talking = o.mouth && o.mouth.a > .06;
+  if (talking && expr !== 'grin' && expr !== 'sheepish') talkMouth(c, 0, -146, o.mouth.a, o.mouth.shape, 1);
+  else if (expr === 'grin' || expr === 'sheepish') {
+    const k = (expr === 'sheepish' ? .6 : 1) * (talking ? .55 + .6 * o.mouth.a : 1), my = -150;
     const m = g => { g.moveTo(-14 * k, my); g.quadraticCurveTo(0, my + 3 * k, 14 * k, my); g.quadraticCurveTo(11 * k, my + 16 * k, 0, my + 17 * k); g.quadraticCurveTo(-11 * k, my + 16 * k, -14 * k, my); g.closePath(); };
     tShape(c, '#5a1430', m, 3.2);
     c.save(); c.beginPath(); m(c); c.clip(); c.fillStyle = '#fff'; c.fillRect(-15, my - 2, 30, 5 * k); c.fillStyle = '#ff7f97'; c.beginPath(); c.ellipse(1, my + 17 * k, 8 * k, 5 * k, 0, 0, 6.2832); c.fill(); c.restore();
@@ -549,11 +583,11 @@ function drawPip2(c, x, y, s, o = {}) {
     else if (expr === 'gasp') tCurve(c, bi, by - 2, ex, by - 8, bo, by - 2, 2.8);
     else tCurve(c, bi, by, ex, by - 5, bo, by, 2.8);
   }
-  if (expr === 'worried' || expr === 'sheepish') tShape(c, '#9fe6ff', g => { g.moveTo(54, -210); g.quadraticCurveTo(62, -196, 58, -190); g.quadraticCurveTo(52, -186, 49, -194); g.quadraticCurveTo(48, -200, 54, -210); g.closePath(); }, 2.6);
+  if (expr === 'worried' || expr === 'sheepish' || o.sweat) tShape(c, '#9fe6ff', g => { g.moveTo(54, -210); g.quadraticCurveTo(62, -196, 58, -190); g.quadraticCurveTo(52, -186, 49, -194); g.quadraticCurveTo(48, -200, 54, -210); g.closePath(); }, 2.6);
   if (o.arms !== false) {
     tTube(c, [-52, -88, -68, -50, -66, -16, -44, -10, -22, -12], 21, P.shirt);
     tHand(c, -18, -13, 8.5, P.skin, P.skinS);
-    if (o.wave !== false) { tTube(c, [50, -92, 78, -98, 84, -126, 88, -146, 90, -164], 20, P.shirt, P.shirtS); tHand(c, 91, -176, 10, P.skin, P.skinS, true); }
+    if (o.wave !== false) { const wv = o.wavePhase != null ? Math.sin(o.wavePhase) * 7 : 0; tTube(c, [50, -92, 78, -98, 84, -126, 88 + wv * .5, -146, 90 + wv, -164], 20, P.shirt, P.shirtS); tHand(c, 91 + wv * 1.2, -176, 10, P.skin, P.skinS, true); }
     else { tTube(c, [52, -88, 68, -50, 66, -16, 44, -10, 22, -12], 21, P.shirt, P.shirtS); tHand(c, 18, -13, 8.5, P.skin, P.skinS); }
   }
   c.restore();
