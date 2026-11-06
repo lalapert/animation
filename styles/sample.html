@@ -1,0 +1,212 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Style samples</title>
+<style>html, body { margin: 0; background: #111; } canvas { display: block; }</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script src="engine.js"></script>
+<script>
+// One scene, three styles. ?s=clear | flat | riso
+// Mina at the top of a steep harbour street at sunset, the red-sealed envelope in her hands, seen from behind.
+'use strict';
+const W = 1080, H = 1920, cv = document.getElementById('c'), c = cv.getContext('2d', { alpha: false });
+const STYLE = new URLSearchParams(location.search).get('s') || 'clear';
+const P = s => new Path2D(s);
+const lerpP = (a, b, u) => [lerp(a[0], b[0], u), lerp(a[1], b[1], u)];
+function quad(a, b, cc, d) { const p = new Path2D(); p.moveTo(...a); p.lineTo(...b); p.lineTo(...cc); p.lineTo(...d); p.closePath(); return p; }
+function rect(x0, y0, x1, y1) { return quad([x0, y0], [x1, y0], [x1, y1], [x0, y1]); }
+function ell(x, y, rx, ry, rot = 0) { const p = new Path2D(); p.ellipse(x, y, rx, ry, rot, 0, 6.2832); return p; }
+
+// ---------------------------------------------------------------- scene geometry (shared by every style)
+// each item: { p: Path2D, role, shade?: [dx, dy] (cel shadow offset), line?: px, char?: bool }
+const SCENE = [];
+const add = (p, role, o = {}) => SCENE.push({ p, role, ...o });
+function facade(near, far, cols, colsRoles, mirror) {
+  // a street-side wall in perspective: near edge [x, yTop, yBot] → far edge [x, yTop, yBot]
+  const pt = (u, v) => { const k = 1 - Math.pow(1 - u, 1.8); return [lerp(near[0], far[0], k), lerp(lerp(near[1], far[1], k), lerp(near[2], far[2], k), v)]; };
+  const bounds = colsRoles.map((r, i) => [i / colsRoles.length, (i + 1) / colsRoles.length, r]);
+  for (const [u0, u1, role] of bounds) add(quad(pt(u0, 0), pt(u1, 0), pt(u1, 1), pt(u0, 1)), role, { shade: [0, 0], line: 2.5 });
+  for (let i = 0; i < cols; i++) for (let j = 0; j < 4; j++) {
+    const u0 = (i + .25) / cols, u1 = (i + .7) / cols, v0 = .08 + j * .19, v1 = v0 + .11;
+    add(quad(pt(u0, v0), pt(u1, v0), pt(u1, v1), pt(u0, v1)), 'window', { line: 2 });
+    add(quad(pt(u0 - .02, v1 + .005), pt(u1 + .02, v1 + .005), pt(u1 + .02, v1 + .03), pt(u0 - .02, v1 + .03)), 'balcony', { line: 1.6 });
+  }
+  void mirror;
+}
+function buildScene() {
+  // background: sunset sky, the sun behind her head, a harbour-town skyline, tram wires
+  add(rect(0, 0, W, H), 'sky');
+  add(ell(236, 990, 150, 150), 'sun');
+  add(P('M0 1180 L0 1020 L70 1020 L70 960 L150 960 L150 1000 L230 1000 L230 930 L262 900 L294 930 L294 990 L380 990 L380 1060 L700 1060 L700 980 L780 980 L780 920 L812 890 L844 920 L844 1000 L930 1000 L930 950 L1010 950 L1010 1010 L1080 1010 L1080 1180 Z'), 'skyline', { line: 2.5 });
+  for (const [x, y] of [[30, 1050], [100, 990], [180, 1030], [262, 960], [330, 1020], [740, 1010], [800, 950], [880, 1030], [960, 980], [1030, 1040]]) add(rect(x - 12, y, x + 12, y + 30), 'window', { line: 1.6 });
+  add(P('M0 820 Q 540 900 1080 780 L1080 786 Q 540 906 0 826 Z'), 'wire');
+  add(P('M0 880 Q 540 960 1080 840 L1080 845 Q 540 965 0 885 Z'), 'wire');
+  add(rect(0, 1180, W, H), 'street', { line: 2.5 });
+  // --- Mina, waist up, three-quarter view, looking down at the letter
+  // back hair
+  add(P('M392 700 C 386 560, 468 476, 576 474 C 694 472, 764 560, 756 700 C 754 790, 752 880, 734 930 C 706 944, 690 904, 688 870 L 470 870 C 462 904, 448 940, 418 934 C 396 884, 394 780, 392 700 Z'), 'hair', { char: true, shade: [10, 6], line: 5 });
+  // neck
+  add(P('M530 880 L604 880 L610 968 L524 968 Z'), 'skin', { char: true, shade: [8, 0], line: 4.5 });
+  // body: oversized ochre cardigan over a white tee, backpack straps
+  add(P('M340 1960 L 356 1560 L 780 1560 L 796 1960 Z'), 'pants', { char: true, shade: [12, 0], line: 5 });
+  add(P('M568 1600 L 570 1960'), 'ink', { stroke: true, line: 3 });
+  add(P('M268 1640 C 270 1400, 300 1080, 410 1000 C 464 962, 520 952, 566 952 C 622 952, 680 962, 734 1002 C 842 1082, 870 1400, 872 1640 C 800 1666, 690 1652, 650 1630 L 566 1560 L 486 1630 C 446 1652, 336 1666, 268 1640 Z'), 'cardigan', { char: true, shade: [16, 8], line: 5 });
+  add(P('M516 958 L 566 1100 L 616 958 C 600 978, 534 978, 516 958 Z'), 'tee', { char: true, line: 4 });
+  add(P('M488 964 L 566 1140 L 646 964 L 652 1560 L 486 1560 Z'), 'tee', { char: true, line: 4 });
+  add(P('M486 1540 L 652 1540 L 652 1570 L 486 1570 Z'), 'belt', { char: true, line: 3.5 });
+  add(P('M488 964 L 566 1140 L 646 964'), 'cardiganRibLine', { stroke: true, line: 10 });
+  add(P('M414 996 C 392 1080, 382 1200, 386 1420 L 420 1420 C 418 1200, 428 1092, 448 1012 Z'), 'strap', { char: true, line: 4 });
+  add(P('M718 996 C 740 1080, 750 1200, 746 1420 L 712 1420 C 714 1200, 704 1092, 684 1012 Z'), 'strap', { char: true, line: 4 });
+  // arms coming in to hold the envelope at the chest
+  add(P('M330 1180 C 352 1260, 400 1320, 470 1330 C 500 1334, 520 1310, 512 1288 C 480 1276, 430 1250, 404 1180 Z'), 'cardigan', { char: true, shade: [10, 6], line: 5 });
+  add(P('M806 1180 C 784 1260, 736 1320, 666 1330 C 636 1334, 616 1310, 624 1288 C 656 1276, 706 1250, 732 1180 Z'), 'cardigan', { char: true, shade: [10, 6], line: 5 });
+  // the envelope, open, the letter half out, the red seal
+  add(P('M430 1180 L 712 1150 L 728 1326 L 446 1356 Z'), 'envelope', { char: true, shade: [6, 4], line: 4.5 });
+  add(P('M462 1130 L 690 1106 L 704 1250 L 476 1274 Z'), 'letter', { char: true, line: 4 });
+  for (let k = 0; k < 5; k++) add(P(`M${488 + k} ${1150 + k * 22} L ${668 + k} ${1131 + k * 22}`), 'ink', { stroke: true, line: 2.6 });
+  add(P('M430 1180 L 584 1262 L 712 1150'), 'envelopeFold', { stroke: true, line: 3.5 });
+  add(ell(584, 1262, 26, 24, -.1), 'seal', { char: true, shade: [3, 2], line: 4 });
+  add(P('M572 1252 L 596 1272 M 596 1252 L 572 1272'), 'sealMark', { stroke: true, line: 3 });
+  // hands (thumbs on the front of the envelope)
+  add(P('M458 1262 C 448 1236, 470 1218, 492 1226 C 512 1234, 516 1262, 502 1282 C 490 1296, 466 1290, 458 1262 Z'), 'skin', { char: true, shade: [4, 2], line: 4.5 });
+  add(P('M676 1236 C 690 1214, 716 1220, 722 1244 C 728 1266, 714 1286, 694 1286 C 676 1284, 666 1258, 676 1236 Z'), 'skin', { char: true, shade: [4, 2], line: 4.5 });
+  // face
+  add(P('M424 700 C 424 600, 492 542, 576 542 C 662 542, 716 602, 712 702 C 710 792, 680 862, 622 900 C 592 920, 546 924, 512 904 C 458 874, 424 800, 424 700 Z'), 'skin', { char: true, shade: [12, 4], line: 5 });
+  // ear (her left, our right) peeking out
+  add(P('M704 700 C 722 690, 738 706, 734 728 C 730 748, 716 760, 702 754 Z'), 'skin', { char: true, line: 4 });
+  add(ell(500, 812, 34, 18, -.1), 'blush'); add(ell(652, 812, 30, 16, .1), 'blush');
+  // eyes: lowered lids looking down at the letter
+  add(P('M462 742 C 476 726, 506 722, 528 734'), 'ink', { stroke: true, line: 6 });
+  add(P('M604 734 C 626 720, 660 722, 678 738'), 'ink', { stroke: true, line: 6 });
+  add(P('M474 742 C 480 756, 514 758, 520 740 Z'), 'iris', { char: true, line: 0 });
+  add(P('M614 738 C 620 754, 660 756, 666 738 Z'), 'iris', { char: true, line: 0 });
+  add(P('M462 742 L 450 734 M 678 738 L 690 728'), 'ink', { stroke: true, line: 3.4 });
+  // brows, a little lifted at the inner ends (wistful)
+  add(P('M462 690 C 480 676, 510 674, 532 684'), 'ink', { stroke: true, line: 5 });
+  add(P('M604 682 C 628 670, 660 672, 680 686'), 'ink', { stroke: true, line: 5 });
+  // nose and mouth: a small, quiet smile
+  add(P('M566 770 C 560 790, 558 800, 570 804'), 'ink', { stroke: true, line: 3.6 });
+  add(P('M542 846 C 556 856, 578 856, 594 846'), 'ink', { stroke: true, line: 4 });
+  // fringe and the front locks of the bob
+  add(P('M420 694 C 416 592, 482 520, 576 518 C 668 516, 726 584, 726 668 C 700 648, 660 620, 606 610 C 590 646, 548 664, 506 666 C 474 668, 444 678, 420 694 Z'), 'hair', { char: true, shade: [8, 4], line: 5 });
+  add(P('M420 694 C 410 770, 414 856, 444 908 C 458 884, 458 806, 452 730 Z'), 'hair', { char: true, shade: [6, 3], line: 5 });
+  add(P('M712 660 C 732 730, 734 830, 718 900 C 704 878, 700 806, 702 726 Z'), 'hair', { char: true, shade: [6, 3], line: 5 });
+  add(P('M520 560 C 560 548, 610 552, 640 568'), 'hairShine', { stroke: true, line: 6 });
+}
+
+// ---------------------------------------------------------------- styles
+const ROLES = {
+  clear: {
+    sky: '#f4c8a0', sun: '#fbe7b0', hills: '#b7a0b4', river: '#cdd8da', street: '#cdb39a', wallA: '#e8a69a', wallB: '#efcd78', wallC: '#8fb2cc', wallD: '#f1dcc0', wallE: '#c5d7b0',
+    window: '#4a5868', balcony: '#3a3433', wire: '#3a3433', tram: '#f2c230', tramBand: '#f6f1e6', tramRoof: '#e9e3d6', lamp: '#fff3c4', iron: '#2f2a2a', lantern: '#fde4a0', cobbleLine: '#9e8670',
+    groundShadow: 'rgba(80,60,60,.28)', pants: '#2c3550', shoe: '#f2efe6', sole: '#c9a26a', cardigan: '#c98a2e', cardiganRib: '#b87a24', cardiganRibLine: '#b87a24', belt: '#6b4a2e', envelope: '#efe6d2', letter: '#fbf8f0', ink: '#2a2524', envelopeFold: '#8c7d66',
+    seal: '#c8442a', skin: '#f0c4a2', pack: '#6f7a46', packFlap: '#636d3d', strap: '#5f6b3a', buckle: '#c9b27a', hair: '#1f1c22',
+    skyline: '#9c7f8f', tee: '#f7f3ea', blush: '#f2a08c', iris: '#2a2226', sealMark: '#8e2a18', hairShine: '#4a4552',
+  },
+  flat: {
+    sky: '#f0c08f', sun: '#f7e1a6', hills: '#2f6f73', river: '#9cc1bd', street: '#d9b48c', wallA: '#d9634c', wallB: '#e7a33e', wallC: '#2f6f73', wallD: '#f2e3c6', wallE: '#e7a33e',
+    window: '#24465a', balcony: '#2b2725', wire: '#2b2725', tram: '#e7a33e', tramBand: '#f2e3c6', tramRoof: '#f2e3c6', lamp: '#f7e1a6', iron: '#2b2725', lantern: '#f7e1a6', cobbleLine: '#b8936c',
+    groundShadow: 'rgba(43,39,37,.22)', pants: '#24465a', shoe: '#f2e3c6', sole: '#d9634c', cardigan: '#e7a33e', cardiganRib: '#cf8f2e', cardiganRibLine: '#cf8f2e', belt: '#2b2725', envelope: '#f2e3c6', letter: '#fbf3e2', ink: '#2b2725', envelopeFold: '#b8936c',
+    seal: '#d9634c', skin: '#f2b896', pack: '#2f6f73', packFlap: '#285f63', strap: '#2f6f73', buckle: '#f2e3c6', hair: '#2b2725',
+    skyline: '#2f6f73', tee: '#fbf3e2', blush: '#e58a6e', iris: '#2b2725', sealMark: '#9c3b2a', hairShine: '#4a4440',
+  },
+  // riso: densities of the three inks [fluorescent pink, blue, yellow]
+  riso: {
+    sky: [.18, 0, .45], sun: [0, 0, .65], hills: [.35, .45, 0], river: [0, .3, .05], street: [.25, .12, .35], wallA: [.6, 0, .25], wallB: [.12, 0, .8], wallC: [0, .6, .1], wallD: [.12, .04, .22], wallE: [0, .25, .55],
+    window: [.3, .85, 0], balcony: [.4, .9, .2], wire: [.5, .95, .2], tram: [.1, 0, 1], tramBand: [0, 0, .08], tramRoof: [0, .05, .1], lamp: [0, 0, .3], iron: [.5, .95, .3], lantern: [.05, 0, .7], cobbleLine: [.3, .3, .3],
+    groundShadow: [.25, .35, 0], pants: [.2, 1, 0], shoe: [0, .05, .05], sole: [.4, 0, .5], cardigan: [.35, 0, .95], cardiganRib: [.5, .05, .95], cardiganRibLine: [.5, .05, .95], belt: [.5, .7, .6], envelope: [.04, 0, .16], letter: [0, 0, .03], ink: [.5, 1, .3], envelopeFold: [.25, .3, .3],
+    seal: [1, 0, .7], skin: [.22, 0, .28], pack: [.1, .55, .55], packFlap: [.15, .65, .6], strap: [.1, .6, .55], buckle: [.1, 0, .5], hair: [.65, 1, .2],
+    skyline: [.45, .55, .05], tee: [0, 0, .03], blush: [.55, 0, .2], iris: [.6, 1, .3], sealMark: [1, .4, .7], hairShine: [.3, .6, .1],
+  },
+};
+
+function shadeCol(col, k) { if (col.startsWith('rgba')) return col; const [r, g, b] = hex(col); return `rgb(${r * k | 0},${g * k | 0},${b * k | 0})`; }
+function noiseCanvas(seed, alpha, scale = 1) {
+  const n = document.createElement('canvas'); n.width = W; n.height = H;
+  const g = n.getContext('2d'), im = g.createImageData(W, H), R = mulberry(seed);
+  for (let i = 0; i < W * H; i++) { const v = 128 + (R() - .5) * 255 * scale; im.data[i * 4] = im.data[i * 4 + 1] = im.data[i * 4 + 2] = v; im.data[i * 4 + 3] = alpha; }
+  g.putImageData(im, 0, 0); return n;
+}
+
+function renderClear() {
+  const T = ROLES.clear;
+  c.fillStyle = '#f7efe2'; c.fillRect(0, 0, W, H);
+  // sky in three flat bands
+  [['#f6dcc0', 0, 260], ['#f4c8a0', 260, 520], ['#f1b68e', 520, 700]].forEach(([col, y0, y1]) => { c.fillStyle = col; c.fillRect(0, y0, W, y1 - y0); });
+  for (const it of SCENE) {
+    if (it.role === 'sky') continue;
+    const col = T[it.role];
+    if (it.stroke) { c.strokeStyle = col; c.lineWidth = it.line || 2; c.lineCap = 'round'; c.stroke(it.p); continue; }
+    c.fillStyle = col; c.fill(it.p);
+    if (it.shade && (it.shade[0] || it.shade[1])) {   // cel shadow: a band on the side away from the light (upper left)
+      c.save(); c.clip(it.p); c.fillStyle = shadeCol(col, .8); c.fill(it.p); c.translate(-it.shade[0], -it.shade[1]); c.fillStyle = col; c.fill(it.p); c.restore();
+    }
+    if (it.line) { c.strokeStyle = it.char ? '#1d1a19' : '#3a2f2c'; c.lineWidth = it.line; c.lineJoin = 'round'; c.stroke(it.p); }
+  }
+}
+
+function renderFlat() {
+  const T = ROLES.flat;
+  c.fillStyle = '#f2e3c6'; c.fillRect(0, 0, W, H);
+  for (const it of SCENE) {
+    const col = T[it.role];
+    if (it.stroke) { if (it.role === 'ink' || it.role === 'sole') { c.strokeStyle = col; c.lineWidth = (it.line || 2) * .8; c.lineCap = 'round'; c.stroke(it.p); } continue; }
+    // flat shapes, printed slightly off register: no outlines
+    c.save(); c.translate(it.char ? 0 : 3, it.char ? 0 : -2); c.fillStyle = col; c.fill(it.p); c.restore();
+    if (it.shade && it.char) { c.save(); c.clip(it.p); c.fillStyle = shadeCol(col, .84); c.fillRect(0, 0, W, H); c.translate(-it.shade[0] * 1.4, -it.shade[1] * 1.4); c.fillStyle = col; c.fill(it.p); c.restore(); }
+  }
+  // mid-century details: a geometric sun ring, star dots, a dry-brush grain
+  c.strokeStyle = '#f7e1a6'; c.lineWidth = 6; c.beginPath(); c.arc(236, 990, 190, Math.PI, 2 * Math.PI); c.stroke();
+  c.fillStyle = '#f7e1a6'; [[200, 180], [880, 140], [360, 90], [980, 300], [90, 330]].forEach(([x, y]) => { c.beginPath(); c.moveTo(x, y - 12); c.lineTo(x + 4, y); c.lineTo(x, y + 12); c.lineTo(x - 4, y); c.closePath(); c.fill(); c.beginPath(); c.moveTo(x - 12, y); c.lineTo(x, y + 4); c.lineTo(x + 12, y); c.lineTo(x, y - 4); c.closePath(); c.fill(); });
+  c.save(); c.globalCompositeOperation = 'multiply'; c.globalAlpha = .22; c.drawImage(noiseCanvas(7, 255, .5), 0, 0); c.restore();
+  c.save(); c.globalCompositeOperation = 'screen'; c.globalAlpha = .12; c.drawImage(noiseCanvas(8, 255, .7), 0, 0); c.restore();
+}
+
+function renderRiso() {
+  const T = ROLES.riso, INKS = [[255, 72, 176], [0, 120, 191], [255, 232, 0]], OFF = [[0, 0], [5, -3], [-4, 4]];
+  // one density layer per ink
+  const layers = INKS.map(() => { const l = document.createElement('canvas'); l.width = W; l.height = H; const g = l.getContext('2d'); g.fillStyle = '#000'; g.fillRect(0, 0, W, H); return l; });
+  layers.forEach((l, k) => {
+    const g = l.getContext('2d');
+    for (const it of SCENE) {
+      const d = T[it.role]; if (!d) continue;
+      const v = Math.round(d[k] * 255), col = `rgb(${v},${v},${v})`;
+      if (it.stroke) { g.strokeStyle = col; g.lineWidth = (it.line || 2) * 1.1; g.lineCap = 'round'; g.stroke(it.p); continue; }
+      g.fillStyle = col; g.fill(it.p);
+      if (it.shade && it.char) { g.save(); g.clip(it.p); const s = Math.min(255, v + 70); g.fillStyle = `rgb(${s},${s},${s})`; g.fillRect(0, 0, W, H); g.translate(-it.shade[0] * 1.2, -it.shade[1] * 1.2); g.fillStyle = col; g.fill(it.p); g.restore(); }
+      if (it.char && it.line && k === 1) { g.strokeStyle = 'rgb(235,235,235)'; g.lineWidth = it.line * .7; g.lineJoin = 'round'; g.stroke(it.p); }   // the blue drum prints the outlines
+    }
+  });
+  // paper, then each ink as a grainy halftone, slightly off register
+  c.fillStyle = '#f4efe4'; c.fillRect(0, 0, W, H);
+  const out = c.getImageData(0, 0, W, H), o = out.data;
+  layers.forEach((l, k) => {
+    const d = l.getContext('2d').getImageData(0, 0, W, H).data, [ir, ig, ib] = INKS[k], [ox, oy] = OFF[k], R = mulberry(20 + k);
+    const ang = [.26, .79, 0][k], ca = Math.cos(ang), sa = Math.sin(ang), cell = 6;
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+      const sx = x - ox, sy = y - oy; if (sx < 0 || sy < 0 || sx >= W || sy >= H) continue;
+      const den = d[(sy * W + sx) * 4] / 255; if (den <= 0.01) continue;
+      // rotated dot screen + grain
+      const u = (x * ca + y * sa) / cell, v = (-x * sa + y * ca) / cell;
+      const fu = u - Math.floor(u) - .5, fv = v - Math.floor(v) - .5, dot = 1 - Math.sqrt(fu * fu + fv * fv) * 1.42;
+      const th = den > .92 ? -1 : dot;
+      if (th > 1 - den + (R() - .5) * .25 || den > .92) {
+        if (R() < .035) continue;   // ink skips
+        const i = (y * W + x) * 4;
+        o[i] = o[i] * ir / 255; o[i + 1] = o[i + 1] * ig / 255; o[i + 2] = o[i + 2] * ib / 255;
+      }
+    }
+  });
+  c.putImageData(out, 0, 0);
+  c.save(); c.globalCompositeOperation = 'multiply'; c.globalAlpha = .12; c.drawImage(noiseCanvas(9, 255, .6), 0, 0); c.restore();
+}
+
+buildScene();
+({ clear: renderClear, flat: renderFlat, riso: renderRiso })[STYLE]();
+window.READY = true;
+</script>
+</body>
+</html>

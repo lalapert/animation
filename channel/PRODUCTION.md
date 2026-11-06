@@ -12,7 +12,7 @@ Read this whole file before you start. Each daily run makes **tomorrow's** episo
 
 - Calendar: `channel/SERIES.md` §4. After the listed dates, keep the rotation: **serial on Sun/Tue/Thu/Sat**, **shorts on Mon/Wed/Fri**. Serial episodes go in Season 1 order (§2 table, one place = 1–2 episodes). Shorts go in §3 order, then new seasonal ideas (one object, one season, one turn), never repeating a subject.
 - Check `channel/LOG.md` and the Metricool schedule for tomorrow first. If tomorrow already has a post, stop and log "already scheduled".
-- Length **30–50 s** (never over 50), 1080×1920, 60 fps, English narration + burned-in English subtitles + `.srt`.
+- Length **40–50 s** (never over 50). Paid external APIs: ElevenLabs only (voice, effects, speech-to-text); no other paid services (vidIQ, Newtake, etc.), 1080×1920, 60 fps, English narration + burned-in English subtitles + `.srt`.
 
 ## 2. How to make it
 
@@ -28,7 +28,7 @@ Steps (each must pass before the next):
 5. Picture `film.js`: render stills with `node tools/render.cjs stills out/review t…` and **look at them** (contact sheet with `tools/sheet.py`). Fix what you see. One fix round, then check again.
 6. `node tools/render.cjs events`, `tools/score.py` (balance stems with `tools/score_gain.json` to roughly: lead −30, accompaniment −33, pads −36 dB active RMS; vary instruments between episodes), `mix.json` + `tools/mix.py`.
 7. `node tools/render.cjs video 3`, `sh tools/mux.sh out/video.mp4 out/mix.wav <slug>.mp4`.
-8. Checks on the final file: duration 30–50 s; about −14 LUFS; `blackdetect` finds nothing; ElevenLabs speech-to-text of the final audio matches the script; a contact sheet of the encoded file looks right.
+8. Checks on the final file: duration 40–50 s; about −14 LUFS; `blackdetect` finds nothing; ElevenLabs speech-to-text of the final audio matches the script; a contact sheet of the encoded file looks right.
 9. `tools/srt.py`, `poster.jpg`, `CREDITS` (every third-party asset and fact source), `build.sh`.
 
 Style rules (keep all): the watercolour brush look of the previous episodes (one paper sheet, translucent strokes with dry-brush bristles, washes with pooled edges, paper is the white, one accent colour, painting-in as the main motion, no vector outlines, no hard cuts). Shorts safe zones: nothing important above y 180, subtitles at y 1430–1490, nothing important right of x 920. Healing tone. No real brands, logos, or real people. Maps (if any) without borders. Facts checked by web search and listed in CREDITS.
@@ -37,7 +37,7 @@ Style rules (keep all): the watercolour brush look of the previous episodes (one
 
 1. Commit `<slug>/` and push to `claude/wonderful-carson-ck1yo6` (retry with backoff on network errors).
 2. Media URL: `https://raw.githubusercontent.com/lalapert/animation/<commit sha>/<slug>/<slug>.mp4`. Check it returns 200 and the full size.
-3. Brand: `getBrandSettings`. Use the brand named "Paper Almanac" if it exists, else "AI Page" (7837461). **Provider: YouTube only.** Never post to Instagram, Facebook, Threads or any other brand.
+3. Brand: "Paper Almanac" (id 7923229, holds the channel's YouTube account; confirm with `getBrandSettings`). **Provider: YouTube only.** Never post to Instagram, Facebook, Threads or any other brand.
 4. `createScheduledPost`: date tomorrow 09:00 `Asia/Seoul`, `autoPublish: true`, `draft: false`, text = 2–4 short lines + hashtags (end with `#shorts`), `youtubeData` = {title ≤ 100 chars ending with `#shorts`, type `short`, privacy `public`, tags, category `FILM_ANIMATION`, madeForKids false, isAiGeneratedContent false}.
 5. Append to `channel/LOG.md`: date, slug, track, duration, LUFS, checks, Metricool post id, ElevenLabs credits left, anything that went wrong. Commit and push.
 
