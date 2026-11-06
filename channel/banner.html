@@ -1,0 +1,164 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Paper Almanac banner</title>
+<style>
+@font-face { font-family: "Cormorant Garamond"; src: url(fonts/cormorant-500i.woff2) format("woff2"); font-weight: 500; font-style: italic; }
+@font-face { font-family: "IBM Plex Mono"; src: url(fonts/plexmono-400.woff2) format("woff2"); font-weight: 400; }
+html, body { margin: 0; background: #f2eadb; }
+canvas { display: block; }
+</style>
+</head>
+<body>
+<canvas id="c" width="2560" height="1440"></canvas>
+<script src="../a-year-on-the-sill/engine.js"></script>
+<script>
+// YouTube channel banner for "Paper Almanac": 2560×1440; everything that matters sits in the centre 1546×423
+// (x 507–2053, y 508–931). Across the desktop strip, one small specimen per season, January → December.
+'use strict';
+const WD = 2560, HT = 1440, cv = document.getElementById('c'), c = cv.getContext('2d', { alpha: false });
+const INK = '#2e2622', INK2 = '#6b5546', PAPERC = '#f2eadb', LEMON = '#e9c23f';
+let PAPER;
+
+function buildPaper() {
+  const p = document.createElement('canvas'); p.width = WD; p.height = HT;
+  const g = p.getContext('2d');
+  const oct = (nw, nh, seed) => {
+    const s = document.createElement('canvas'); s.width = nw; s.height = nh;
+    const sg = s.getContext('2d'), im = sg.createImageData(nw, nh), R = mulberry(seed);
+    for (let i = 0; i < nw * nh; i++) { const v = R() * 255; im.data[i * 4] = im.data[i * 4 + 1] = im.data[i * 4 + 2] = v; im.data[i * 4 + 3] = 255; }
+    sg.putImageData(im, 0, 0);
+    const b = document.createElement('canvas'); b.width = WD; b.height = HT;
+    const bg = b.getContext('2d'); bg.imageSmoothingQuality = 'high'; bg.drawImage(s, 0, 0, WD, HT);
+    return bg.getImageData(0, 0, WD, HT).data;
+  };
+  const n1 = oct(16, 9, 1), n2 = oct(53, 30, 2), n3 = oct(190, 107, 3), base = hex(PAPERC), im = g.createImageData(WD, HT), d = im.data, R = mulberry(4);
+  for (let i = 0; i < WD * HT; i++) {
+    const k = 1 + .035 * (n1[i * 4] / 127.5 - 1) + .02 * (n2[i * 4] / 127.5 - 1) + .012 * (n3[i * 4] / 127.5 - 1) + .02 * (R() - .5);
+    d[i * 4] = base[0] * k; d[i * 4 + 1] = base[1] * k; d[i * 4 + 2] = base[2] * k; d[i * 4 + 3] = 255;
+  }
+  g.putImageData(im, 0, 0);
+  withSeed(5, () => {
+    for (let k = 0; k < 2200; k++) {
+      const P = polar(rnd(0, WD), rnd(0, HT), rnd(0, 6.28), rnd(10, 46), rnd(-7, 7), 6);
+      g.strokeStyle = RNG() < .5 ? `rgba(255,252,244,${rnd(.12, .3)})` : `rgba(150,130,105,${rnd(.05, .12)})`;
+      g.lineWidth = rnd(.8, 1.8); g.beginPath(); P.forEach(([x, y], i) => i ? g.lineTo(x, y) : g.moveTo(x, y)); g.stroke();
+    }
+  });
+  return p;
+}
+function paperClip(pathFn, a = 1) { c.save(); pathFn(); c.clip(); c.globalCompositeOperation = 'source-over'; c.globalAlpha = a; c.drawImage(PAPER, 0, 0); c.restore(); }
+function lemonPath(x, y, r, rot = .14, wob = .03, seed = 7) {
+  const n = 60; c.beginPath();
+  for (let i = 0; i <= n; i++) {
+    const a = i / n * Math.PI * 2;
+    const tipB = Math.exp(-Math.pow((a - Math.PI / 2) / .22, 2)) * .2, tipT = Math.exp(-Math.pow((a - 3 * Math.PI / 2) / .3, 2)) * .08;
+    const k = (1 + tipB + tipT) * (1 + wob * (2 * vnoise(i * .4 + seed, seed) - 1));
+    const px = Math.cos(a) * r * .8 * k, py = Math.sin(a) * r * k;
+    const X = x + px * Math.cos(rot) - py * Math.sin(rot), Y = y + px * Math.sin(rot) + py * Math.cos(rot);
+    i ? c.lineTo(X, Y) : c.moveTo(X, Y);
+  }
+  c.closePath();
+}
+function fruit(x, y, r, col, rot = .14, seed = 7) {
+  paperClip(() => lemonPath(x, y, r * 1.01, rot), .95);
+  for (let k = 0; k < 3; k++) { c.fillStyle = rgba(col, .3); lemonPath(x, y, r * (1 - k * .03), rot, .03 + k * .012, seed + k * 3); c.fill(); }
+  c.strokeStyle = rgba(shade(col, .7), .45); c.lineWidth = Math.max(1.5, r * .03); lemonPath(x, y, r, rot); c.stroke();
+  c.save(); lemonPath(x, y, r, rot); c.clip();
+  c.fillStyle = rgba(shade(mixc(col, '#c08a3a', .3), .84), .3); c.beginPath(); c.ellipse(x + r * .52, y + r * .36, r * .6, r * .86, .3, 0, 6.283); c.fill();
+  c.restore();
+  paperClip(() => { c.beginPath(); c.ellipse(x - r * .3, y - r * .38, r * .2, r * .13, -.7, 0, 6.283); }, .85);
+  c.strokeStyle = rgba(INK, .32); c.lineWidth = Math.max(1.5, r * .035); c.lineCap = 'round'; c.beginPath(); c.ellipse(x, y, r * .76, r * .95, rot, -.25, 1.75); c.stroke();
+}
+function leaf(x, y, ang, len, w, col, seed) {
+  withSeed(seed, () => {
+    const P = polar(x, y, ang, len, len * .06, 16);
+    drawS(c, mk(P, w, col, { prof: 'leaf', nb: 5, a: .82, rough: .14, rib: .72, bm: .55 }));
+    drawS(c, mk(P.slice(1, 13), Math.max(1.2, w * .045), '#34492a', { prof: 'even', nb: 0, a: .38, rough: .3, rib: 1 }));
+  });
+}
+function twig(pts, w, seed, col = '#6e5a45') { withSeed(seed, () => drawS(c, mk(pts, w, col, { prof: 'tip', nb: w >= 6 ? 4 : 0, a: .9, rough: .2 }))); }
+function bud(x, y, ang, r) {
+  const bx = x + Math.cos(ang) * r, by = y + Math.sin(ang) * r;
+  paperClip(() => { c.beginPath(); c.ellipse(bx, by, r * 1.25, r * .85, ang, 0, 6.283); }, .95);
+  c.fillStyle = rgba('#b48ab4', .45); c.beginPath(); c.ellipse(bx + Math.cos(ang) * r * .55, by + Math.sin(ang) * r * .55, r * .6, r * .5, ang, 0, 6.283); c.fill();
+  c.fillStyle = rgba('#6f8f4a', .7); c.beginPath(); c.ellipse(x, y, r * .55, r * .45, ang, 0, 6.283); c.fill();
+  c.strokeStyle = rgba(INK2, .45); c.lineWidth = 1.5; c.beginPath(); c.ellipse(bx, by, r * 1.25, r * .85, ang, 0, 6.283); c.stroke();
+}
+function flower(x, y, s, rot = .3) {
+  for (let k = 0; k < 5; k++) {
+    const a = rot + k * 1.2566, L = 30 * s, wd = 20 * s, cx = x + Math.cos(a) * L * .55, cy = y + Math.sin(a) * L * .55;
+    const path = () => { c.beginPath(); c.ellipse(cx, cy, L * .55, wd * .5, a, 0, 6.283); };
+    paperClip(path, .96); path(); c.fillStyle = rgba('#e7d9e3', .3); c.fill(); c.strokeStyle = rgba('#8c6f86', .4); c.lineWidth = 1.6; c.stroke();
+  }
+  c.fillStyle = rgba('#c9c46a', .85); c.beginPath(); c.arc(x, y, 6.5 * s, 0, 6.283); c.fill();
+  c.fillStyle = rgba('#c9a23a', .7);
+  for (let k = 0; k < 7; k++) { const a = rot + k * .9; c.beginPath(); c.arc(x + Math.cos(a) * 11 * s, y + Math.sin(a) * 11 * s, 2.2 * s, 0, 6.283); c.fill(); }
+}
+function fruitlet(x, y, r) {
+  c.fillStyle = rgba('#9fb24a', .62); blobPath(c, x, y, r, 3, .05, 24); c.fill();
+  c.fillStyle = rgba(shade('#9fb24a', .78), .4); c.beginPath(); c.arc(x + r * .25, y + r * .25, r * .7, -.6, 2.2); c.fill();
+  paperClip(() => { c.beginPath(); c.ellipse(x - r * .32, y - r * .3, r * .26, r * .18, -.6, 0, 6.283); }, .75);
+  c.strokeStyle = rgba(INK, .4); c.lineWidth = r * .12; c.beginPath(); c.arc(x, y, r, -.4, 2.4); c.stroke();
+}
+function rain(x, y, n, seed) {
+  withSeed(seed, () => { for (let i = 0; i < n; i++) { const px = x + rnd(-60, 60), py = y + rnd(-70, 70), l = rnd(26, 46);
+    drawS(c, mk([[px, py], [px - l * .12, py + l]], 3, '#5f7486', { prof: 'even', nb: 0, a: .45, rough: .3, rib: 1 })); } });
+}
+function mono(txt, x, y, size, a = .82) {
+  c.save(); c.globalCompositeOperation = 'source-over'; c.font = `400 ${size}px "IBM Plex Mono"`; c.letterSpacing = Math.round(size * .32) + 'px'; c.textAlign = 'center';
+  c.shadowColor = PAPERC; c.shadowBlur = 12; c.fillStyle = rgba(INK, a); c.fillText(txt, x, y); c.fillText(txt, x, y); c.restore();
+}
+
+function paint() {
+  c.globalCompositeOperation = 'source-over'; c.drawImage(PAPER, 0, 0);
+  c.globalCompositeOperation = 'multiply';
+  // one long wash across the strip every device shows
+  withSeed(41, () => drawWash(c, mkWash([[-60, 470], [WD + 60, 478], [WD + 60, 968], [-60, 962]], '#c3ced5', .42, 14, 3, 26)));
+  withSeed(42, () => drawWash(c, mkWash([[-60, 900], [WD + 60, 905], [WD + 60, 968], [-60, 962]], '#b2a48e', .18, 8, 3, 26)));
+  // a pen timeline under the year, with a tick for each month
+  withSeed(43, () => drawS(c, mk(qcurve(140, 872, WD - 140, 868, -3, 60), 2.6, INK2, { prof: 'even', nb: 0, a: .55, rough: .3, rib: 1 })));
+  for (let m = 0; m < 12; m++) { const x = lerp(170, WD - 170, m / 11); withSeed(60 + m, () => drawS(c, mk([[x, 860], [x + rnd(-1, 1), 884]], 2.4, INK2, { prof: 'even', nb: 0, a: .5, rough: .3, rib: 1 }))); }
+  // January → December, left to right, on the desktop strip
+  twig(qcurve(180, 840, 160, 600, 18, 16), 9, 101, '#76644c');
+  twig(qcurve(172, 700, 108, 610, -8, 10), 4, 102, '#76644c'); twig(qcurve(168, 650, 230, 575, 8, 10), 3.6, 103, '#76644c');
+  twig(qcurve(290, 840, 305, 610, -14, 16), 8, 111, '#717650');
+  leaf(300, 700, -2.6, 90, 40, '#5f7f45', 112); leaf(302, 680, -.55, 84, 36, '#4e6e3c', 113);
+  bud(306, 612, -1.6, 13); bud(295, 650, -2.4, 10);
+  twig(qcurve(430, 840, 415, 640, 10, 16), 7, 121, '#717650');
+  leaf(420, 720, -2.3, 92, 40, '#58783f', 122); leaf(422, 700, -.6, 86, 37, '#4e6e3c', 123);
+  flower(412, 628, 1.15, .5);
+  // inside the safe area: a sprig on the left, the lemon on the right
+  twig(qcurve(640, 840, 690, 600, -30, 18), 10, 131);
+  leaf(680, 650, -2.5, 150, 62, '#5f7f45', 132); leaf(688, 640, -.55, 138, 56, '#4e6e3c', 133);
+  leaf(668, 730, -2.9, 120, 50, '#6f8f4a', 134);
+  twig(qcurve(1880, 560, 1920, 610, 6, 10), 6, 141);
+  leaf(1915, 600, -2.8, 120, 50, '#5f7f45', 142); leaf(1920, 600, -.2, 110, 46, '#4e6e3c', 143);
+  fruit(1925, 712, 92, LEMON, .12, 7);
+  // summer → December on the right strip
+  twig(qcurve(2150, 840, 2160, 640, -10, 16), 7, 151, '#717650');
+  leaf(2158, 690, -2.5, 90, 38, '#58783f', 152); leaf(2160, 670, -.5, 86, 36, '#4e6e3c', 153);
+  fruitlet(2180, 648, 20);
+  rain(2305, 700, 9, 161);
+  twig(qcurve(2445, 840, 2435, 600, 10, 16), 7, 171, '#76644c');
+  fruit(2445, 690, 52, mixc('#93a03e', LEMON, .55), .2, 9);
+  // title block, centred
+  c.globalCompositeOperation = 'source-over';
+  c.font = 'italic 500 168px "Cormorant Garamond"'; c.textAlign = 'center';
+  c.shadowColor = PAPERC; c.shadowBlur = 20; c.fillStyle = rgba(INK, .9);
+  c.fillText('Paper Almanac', WD / 2, 735); c.fillText('Paper Almanac', WD / 2, 735);
+  c.shadowColor = 'transparent';
+  mono('SMALL SEASONS, PAINTED SLOWLY', WD / 2, 815, 34);
+  c.globalCompositeOperation = 'multiply';
+  withSeed(181, () => drawS(c, mk(qcurve(WD / 2 - 230, 765, WD / 2 + 230, 761, -4, 30), 8, LEMON, { prof: 'brush', nb: 4, a: .85 })));
+}
+(async () => {
+  await Promise.all([document.fonts.load('italic 500 160px "Cormorant Garamond"'), document.fonts.load('400 34px "IBM Plex Mono"')]);
+  PAPER = buildPaper();
+  paint();
+  window.READY = true;
+})();
+</script>
+</body>
+</html>
