@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Void Mart character design v2</title>
+<style>html, body { margin: 0; background: #120a2a; } canvas { display: block; }</style>
+</head>
+<body>
+<canvas id="c" width="1440" height="2560"></canvas>
+<script src="toon.js"></script>
+<script>
+'use strict';
+const W = 1440, H = 2560, c = document.getElementById('c').getContext('2d');
+
+function panel(x, y, w, h, fill) {
+  c.save(); c.beginPath(); c.roundRect(x, y, w, h, 28); c.fillStyle = fill || '#1f1145'; c.fill();
+  c.lineWidth = 4; c.strokeStyle = '#3a2470'; c.stroke(); c.restore();
+}
+function label(s, x, y, size, color, align, weight) { tText(c, s, x, y, size, color || TOON.white, '"Fredoka"', align, weight); }
+function head(fn, cx, cy, s, headY, opts, name) {
+  // draw the character so its face centre lands at (cx, cy), clipped to a round tile
+  c.save(); c.beginPath(); c.roundRect(cx - 115, cy - 125, 230, 250, 22); c.fillStyle = '#2b1858'; c.fill(); c.clip();
+  fn(c, cx, cy + headY * s / 100, s, opts);
+  c.restore();
+  label(name, cx, cy + 150, 30, '#d9ccff');
+}
+
+toonFonts().then(() => {
+  // background
+  const g = c.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#1b0f3d'); g.addColorStop(1, '#0e0822');
+  c.fillStyle = g; c.fillRect(0, 0, W, H); drawStars(c, W, H, 260, 7);
+
+  // header
+  drawLogo(c, W / 2, 110, 86);
+  label('CHARACTER DESIGN  ·  SEASON 1  ·  v2', W / 2, 205, 34, '#b9a6ff');
+
+  // ---- lineup: behind the counter ----
+  panel(60, 250, 1320, 900, '#24134e');
+  c.save(); c.beginPath(); c.roundRect(60, 250, 1320, 900, 28); c.clip();
+  // window to the void behind them
+  const wg = c.createRadialGradient(1080, 520, 20, 1080, 520, 520); wg.addColorStop(0, '#ffb066'); wg.addColorStop(.08, '#ff4fa3'); wg.addColorStop(.3, '#4b1f8a'); wg.addColorStop(1, '#170b33');
+  c.fillStyle = wg; c.fillRect(60, 250, 1320, 900);
+  drawStars(c, 1320, 600, 120, 11, 60, 250);
+  // shelves on the left wall
+  c.fillStyle = '#2e1a5e'; c.fillRect(60, 300, 380, 560);
+  const items = ['#ff7a1a', '#29d3c3', '#ffd23f', '#ff4fa3', '#b9a6ff', '#7ef0ff'];
+  for (let r = 0; r < 4; r++) { tShape(c, '#4a3192', gg => gg.rect(70, 400 + r * 120, 360, 14), 3); for (let i = 0; i < 7; i++) { const hh = 40 + ((i * 7 + r * 3) % 4) * 12; tShape(c, items[(i + r) % 6], gg => gg.roundRect(82 + i * 49, 400 + r * 120 - hh, 38, hh, 4), 3); } }
+  // incident board
+  tShape(c, '#fbf7ff', gg => gg.roundRect(110, 290, 280, 86, 8), 4);
+  label('DAYS SINCE LAST INCIDENT', 250, 314, 19, TOON.ink);
+  tShape(c, '#e23b4a', gg => gg.roundRect(222, 328, 56, 40, 6), 3); label('0', 250, 349, 32, '#fff');
+  c.restore();
+  // MAGS on the ceiling
+  c.save(); c.beginPath(); c.roundRect(60, 250, 1320, 900, 28); c.clip();
+  c.fillStyle = '#2a1858'; c.fillRect(60, 250, 1320, 22);
+  drawMags(c, 620, 262, 150);
+  // the three behind the counter
+  const CT = 960;
+  drawPip2(c, 330, CT, 190);
+  drawRae2(c, 660, CT, 190);
+  drawDennis(c, 1100, CT, 140);
+  // counter
+  tShape(c, TOON.orange, gg => gg.rect(40, CT, 1360, 34), 5);
+  c.fillStyle = '#3a2470'; c.fillRect(40, CT + 36, 1360, 160);
+  tLine(c, [40, CT + 34, 1400, CT + 34], 5);
+  c.restore();
+  label('PIP', 330, 1040, 56, TOON.white);  label('new hire · week one', 330, 1088, 28, '#d9ccff');
+  label('RAE', 660, 1040, 56, TOON.white);  label('night clerk · year three', 660, 1088, 28, '#d9ccff');
+  label('DENNIS', 1100, 1040, 56, TOON.white); label('the regular · freight hauler', 1100, 1088, 28, '#d9ccff');
+  label('MAGS', 760, 330, 40, TOON.white, 'left'); label('the store AI', 760, 366, 26, '#d9ccff', 'left');
+
+  // ---- Rae expressions ----
+  panel(60, 1180, 1320, 470);
+  label('RAE  —  deadpan, never surprised. Voice: Kar2', 100, 1222, 32, '#ffb066', 'left');
+  ['deadpan', 'smirk', 'annoyed', 'sigh', 'shocked'].forEach((e, i) => head(drawRae2, 190 + i * 265, 1395, 150, 222, { expr: e, arms: false }, e === 'shocked' ? 'shocked (rare)' : e));
+
+  // ---- Pip expressions ----
+  panel(60, 1680, 1320, 470);
+  label('PIP  —  delighted by everything. Voice: Win2', 100, 1722, 32, '#ffb066', 'left');
+  ['grin', 'gasp', 'worried', 'sheepish', 'sad'].forEach((e, i) => head(drawPip2, 190 + i * 265, 1895, 150, 178, { expr: e, arms: false }, e));
+
+  // ---- notes + palettes ----
+  panel(60, 2180, 1320, 330);
+  const pal = [['PIP', [TOON.pip.hair, TOON.pip.skin, TOON.pip.shirt, TOON.orange, TOON.pip.clip]],
+               ['RAE', [TOON.rae.hair, TOON.rae.skin, TOON.rae.hood, TOON.orange, '#9aa0b8']],
+               ['DENNIS', ['#8fd65a', '#c6f29c', '#7a4e2c', '#e23b4a', '#fbf7ff']],
+               ['MAGS', [TOON.mags.shell, TOON.mags.band, TOON.mags.eye]]];
+  pal.forEach(([n, cols], i) => {
+    const x0 = 100 + i * 320; label(n, x0, 2230, 28, TOON.white, 'left');
+    cols.forEach((col, j) => tShape(c, col, gg => gg.arc(x0 + 24 + j * 52, 2285, 20, 0, 6.2832), 3.5));
+  });
+  label('Orange = staff vest only. Everyone else stays out of orange.', 100, 2370, 28, '#d9ccff', 'left');
+  label('Clerks are drawn waist-up behind the counter. Dennis and MAGS: Voice Design voices.', 100, 2420, 28, '#d9ccff', 'left');
+  label('One-off customers: a new design and a stock voice each episode.', 100, 2470, 28, '#d9ccff', 'left');
+  window.READY = true;
+});
+</script>
+</body>
+</html>

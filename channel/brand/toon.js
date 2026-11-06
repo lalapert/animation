@@ -315,6 +315,47 @@ function drawDennis(c, x, y, s, o = {}) {
   c.restore();
 }
 
+// ---------- shared anime-flat helpers (used by both shows) ----------
+// bangs made of curved clumps: pts = [[x, y], ...] alternating valley, tip, valley, tip ... (left to right)
+function clumps(g, pts) {
+  for (let i = 1; i < pts.length; i++) {
+    const [x0, y0] = pts[i - 1], [x1, y1] = pts[i];
+    const toTip = y1 > y0;
+    const cx = toTip ? x1 - (x1 - x0) * .12 : x0 + (x1 - x0) * .12, cy = toTip ? y0 + (y1 - y0) * .3 : y1 + (y0 - y1) * .3;
+    g.quadraticCurveTo(cx, cy, x1, y1);
+  }
+}
+// anime eye: sx = -1 (viewer's left) / 1, w/h = half width/height, lid 0..1 covers the top, look = pupil shift
+function animeEye(c, ex, ey, sx, o) {
+  const w = o.w || 12, h = o.h || 12, lid = o.lid || 0, look = o.look || 0, tilt = o.tilt ?? .3;
+  const ixx = ex - sx * w, oxx = ex + sx * w, iyy = ey - h * .1, oyy = ey - h * .1 - tilt * h * .3;   // inner / outer corners
+  const up = o.round ? (g => { g.moveTo(ixx, iyy); g.bezierCurveTo(ixx + sx * 1, ey - h * 1.02, oxx - sx * 2, ey - h * 1.02, oxx, oyy); })
+                    : (g => { g.moveTo(ixx, iyy); g.quadraticCurveTo(ex - sx * 1, ey - h * 1.35, oxx, oyy); });
+  const shape = g => { up(g); g.quadraticCurveTo(ex, ey + h * .6, ixx, iyy); g.closePath(); };
+  c.beginPath(); shape(c); c.fillStyle = '#ffffff'; c.fill();
+  c.save(); c.beginPath(); shape(c); c.clip();
+  const cx0 = ex + look, cy0 = ey - h * .3, rx = w * .56, ry = h * .82;
+  const gr = c.createLinearGradient(0, cy0 - ry, 0, cy0 + ry); gr.addColorStop(0, o.irisD); gr.addColorStop(1, o.iris);
+  c.fillStyle = gr; c.beginPath(); c.ellipse(cx0, cy0, rx, ry, 0, 0, 6.2832); c.fill();
+  c.fillStyle = TOON.ink; c.beginPath(); c.ellipse(cx0, cy0 + ry * .05, rx * .4, ry * .46, 0, 0, 6.2832); c.fill();
+  c.fillStyle = '#fff'; c.beginPath(); c.ellipse(cx0 - rx * .35, cy0 - ry * .4, rx * .32, ry * .22, -.5, 0, 6.2832); c.fill();
+  c.beginPath(); c.arc(cx0 + rx * .38, cy0 + ry * .45, rx * .14, 0, 6.2832); c.fill();
+  if (lid > 0) {
+    const ly = ey - h * 1.05 + lid * h * 1.25;
+    c.fillStyle = o.skin; c.beginPath(); c.moveTo(ixx - sx * 4, ey - h * 1.8); c.lineTo(ixx - sx * 4, ly - 1); c.quadraticCurveTo(ex, ly - h * .14, oxx + sx * 4, ly + 2.5); c.lineTo(oxx + sx * 4, ey - h * 1.8); c.closePath(); c.fill();
+    c.restore();
+    c.beginPath(); c.moveTo(ixx, ly - 1); c.quadraticCurveTo(ex, ly - h * .14, oxx + sx * 2, ly + 3.5);
+    c.lineWidth = 5; c.strokeStyle = TOON.ink; c.lineCap = 'round'; c.stroke();
+  } else {
+    c.restore();
+    c.beginPath(); up(c); c.lineWidth = 5.4; c.strokeStyle = TOON.ink; c.lineCap = 'round'; c.stroke();
+  }
+  if (lid < .3 && o.flick !== false) tLine(c, [oxx, oyy, oxx + sx * 5, oyy - h * .45 - tilt * h * .1], 4.2);   // outer lash flick
+  if (o.flick === false && lid < .3) tLine(c, [oxx, oyy, oxx + sx * 5, oyy - 1.5], 3.6);
+  tCurve(c, ex + sx * w * .2, ey + h * .5, ex + sx * w * .7, ey + h * .38, ex + sx * w * .95, ey + h * .12, 2);
+}
+
+
 // ---------- logo: VOID MART with a black hole for the O ----------
 // (x, y) = centre of the word, cap = cap height in px. Returns the drawn width.
 function drawLogo(c, x, y, cap, o = {}) {
@@ -380,4 +421,139 @@ function drawStars(c, w, h, n, seed, x0 = 0, y0 = 0) {
     c.fillStyle = `rgba(255,246,230,${a})`; c.beginPath(); c.arc(x, y, r, 0, 6.2832); c.fill();
     if (r > 3) { c.strokeStyle = `rgba(255,246,230,${a * .8})`; c.lineWidth = r * .45; c.lineCap = 'round'; c.beginPath(); c.moveTo(x - r * 3, y); c.lineTo(x + r * 3, y); c.moveTo(x, y - r * 3); c.lineTo(x, y + r * 3); c.stroke(); }
   }
+}
+
+// ======================= v2: Void Mart cast in the shared anime-flat look (same silhouettes, colours and outfits) =======================
+function drawRae2(c, x, y, s, o = {}) {
+  const R = TOON.rae, expr = o.expr || 'deadpan', IR = { iris: '#a27a4e', irisD: '#3e2716' };
+  c.save(); c.translate(x, y); c.scale(s / 100, s / 100);
+  // low messy bun + back hair
+  tEllipse(c, 50, -194, 19, 17, R.hair); tCurve(c, 40, -200, 52, -212, 64, -198, 2.6, R.hairL);
+  tCurve(c, 60, -184, 70, -178, 72, -168, 3.2);
+  tShape(c, R.hairS, g => { g.moveTo(-46, -182); g.quadraticCurveTo(-60, -232, -48, -262); g.quadraticCurveTo(-34, -298, 2, -298); g.quadraticCurveTo(38, -298, 50, -262); g.quadraticCurveTo(60, -232, 46, -182); g.lineTo(38, -192); g.lineTo(-38, -192); g.closePath(); });
+  // hood, hoodie, vest (as v1)
+  tShape(c, R.hood, g => { g.moveTo(-42, -150); g.bezierCurveTo(-46, -176, 46, -176, 42, -150); g.closePath(); });
+  const torso = g => { g.moveTo(-60, 2); g.lineTo(-64, -106); g.bezierCurveTo(-64, -138, -44, -150, -16, -158); g.lineTo(16, -158); g.bezierCurveTo(44, -150, 64, -138, 64, -106); g.lineTo(60, 2); g.closePath(); };
+  tShape(c, R.hood, torso); tShade(c, torso, R.hoodS, g => g.rect(30, -170, 50, 180));
+  const vl = g => { g.moveTo(-54, 2); g.lineTo(-57, -102); g.bezierCurveTo(-56, -132, -42, -142, -28, -148); g.lineTo(-12, -104); g.lineTo(-14, 2); g.closePath(); };
+  const vr = g => { g.moveTo(54, 2); g.lineTo(57, -102); g.bezierCurveTo(56, -132, 42, -142, 28, -148); g.lineTo(12, -104); g.lineTo(14, 2); g.closePath(); };
+  tShape(c, TOON.orange, vl); tShape(c, TOON.orange, vr); tShade(c, vr, TOON.orangeS, g => g.rect(38, -160, 30, 170));
+  tLine(c, [-6, -150, -8, -114], 2.6); tLine(c, [6, -150, 8, -112], 2.6);
+  tEllipse(c, -8, -112, 2.6, 4, TOON.white, 2); tEllipse(c, 8, -110, 2.6, 4, TOON.white, 2);
+  nameTag(c, -35, -88, 27, 12, 'RAE');
+  const neck = g => g.rect(-11, -184, 22, 30);
+  tShape(c, R.skin, neck); tShade(c, neck, R.skinS, g => g.rect(-11, -184, 22, 12));
+  tEllipse(c, -38, -222, 6.5, 10.5, R.skin); tEllipse(c, 38, -222, 6.5, 10.5, R.skin);
+  // face
+  const face = g => { g.moveTo(0, -272); g.bezierCurveTo(27, -272, 39, -256, 39, -232); g.bezierCurveTo(39, -210, 27, -188, 0, -175); g.bezierCurveTo(-27, -188, -39, -210, -39, -232); g.bezierCurveTo(-39, -256, -27, -272, 0, -272); g.closePath(); };
+  tShape(c, R.skin, face);
+  tShade(c, face, R.skinS, g => { g.moveTo(24, -278); g.bezierCurveTo(35, -240, 30, -200, 4, -170); g.lineTo(60, -170); g.lineTo(60, -278); g.closePath(); });
+  // eyes: heavy-lidded
+  const lid = { deadpan: .52, smirk: .44, annoyed: .64, shocked: 0, sigh: 1 }[expr] ?? .52;
+  for (const sx of [-1, 1]) {
+    const ex = sx * 16, ey = -222;
+    if (expr === 'sigh') tCurve(c, ex - 10, ey - 4, ex, ey + 1, ex + 10, ey - 4, 4.4);
+    else animeEye(c, ex, ey, sx, { ...IR, skin: R.skin, w: 12, h: 12.5, lid, look: o.look ?? 1.5 });
+    if (expr === 'shocked') { c.fillStyle = '#fff'; c.beginPath(); c.arc(ex, ey - 4, 5.5, 0, 6.2832); c.fill(); c.fillStyle = TOON.ink; c.beginPath(); c.arc(ex, ey - 4, 2.6, 0, 6.2832); c.fill(); }
+    if (expr !== 'shocked') tCurve(c, ex - 8, ey + 11, ex, ey + 13, ex + 8, ey + 10, 1.8, R.skinS);   // tired bags
+    const bi = ex - sx * 11, bo = ex + sx * 11;
+    if (expr === 'annoyed') tLine(c, [bo, -244, bi, -236], 3.6);
+    else if (expr === 'shocked') tCurve(c, bi, -246, ex, -252, bo, -246, 3.6);
+    else if (expr === 'sigh') tLine(c, [bi, -243, bo, -238], 3.6);
+    else if (expr === 'smirk' && sx > 0) tLine(c, [bi, -242, bo, -248], 3.6);
+    else tLine(c, [bi, -240, bo, -240], 3.6);
+  }
+  tLine(c, [2, -206, 0, -201], 2.6);
+  if (expr === 'smirk') tCurve(c, -8, -189, 2, -188, 10, -193, 3);
+  else if (expr === 'annoyed') tCurve(c, -8, -187, 0, -191, 8, -187, 3);
+  else if (expr === 'shocked') tEllipse(c, 0, -188, 4, 5.5, '#4a1028', 2.8);
+  else if (expr === 'sigh') { tEllipse(c, -2, -189, 3.4, 2.8, '#4a1028', 2.6); tCurve(c, -14, -186, -22, -182, -20, -176, 2.4, 'rgba(255,255,255,.8)'); }
+  else tLine(c, [-8, -189, 8, -189.5], 3);
+  // front hair: middle part, long curtains in clumps, two antenna strands
+  for (const sx of [-1, 1]) tShape(c, R.hair, g => {
+    g.moveTo(sx * 2, -292); g.quadraticCurveTo(sx * 32, -290, sx * 45, -254); g.quadraticCurveTo(sx * 49, -224, sx * 46, -194);
+    g.lineTo(sx * 40, -210); g.lineTo(sx * 37, -196); g.quadraticCurveTo(sx * 34, -228, sx * 24, -246);
+    g.lineTo(sx * 17, -236); g.quadraticCurveTo(sx * 10, -258, sx * 2, -266); g.closePath(); });
+  tCurve(c, -10, -284, -30, -276, -38, -250, 2.6, R.hairL);
+  tCurve(c, 2, -291, 6, -308, 16, -312, 3.2); tCurve(c, -4, -291, -12, -306, -6, -316, 3.2);
+  if (o.arms !== false) {
+    tTube(c, [-58, -122, -76, -72, -72, -26, -44, -20, -12, -22], 24, R.hood);
+    tTube(c, [58, -122, 76, -72, 74, -24, 50, -16, 20, -18], 24, R.hood, R.hoodS);
+    tHand(c, -8, -23, 9.5, R.skin, R.skinS);
+    if (o.scanner !== false) {
+      tShape(c, '#9aa0b8', g => g.roundRect(8, -40, 34, 14, 5), 3.4);
+      tShape(c, '#ff3355', g => g.roundRect(34, -37, 7, 8, 2), 2.2);
+      tShape(c, '#7a8098', g => { g.moveTo(14, -28); g.lineTo(24, -28); g.lineTo(21, -16); g.lineTo(13, -16); g.closePath(); }, 3.2);
+    }
+    tHand(c, 22, -19, 9.5, R.skin, R.skinS);
+  }
+  c.restore();
+}
+
+function drawPip2(c, x, y, s, o = {}) {
+  const P = TOON.pip, expr = o.expr || 'grin', IR = { iris: '#ffb347', irisD: '#a0521a' };
+  c.save(); c.translate(x, y); c.scale(s / 100, s / 100);
+  tShape(c, P.hairS, g => { g.moveTo(-54, -148); g.quadraticCurveTo(-66, -214, -44, -234); g.quadraticCurveTo(-24, -246, 0, -246); g.quadraticCurveTo(24, -246, 44, -234); g.quadraticCurveTo(66, -214, 54, -148); g.lineTo(44, -156); g.lineTo(40, -142); g.lineTo(30, -152); g.lineTo(-30, -152); g.lineTo(-40, -142); g.lineTo(-44, -156); g.closePath(); });
+  const torso = g => { g.moveTo(-50, 2); g.lineTo(-53, -76); g.bezierCurveTo(-53, -98, -38, -106, -20, -110); g.lineTo(20, -110); g.bezierCurveTo(38, -106, 53, -98, 53, -76); g.lineTo(50, 2); g.closePath(); };
+  tShape(c, P.shirt, torso); tShade(c, torso, P.shirtS, g => g.rect(24, -120, 40, 130));
+  const vl = g => { g.moveTo(-62, 2); g.lineTo(-66, -76); g.bezierCurveTo(-66, -100, -50, -110, -30, -114); g.lineTo(-9, -78); g.lineTo(-11, 2); g.closePath(); };
+  const vr = g => { g.moveTo(62, 2); g.lineTo(66, -76); g.bezierCurveTo(66, -100, 50, -110, 30, -114); g.lineTo(9, -78); g.lineTo(11, 2); g.closePath(); };
+  tShape(c, TOON.orange, vl); tShape(c, TOON.orange, vr); tShade(c, vr, TOON.orangeS, g => g.rect(44, -120, 30, 130));
+  nameTag(c, -34, -62, 26, 12, 'PIP', true);
+  drawStar(c, -44, -42, 5, '#7ef0ff', 2);
+  tShape(c, P.shirt, g => { g.moveTo(-20, -112); g.quadraticCurveTo(0, -96, 20, -112); g.quadraticCurveTo(0, -104, -20, -112); g.closePath(); }, 3);
+  const neck = g => g.rect(-10, -136, 20, 26);
+  tShape(c, P.skin, neck); tShade(c, neck, P.skinS, g => g.rect(-10, -136, 20, 10));
+  tEllipse(c, -44, -174, 6.5, 10, P.skin); tEllipse(c, 44, -174, 6.5, 10, P.skin);
+  // face: round, small chin
+  const face = g => { g.moveTo(0, -222); g.bezierCurveTo(30, -222, 45, -204, 45, -180); g.bezierCurveTo(45, -158, 30, -138, 0, -131); g.bezierCurveTo(-30, -138, -45, -158, -45, -180); g.bezierCurveTo(-45, -204, -30, -222, 0, -222); g.closePath(); };
+  tShape(c, P.skin, face);
+  tShade(c, face, P.skinS, g => { g.moveTo(30, -228); g.bezierCurveTo(42, -190, 34, -152, 8, -126); g.lineTo(70, -126); g.lineTo(70, -228); g.closePath(); });
+  c.fillStyle = expr === 'sheepish' ? 'rgba(255,100,135,.55)' : 'rgba(255,120,150,.35)';
+  c.beginPath(); c.ellipse(-27, -158, 10, 5.5, 0, 0, 6.2832); c.ellipse(27, -158, 10, 5.5, 0, 0, 6.2832); c.fill();
+  for (const sx of [-1, 1]) for (let k = 0; k < 3; k++) tLine(c, [sx * (21 + k * 5), -155, sx * (24 + k * 5), -161], 1.8);
+  // eyes: big and sparkly
+  for (const sx of [-1, 1]) {
+    const ex = sx * 18, ey = -170;
+    if (expr === 'sheepish') { tCurve(c, ex - 10, ey - 2, ex, ey - 12, ex + 10, ey - 2, 4.6); continue; }
+    const big = expr === 'gasp' ? 1.12 : 1;
+    animeEye(c, ex, ey + 2, sx, { ...IR, skin: P.skin, w: 12.5 * big, h: 19 * big, lid: expr === 'sad' ? .12 : 0, look: expr === 'worried' ? -sx * 1.5 : 0, tilt: -.1, round: true, flick: false });
+    c.fillStyle = '#fff'; c.beginPath(); c.arc(ex + 3, ey - 2, 1.8, 0, 6.2832); c.fill();
+    if (expr === 'sad') { c.fillStyle = 'rgba(126,220,255,.8)'; c.beginPath(); c.ellipse(ex, ey + 6, 11, 4, 0, 0, 6.2832); c.fill(); tShape(c, '#9fe6ff', g => { g.moveTo(ex + sx * 6, ey + 8); g.quadraticCurveTo(ex + sx * 12, ey + 20, ex + sx * 7, ey + 24); g.quadraticCurveTo(ex + sx * 1, ey + 20, ex + sx * 6, ey + 8); g.closePath(); }, 2.4); }
+  }
+  tLine(c, [1, -158, 0, -155], 2.4);
+  // mouth
+  if (expr === 'grin' || expr === 'sheepish') {
+    const k = expr === 'sheepish' ? .6 : 1, my = -150;
+    const m = g => { g.moveTo(-14 * k, my); g.quadraticCurveTo(0, my + 3 * k, 14 * k, my); g.quadraticCurveTo(11 * k, my + 16 * k, 0, my + 17 * k); g.quadraticCurveTo(-11 * k, my + 16 * k, -14 * k, my); g.closePath(); };
+    tShape(c, '#5a1430', m, 3.2);
+    c.save(); c.beginPath(); m(c); c.clip(); c.fillStyle = '#fff'; c.fillRect(-15, my - 2, 30, 5 * k); c.fillStyle = '#ff7f97'; c.beginPath(); c.ellipse(1, my + 17 * k, 8 * k, 5 * k, 0, 0, 6.2832); c.fill(); c.restore();
+    tShape(c, null, m, 3.2);
+  } else if (expr === 'gasp') {
+    tEllipse(c, 0, -142, 8, 10, '#5a1430', 3.2);
+    c.save(); c.beginPath(); c.ellipse(0, -142, 8, 10, 0, 0, 6.2832); c.clip(); c.fillStyle = '#ff7f97'; c.beginPath(); c.ellipse(0, -134, 6, 4.5, 0, 0, 6.2832); c.fill(); c.restore();
+    tEllipse(c, 0, -142, 8, 10, null, 3.2);
+  } else if (expr === 'worried') {
+    c.beginPath(); c.moveTo(-9, -145); c.bezierCurveTo(-5, -150, -2, -141, 2, -145); c.bezierCurveTo(5, -149, 8, -144, 9, -146); c.lineWidth = 3.2; c.strokeStyle = TOON.ink; c.lineCap = 'round'; c.stroke();
+  } else if (expr === 'sad') tCurve(c, -8, -141, 0, -148, 8, -141, 3.4);
+  // front hair: blunt bangs in clumps, side locks curling in, star clip
+  tShape(c, P.hair, g => { g.moveTo(50, -168); g.quadraticCurveTo(58, -238, 0, -240); g.quadraticCurveTo(-58, -238, -50, -168); clumps(g, [[-50, -168], [-45, -178], [-40, -198], [-32, -186], [-24, -202], [-14, -188], [-6, -204], [4, -188], [12, -204], [22, -188], [30, -202], [38, -186], [44, -198], [50, -168]]); g.closePath(); });
+  for (const sx of [-1, 1]) tShape(c, P.hair, g => { g.moveTo(sx * 48, -186); g.quadraticCurveTo(sx * 60, -158, sx * 50, -138); g.quadraticCurveTo(sx * 44, -132, sx * 38, -138); g.quadraticCurveTo(sx * 46, -146, sx * 44, -158); g.quadraticCurveTo(sx * 42, -172, sx * 42, -184); g.closePath(); });
+  tCurve(c, -30, -228, -10, -236, 10, -234, 3.2, P.hairL);
+  drawStar(c, 34, -216, 11, P.clip, 3.2);
+  // brows over the bangs (thin)
+  for (const sx of [-1, 1]) {
+    const ex = sx * 18, bi = ex - sx * 8, bo = ex + sx * 8, by = -200;
+    if (expr === 'worried' || expr === 'sad') tLine(c, [bi, by - 4, bo, by + 1], 2.8);
+    else if (expr === 'gasp') tCurve(c, bi, by - 2, ex, by - 8, bo, by - 2, 2.8);
+    else tCurve(c, bi, by, ex, by - 5, bo, by, 2.8);
+  }
+  if (expr === 'worried' || expr === 'sheepish') tShape(c, '#9fe6ff', g => { g.moveTo(54, -210); g.quadraticCurveTo(62, -196, 58, -190); g.quadraticCurveTo(52, -186, 49, -194); g.quadraticCurveTo(48, -200, 54, -210); g.closePath(); }, 2.6);
+  if (o.arms !== false) {
+    tTube(c, [-52, -88, -68, -50, -66, -16, -44, -10, -22, -12], 21, P.shirt);
+    tHand(c, -18, -13, 8.5, P.skin, P.skinS);
+    if (o.wave !== false) { tTube(c, [50, -92, 78, -98, 84, -126, 88, -146, 90, -164], 20, P.shirt, P.shirtS); tHand(c, 91, -176, 10, P.skin, P.skinS, true); }
+    else { tTube(c, [52, -88, 68, -50, 66, -16, 44, -10, 22, -12], 21, P.shirt, P.shirtS); tHand(c, 18, -13, 8.5, P.skin, P.skinS); }
+  }
+  c.restore();
 }

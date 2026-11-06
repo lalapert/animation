@@ -347,46 +347,7 @@ const LAB2 = {
   cleo: { skin: '#fde5d6', skinS: '#f0c2ab', hair: '#cdbdf2', hairS: '#9c86d6', hairL: '#f1ebff', tee: '#fbf7ff', apron: '#26213a', apronS: '#17132a', iris: '#2fc0bb', irisD: '#137a78', glove: '#b6ff3b' },
 };
 
-// bangs made of curved clumps: pts = [[x, y], ...] alternating valley, tip, valley, tip ... (left to right)
-function clumps(g, pts) {
-  for (let i = 1; i < pts.length; i++) {
-    const [x0, y0] = pts[i - 1], [x1, y1] = pts[i];
-    const toTip = y1 > y0;
-    const cx = toTip ? x1 - (x1 - x0) * .12 : x0 + (x1 - x0) * .12, cy = toTip ? y0 + (y1 - y0) * .3 : y1 + (y0 - y1) * .3;
-    g.quadraticCurveTo(cx, cy, x1, y1);
-  }
-}
-// anime eye: sx = -1 (viewer's left) / 1, w/h = half width/height, lid 0..1 covers the top, look = pupil shift
-function animeEye(c, ex, ey, sx, o) {
-  const w = o.w || 12, h = o.h || 12, lid = o.lid || 0, look = o.look || 0;
-  const up = g => { g.moveTo(ex - w, ey); g.quadraticCurveTo(ex + sx * 2, ey - h * 1.35, ex + w, ey - h * .25); };
-  const shape = g => { up(g); g.quadraticCurveTo(ex, ey + h * .6, ex - w, ey); g.closePath(); };
-  c.beginPath(); shape(c); c.fillStyle = '#ffffff'; c.fill();
-  c.save(); c.beginPath(); shape(c); c.clip();
-  const ix = ex + look, iy = ey - h * .3, rx = w * .56, ry = h * .82;
-  const gr = c.createLinearGradient(0, iy - ry, 0, iy + ry); gr.addColorStop(0, o.irisD); gr.addColorStop(1, o.iris);
-  c.fillStyle = gr; c.beginPath(); c.ellipse(ix, iy, rx, ry, 0, 0, 6.2832); c.fill();
-  c.fillStyle = TOON.ink; c.beginPath(); c.ellipse(ix, iy + ry * .05, rx * .4, ry * .46, 0, 0, 6.2832); c.fill();
-  c.fillStyle = '#fff'; c.beginPath(); c.ellipse(ix - rx * .35, iy - ry * .4, rx * .32, ry * .22, -.5, 0, 6.2832); c.fill();
-  c.beginPath(); c.arc(ix + rx * .38, iy + ry * .45, rx * .14, 0, 6.2832); c.fill();
-  if (lid > 0) {
-    const ly = ey - h * 1.05 + lid * h * 1.25;
-    const ixa = ex - sx * w, oxa = ex + sx * w;
-    c.fillStyle = o.skin; c.beginPath(); c.moveTo(ixa - sx * 4, ey - h * 1.8); c.lineTo(ixa - sx * 4, ly - 1); c.quadraticCurveTo(ex, ly - h * .14, oxa + sx * 4, ly + 2.5); c.lineTo(oxa + sx * 4, ey - h * 1.8); c.closePath(); c.fill();
-    c.restore();
-    const ix0 = ex - sx * w, ox0 = ex + sx * w;
-    c.beginPath(); c.moveTo(ix0, ly - 1); c.quadraticCurveTo(ex, ly - h * .14, ox0 + sx * 2, ly + 3.5);
-    c.lineWidth = 5; c.strokeStyle = TOON.ink; c.lineCap = 'round'; c.stroke();
-  } else {
-    c.restore();
-    c.beginPath(); up(c); c.lineWidth = 5.4; c.strokeStyle = TOON.ink; c.lineCap = 'round'; c.stroke();
-  }
-  // outer lash flick + lower lid tick
-  const oxx = sx > 0 ? ex + w : ex - w, oyy = sx > 0 ? ey - h * .25 : ey;
-  if (lid < .3) tLine(c, [oxx, oyy, oxx + sx * 5, oyy - h * .5], 4.2);
-  tCurve(c, ex + sx * w * .2, ey + h * .5, ex + sx * w * .7, ey + h * .38, ex + sx * w * .95, ey + h * .12, 2);
-}
-
+// (animeEye and clumps live in toon.js)
 // ---------- Dr. Vera Volt (v2): looks cool and composed. Is not. ----------
 // o.expr: cool | scheme | fluster | laugh
 function drawVera2(c, x, y, s, o = {}) {

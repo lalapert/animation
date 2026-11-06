@@ -10,12 +10,12 @@ function tile(fn, cx, cy, s, headY, opts, name, bg) {
 }
 toonFonts().then(() => {
   c.fillStyle = '#120a2a'; c.fillRect(0, 0, 1440, 760);
-  label('VOID MART (now)', 380, 60, 34, '#ffb066'); label('THE LAB (v2)', 1060, 60, 34, '#b6ff3b');
-  tile(drawRae, 220, 300, 175, 225, { arms: false }, 'Rae', '#2b1858');
-  tile(drawPip, 540, 300, 175, 182, { arms: false }, 'Pip', '#2b1858');
+  label('VOID MART (v2)', 380, 60, 34, '#ffb066'); label('THE LAB (v2)', 1060, 60, 34, '#b6ff3b');
+  tile(drawRae2, 220, 300, 175, 222, { arms: false }, 'Rae', '#2b1858');
+  tile(drawPip2, 540, 300, 175, 178, { arms: false }, 'Pip', '#2b1858');
   tile(drawVera2, 900, 300, 175, 222, { tube: false }, 'Vera', '#1d3b35');
   tile(drawCleo2, 1220, 300, 175, 198, { remote: false }, 'Cleo', '#1d3b35');
-  label('Same: outline weight, flat colour, one shade.   Different: eyes (dot pupils vs anime irises), hair (soft shapes vs pointed clumps).', 720, 700, 24, '#d9ccff');
+  label('One look for the whole universe: heavy outline, flat colour, one shade, anime eyes, pointed hair clumps.', 720, 700, 24, '#d9ccff');
   window.READY = true;
 });
 </script></body></html>
