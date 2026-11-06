@@ -21,7 +21,7 @@ for a, b in zip(VO, VO[1:]):
     assert a["t"] + a["dur"] < b["t"] - 0.3, (a["id"], b["id"])
 CHIME = 1.2
 # the figure: (time it appears there, distance down the concourse in metres); each jump hides behind a glitch
-JUMPS = [[0.0, 34.6, 0.0], [11.0, 27.3, .4], [16.9, 19.3, 1.3], [22.4, 11.3, 1.6], [25.2, 8.4, 2.0], [29.0, 5.6, 2.5], [32.6, 3.3, 3.0]]   # [time, z, x]: far away it only stands under a night light
+JUMPS = [[0.0, 34.6, 0.0], [4.4, 11.3, 1.6], [11.0, -1, 0], [16.9, 9.0, -.6], [22.4, 7.4, .6], [25.2, 6.2, 1.6], [29.0, 5.0, 2.4], [32.6, 3.3, 3.0]]   # [time, z, x]; z < 0: gone. The first step (4.4 s) lands in the pause after "Attention shoppers."
 GLITCH = [[j[0] - .18, .42] for j in JUMPS[1:]]
 END = 34.6                 # static burst; the tape ends
 DUR = 36.4

@@ -89,7 +89,7 @@ function render(t) {
     const cam = TK.render(RG, SCENE, CAM, { ambient: 1.25, fog: .035 });
     pools(RG, cam);
     const F = figureAt(tq);
-    if (F.z < 3.5) lensShape(RG, tq); else drawFigure(RG, cam, F.x, F.z);
+    if (F.z < 0) { } else if (F.z < 3.5) lensShape(RG, tq); else drawFigure(RG, cam, F.x, F.z);   // z < 0: it is gone
     TK.grade(WG, RAW, tq, 'cctv');
     const gk = glitchAt(t);
     TK.vhs(WG, tq, gk >= 0 ? 2.5 : 1, 3);
