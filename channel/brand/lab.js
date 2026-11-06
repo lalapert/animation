@@ -526,3 +526,90 @@ function drawCleo2(c, x, y, s, o = {}) {
   tHand(c, -20, -40, 8.5, K.glove, LAB.glowS); tHand(c, 20, -40, 8.5, K.glove, LAB.glowS);
   c.restore();
 }
+
+// ---------- Sterling Bright: the world's favourite billionaire. Gives everyone a free smart cap. Is actually taking over the world ----------
+// o.expr: public (eyes-closed smile) | wink | true (eyes open, cold) | crack (smile breaking) ; (x, y) = podium top
+const BRIGHT = { skin: '#f3cdb5', skinS: '#dda88f', hair: '#1f2440', hairS: '#141830', hairL: '#5d6aa8', suit: '#f7f8fc', suitS: '#cfd5e6', shirt: '#8fd3ff', gold: '#ffc83d', goldS: '#d89a12', iris: '#ffcf3d', irisD: '#b77400', sky: '#4fb8ff' };
+function drawSun(c, x, y, r, fill, lw) {
+  c.save(); c.translate(x, y);
+  for (let i = 0; i < 8; i++) { c.save(); c.rotate(i * Math.PI / 4); tShape(c, fill, g => { g.moveTo(-r * .22, -r * .78); g.lineTo(0, -r * 1.25); g.lineTo(r * .22, -r * .78); g.closePath(); }, lw); c.restore(); }
+  tEllipse(c, 0, 0, r * .72, r * .72, fill, lw);
+  c.restore();
+}
+function drawBrightCap(c, x, y, k, rot) {
+  c.save(); c.translate(x, y); c.rotate(rot || 0); c.scale(k, k);
+  tShape(c, BRIGHT.suit, g => { g.moveTo(-34, 0); g.bezierCurveTo(-34, -40, 34, -40, 34, 0); g.closePath(); });
+  tShade(c, g => { g.moveTo(-34, 0); g.bezierCurveTo(-34, -40, 34, -40, 34, 0); g.closePath(); }, BRIGHT.suitS, g => g.rect(14, -40, 30, 40));
+  tShape(c, BRIGHT.sky, g => { g.moveTo(-36, 0); g.quadraticCurveTo(0, 8, 50, 2); g.quadraticCurveTo(10, -6, -36, 0); g.closePath(); }, 3.4);
+  c.save(); c.shadowColor = BRIGHT.gold; c.shadowBlur = 14; drawSun(c, 0, -16, 10, BRIGHT.gold, 2.4); c.restore();
+  c.restore();
+}
+function drawBright(c, x, y, s, o = {}) {
+  const B = BRIGHT, expr = o.expr || 'public';
+  c.save(); c.translate(x, y); c.scale(s / 100, s / 100);
+  // back hair
+  tShape(c, B.hairS, g => { g.moveTo(-44, -214); g.quadraticCurveTo(-58, -268, -20, -296); g.quadraticCurveTo(30, -310, 52, -270); g.quadraticCurveTo(58, -240, 46, -206); g.lineTo(38, -220); g.lineTo(-36, -220); g.closePath(); });
+  // tall frame: white suit, sky-blue open-collar shirt
+  const torso = g => { g.moveTo(-70, 2); g.lineTo(-76, -110); g.bezierCurveTo(-76, -146, -50, -156, -18, -164); g.lineTo(18, -164); g.bezierCurveTo(50, -156, 76, -146, 76, -110); g.lineTo(70, 2); g.closePath(); };
+  tShape(c, B.suit, torso); tShade(c, torso, B.suitS, g => g.rect(42, -170, 50, 180));
+  tShape(c, B.shirt, g => { g.moveTo(-22, -164); g.lineTo(22, -164); g.lineTo(8, -96); g.lineTo(-8, -96); g.closePath(); });
+  tShape(c, B.suit, g => { g.moveTo(-24, -164); g.lineTo(-8, -96); g.lineTo(-32, -118); g.lineTo(-48, -154); g.closePath(); }, 3.4);
+  tShape(c, B.suitS, g => { g.moveTo(24, -164); g.lineTo(8, -96); g.lineTo(32, -118); g.lineTo(48, -154); g.closePath(); }, 3.4);
+  tShape(c, B.shirt, g => { g.moveTo(-20, -166); g.lineTo(-5, -140); g.lineTo(-15, -132); g.lineTo(-28, -154); g.closePath(); }, 3);
+  tShape(c, B.shirt, g => { g.moveTo(20, -166); g.lineTo(5, -140); g.lineTo(15, -132); g.lineTo(28, -154); g.closePath(); }, 3);
+  drawSun(c, -46, -118, 7, B.gold, 2.2);
+  const neck = g => g.rect(-11, -192, 22, 32);
+  tShape(c, B.skin, neck); tShade(c, neck, B.skinS, g => g.rect(-11, -192, 22, 12));
+  tEllipse(c, -38, -226, 6.5, 10.5, B.skin); tEllipse(c, 38, -226, 6.5, 10.5, B.skin);
+  // face: long, defined jaw
+  const face = g => { g.moveTo(0, -276); g.bezierCurveTo(27, -276, 38, -260, 38, -236); g.bezierCurveTo(38, -214, 32, -198, 18, -184); g.quadraticCurveTo(8, -176, 0, -175); g.quadraticCurveTo(-8, -176, -18, -184); g.bezierCurveTo(-32, -198, -38, -214, -38, -236); g.bezierCurveTo(-38, -260, -27, -276, 0, -276); g.closePath(); };
+  tShape(c, B.skin, face);
+  tShade(c, face, B.skinS, g => { g.moveTo(24, -282); g.bezierCurveTo(36, -242, 30, -202, 6, -172); g.lineTo(60, -172); g.lineTo(60, -282); g.closePath(); });
+  // eyes
+  for (const sx of [-1, 1]) {
+    const ex = sx * 16, ey = -226;
+    const closed = expr === 'public' || expr === 'crack' || (expr === 'wink' && sx > 0);
+    if (closed) { tCurve(c, ex - 10, ey + 1, ex, ey - 7, ex + 10, ey + 1, 3.8); tLine(c, [ex + sx * 10, ey + 1, ex + sx * 13, ey - 2], 3); }
+    else animeEye(c, ex, ey, sx, { skin: B.skin, iris: B.iris, irisD: B.irisD, w: 11.5, h: 10.5, lid: expr === 'true' ? .38 : .1 });
+    if (expr === 'true') tLine(c, [ex - sx * 11, -236, ex + sx * 12, -244], 3.8);
+    else if (expr === 'crack') tLine(c, [ex - sx * 11, -244, ex + sx * 12, -240], 3.6);
+    else tCurve(c, ex - 11, -241, ex, -247, ex + 12, -242, 3.4);
+  }
+  if (expr === 'crack') { tLine(c, [32, -258, 36, -266], 2.6); tLine(c, [38, -254, 44, -258], 2.6); tShape(c, '#9fe6ff', g => { g.moveTo(-44, -250); g.quadraticCurveTo(-36, -236, -40, -230); g.quadraticCurveTo(-46, -226, -49, -234); g.quadraticCurveTo(-50, -240, -44, -250); g.closePath(); }, 2.4); }
+  tLine(c, [3, -210, 0, -204], 2.6);
+  // smile: thin, confident, a strip of perfect teeth
+  if (expr === 'true') tLine(c, [-9, -191, 9, -191], 3);
+  else {
+    const m = g => { g.moveTo(-15, -195); g.quadraticCurveTo(0, -190, 15, -196); g.quadraticCurveTo(8, -184, 0, -184); g.quadraticCurveTo(-8, -184, -15, -195); g.closePath(); };
+    tShape(c, '#fff', m, 2.8);
+    if (expr === 'crack') { c.strokeStyle = TOON.ink; c.lineWidth = 2; c.beginPath(); c.moveTo(-4, -193); c.lineTo(-1, -188); c.lineTo(-5, -185); c.stroke(); }
+    if (expr !== 'crack') drawStar(c, 21, -200, 5.5, '#fffbe0', 1.8);
+  }
+  // swept-back hair with one loose strand
+  tShape(c, B.hair, g => { g.moveTo(-40, -234); g.quadraticCurveTo(-48, -282, -6, -298); g.quadraticCurveTo(40, -306, 50, -262); g.lineTo(44, -240); g.quadraticCurveTo(40, -256, 30, -262); clumps(g, [[30, -262], [20, -254], [10, -268], [-4, -258], [-14, -270], [-30, -250], [-40, -234]]); g.closePath(); });
+  tShape(c, B.hair, g => { g.moveTo(-6, -266); g.quadraticCurveTo(-14, -250, -10, -232); g.quadraticCurveTo(-4, -246, 2, -262); g.closePath(); }, 3.4);
+  tCurve(c, -28, -278, -4, -294, 28, -288, 3.4, B.hairL); tCurve(c, -20, -268, 4, -282, 26, -276, 2.4, B.hairL);
+  if (o.arms !== false) {
+    tTube(c, [-72, -128, -98, -100, -102, -144, -104, -170, -102, -188], 22, B.suit);
+    tHand(c, -102, -200, 10.5, B.skin, B.skinS, true);
+    tTube(c, [72, -128, 94, -88, 90, -50, 86, -42, 68, -46], 22, B.suit, B.suitS);
+    drawBrightCap(c, 64, -56, 1.05, -.12);
+    tHand(c, 66, -46, 9.5, B.skin, B.skinS);
+  }
+  c.restore();
+}
+// a BrightSide staff member: identical smile, identical cap
+function drawBrightsider(c, x, y, s) {
+  const B = BRIGHT;
+  c.save(); c.translate(x, y); c.scale(s / 100, s / 100);
+  const torso = g => { g.moveTo(-58, 2); g.lineTo(-60, -96); g.bezierCurveTo(-60, -124, -40, -134, -14, -140); g.lineTo(14, -140); g.bezierCurveTo(40, -134, 60, -124, 60, -96); g.lineTo(58, 2); g.closePath(); };
+  tShape(c, B.sky, torso); tShade(c, torso, '#2f94dc', g => g.rect(30, -150, 40, 160));
+  drawSun(c, -28, -96, 9, B.gold, 2.2);
+  const neck = g => g.rect(-11, -176, 22, 40); tShape(c, B.skin, neck);
+  const face = g => g.ellipse(0, -222, 38, 46, 0, 0, 6.2832);
+  tShape(c, B.skin, face); tShade(c, face, B.skinS, g => g.ellipse(26, -212, 20, 44, -.2, 0, 6.2832));
+  for (const sx of [-1, 1]) tCurve(c, sx * 16 - 10, -226, sx * 16, -235, sx * 16 + 10, -226, 4.6);
+  tShape(c, '#fff', g => { g.moveTo(-18, -198); g.quadraticCurveTo(0, -193, 18, -199); g.quadraticCurveTo(10, -182, 0, -182); g.quadraticCurveTo(-10, -182, -18, -198); g.closePath(); }, 3.2);
+  drawBrightCap(c, 0, -254, 1.25, 0);
+  c.restore();
+}

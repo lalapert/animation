@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Sterling Bright design</title>
+<style>html, body { margin: 0; background: #0c1630; } canvas { display: block; }</style>
+</head>
+<body>
+<canvas id="c" width="1440" height="2560"></canvas>
+<script src="toon.js"></script>
+<script src="lab.js"></script>
+<script>
+'use strict';
+const W = 1440, H = 2560, c = document.getElementById('c').getContext('2d');
+const SKY = BRIGHT.sky, GOLD = BRIGHT.gold;
+function label(s, x, y, size, color, align) { tText(c, s, x, y, size, color || TOON.white, '"Fredoka"', align); }
+function glowText(s, x, y, size, col) {
+  c.save(); c.font = `${size}px "Bungee"`; c.textAlign = 'center'; c.textBaseline = 'middle';
+  c.shadowColor = col; c.shadowBlur = size * .45; c.fillStyle = col; c.fillText(s, x, y); c.restore();
+  c.save(); c.font = `${size}px "Bungee"`; c.textAlign = 'center'; c.textBaseline = 'middle';
+  c.lineWidth = size * .09; c.strokeStyle = TOON.ink; c.lineJoin = 'round'; c.strokeText(s, x, y); c.fillStyle = '#fff8dc'; c.fillText(s, x, y); c.restore();
+}
+function panel(y0, h, fill) { c.save(); c.beginPath(); c.roundRect(60, y0, 1320, h, 28); c.fillStyle = fill || '#13224a'; c.fill(); c.lineWidth = 4; c.strokeStyle = '#2a4386'; c.stroke(); c.restore(); }
+function tile(fn, cx, cy, s, headY, opts, name) {
+  c.save(); c.beginPath(); c.roundRect(cx - 130, cy - 150, 260, 290, 22); c.fillStyle = '#1c3166'; c.fill(); c.clip();
+  fn(c, cx, cy + headY * s / 100, s, opts); c.restore();
+  label(name, cx, cy + 170, 28, '#cfe3ff');
+}
+
+toonFonts().then(() => {
+  c.fillStyle = '#0c1630'; c.fillRect(0, 0, W, H); drawStars(c, W, 220, 50, 9);
+  glowText('STERLING BRIGHT', W / 2, 92, 78, GOLD);
+  label('THE LAB  ·  VILLAIN DESIGN  ·  v1', W / 2, 176, 30, '#cfe3ff');
+
+  // ---- the keynote stage ----
+  const y0 = 230, h0 = 820;
+  c.save(); c.beginPath(); c.roundRect(60, y0, 1320, h0, 28); c.clip();
+  const g = c.createLinearGradient(0, y0, 0, y0 + h0); g.addColorStop(0, '#dff3ff'); g.addColorStop(1, '#8fcfff'); c.fillStyle = g; c.fillRect(60, y0, 1320, h0);
+  // big screen
+  tShape(c, '#ffffff', gg => gg.roundRect(180, y0 + 60, 1080, 360, 24), 5);
+  c.save(); c.shadowColor = GOLD; c.shadowBlur = 40; drawSun(c, 290, y0 + 236, 74, GOLD, 4); c.restore();
+  c.font = '64px "Bungee"'; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillStyle = '#1f2440'; c.fillText('BRIGHTSIDE', 400, y0 + 196);
+  c.font = '600 36px "Fredoka"'; c.fillStyle = SKY; c.fillText('THE FUTURE IS FREE.', 406, y0 + 262);
+  // spotlight
+  const sp = c.createRadialGradient(1070, y0 + 640, 30, 1070, y0 + 640, 520); sp.addColorStop(0, 'rgba(255,248,220,.75)'); sp.addColorStop(1, 'rgba(255,248,220,0)'); c.fillStyle = sp; c.fillRect(60, y0, 1320, h0);
+  // Bright behind the podium
+  const PT = y0 + 690;
+  drawBright(c, 1070, PT, 205);
+  tShape(c, SKY, gg => { gg.moveTo(910, PT); gg.lineTo(1230, PT); gg.lineTo(1200, y0 + h0 + 10); gg.lineTo(940, y0 + h0 + 10); gg.closePath(); }, 5);
+  tShape(c, '#ffffff', gg => gg.rect(910, PT - 14, 320, 18), 4);
+  drawSun(c, 1070, PT + 70, 30, GOLD, 3);
+  c.restore();
+  label('STERLING BRIGHT', 100, y0 + h0 + 44, 36, TOON.white, 'left');
+  label("founder of BrightSide · the world's favourite billionaire · gives everyone a free smart cap", 100, y0 + h0 + 82, 25, '#cfe3ff', 'left');
+
+  // ---- expressions ----
+  panel(1160, 480);
+  label('THE SMILE NEVER MOVES. THE EYES ARE THE TELL.', 100, 1205, 28, GOLD, 'left');
+  [['public', 'on camera'], ['wink', 'charming'], ['true', 'eyes open (the real him)'], ['crack', 'smile cracking']].forEach(([e, n], i) => tile(drawBright, 250 + i * 315, 1420, 150, 230, { expr: e, arms: false }, n));
+
+  // ---- product + staff ----
+  panel(1670, 520);
+  label('THE BRIGHTCAP (free!)', 100, 1715, 28, GOLD, 'left');
+  c.save(); c.beginPath(); c.roundRect(100, 1750, 420, 400, 22); c.fillStyle = '#1c3166'; c.fill(); c.restore();
+  drawBrightCap(c, 310, 1990, 3.4, -.08);
+  tShape(c, '#ff3355', gg => { gg.save(); gg.translate(430, 1810); gg.rotate(.25); gg.roundRect(-64, -26, 128, 52, 10); gg.restore(); }, 4);
+  c.save(); c.translate(430, 1810); c.rotate(.25); label('FREE', 0, 2, 38, '#fff'); c.restore();
+  label('BRIGHTSIDERS  —  everyone smiles the same', 560, 1715, 28, GOLD, 'left');
+  c.save(); c.beginPath(); c.roundRect(560, 1750, 780, 400, 22); c.fillStyle = '#1c3166'; c.fill(); c.clip();
+  [690, 950, 1210].forEach(x => drawBrightsider(c, x, 2150, 130)); c.restore();
+
+  // ---- notes ----
+  label('Brand colours: white, sky blue, gold. Never the lab green or the Void Mart orange.', 100, 2260, 25, '#cfe3ff', 'left');
+  label('Not based on any real person: no lookalike face, outfit or catchphrase.', 100, 2302, 25, '#cfe3ff', 'left');
+  label('Seeded before the reveal: free BrightCaps on the Void Mart shelf, his ad on the store TV.', 100, 2344, 25, '#cfe3ff', 'left');
+  label('Rae, in Void Mart: "Nothing is free."', 100, 2386, 25, '#cfe3ff', 'left');
+  window.READY = true;
+});
+</script>
+</body>
+</html>

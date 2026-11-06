@@ -1,0 +1,21 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Style compare</title><style>html,body{margin:0;background:#120a2a}canvas{display:block}</style></head>
+<body><canvas id="c" width="1440" height="760"></canvas>
+<script src="toon.js"></script><script src="lab.js"></script>
+<script>
+const c = document.getElementById('c').getContext('2d');
+function label(s, x, y, size, color) { tText(c, s, x, y, size, color || TOON.white, '"Fredoka"', 'center'); }
+function tile(fn, cx, cy, s, headY, opts, name, bg) {
+  c.save(); c.beginPath(); c.roundRect(cx - 150, cy - 170, 300, 330, 22); c.fillStyle = bg; c.fill(); c.clip();
+  fn(c, cx, cy + headY * s / 100, s, opts); c.restore(); label(name, cx, cy + 195, 32);
+}
+toonFonts().then(() => {
+  c.fillStyle = '#120a2a'; c.fillRect(0, 0, 1440, 760);
+  label('VOID MART (now)', 380, 60, 34, '#ffb066'); label('THE LAB (v2)', 1060, 60, 34, '#b6ff3b');
+  tile(drawRae, 220, 300, 175, 225, { arms: false }, 'Rae', '#2b1858');
+  tile(drawPip, 540, 300, 175, 182, { arms: false }, 'Pip', '#2b1858');
+  tile(drawVera2, 900, 300, 175, 222, { tube: false }, 'Vera', '#1d3b35');
+  tile(drawCleo2, 1220, 300, 175, 198, { remote: false }, 'Cleo', '#1d3b35');
+  label('Same: outline weight, flat colour, one shade.   Different: eyes (dot pupils vs anime irises), hair (soft shapes vs pointed clumps).', 720, 700, 24, '#d9ccff');
+  window.READY = true;
+});
+</script></body></html>
