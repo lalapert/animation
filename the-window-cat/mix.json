@@ -1,0 +1,17 @@
+{
+  "room_db": -56,
+  "voice_over_music_db": 8,
+  "beds": {},
+  "foley": {
+    "brushbed":   { "fx": "brush_long", "g": -16, "fin": 0.15, "fout": 0.5, "tail": 0.0 },
+    "brush":      { "fx": ["brush1", "brush2", "brush3"], "g": -14, "fin": 0.03, "fout": 0.25 },
+    "jump":       { "fx": "cat_jump", "g": -11, "align": true, "dur": 0.8, "fin": 0.002, "fout": 0.2 },
+    "meow":       { "fx": "meow", "g": -12, "align": true, "dur": 1.1, "fin": 0.005, "fout": 0.25 },
+    "purr":       { "fx": "purr", "g": -16, "fin": 0.4, "fout": 0.8, "tail": 0.0 },
+    "sash_crack": { "fx": "sash_crack", "g": -13, "dur": 1.1, "fin": 0.02, "fout": 0.3 },
+    "sash_open":  { "fx": "sash_open", "g": -12, "dur": 1.7, "fin": 0.02, "fout": 0.4 },
+    "bowl":       { "fx": "bowl", "g": -11, "align": true, "dur": 0.9, "fin": 0.002, "fout": 0.2 },
+    "eat":        { "fx": "eat", "g": -17, "fin": 0.2, "fout": 0.4, "tail": 0.0 },
+    "lamp":       { "fx": "lamp", "g": -10, "align": true, "dur": 0.6, "fin": 0.002, "fout": 0.1 }
+  }
+}

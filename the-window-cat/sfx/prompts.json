@@ -1,0 +1,23 @@
+{
+  "brush1":      [1.5, "a wet watercolor brush stroke sweeping across textured cotton paper, close, quiet, soft bristle swish"],
+  "brush2":      [1.5, "a soft round watercolor brush dabbing and dragging across rough paper, close and quiet"],
+  "brush3":      [2.0, "a broad flat wash brush gliding across wet paper in one slow stroke, gentle swish"],
+  "brush_long":  [5.0, "slow continuous watercolor painting, several soft brush strokes on paper one after another, close and intimate, quiet"],
+  "pen":         [1.2, "a dip pen writing a short word on textured paper, light quiet scratching"],
+  "mist":        [1.6, "a soft airy breathy whoosh, gentle, like air moving over a sheet of paper"],
+  "page":        [1.5, "a large sheet of thick watercolor paper slid over a desk and laid down flat, soft paper rustle"],
+  "snow":        [8.0, "very quiet snowfall in a courtyard at dusk, soft hush, faint distant wind, no music"],
+  "rain":        [8.0, "gentle steady rain tapping on a window pane, heard from inside a quiet room, soft patter, no thunder, no music"],
+  "birds":       [8.0, "a few distant songbirds outside a closed window on an early spring morning, muffled and sparse"],
+  "wind":        [6.0, "soft winter wind outside a closed window, very gentle low muffled whoosh"],
+  "crickets":    [8.0, "crickets chirping outside on an autumn evening, heard faintly through a closed window"],
+  "cat_jump":    [1.0, "a cat jumping up and landing softly on a stone window ledge, light thump of paws"],
+  "meow":        [1.2, "a single soft friendly meow from a house cat, close, outdoors, quiet"],
+  "purr":        [4.0, "a cat purring contentedly, close and warm, steady soft purr"],
+  "bowl":        [1.0, "a small ceramic bowl set down gently on a stone window ledge, soft clink"],
+  "eat":         [2.5, "a cat eating dry food from a small bowl, quiet soft crunching"],
+  "sash_crack":  [1.2, "an old wooden sash window being lifted open a few inches, soft wooden creak and slide"],
+  "sash_open":   [1.8, "an old wooden sash window being slowly pushed all the way open, long wooden slide and creak"],
+  "lamp":        [0.8, "a small table lamp switched on indoors, single soft click"],
+  "leaves":      [4.0, "dry autumn leaves skittering in a gentle breeze along a stone wall, quiet"]
+}

@@ -1,0 +1,16 @@
+{
+  "voice_id": "pFZP5JQG7iQjIQuC4Bku",
+  "voice_name": "Lily",
+  "model_id": "eleven_multilingual_v2",
+  "voice_settings": { "stability": 0.6, "similarity_boost": 0.75, "style": 0.15, "use_speaker_boost": true, "speed": 0.9 },
+  "lines": [
+    { "id": "L1", "text": "Every day at five, the cat came to the window.", "sub": "Every day at five,\nthe cat came to the window." },
+    { "id": "L2", "text": "And every day, the old man left a little bowl out.", "sub": "And every day,\nthe old man left a little bowl out." },
+    { "id": "L3", "text": "Spring. Summer. Autumn. They never said a word.", "sub": "Spring. Summer. Autumn.\nThey never said a word." },
+    { "id": "L4", "text": "They didn't need to.", "sub": "They didn't need to." },
+    { "id": "L5", "text": "Then one winter, the window stayed dark.", "sub": "Then one winter,\nthe window stayed dark." },
+    { "id": "L6", "text": "The cat came anyway.", "sub": "The cat came anyway." },
+    { "id": "L7", "text": "One evening, the light came back on.", "sub": "One evening,\nthe light came back on." },
+    { "id": "L8", "text": "This time, she opened the window all the way.", "sub": "This time,\nshe opened the window all the way." }
+  ]
+}
