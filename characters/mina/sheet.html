@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Mina model sheet</title>
+<style>
+@font-face { font-family: "Cormorant Garamond"; src: url(../../the-window-cat/fonts/cormorant-500i.woff2) format("woff2"); font-weight: 500; font-style: italic; }
+@font-face { font-family: "Caveat"; src: url(../../the-window-cat/fonts/caveat-500.woff2) format("woff2"); font-weight: 500; }
+@font-face { font-family: "IBM Plex Mono"; src: url(../../the-window-cat/fonts/plexmono-400.woff2) format("woff2"); font-weight: 400; }
+html, body { margin: 0; background: #f2eadb; } canvas { display: block; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>window.TL = { VO: [] };</script>
+<script src="../../the-window-cat/engine.js"></script>
+<script src="../../the-window-cat/common.js"></script>
+<script src="mina.js"></script>
+<script>
+'use strict';
+const c = document.getElementById('c').getContext('2d', { alpha: false });
+(async () => {
+  await loadFonts(); PAPER = buildPaper(7);
+  c.drawImage(PAPER, 0, 0, W, H);
+  c.globalCompositeOperation = 'multiply';
+  c.globalCompositeOperation = 'source-over';
+  c.font = 'italic 500 66px "Cormorant Garamond"'; c.fillStyle = rgba(INK, .88); c.fillText('Mina', 70, 140);
+  mono(c, 'MODEL SHEET · OPEN WHEN YOU GET THERE', 74, 190, 1, 22);
+  c.globalCompositeOperation = 'multiply';
+  // turnaround
+  const views = [['front', 'front'], ['tq', 'three-quarter'], ['side', 'side'], ['back', 'back']];
+  views.forEach(([v, name], i) => { const x = 150 + i * 262; drawMina(c, x, 1010, 600, { view: v, expr: v === 'front' ? 'smile' : 'calm', hold: v === 'tq' ? 'letter' : null }); c.globalCompositeOperation = 'source-over'; hand(c, name, x - 60, 1068, 1, 38); c.globalCompositeOperation = 'multiply'; });
+  // expressions
+  const ex = [['calm', 'calm'], ['smile', 'smile'], ['sad', 'missing him'], ['surprised', 'surprised'], ['cry', 'tears'], ['laugh', 'laugh']];
+  ex.forEach(([e, name], i) => { const x = 190 + (i % 3) * 350, y = 1250 + Math.floor(i / 3) * 300; drawMinaHead(c, x, y, 92, 'front', e, .3); c.globalCompositeOperation = 'source-over'; hand(c, name, x - 60, y + 150, 1, 36); c.globalCompositeOperation = 'multiply'; });
+  // palette
+  c.globalCompositeOperation = 'source-over';
+  mono(c, 'PALETTE', 74, 1830, 1, 20);
+  ['hair', 'skin', 'cardigan', 'tee', 'pants', 'pack', 'seal'].forEach((k, i) => { c.globalCompositeOperation = 'multiply'; c.fillStyle = rgba(MINA[k], .8); c.beginPath(); c.ellipse(230 + i * 112, 1822, 40, 22, 0, 0, 6.283); c.fill(); c.globalCompositeOperation = 'source-over'; mono(c, k.toUpperCase(), 200 + i * 112, 1876, .8, 15); });
+  window.READY = true;
+})();
+</script>
+</body>
+</html>
