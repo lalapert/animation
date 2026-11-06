@@ -1,0 +1,31 @@
+{
+ "name": "Bright",
+ "desc": "A charismatic billionaire tech founder in his forties giving a keynote speech. Warm, bright, polished male voice, radio-host smooth with a big trustworthy smile you can hear, persuasive and friendly, with something cold just underneath. American accent. Clear studio recording.",
+ "text": "Hi, everyone. I'm Sterling Bright. Today, BrightSide is giving every single person on Earth a free BrightCap. Because the future should be free. Smile!",
+ "previews": [
+  {
+   "n": 1,
+   "generated_voice_id": "g5QiE8eJceeEcuPGC2IM",
+   "duration": 10.6084375,
+   "f0": 160,
+   "match": 0.94,
+   "lang": "eng"
+  },
+  {
+   "n": 2,
+   "generated_voice_id": "b8RGBUUjRf7YyTQ2R6Bt",
+   "duration": 9.798625,
+   "f0": 138,
+   "match": 0.94,
+   "lang": "eng"
+  },
+  {
+   "n": 3,
+   "generated_voice_id": "5U23skt55mDBEzMTh4eS",
+   "duration": 11.078625,
+   "f0": 139,
+   "match": 0.94,
+   "lang": "eng"
+  }
+ ]
+}

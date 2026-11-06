@@ -1,0 +1,31 @@
+{
+ "name": "Vera",
+ "desc": "A brilliant young woman scientist in her late twenties. Cool, low, composed and elegant voice with crisp American diction, who suddenly cracks into excited, theatrical villain glee when she talks about ruling the world. Clear studio recording.",
+ "text": "Step one: build the death ray. Step two: rule the world. Step three... pay the rent. Ha! Ha ha ha! Cleo, write that down. No, just the first two parts.",
+ "previews": [
+  {
+   "n": 1,
+   "generated_voice_id": "buRySvQEB2e8Dcglym6i",
+   "duration": 14.4484375,
+   "f0": 252,
+   "match": 0.91,
+   "lang": "eng"
+  },
+  {
+   "n": 2,
+   "generated_voice_id": "WJyr6Uhno5xvcGxAg2KS",
+   "duration": 16.277,
+   "f0": 239,
+   "match": 0.93,
+   "lang": "eng"
+  },
+  {
+   "n": 3,
+   "generated_voice_id": "fwbJgf9DucuNElxugxOv",
+   "duration": 15.4933125,
+   "f0": 216,
+   "match": 0.93,
+   "lang": "eng"
+  }
+ ]
+}

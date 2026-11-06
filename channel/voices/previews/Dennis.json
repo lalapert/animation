@@ -1,0 +1,31 @@
+{
+ "name": "Dennis",
+ "desc": "A giant, gentle alien freight hauler. Very deep, slow, warm male voice with a soft gravelly rumble, extremely polite and old-fashioned, unhurried pauses, kind grandfatherly warmth. Clear studio recording.",
+ "text": "Good evening. Just the milk tonight, thank you. No bag, please, I can carry it. I have been carrying things across the galaxy for three hundred years.",
+ "previews": [
+  {
+   "n": 1,
+   "generated_voice_id": "yxlLlNLfBgtpNfjM3DQn",
+   "duration": 13.2468125,
+   "f0": 250,
+   "match": 1.0,
+   "lang": "eng"
+  },
+  {
+   "n": 2,
+   "generated_voice_id": "4vRkwG6IFLYddvxhEKmU",
+   "duration": 13.4035625,
+   "f0": 124,
+   "match": 1.0,
+   "lang": "eng"
+  },
+  {
+   "n": 3,
+   "generated_voice_id": "Mus1ZVn2rBUHbw89dam2",
+   "duration": 13.0900625,
+   "f0": 131,
+   "match": 1.0,
+   "lang": "eng"
+  }
+ ]
+}

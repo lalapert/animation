@@ -1,0 +1,31 @@
+{
+ "name": "Cleo",
+ "desc": "A young woman lab assistant in her early twenties. Flat, quiet, sleepy deadpan voice, low energy, slow and unbothered, dry understatement, slight vocal fry, never raises her voice. American accent. Clear studio recording.",
+ "text": "I pressed the red button. You said don't press the red button, so I wanted to see what would happen. It's fine. The lab is only a little bit on fire.",
+ "previews": [
+  {
+   "n": 1,
+   "generated_voice_id": "nliXlNzFdX0sHWkJgcks",
+   "duration": 10.2688125,
+   "f0": 222,
+   "match": 1.0,
+   "lang": "eng"
+  },
+  {
+   "n": 2,
+   "generated_voice_id": "biUhGlVm4NoNe58piPit",
+   "duration": 11.6533125,
+   "f0": 195,
+   "match": 1.0,
+   "lang": "eng"
+  },
+  {
+   "n": 3,
+   "generated_voice_id": "jOBIAQMMO9lamWNfnzsk",
+   "duration": 14.0305,
+   "f0": 219,
+   "match": 1.0,
+   "lang": "eng"
+  }
+ ]
+}

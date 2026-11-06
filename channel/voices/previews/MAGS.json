@@ -1,0 +1,31 @@
+{
+ "name": "MAGS",
+ "desc": "An artificial-intelligence store manager speaking through a ceiling speaker. Middle-aged male voice with a smooth American corporate-training-video tone, relentlessly upbeat and polite, perfectly even rhythm with a faint synthetic sheen, like a cheerful in-store announcement. Clear studio quality.",
+ "text": "Welcome to Void Mart, where we are open until the heat death of the universe. Today only, every disaster is a sales opportunity. Have a stellar shift!",
+ "previews": [
+  {
+   "n": 1,
+   "generated_voice_id": "ybUZETwb8AZ9zInxOytV",
+   "duration": 9.2500625,
+   "f0": 235,
+   "match": 1.0,
+   "lang": "eng"
+  },
+  {
+   "n": 2,
+   "generated_voice_id": "aJJtUCbISCTPdEn5F8YE",
+   "duration": 9.641875,
+   "f0": 184,
+   "match": 1.0,
+   "lang": "eng"
+  },
+  {
+   "n": 3,
+   "generated_voice_id": "WkUURyKtbzB9IM50qGdP",
+   "duration": 9.798625,
+   "f0": 229,
+   "match": 1.0,
+   "lang": "eng"
+  }
+ ]
+}
