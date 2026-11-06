@@ -1,0 +1,4 @@
+/out/
+/.venv/
+sfx/out/*.wav
+__pycache__/

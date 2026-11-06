@@ -1,0 +1,22 @@
+{
+  "rain":       [8.0, "gentle steady rain tapping on a window pane, heard from inside a quiet room, soft patter, no thunder, no music"],
+  "kettle":     [3.0, "an electric kettle quietly simmering then clicking off in a quiet room at night, no music"],
+  "pour":       [2.0, "hot tea poured from a small teapot into a ceramic cup, close, quiet room, no music"],
+  "clink":      [1.0, "a ceramic teacup set down gently on a saucer, one soft clink, quiet room"],
+  "page":       [1.5, "a large sheet of thick watercolor paper slid over a desk and laid down flat, soft paper rustle"],
+  "drop_wood1": [1.0, "a tiny hard unripe fruit drops onto a wooden windowsill, a single soft wooden tok with a tiny bounce, quiet room"],
+  "drop_wood2": [1.0, "a small green berry falls onto a wooden shelf, one light hollow wooden knock, quiet room"],
+  "drop_soil":  [1.0, "a tiny fruit drops onto soft potting soil in a clay pot, one muffled soft thud"],
+  "brush1":     [1.5, "a wet watercolor brush stroke sweeping across textured cotton paper, close, quiet, soft bristle swish"],
+  "brush2":     [1.5, "a soft round watercolor brush dabbing and dragging across rough paper, close and quiet"],
+  "brush3":     [2.0, "a broad flat wash brush gliding across wet paper in one slow stroke, gentle swish"],
+  "brush_long": [5.0, "slow continuous watercolor painting, several soft brush strokes on paper one after another, close and intimate, quiet"],
+  "pen":        [1.2, "a dip pen writing a short word on textured paper, light quiet scratching"],
+  "birds":      [8.0, "a few distant songbirds outside a closed window on an early spring morning, muffled and sparse"],
+  "crickets":   [8.0, "crickets chirping outside on an autumn evening, heard faintly through a closed window"],
+  "wind":       [6.0, "soft winter wind outside a closed window, very gentle low muffled whoosh"],
+  "cicadas":    [5.0, "distant summer cicadas heard faintly through a closed window, gentle"],
+  "bloom":      [1.5, "a single drop of water falls onto wet watercolor paper and the paint spreads, tiny soft splash"],
+  "mist":       [1.6, "a soft airy breathy whoosh, gentle, like air moving over a sheet of paper"],
+  "petals":     [2.0, "tiny soft flower petals falling onto a wooden surface, delicate faint rustle"]
+}

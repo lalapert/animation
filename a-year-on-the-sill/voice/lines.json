@@ -1,0 +1,20 @@
+{
+  "voice_id": "pFZP5JQG7iQjIQuC4Bku",
+  "voice_name": "Lily",
+  "model_id": "eleven_multilingual_v2",
+  "voice_settings": { "stability": 0.6, "similarity_boost": 0.75, "style": 0.12, "use_speaker_boost": true, "speed": 0.9 },
+  "lines": [
+    { "id": "L1",  "text": "This lemon took a year.", "sub": "This lemon took a year." },
+    { "id": "L2",  "text": "In January, it was a small tree in a pot, resting by a cold window.", "sub": "In January, it was a small tree in a pot,\nresting by a cold window." },
+    { "id": "L3",  "text": "In March, it woke up.", "sub": "In March, it woke up." },
+    { "id": "L4",  "text": "By April, twenty-three flowers. The whole room smelled sweet.", "sub": "By April, 23 flowers.\nThe whole room smelled sweet." },
+    { "id": "L5",  "text": "Then, nine tiny green lemons.", "sub": "Then, 9 tiny green lemons." },
+    { "id": "L6",  "text": "And in June, it let almost all of them go.", "sub": "And in June,\nit let almost all of them go." },
+    { "id": "L7",  "text": "Gardeners call it the June drop. A tree keeps only what it can carry.", "sub": "Gardeners call it the June drop.\nA tree keeps only what it can carry." },
+    { "id": "L8",  "text": "All summer, it carried one.", "sub": "All summer, it carried one." },
+    { "id": "L9",  "text": "When the nights turned cold, it slowly turned gold.", "sub": "When the nights turned cold,\nit slowly turned gold." },
+    { "id": "L10", "text": "No one hurried it.", "sub": "No one hurried it." },
+    { "id": "L11", "text": "One lemon. One year.", "sub": "One lemon. One year." },
+    { "id": "L12", "text": "And already, a new bud.", "sub": "And already, a new bud." }
+  ]
+}

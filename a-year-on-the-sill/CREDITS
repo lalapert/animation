@@ -1,0 +1,36 @@
+A Year on the Sill: credits and licences
+=========================================
+
+Picture
+- Drawn entirely in code for this film (engine.js, film.js; HTML canvas, rendered with headless Chromium).
+- Style rules: "Watercolor Brush" style guide of the Lemo-Opuscar library (github.com/lemomo-ai/lemo-opuscar, MIT License).
+  Only the written guide was followed; no code or artwork from the library is used in the picture.
+
+Narration
+- ElevenLabs text-to-speech, premade voice "Lily", model eleven_multilingual_v2, generated on the account holder's plan.
+  Use is governed by the ElevenLabs Terms of Service for that plan (paid plans include commercial use; check your plan).
+
+Sound effects
+- ElevenLabs Sound Effects, generated for this film (prompts: sfx/prompts.json), same terms as above:
+  rain on glass, kettle, tea pour, cup on saucer, paper page, fruit drops (wood, soil), brush strokes, pen,
+  birds, crickets, cicadas, winter wind, water drop, air whoosh, petals.
+- Room tone: synthesised (filtered noise).
+
+Music
+- Original score composed for this film (tools/score.py), played with CC0 samples:
+  - Upright piano, viola section, cello section, clarinet: VSCO 2 Community Edition, Versilian Studios (CC0 1.0)
+  - Glockenspiel, hand chimes, concert harp: VCSL, Versilian Community Sample Library (CC0 1.0)
+  - Nylon-string classical guitar: FreePats "Spanish classical guitar" (CC0 1.0)
+  Sample packs as published in the Lemo-Opuscar asset release (github.com/lemomo-ai/lemo-opuscar/releases/tag/assets).
+
+Fonts (SIL Open Font License 1.1, texts in fonts/)
+- Cormorant Garamond (Cormorant Project Authors), Caveat (Caveat Project Authors), IBM Plex Mono (IBM Corp.), via Google Fonts.
+
+Facts used in the narration and notes
+- Lemons ripen roughly 6–9 months after flowering (4–12 by variety): https://greenupside.com/when-does-a-lemon-tree-bear-fruit
+- "June drop", the natural shedding of young fruit 1–2 months after bloom: https://www.agrifarming.in/lemon-flower-and-fruit-drop-causes-control-methods
+- Citrus peel colour change is triggered by night temperatures below about 13 °C (55 °F):
+  https://citrusindustry.net/2020/09/21/obtaining-optimal-peel-color-of-fresh-florida-citrus/
+- The tree's own numbers (23 buds and flowers, 9 fruitlets, 1 kept, fruit diameters) are this journal's fictional record.
+
+The person publishing this film is responsible for the materials used in it and for the terms of the services above.
