@@ -1,0 +1,55 @@
+{
+ "voice_id": "pFZP5JQG7iQjIQuC4Bku",
+ "voice_name": "Lily",
+ "model_id": "eleven_multilingual_v2",
+ "voice_settings": {
+  "stability": 0.6,
+  "similarity_boost": 0.75,
+  "style": 0.15,
+  "use_speaker_boost": true,
+  "speed": 0.9
+ },
+ "lines": [
+  {
+   "id": "L1",
+   "text": "Every leaf on the old oak had fallen. All but one.",
+   "sub": "Every leaf on the old oak had fallen.\nAll but one."
+  },
+  {
+   "id": "L2",
+   "text": "Every morning, on her way to school, she checked on it.",
+   "sub": "Every morning, on her way to school,\nshe checked on it."
+  },
+  {
+   "id": "L3",
+   "text": "The wind tried. The rain tried.",
+   "sub": "The wind tried. The rain tried."
+  },
+  {
+   "id": "L4",
+   "text": "It held on.",
+   "sub": "It held on."
+  },
+  {
+   "id": "L5",
+   "text": "Then, one still, cold morning, it let go.",
+   "sub": "Then, one still, cold morning,\nit let go."
+  },
+  {
+   "id": "L6",
+   "text": "She was right there.",
+   "sub": "She was right there."
+  },
+  {
+   "id": "L7",
+   "text": "She pressed it in her favourite book.",
+   "sub": "She pressed it in her favourite book.",
+   "asr": "She pressed it in her favorite book"
+  },
+  {
+   "id": "L8",
+   "text": "It's still there.",
+   "sub": "It's still there."
+  }
+ ]
+}

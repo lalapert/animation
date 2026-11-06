@@ -1,0 +1,16 @@
+{
+  "room_db": -56,
+  "voice_over_music_db": 8,
+  "beds": {},
+  "foley": {
+    "brushbed": { "fx": "brush_long", "g": -16, "fin": 0.15, "fout": 0.5, "tail": 0.0 },
+    "brush":    { "fx": ["brush1", "brush2", "brush3"], "g": -14, "fin": 0.03, "fout": 0.25 },
+    "steps":    { "fx": "steps", "g": -14, "fin": 0.2, "fout": 0.4, "tail": 0.0 },
+    "gust":     { "fx": "gust", "g": -12, "dur": 2.4, "fin": 0.2, "fout": 0.6 },
+    "flutter":  { "fx": "flutter", "g": -13, "fin": 0.1, "fout": 0.5, "tail": 0.0 },
+    "catch":    { "fx": "catch", "g": -9, "align": true, "dur": 0.6, "fin": 0.002, "fout": 0.15 },
+    "mist":     { "fx": "mist", "g": -15, "fin": 0.2, "fout": 0.5 },
+    "book":     { "fx": "book", "g": -11, "dur": 1.5, "fin": 0.02, "fout": 0.3 },
+    "pen":      { "fx": "pen", "g": -15, "fin": 0.02, "fout": 0.15 }
+  }
+}

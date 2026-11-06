@@ -1,0 +1,19 @@
+{
+  "brush1": [1.5, "a wet watercolor brush stroke sweeping across textured cotton paper, close, quiet, soft bristle swish"],
+  "brush2": [1.5, "a soft round watercolor brush dabbing and dragging across rough paper, close and quiet"],
+  "brush3": [2.0, "a broad flat wash brush gliding across wet paper in one slow stroke, gentle swish"],
+  "brush_long": [5.0, "slow continuous watercolor painting, several soft brush strokes on paper one after another, close and intimate, quiet"],
+  "pen": [1.2, "a dip pen writing a short word on textured paper, light quiet scratching"],
+  "mist": [1.6, "a soft airy breathy whoosh, gentle, like air moving over a sheet of paper"],
+  "page": [1.5, "a large sheet of thick watercolor paper slid over a desk and laid down flat, soft paper rustle"],
+  "rain": [8.0, "gentle steady rain tapping on a window pane, heard from inside a quiet room, soft patter, no thunder, no music"],
+  "birds": [8.0, "a few distant songbirds outside a closed window on an early spring morning, muffled and sparse"],
+  "snow": [8.0, "very quiet snowfall in a courtyard at dusk, soft hush, faint distant wind, no music"],
+  "wind_autumn": [8.0, "gentle cold autumn wind under the wooden eaves of a traditional house, a few dry leaves, calm, no music"],
+  "gust": [4.0, "a strong gust of autumn wind through bare tree branches, branches creaking, outdoors"],
+  "steps": [4.0, "a small child's footsteps walking through dry fallen leaves on a park path, crunching, outdoors morning"],
+  "flutter": [2.0, "a single dry leaf fluttering and tumbling down through still air, very soft papery flutter"],
+  "catch": [0.8, "small hands softly catching a dry leaf, tiny papery crinkle"],
+  "book": [1.6, "a hardcover book opened, a page turned, then the book gently closed, close and quiet"],
+  "crows": [4.0, "two crows cawing in the distance on a cold autumn morning in a quiet park"]
+}
