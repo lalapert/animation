@@ -596,20 +596,31 @@ function subtitles(c, t) {
     c.restore();
   }
 }
+// a small patch of unpainted paper behind a measured label, so it reads over anything
+function labelPatch(c, txt, x, y, a) {
+  c.save(); c.font = '400 26px "IBM Plex Mono"'; c.letterSpacing = '4px';
+  const w = c.measureText(txt).width; c.restore();
+  c.save(); c.globalAlpha = .82 * a;
+  c.beginPath(); const x0 = x - 16, x1 = x + w + 12, y0 = y - 30, y1 = y + 12, n = 14;
+  for (let i = 0; i <= n; i++) c.lineTo(lerp(x0, x1, i / n), y0 + 3 * (2 * vnoise(i * .9, 3) - 1));
+  for (let i = 0; i <= n; i++) c.lineTo(lerp(x1, x0, i / n), y1 + 3 * (2 * vnoise(i * .9, 5) - 1));
+  c.closePath(); c.clip(); c.drawImage(PAPER, 0, 0, W, H); c.restore();
+}
 function counters(c, t) {
   const X = 90, Y = 1336;
+  const lab = (cc, txt, x, y, a) => { labelPatch(cc, txt, x, y, a); mono(cc, txt, x, y, a); };
   const fade = (t0, t1) => ss(seg(t, t0, t0 + .4)) * (1 - ss(seg(t, t1, t1 + .4)));
   // buds counting up on the 16th-note grid
   let a = fade(TL.BUDS[0], 20.4);
-  if (a > 0) { const n = S.flowers.filter(f => t >= f.budT).length; mono(c, 'BUDS  ' + String(n).padStart(2, ' '), X, Y, a); }
+  if (a > 0) { const n = S.flowers.filter(f => t >= f.budT).length; lab(c, 'BUDS  ' + String(n).padStart(2, ' '), X, Y, a); }
   a = fade(TL.BURST + .2, 29.6);
-  if (a > 0) mono(c, 'FLOWERS  23', X, Y, a);
+  if (a > 0) lab(c, 'FLOWERS  23', X, Y, a);
   a = fade(TL.FRUITLETS[0] + .8, 49.6);
-  if (a > 0) { const n = 9 - TL.DROPS.filter(d => t >= d).length; mono(c, 'FRUITLETS  ' + n, X, Y, a); }
+  if (a > 0) { const n = 9 - TL.DROPS.filter(d => t >= d).length; lab(c, 'FRUITLETS  ' + n, X, Y, a); }
   a = fade(55.4, 59.6);
-  if (a > 0) mono(c, 'Ø ' + Math.round(lerp(18, 41, ss(seg(t, 55.4, 59.4)))) + ' mm', X, Y, a);
+  if (a > 0) lab(c, 'Ø ' + Math.round(lerp(18, 41, ss(seg(t, 55.4, 59.4)))) + ' mm', X, Y, a);
   a = fade(61.2, 69.6);
-  if (a > 0) mono(c, 'NIGHTS < 13 °C', X, Y, a);
+  if (a > 0) lab(c, 'NIGHTS < 13 °C', X, Y, a);
 }
 
 // ---------------------------------------------------------------- mist, page turn, title
