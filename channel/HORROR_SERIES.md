@@ -88,6 +88,7 @@
 
 - 11/7: 채널 분리, *STILL RECORDING* / Halloway Galleria 설정, 주 3편(월·목·토), 시즌 1 30화.
 - 11/7: 채널 이름 **Halloway Archive**, 핸들 **@hallowayarchive**(작가님이 맡김). 인스타는 두지 않는다(유튜브만).
+- 11/7: "그것"은 얼굴을 그리지 않는다. 이목구비 없는 새까만 실루엣(조금 길쭉한 비율)만(작가님: 얼굴은 하나도 안 무섭다). 멀리 있을 땐 야간등 아래나 밝은 유리문 앞에만 세워야 보인다.
 - 남은 것: 예전 "AI Video Lab" 영상 비공개(작가님이 유튜브 스튜디오에서).
 
 ## 6. 채널 소개와 재생목록 (안)
@@ -105,3 +106,9 @@ A work of fiction. All footage is animated.
 - 마지막 줄("A work of fiction.")은 넣는 걸 권한다. 실제 사건 영상처럼 보이는 콘텐츠는 오해를 부르고, 유튜브의 기만성 콘텐츠 정책에도 걸릴 수 있다. 설정 몰입은 채널 이름과 테이프 라벨로 충분하다.
 - 재생목록: **STILL RECORDING | Season 1 (Tapes 1–30)** — "Recovered security and camcorder footage from the Halloway Galleria, closed December 31, 1999. Watch in order."
 - 예전 "AI Video Lab" 영상은 비공개로 돌리는 걸 권한다.
+
+## 7. ARG 목록 (테이프마다 숨긴 것)
+
+| 테이프 | 언제 | 무엇 | 값 |
+|---|---|---|---|
+| 1 *Closing Announcement* | 16.9초, 6프레임 | 화면 왼쪽 위 카메라 번호가 CAM 01 → **CAM 13** | 13 |

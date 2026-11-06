@@ -1,0 +1,54 @@
+{
+ "model_id": "eleven_v4",
+ "cast": {
+  "PA": {
+   "voice_id": "ZPgDKQUoTzQKZTHhQYAM",
+   "name": "HA Mall PA",
+   "settings": {
+    "stability": 0.75,
+    "similarity_boost": 0.8,
+    "style": 0.1,
+    "speed": 0.9
+   }
+  }
+ },
+ "lines": [
+  {
+   "id": "L1",
+   "who": "PA",
+   "text": "Attention shoppers. The Halloway Galleria is now closed.",
+   "sub": "ATTENTION SHOPPERS.\nTHE HALLOWAY GALLERIA IS NOW CLOSED.",
+   "asr": "Attention shoppers. The Holloway Galleria is now closed."
+  },
+  {
+   "id": "L2",
+   "who": "PA",
+   "text": "Thank you for shopping with us.",
+   "sub": "THANK YOU FOR SHOPPING WITH US."
+  },
+  {
+   "id": "L3",
+   "who": "PA",
+   "text": "We are still waiting for one remaining shopper.",
+   "sub": "WE ARE STILL WAITING\nFOR ONE REMAINING SHOPPER."
+  },
+  {
+   "id": "L4",
+   "who": "PA",
+   "text": "Please make your way to the main entrance.",
+   "sub": "PLEASE MAKE YOUR WAY\nTO THE MAIN ENTRANCE."
+  },
+  {
+   "id": "L5",
+   "who": "PA",
+   "text": "Thank you.",
+   "sub": "THANK YOU."
+  },
+  {
+   "id": "L6",
+   "who": "PA",
+   "text": "We can see you.",
+   "sub": "WE CAN SEE YOU."
+  }
+ ]
+}

@@ -115,7 +115,7 @@ const TK = {};
       g.beginPath(); sp.forEach((p, i) => i ? g.lineTo(p[0], p[1]) : g.moveTo(p[0], p[1])); g.closePath();
       const em = q.emit || 0;
       let col = shadeCol(q.col, d, o);
-      if (em > 0) col = q.col.map((v, i) => v * (1 - em) * .5 + (q.light ? 255 : v * 1.6) * em * Math.max(.25, Math.exp(-d * .02)));
+      if (em > 0) col = q.col.map((v, i) => v * (1 - em) * .5 + (q.light ? 255 : v * 1.6) * em * Math.max(.45, Math.exp(-d * .012)));
       g.fillStyle = css(col); g.fill();
       if (em > .2) { g.save(); g.shadowColor = css(q.light ? [255, 250, 225] : q.col, .9); g.shadowBlur = 40 * em; g.fill(); g.restore(); }
       if (q.tex) texture(g, q, cpts, sp, cam, d, o);

@@ -1,0 +1,22 @@
+{
+ "name": "PA",
+ "desc": "A 1990s shopping mall public address announcer: a calm, polite, slightly bored middle-aged American woman reading closing announcements into a microphone, even and unhurried, a little too calm. Clear recording.",
+ "text": "Attention shoppers. The Halloway Galleria is now closed. Thank you for shopping with us. We are still waiting for one remaining shopper. Please make your way to the main entrance.",
+ "previews": [
+  {
+   "n": 1,
+   "generated_voice_id": "g3Uhp9AttfJsudQwVIfZ",
+   "duration": 13.0116875
+  },
+  {
+   "n": 2,
+   "generated_voice_id": "LSsyooKgafRH7JeROtms",
+   "duration": 12.8288125
+  },
+  {
+   "n": 3,
+   "generated_voice_id": "ZPgDKQUoTzQKZTHhQYAM",
+   "duration": 14.5268125
+  }
+ ]
+}

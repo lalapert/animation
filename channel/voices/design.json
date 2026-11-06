@@ -1,12 +1,26 @@
 {
-  "MAGS":   {"desc": "An artificial-intelligence store manager speaking through a ceiling speaker. Middle-aged male voice with a smooth American corporate-training-video tone, relentlessly upbeat and polite, perfectly even rhythm with a faint synthetic sheen, like a cheerful in-store announcement. Clear studio quality.",
-             "text": "Welcome to Void Mart, where we are open until the heat death of the universe. Today only, every disaster is a sales opportunity. Have a stellar shift!"},
-  "Dennis": {"desc": "A giant, gentle alien freight hauler. Very deep, slow, warm male voice with a soft gravelly rumble, extremely polite and old-fashioned, unhurried pauses, kind grandfatherly warmth. Clear studio recording.",
-             "text": "Good evening. Just the milk tonight, thank you. No bag, please, I can carry it. I have been carrying things across the galaxy for three hundred years."},
-  "Vera":   {"desc": "A brilliant young woman scientist in her late twenties. Cool, low, composed and elegant voice with crisp American diction, who suddenly cracks into excited, theatrical villain glee when she talks about ruling the world. Clear studio recording.",
-             "text": "Step one: build the death ray. Step two: rule the world. Step three... pay the rent. Ha! Ha ha ha! Cleo, write that down. No, just the first two parts."},
-  "Cleo":   {"desc": "A young woman lab assistant in her early twenties. Flat, quiet, sleepy deadpan voice, low energy, slow and unbothered, dry understatement, slight vocal fry, never raises her voice. American accent. Clear studio recording.",
-             "text": "I pressed the red button. You said don't press the red button, so I wanted to see what would happen. It's fine. The lab is only a little bit on fire."},
-  "Bright": {"desc": "A charismatic billionaire tech founder in his forties giving a keynote speech. Warm, bright, polished male voice, radio-host smooth with a big trustworthy smile you can hear, persuasive and friendly, with something cold just underneath. American accent. Clear studio recording.",
-             "text": "Hi, everyone. I'm Sterling Bright. Today, BrightSide is giving every single person on Earth a free BrightCap. Because the future should be free. Smile!"}
+ "MAGS": {
+  "desc": "An artificial-intelligence store manager speaking through a ceiling speaker. Middle-aged male voice with a smooth American corporate-training-video tone, relentlessly upbeat and polite, perfectly even rhythm with a faint synthetic sheen, like a cheerful in-store announcement. Clear studio quality.",
+  "text": "Welcome to Void Mart, where we are open until the heat death of the universe. Today only, every disaster is a sales opportunity. Have a stellar shift!"
+ },
+ "Dennis": {
+  "desc": "A giant, gentle alien freight hauler. Very deep, slow, warm male voice with a soft gravelly rumble, extremely polite and old-fashioned, unhurried pauses, kind grandfatherly warmth. Clear studio recording.",
+  "text": "Good evening. Just the milk tonight, thank you. No bag, please, I can carry it. I have been carrying things across the galaxy for three hundred years."
+ },
+ "Vera": {
+  "desc": "A brilliant young woman scientist in her late twenties. Cool, low, composed and elegant voice with crisp American diction, who suddenly cracks into excited, theatrical villain glee when she talks about ruling the world. Clear studio recording.",
+  "text": "Step one: build the death ray. Step two: rule the world. Step three... pay the rent. Ha! Ha ha ha! Cleo, write that down. No, just the first two parts."
+ },
+ "Cleo": {
+  "desc": "A young woman lab assistant in her early twenties. Flat, quiet, sleepy deadpan voice, low energy, slow and unbothered, dry understatement, slight vocal fry, never raises her voice. American accent. Clear studio recording.",
+  "text": "I pressed the red button. You said don't press the red button, so I wanted to see what would happen. It's fine. The lab is only a little bit on fire."
+ },
+ "Bright": {
+  "desc": "A charismatic billionaire tech founder in his forties giving a keynote speech. Warm, bright, polished male voice, radio-host smooth with a big trustworthy smile you can hear, persuasive and friendly, with something cold just underneath. American accent. Clear studio recording.",
+  "text": "Hi, everyone. I'm Sterling Bright. Today, BrightSide is giving every single person on Earth a free BrightCap. Because the future should be free. Smile!"
+ },
+ "PA": {
+  "desc": "A 1990s shopping mall public address announcer: a calm, polite, slightly bored middle-aged American woman reading closing announcements into a microphone, even and unhurried, a little too calm. Clear recording.",
+  "text": "Attention shoppers. The Halloway Galleria is now closed. Thank you for shopping with us. We are still waiting for one remaining shopper. Please make your way to the main entrance."
+ }
 }

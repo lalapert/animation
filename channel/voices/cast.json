@@ -23,5 +23,10 @@
   "voice_id": "g5QiE8eJceeEcuPGC2IM",
   "name": "LAB Sterling Bright",
   "from_preview": 1
+ },
+ "PA": {
+  "voice_id": "ZPgDKQUoTzQKZTHhQYAM",
+  "name": "HA Mall PA",
+  "from_preview": 3
  }
 }
