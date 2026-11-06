@@ -382,7 +382,8 @@ function drawLogo(c, x, y, cap, o = {}) {
     c.lineWidth = cap * .09; c.strokeStyle = TOON.ink; c.lineJoin = 'round'; c.strokeText(g, pos[i], base);
     fillCore(g, pos[i]);
   });
-  // the O: a small black hole
+  // the O: a small black hole (only when the second letter is an O)
+  if (glyphs[1] !== 'O') { c.restore(); return total; }
   const ox = pos[1] + wO / 2, oy = base - cap / 2, r = cap * .5;
   c.save(); c.translate(ox, oy);
   const disk = (front) => {

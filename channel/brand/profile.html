@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Void Mart profile picture</title>
+<style>html, body { margin: 0; background: #120a2a; } canvas { display: block; }</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1080"></canvas>
+<script src="toon.js"></script>
+<script>
+'use strict';
+// Profile picture options (1080x1080; YouTube and Instagram crop it to a circle, so everything sits inside r = 480).
+const S = 1080, c = document.getElementById('c').getContext('2d');
+const opt = new URLSearchParams(location.search).get('opt') || 'A';
+function space(seed) {
+  const g = c.createRadialGradient(540, 560, 40, 540, 540, 760); g.addColorStop(0, '#4b1f8a'); g.addColorStop(.55, '#24124a'); g.addColorStop(1, '#0e0822');
+  c.fillStyle = g; c.fillRect(0, 0, S, S); drawStars(c, S, S, 140, seed);
+}
+function blackHole(x, y, r, tilt) {
+  c.save(); c.translate(x, y);
+  const ring = (front) => { c.save(); c.rotate(tilt); c.beginPath();
+    if (front) c.ellipse(0, 0, r * 1.75, r * .42, 0, 0, Math.PI); else c.ellipse(0, 0, r * 1.75, r * .42, 0, Math.PI, Math.PI * 2);
+    c.lineWidth = r * .3; c.strokeStyle = TOON.ink; c.stroke();
+    const gr = c.createLinearGradient(-r * 1.75, 0, r * 1.75, 0); gr.addColorStop(0, '#ff4fa3'); gr.addColorStop(.5, '#ffe2ae'); gr.addColorStop(1, TOON.orange);
+    c.lineWidth = r * .18; c.strokeStyle = gr; c.stroke(); c.restore(); };
+  ring(false);
+  c.save(); c.shadowColor = 'rgba(255,122,26,.95)'; c.shadowBlur = r * .9; c.beginPath(); c.arc(0, 0, r, 0, 6.2832); c.fillStyle = TOON.orange; c.fill(); c.restore();
+  c.beginPath(); c.arc(0, 0, r, 0, 6.2832); c.lineWidth = r * .14; c.strokeStyle = TOON.ink; c.stroke();
+  c.beginPath(); c.arc(0, 0, r * .9, 0, 6.2832); c.fillStyle = '#ffd08a'; c.fill();
+  c.beginPath(); c.arc(0, 0, r * .62, 0, 6.2832); c.fillStyle = '#07030f'; c.fill(); c.lineWidth = r * .07; c.strokeStyle = TOON.ink; c.stroke();
+  ring(true);
+  c.restore();
+}
+toonFonts().then(() => {
+  if (opt === 'A') {                       // the wordmark, stacked
+    space(5);
+    drawLogo(c, 540, 452, 200, { text: 'VOID', glow: .5 });
+    drawLogo(c, 540, 690, 170, { text: 'MART', glow: .5 });
+  } else if (opt === 'B') {                // the Void Mart duo
+    space(8);
+    const gl = c.createRadialGradient(540, 470, 20, 540, 470, 460); gl.addColorStop(0, 'rgba(255,150,70,.75)'); gl.addColorStop(.5, 'rgba(255,79,163,.25)'); gl.addColorStop(1, 'rgba(255,79,163,0)'); c.fillStyle = gl; c.fillRect(0, 0, S, S);
+    c.save(); c.beginPath(); c.rect(0, 0, S, S); c.clip();
+    drawPip2(c, 365, 1210, 360, { arms: false });
+    drawRae2(c, 730, 1290, 345, { arms: false, look: -1.5 });
+    c.restore();
+  } else {                                 // just the black hole "O"
+    space(11);
+    blackHole(540, 540, 250, -.32);
+  }
+  window.READY = true;
+});
+</script>
+</body>
+</html>

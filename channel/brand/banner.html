@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Void Mart banner</title>
+<style>html, body { margin: 0; background: #120a2a; } canvas { display: block; }</style>
+</head>
+<body>
+<canvas id="c" width="2560" height="1440"></canvas>
+<script src="toon.js"></script>
+<script src="lab.js"></script>
+<script>
+'use strict';
+// YouTube banner 2560x1440. Safe area for every device: x 507-2053, y 508-931. Desktop shows the full width of that strip; TV shows everything.
+const W = 2560, H = 1440, c = document.getElementById('c').getContext('2d');
+const CT = 925;   // counter / bench top
+function label(s, x, y, size, color, align, font, weight) { tText(c, s, x, y, size, color || TOON.white, font || '"Fredoka"', align, weight); }
+function pill(x, y, w, h, fill, text, dir) {
+  tShape(c, fill, g => g.roundRect(x - w / 2, y - h / 2, w, h, h / 2), 4);
+  const tx = dir < 0 ? x + 14 : x - 14;
+  label(text, tx, y + 2, h * .42, TOON.ink, 'center', '"Bungee"', 400);
+  const ax = dir < 0 ? x - w / 2 + 26 : x + w / 2 - 26;
+  tShape(c, TOON.ink, g => { g.moveTo(ax + dir * 12, y); g.lineTo(ax - dir * 8, y - 12); g.lineTo(ax - dir * 8, y + 12); g.closePath(); }, 2);
+}
+
+toonFonts().then(() => {
+  // ---------- left: Void Mart interior ----------
+  c.save(); c.beginPath(); c.moveTo(0, 0); c.lineTo(1330, 0); c.lineTo(1230, H); c.lineTo(0, H); c.closePath(); c.clip();
+  c.fillStyle = '#2e1a5e'; c.fillRect(0, 0, 1340, H);
+  // window to the void
+  const wg = c.createRadialGradient(780, 620, 20, 780, 620, 620); wg.addColorStop(0, '#ffb066'); wg.addColorStop(.07, '#ff4fa3'); wg.addColorStop(.3, '#4b1f8a'); wg.addColorStop(1, '#170b33');
+  tShape(c, null, g => g.rect(380, 240, 1000, 650), 8);
+  c.fillStyle = wg; c.fillRect(380, 240, 1000, 650); drawStars(c, 1000, 650, 160, 21, 380, 240);
+  tShape(c, null, g => g.rect(380, 240, 1000, 650), 10);
+  // shelves (desktop / TV only)
+  c.fillStyle = '#24134e'; c.fillRect(0, 200, 360, 740);
+  const items = ['#ff7a1a', '#29d3c3', '#ffd23f', '#ff4fa3', '#b9a6ff', '#7ef0ff'];
+  for (let r = 0; r < 5; r++) { tShape(c, '#4a3192', g => g.rect(10, 330 + r * 130, 340, 14), 3); for (let i = 0; i < 6; i++) { const hh = 46 + ((i * 7 + r * 3) % 4) * 14; tShape(c, items[(i + r) % 6], g => g.roundRect(24 + i * 54, 330 + r * 130 - hh, 42, hh, 5), 3); } }
+  // incident board
+  tShape(c, '#fbf7ff', g => g.roundRect(60, 120, 260, 84, 8), 4);
+  label('DAYS SINCE LAST INCIDENT', 190, 144, 17, TOON.ink);
+  tShape(c, '#e23b4a', g => g.roundRect(162, 158, 56, 38, 6), 3); label('0', 190, 178, 30, '#fff');
+  // ceiling + MAGS + Dennis peeking in from the left edge
+  c.fillStyle = '#24134e'; c.fillRect(0, 0, 1340, 40);
+  drawMags(c, 450, 500, 120);
+  drawDennis(c, 210, CT, 95, { item: false });
+  // the clerks
+  drawPip2(c, 640, CT, 96);
+  drawRae2(c, 870, CT, 96);
+  // counter
+  tShape(c, TOON.orange, g => g.rect(-10, CT, 1360, 34), 5);
+  c.fillStyle = '#3a2470'; c.fillRect(-10, CT + 36, 1360, H);
+  label('THANK YOU. COME AGAIN. (PLEASE.)', 640, 1150, 44, 'rgba(255,176,102,.55)', 'center', '"Bungee"', 400);
+  c.restore();
+
+  // ---------- right: the lab ----------
+  c.save(); c.beginPath(); c.moveTo(1330, 0); c.lineTo(W, 0); c.lineTo(W, H); c.lineTo(1230, H); c.closePath(); c.clip();
+  const lg = c.createLinearGradient(0, 0, 0, H); lg.addColorStop(0, '#1d3b35'); lg.addColorStop(1, '#0f2420'); c.fillStyle = lg; c.fillRect(1220, 0, W - 1220, H);
+  c.strokeStyle = 'rgba(0,0,0,.18)'; c.lineWidth = 3;
+  for (let r = 0; r * 54 < H; r++) { c.beginPath(); c.moveTo(1220, r * 54); c.lineTo(W, r * 54); c.stroke(); for (let k = 0; k * 140 < W; k++) { const bx = 1220 + k * 140 + (r % 2) * 70; c.beginPath(); c.moveTo(bx, r * 54); c.lineTo(bx, r * 54 + 54); c.stroke(); } }
+  tShape(c, '#5d6e7a', g => g.rect(1220, 470, W, 24), 4); tShape(c, '#5d6e7a', g => g.rect(2060, 0, 24, H), 4);
+  // chalkboard (desktop / TV)
+  tShape(c, '#203a2a', g => g.roundRect(2120, 560, 390, 250, 10), 6);
+  c.save(); c.strokeStyle = '#8a5a2c'; c.lineWidth = 12; c.strokeRect(2120, 560, 390, 250); c.restore();
+  label('THE PLAN', 2315, 598, 30, '#f3f7ee');
+  label('1. BUILD DEATH RAY', 2150, 650, 27, '#f3f7ee', 'left');
+  label('2. RULE THE WORLD', 2150, 694, 27, '#f3f7ee', 'left');
+  label('3. PAY RENT', 2150, 738, 27, '#f3f7ee', 'left');
+  c.strokeStyle = '#ff8fb1'; c.lineWidth = 4; c.beginPath(); c.ellipse(2245, 739, 100, 24, -.04, 0, 6.2832); c.stroke();
+  // TV with the villain's ad (TV only)
+  tShape(c, '#1a1a24', g => g.roundRect(2130, 130, 380, 250, 14), 6);
+  c.save(); c.beginPath(); c.roundRect(2146, 146, 348, 218, 8); c.clip();
+  const tg = c.createLinearGradient(0, 146, 0, 364); tg.addColorStop(0, '#dff3ff'); tg.addColorStop(1, '#8fcfff'); c.fillStyle = tg; c.fillRect(2146, 146, 348, 218);
+  drawBright(c, 2320, 364 + 40, 62, { arms: false }); c.restore();
+  // the scientist and her assistant
+  drawVera2(c, 1700, CT, 96);
+  drawCleo2(c, 1930, CT, 96);
+  // bench
+  tShape(c, '#4b5a63', g => g.rect(1210, CT, W, 30), 5);
+  c.fillStyle = '#26323a'; c.fillRect(1210, CT + 32, W, H);
+  c.save(); c.beginPath(); c.rect(1200, 1010, W, 40); c.clip(); for (let k = 0; k < 60; k++) { c.fillStyle = k % 2 ? '#ffd23f' : '#20183a'; c.beginPath(); c.moveTo(1200 + k * 50, 1050); c.lineTo(1250 + k * 50, 1010); c.lineTo(1275 + k * 50, 1010); c.lineTo(1225 + k * 50, 1050); c.closePath(); c.fill(); } c.restore();
+  label('DO NOT PRESS THE RED BUTTON', 1900, 1150, 44, 'rgba(182,255,59,.55)', 'center', '"Bungee"', 400);
+  c.restore();
+
+  // ---------- the seam between the two worlds ----------
+  c.save(); c.lineWidth = 10; c.strokeStyle = TOON.ink; c.beginPath(); c.moveTo(1330, 0); c.lineTo(1230, H); c.stroke(); c.restore();
+  // centre plate behind the text
+  c.save(); c.shadowColor = 'rgba(0,0,0,.45)'; c.shadowBlur = 30;
+  tShape(c, '#120a2a', g => g.roundRect(1060, 650, 440, 250, 24), 5); c.restore();
+  drawStars(c, 430, 240, 40, 33, 1065, 655);
+
+  // ---------- wordmark + lines (inside the safe area) ----------
+  drawLogo(c, 1280, 584, 82, { glow: .5 });
+  label('TWO SHOWS. ONE UNIVERSE.', 1280, 702, 34, TOON.white, 'center', '"Fredoka"', 600);
+  pill(1166, 778, 214, 52, TOON.orange, 'VOID MART', -1);
+  pill(1394, 778, 214, 52, LAB.glow, 'THE LAB', 1);
+  label('NEW EPISODES 4x A WEEK', 1280, 852, 28, '#d9ccff', 'center', '"Fredoka"', 600);
+  window.READY = true;
+});
+</script>
+</body>
+</html>
