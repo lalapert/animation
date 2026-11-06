@@ -36,10 +36,19 @@ function drawMonster(g, t) {
 }
 
 // ---------------------------------------------------------------- a hand pressed on the glass (screen space)
+// Pip's right arm reaching toward the camera, her palm flat on the glass (screen space; follows her shoulder on screen)
+function reachArm(g, cam, sk, bob, hx, hy, k) {
+  const [sx, sy, z] = toScreen(cam, sk, PIP.x - 50 * PIP.s / 100, CT - 92 * PIP.s / 100 + bob);
+  const w0 = 21 * PIP.s / 100 * z * .55, w1 = 34 * k;            // the sleeve widens as it comes toward the lens
+  const dx = hx - sx, dy = hy - sy, L = Math.hypot(dx, dy) || 1, nx = -dy / L, ny = dx / L;
+  tShape(g, TOON.pip.shirt, gg => { gg.moveTo(sx + nx * w0, sy + ny * w0); gg.lineTo(hx + nx * w1, hy + ny * w1); gg.lineTo(hx - nx * w1, hy - ny * w1); gg.lineTo(sx - nx * w0, sy - ny * w0); gg.closePath(); }, 4.2 * z * .9);
+  tShade(g, gg => { gg.moveTo(sx + nx * w0, sy + ny * w0); gg.lineTo(hx + nx * w1, hy + ny * w1); gg.lineTo(hx - nx * w1, hy - ny * w1); gg.lineTo(sx - nx * w0, sy - ny * w0); gg.closePath(); }, TOON.pip.shirtS, gg => gg.rect(Math.min(sx, hx) - 200, hy - w1 * .2, 400, 400));
+}
 function glassHand(g, x, y, k, alpha) {
   g.save(); g.globalAlpha = alpha;
-  g.fillStyle = 'rgba(255,255,255,.22)'; g.beginPath(); g.ellipse(x, y - 10 * k, 120 * k, 140 * k, 0, 0, 6.2832); g.fill();
-  tHand(g, x, y, 22 * k, TOON.pip.skin, TOON.pip.skinS, true);
+  g.fillStyle = 'rgba(255,255,255,.22)'; g.beginPath(); g.ellipse(x, y - 10 * k, 46 * k, 54 * k, 0, 0, 6.2832); g.fill();
+  g.translate(x, y); g.scale(-1, 1);                                // her right hand, palm to the glass: thumb toward her centre
+  tHand(g, 0, 0, 22 * k, TOON.pip.skin, TOON.pip.skinS, true);
   g.restore();
 }
 function handPrint(g, x, y, k, alpha) {
@@ -48,7 +57,7 @@ function handPrint(g, x, y, k, alpha) {
   const r = 22 * k;
   g.beginPath(); g.ellipse(x, y, r * .95, r * .9, 0, 0, 6.2832); g.fill();
   [[-.9, -1.9], [-.3, -2.25], [.35, -2.15], [.95, -1.75]].forEach(([fx, fy]) => { g.beginPath(); g.ellipse(x + fx * r * .85, y + fy * r * .75, r * .26, r * .55, 0, 0, 6.2832); g.fill(); });
-  g.beginPath(); g.ellipse(x - r * 1.5, y - r * .3, r * .22, r * .45, -.8, 0, 6.2832); g.fill();
+  g.beginPath(); g.ellipse(x + r * 1.5, y - r * .3, r * .22, r * .45, .8, 0, 6.2832); g.fill();
   g.restore();
 }
 // ---------------------------------------------------------------- cameras
@@ -80,7 +89,8 @@ function pipState(t, shot) {
   const frozen = n === 'WIDE_FREEZE';
   const mouth = frozen ? null : mouthFor('PIP', t);
   const talking = mouth && mouth.a > .06;
-  return { x, o: { expr, wave, wavePhase, sweat, mouth, blink: !frozen && blinkAt(0, t), arms: true }, bob: frozen ? 0 : Math.sin(t * 2.1) * 2 + (talking ? Math.sin(t * 15) * 2.5 : 0) };
+  const reach = n === 'PIP_GLASS' || (n === 'PIP_PEEL' && (t - TL.PEEL[0]) / (TL.PEEL[1] - TL.PEEL[0]) < .85);
+  return { x, o: { expr, wave, wavePhase, sweat, mouth, blink: !frozen && blinkAt(0, t), arms: true, reach }, bob: frozen ? 0 : Math.sin(t * 2.1) * 2 + (talking ? Math.sin(t * 15) * 2.5 : 0) };
 }
 function raeState(t, shot) {
   const n = shot[0];
@@ -125,11 +135,14 @@ function drawScene(t) {
   if (n === 'RAE_MED' && t < V.L4.t && Math.sin(t * 9) > .6) { c.save(); c.globalAlpha = .7; tLine(c, [RAE.x + 44 * RAE.s / 100, CT - 38 * RAE.s / 100, 680, CT - 14], 3); c.restore(); }
   c.setTransform(1, 0, 0, 1, 0, 0);
   // screen-space layers
-  if (n === 'PIP_GLASS') glassHand(c, 260, 1230, 3, 1);
+  if (n === 'PIP_GLASS') { reachArm(c, CAM[n], sk, P.bob, 300, 1260, 3); glassHand(c, 300, 1250, 3, 1); }
   if (n === 'PIP_PEEL') {
     const k = ease((t - TL.PEEL[0]) / (TL.PEEL[1] - TL.PEEL[0]));
-    handPrint(c, 260, 1230, 3, clamp((t - TL.PEEL[0] - .2) / .4));
-    glassHand(c, 260 - k * 60, 1230 + k * 760, 3, 1);
+    handPrint(c, 300, 1250, 3, clamp((t - TL.PEEL[0] - .2) / .4));
+    // squeak: the hand slides down the glass a little, then she pulls it back to her side
+    const k1 = ease(k / .45), k2 = ease((k - .45) / .4);
+    const hx = 300 - 10 * k1 - 20 * k2, hy = 1250 + 70 * k1 - 140 * k2, hk = 3 - 1.7 * k2;
+    if (k < .85) { reachArm(c, CAM[n], sk, P.bob, hx, hy + 10, hk); glassHand(c, hx, hy, hk, 1); }
   }
   if (n === 'PIP_CU' && t > V.L7.t) for (let i = 0; i < 5; i++) { const a = t * 2 + i * 1.3; drawStar(c, 540 + Math.cos(a) * 330, 700 + Math.sin(a * 1.3) * 200, 14 + 6 * Math.sin(a * 3), '#fff6b0', 2.4); }
   if (n.startsWith('WIDE') || n === 'RAE_MED' || n.startsWith('PIP')) glassStreaks(c, .9);

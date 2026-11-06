@@ -585,9 +585,10 @@ function drawPip2(c, x, y, s, o = {}) {
   }
   if (expr === 'worried' || expr === 'sheepish' || o.sweat) tShape(c, '#9fe6ff', g => { g.moveTo(54, -210); g.quadraticCurveTo(62, -196, 58, -190); g.quadraticCurveTo(52, -186, 49, -194); g.quadraticCurveTo(48, -200, 54, -210); g.closePath(); }, 2.6);
   if (o.arms !== false) {
-    tTube(c, [-52, -88, -68, -50, -66, -16, -44, -10, -22, -12], 21, P.shirt);
-    tHand(c, -18, -13, 8.5, P.skin, P.skinS);
-    if (o.wave !== false) { const wv = o.wavePhase != null ? Math.sin(o.wavePhase) * 7 : 0; tTube(c, [50, -92, 78, -98, 84, -126, 88 + wv * .5, -146, 90 + wv, -164], 20, P.shirt, P.shirtS); tHand(c, 91 + wv * 1.2, -176, 10, P.skin, P.skinS, true); }
+    if (o.hold) tTube(c, [-52, -88, -60, -60, -40, -86, -30, -100, -16, -104], 20, P.shirt);
+    else if (!o.reach) { tTube(c, [-52, -88, -68, -50, -66, -16, -44, -10, -22, -12], 21, P.shirt); tHand(c, -18, -13, 8.5, P.skin, P.skinS); }   // reach: the episode draws this arm toward the camera
+    if (o.hold) { tTube(c, [52, -88, 60, -60, 40, -86, 30, -100, 16, -104], 20, P.shirt, P.shirtS); tHand(c, 14, -104, 8.5, P.skin, P.skinS); tHand(c, -14, -104, 8.5, P.skin, P.skinS); }
+    else if (o.wave !== false) { const wv = o.wavePhase != null ? Math.sin(o.wavePhase) * 7 : 0; tTube(c, [50, -92, 78, -98, 84, -126, 88 + wv * .5, -146, 90 + wv, -164], 20, P.shirt, P.shirtS); tHand(c, 91 + wv * 1.2, -176, 10, P.skin, P.skinS, true); }
     else { tTube(c, [52, -88, 68, -50, 66, -16, 44, -10, 22, -12], 21, P.shirt, P.shirtS); tHand(c, 18, -13, 8.5, P.skin, P.skinS); }
   }
   c.restore();
