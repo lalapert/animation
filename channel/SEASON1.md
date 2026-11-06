@@ -98,4 +98,5 @@ PIP:   (tiny voice, grin back on)
 ```
 
 - 대사 64단어. 배경에 이달의 직원 액자(MAGS 사진)와 카운터를 심어 둔다.
-- 목소리: Pip = Win2, Rae = Kar2, MAGS = 보이스 디자인(제작 전), 문간의 손님 = 대사 없음.
+- 목소리: Pip = Win2, Rae = Kar2(1.5반음 낮춤), MAGS = 보이스 디자인 `WkUURyKtbzB9IM50qGdP`, 문간의 손님 = 대사 없음.
+- 번역과 장면 메모를 붙인 대본: `scripts/VM01_first_shift.md`.
