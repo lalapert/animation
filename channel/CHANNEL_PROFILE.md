@@ -108,5 +108,5 @@ New episodes 3x a week ↓
 | **Volt Labs \| Season 1** | Dr. Vera Volt will rule the world. Right after she pays the rent. A basement lab, a deadpan assistant, and a big red button nobody should press. New episodes every Saturday and Monday. |
 | **Start Here: The Void Mart Universe** | Episode 1 of every show. Same universe, same 3 AM. |
 
-- 과학자 시리즈의 제목은 아직 가제(*The Lab*)다. 재생목록과 영상 제목에 들어가므로 **Volt Labs**로 정하는 걸 제안한다(과학자 Vera Volt의 지하 연구소 이름). "The Lab"은 검색어로 너무 흔하다.
+- 과학자 시리즈의 제목은 아직 가제(*Volt Labs*)다. 재생목록과 영상 제목에 들어가므로 **Volt Labs**로 정하는 걸 제안한다(과학자 Vera Volt의 지하 연구소 이름). "The Lab"은 검색어로 너무 흔하다.
 - "Start Here"에는 각 시리즈 1화만 넣는다. 한 시리즈를 본 사람이 다른 시리즈로 넘어가게 하는 입구다.

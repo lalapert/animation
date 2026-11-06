@@ -1,0 +1,20 @@
+<!doctype html><html><head><meta charset="utf-8"><title>t</title><style>html,body{margin:0;background:#000}canvas{display:block}</style></head>
+<body><canvas id="c" width="1080" height="1920"></canvas>
+<script src="tapekit.js"></script>
+<script>
+const out = document.getElementById('c').getContext('2d');
+const raw = document.createElement('canvas'); raw.width = TK.TW; raw.height = TK.TH; const rg = raw.getContext('2d');
+const win = document.createElement('canvas'); win.width = TK.TW; win.height = TK.TH; const wg = win.getContext('2d');
+const look = new URLSearchParams(location.search).get('look') || 'cctv';
+TK.fonts().then(() => {
+  const S = TK.concourse({ lightsOn: z => (z % 12 === 3 ? .9 : 0) });
+  const cam = look === 'cctv' ? { x: 3.6, y: 4.2, z: .4, yaw: -.1, pitch: -.36, fov: 80 } : { x: .4, y: 1.6, z: 3, yaw: .05, pitch: -.03, fov: 66 };
+  TK.render(rg, S, cam, { ambient: look === 'cctv' ? 1.25 : .6, fog: look === 'cctv' ? .04 : .05 });
+  TK.grade(wg, raw, 1.0, look);
+  TK.vhs(wg, 1.0, 1, 3);
+  TK.osd(wg, look, 1.0, { cam: 'CAM 01', place: 'MAIN CONCOURSE', stamp: '12-31-1999  23:58:41' });
+  TK.caption(wg, look === 'cctv' ? 'ATTENTION SHOPPERS.\nTHE MALL IS NOW CLOSED.' : '');
+  TK.frame(out, win, { label: 'TAPE 0001', sub: 'CAM 01  ·  MAIN CONCOURSE  ·  12/31/99', rule: 'RULE 1: WHEN THE CLOSING\nANNOUNCEMENT PLAYS, LEAVE.' });
+  window.READY = true;
+});
+</script></body></html>

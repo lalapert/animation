@@ -15,7 +15,7 @@ Each run makes **one** episode, the one whose series is closest to running out o
 | Series | Plan | Slots (KST) | Template folder |
 |---|---|---|---|
 | Void Mart | `channel/SEASON1.md` §4 (15 episodes, 11/14 → 12/31) | Tue, Thu 09:00 (and the 11/14 Sat premiere) | the latest `vmNN-*` folder (now `vm02-exact-change/`) |
-| The Lab | `channel/LAB_SERIES.md` §2 (20 episodes, 11/28 → 2/1) | Sat, Mon 09:00 | none yet: build `channel/brand/labkit.js` first (§2.3) |
+| Volt Labs | `channel/LAB_SERIES.md` §2 (20 episodes, 11/28 → 2/1) | Sat, Mon 09:00 | none yet: build `channel/brand/labkit.js` first (§2.3) |
 | Horror (*STILL RECORDING*, own channel) | `channel/HORROR_SERIES.md` §3 (30 tapes, 11/23 → 1/30) | Mon, Thu, Sat 13:00 | none yet: build `channel/brand/tapekit.js` first (§2.6) |
 
 1. For each series, list its next post dates and which of them already have a scheduled Metricool post or a finished folder. Banked = finished, not yet published.
@@ -58,7 +58,7 @@ Copy the template folder to `<prefix><NN>-<slug>/` (Void Mart: `vm03-dennis/`), 
 Duration in range; about −14 LUFS; `blackdetect` finds nothing; ElevenLabs speech-to-text of the final audio contains every line (bracketed sound tags like `[chime]` are fine); `check_english.py` passes on `film.js`, `timeline.js`, `voice/lines.json`, the `.srt`, `CREDITS` and the post text; a contact sheet of the encoded file looks right (count the hands).
 
 ### 2.6 Horror tapes (*STILL RECORDING*)
-- Own channel and brand: Metricool **7927149 "horror"** (YouTube only unless an Instagram is added). Never mix it with the Void Mart brand.
+- Own channel and brand: Metricool **7927149 "horror"** (YouTube only; no Instagram, owner's decision). Never mix it with the Void Mart brand.
 - Engine `channel/brand/tapekit.js` (build it first if missing): a 2.5D canvas renderer for the Halloway Galleria (corridors, storefronts with shutters, escalators, fountain, food court, parking, security office) seen through two kinds of camera: CCTV (high fixed angle, green-grey, a few frames a second, `CAM 07 — EAST ESCALATOR` and timestamp) and camcorder (handheld sway, colour, red REC dot, battery, date, autofocus hunting); VHS effects (noise, chroma shift, tracking lines, dropouts). Vertical layout: a 4:3 tape window (1080×810) in the middle, the tape label above, the episode's rule below; no other subtitles unless someone speaks.
 - Writing: one wrong thing per tape, visible from the first frame for the second viewing; slow tension; the reveal where the two cameras disagree or a rule breaks; cut to static and back to the first frame. PG-13: no gore, no screaming jump scares. Nothing from the Backrooms community (names, levels, entities). English text only. Each tape hides one number or letter in one frame (the ARG; keep a list in `HORROR_SERIES.md`).
 - Length 30–50 s. Voices only for the mall PA and the guard (Voice Design voices, add them to `VOICES.md` when made).
@@ -68,12 +68,12 @@ Duration in range; about −14 LUFS; `blackdetect` finds nothing; ElevenLabs spe
 
 1. Commit the folder and push (retry with backoff on network errors).
 2. Media URL: `https://raw.githubusercontent.com/lalapert/animation/<commit sha>/<folder>/<folder>.mp4`; check it returns 200 and the full size.
-3. Metricool brand **7923229** for Void Mart and The Lab (YouTube @thevoidmart + Instagram voidmartshow); **7927149** for the horror tapes (§2.6). Never any other brand.
+3. Metricool brand **7923229** for Void Mart and Volt Labs (YouTube @thevoidmart + Instagram voidmartshow); **7927149** for the horror tapes (§2.6). Never any other brand.
 4. `createScheduledPost`: the series slot (`Asia/Seoul`), `autoPublish: true`, `draft: false`, providers youtube + instagram.
-   - text: 2–3 short English lines + `Void Mart, episode N.` (or `The Lab, episode N.`) + `#animation #cartoon #scifi #comedy #shorts`
-   - youtubeData: title ≤ 100 chars ending `| Void Mart Ep N #shorts`, type `short`, privacy `public`, tags, category `FILM_ANIMATION`, madeForKids false, isAiGeneratedContent false
+   - text: 2–3 short English lines + `Void Mart, episode N.` (or `Volt Labs, episode N.`) + `#animation #cartoon #scifi #comedy #shorts`
+   - youtubeData: title ≤ 100 chars ending `| Void Mart Ep N #shorts` (or `| Volt Labs Ep N #shorts`), type `short`, privacy `public`, tags, category `FILM_ANIMATION`, madeForKids false, isAiGeneratedContent false
    - instagramData: type `REEL`, showReelOnFeed true, isAiGenerated true
-5. Append to `channel/LOG.md` (Void Mart / The Lab tables): date, folder, series, length, LUFS, checks, Metricool post id, ElevenLabs credits used and left, anything that went wrong. Commit and push.
+5. Append to `channel/LOG.md` (Void Mart / Volt Labs tables): date, folder, series, length, LUFS, checks, Metricool post id, ElevenLabs credits used and left, anything that went wrong. Commit and push.
 
 ## 4. When something fails
 

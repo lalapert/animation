@@ -6,8 +6,8 @@
 - 이야기: `SEASON1.md` (시즌 줄기, 21화 편성, 1화 대본)
 - 캐릭터: `brand/toon.js`, 디자인 시트 `brand/out/characters_v1.png`
 - 게시: Metricool 브랜드 7923229(현재 이름 Paper Almanac)의 **유튜브 쇼츠 + 인스타 릴스** 동시 게시. 다른 브랜드에는 올리지 않는다
-- 주기: **주 4회 09:00 KST.** Void Mart 화·목, The Lab 토·월 (미국 동부 기준 월·수·금·일 저녁 7시. 한국 오전 9시는 UTC 0시). Void Mart 시즌 1은 11/14 첫 화부터 12/31까지 15화 (`LAB_SERIES.md` 3절)
-- 두 번째 시리즈: *The Lab* (`LAB_SERIES.md`). 같은 세계관이고, 잇는 장치는 `UNIVERSE.md`
+- 주기: **주 4회 09:00 KST.** Void Mart 화·목, Volt Labs 토·월 (미국 동부 기준 월·수·금·일 저녁 7시. 한국 오전 9시는 UTC 0시). Void Mart 시즌 1은 11/14 첫 화부터 12/31까지 15화 (`LAB_SERIES.md` 3절)
+- 두 번째 시리즈: *Volt Labs* (`LAB_SERIES.md`). 같은 세계관이고, 잇는 장치는 `UNIVERSE.md`
 - 길이 40~50초, 1080×1920, 60fps
 - 유료 외부 API는 ElevenLabs만(음성, 보이스 디자인, 효과음, 받아쓰기)
 - 첫 화 목표: 11/14(토). 그 전에 1화와 2화를 만들어 둔다

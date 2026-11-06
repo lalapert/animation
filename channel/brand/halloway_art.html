@@ -1,0 +1,52 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Halloway Archive art</title><style>html,body{margin:0;background:#000}canvas{display:block}</style></head>
+<body><canvas id="c" width="2560" height="1440"></canvas>
+<script src="tapekit.js"></script>
+<script>
+'use strict';
+// Halloway Archive channel art. ?what=banner (2560x1440, safe area x 507-2053, y 508-931) | ?what=profile (1080x1080)
+const what = new URLSearchParams(location.search).get('what') || 'banner';
+const cv = document.getElementById('c');
+if (what === 'profile') { cv.width = 1080; cv.height = 1080; }
+const out = cv.getContext('2d');
+function off(w, h) { const c = document.createElement('canvas'); c.width = w; c.height = h; return c; }
+function cctvCamera(g, x, y, k) {     // a wall-mounted security camera, white on black, red light
+  g.save(); g.translate(x, y); g.scale(k, k);
+  g.fillStyle = '#e9e4d6'; g.strokeStyle = '#e9e4d6'; g.lineJoin = 'round';
+  g.fillRect(150, -150, 46, 200); g.fillRect(70, -20, 120, 34);                         // wall plate + arm
+  g.save(); g.rotate(-.32);
+  g.beginPath(); g.roundRect(-210, -70, 300, 130, 22); g.fill();                         // body
+  g.beginPath(); g.moveTo(-210, -82); g.lineTo(110, -82); g.lineTo(130, -60); g.lineTo(-230, -60); g.closePath(); g.fill();   // hood
+  g.fillStyle = '#0a0a0b'; g.beginPath(); g.roundRect(-250, -48, 52, 86, 12); g.fill();  // lens housing
+  g.fillStyle = '#e9e4d6'; g.beginPath(); g.ellipse(-250, -5, 20, 40, 0, 0, 6.2832); g.fill();
+  g.fillStyle = '#0a0a0b'; g.beginPath(); g.ellipse(-252, -5, 11, 24, 0, 0, 6.2832); g.fill();
+  g.shadowColor = '#ff2a2a'; g.shadowBlur = 40; g.fillStyle = '#ff3a32'; g.beginPath(); g.arc(40, -10, 14, 0, 6.2832); g.fill(); g.fill();
+  g.restore(); g.restore();
+}
+TK.fonts().then(() => {
+  if (what === 'banner') {
+    const W = 2560, H = 1440, raw = off(W, H), rg = raw.getContext('2d'), win = off(W, H), wg = win.getContext('2d');
+    const S = TK.concourse({ length: 80, lightsOn: z => (z === 3 || z === 39 ? .85 : 0) });
+    TK.render(rg, S, { x: 0, y: 4.0, z: -.6, yaw: 0, pitch: -.2, fov: 96 }, { ambient: 1.25, fog: .035 });
+    TK.grade(wg, raw, 2.0, 'cctv', { brightness: 1.15 });
+    wg.fillStyle = 'rgba(0,0,0,.42)'; wg.fillRect(0, 0, W, H);                             // keep the title readable
+    out.drawImage(win, 0, 0);
+    // safe-area text
+    out.textAlign = 'center'; out.textBaseline = 'middle';
+    out.font = '150px "Special Elite"'; out.fillStyle = '#e9e4d6'; out.shadowColor = 'rgba(0,0,0,.9)'; out.shadowBlur = 24; out.fillText('HALLOWAY ARCHIVE', W / 2, 670);
+    out.shadowBlur = 12; out.font = '56px "Special Elite"'; out.fillText('THE CAMERAS ARE STILL RECORDING.', W / 2, 790);
+    out.font = '44px "VT323"'; out.fillStyle = 'rgba(233,228,214,.85)'; out.fillText('NEW TAPES  ·  MON  ·  THU  ·  SAT', W / 2, 856);
+    out.shadowBlur = 0; out.font = '52px "VT323"'; out.textAlign = 'left'; out.fillStyle = 'rgba(235,240,235,.9)';
+    out.fillText('CAM 01   MAIN CONCOURSE', 540, 545); out.textAlign = 'right'; out.fillText('12-31-1999  23:59:59', 2020, 905); out.textAlign = 'left';
+    out.textAlign = 'right'; out.fillStyle = 'rgba(255,70,70,.95)'; out.fillText('● REC', 2020, 545);
+    out.fillStyle = 'rgba(0,0,0,.16)'; for (let y = 0; y < H; y += 4) out.fillRect(0, y, W, 2);
+  } else {
+    const W = 1080;
+    const gr = out.createRadialGradient(540, 560, 60, 540, 540, 700); gr.addColorStop(0, '#1d2a22'); gr.addColorStop(1, '#050606');
+    out.fillStyle = gr; out.fillRect(0, 0, W, W);
+    cctvCamera(out, 590, 540, 1.55);
+    out.fillStyle = 'rgba(0,0,0,.18)'; for (let y = 0; y < W; y += 4) out.fillRect(0, y, W, 2);
+    out.font = '84px "VT323"'; out.textAlign = 'center'; out.fillStyle = 'rgba(255,70,70,.95)'; out.fillText('● REC', 540, 880);
+  }
+  window.READY = true;
+});
+</script></body></html>

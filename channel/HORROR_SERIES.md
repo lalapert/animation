@@ -80,18 +80,19 @@
 
 - **월·목·토 13:00 KST** (미국 동부 기준 일·수·금 밤 11시). 공포는 밤에 본다. 금요일(KST)은 쉰다.
 - 첫 화 11/23(월), 30화 1/30(토).
-- 게시: Metricool 브랜드 **7927149 "horror"**의 유튜브(쇼츠). 인스타를 붙이면 같이 올린다.
+- 게시: Metricool 브랜드 **7927149 "horror"**의 유튜브(쇼츠)만. 인스타는 없다(작가님 결정).
 - 비축: 항상 2편 이상 앞서 만든다.
 - 크레딧: 대사가 적어 편당 1,000 안팎으로 추정. 주 3편이면 월 약 13,000.
 
 ## 5. 결정 기록과 남은 것
 
 - 11/7: 채널 분리, *STILL RECORDING* / Halloway Galleria 설정, 주 3편(월·목·토), 시즌 1 30화.
-- 남은 것: 채널 이름과 핸들(제안: 채널 이름 **Halloway Archive**, 핸들 **@hallowayarchive**), 예전 영상 비공개 여부, 인스타 계정을 따로 둘지.
+- 11/7: 채널 이름 **Halloway Archive**, 핸들 **@hallowayarchive**(작가님이 맡김). 인스타는 두지 않는다(유튜브만).
+- 남은 것: 예전 "AI Video Lab" 영상 비공개(작가님이 유튜브 스튜디오에서).
 
 ## 6. 채널 소개와 재생목록 (안)
 
-- 채널 이름: **Halloway Archive** / 핸들: **@hallowayarchive** (사용 가능 여부는 유튜브 스튜디오에서 확인. 막히면 @hallowayarchives, @halloway.archive)
+- 채널 이름: **Halloway Archive** / 핸들: **@hallowayarchive** (확정. 막히면 @hallowayarchives, @halloway.archive 순서)
 - 채널 설명:
 ```
 Recovered footage from the Halloway Galleria.
