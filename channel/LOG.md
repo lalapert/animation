@@ -9,3 +9,4 @@
 | 2026-11-08 (일) | `the-last-leaf/` | 단편 | 46.0초 | −14.1 LUFS | 받아쓰기 일치, 검은 프레임 0 | 419109915 (Paper Almanac 7923229) | |
 
 - 2026-11-07 00:3x KST: 수채화 그림체 중단. 매일 자동 제작 예약 작업 일시정지(trig_01SkQF5mc8sB5V6mp3YsZayr). 새 그림체 견본은 `styles/`. Metricool 브랜드 "Paper Almanac"(7923229) 생성, 유튜브 계정 이동 확인.
+- 2026-11-06 KST: 방향 변경. 수채 중단, 우주 시트콤 툰 *Void Mart* 주 3회(화·목·토) 초안. 픽셀 디오라마 판타지와 리미널 파운드 푸티지는 '언젠가'로 문서에만(`SERIES.md` 6절). 채널 이름·소개 안 `CHANNEL_PROFILE.md`. 주인공 목소리 Kar2/Win2(eleven_v4), 반복 인물은 보이스 디자인. `PRODUCTION.md`는 정지 표시.

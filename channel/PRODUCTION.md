@@ -1,5 +1,7 @@
 # Paper Almanac — daily production runbook
 
+> **PAUSED (2026-11-06). Do not run.** The channel is moving to the toon sitcom *Void Mart* (see `SERIES.md`). This watercolour runbook will be replaced before the scheduled task is turned back on. If a run starts anyway, make nothing, schedule nothing, and report that the runbook is paused.
+
 Read this whole file before you start. Each daily run makes **tomorrow's** episode (dates in Asia/Seoul) and schedules it for **09:00 KST**. Report progress and the result in Korean.
 
 ## 0. Setup (fresh container)
