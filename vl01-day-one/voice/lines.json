@@ -1,0 +1,107 @@
+{
+ "model_id": "eleven_v4",
+ "cast": {
+  "VERA": {
+   "voice_id": "buRySvQEB2e8Dcglym6i",
+   "name": "LAB Vera Volt",
+   "settings": {
+    "stability": 0.4,
+    "similarity_boost": 0.8,
+    "style": 0.45,
+    "speed": 1.0
+   }
+  },
+  "CLEO": {
+   "voice_id": "biUhGlVm4NoNe58piPit",
+   "name": "LAB Cleo",
+   "settings": {
+    "stability": 0.85,
+    "similarity_boost": 0.8,
+    "style": 0.0,
+    "speed": 0.92
+   }
+  }
+ },
+ "lines": [
+  {
+   "id": "L1",
+   "who": "VERA",
+   "text": "Day one of world domination.",
+   "sub": "Day one of\nworld domination."
+  },
+  {
+   "id": "L2",
+   "who": "CLEO",
+   "text": "You said that yesterday."
+  },
+  {
+   "id": "L3",
+   "who": "VERA",
+   "text": "Yesterday was a rehearsal."
+  },
+  {
+   "id": "L4",
+   "who": "VERA",
+   "text": "Behold: the Adoration Ray. One shot, and every creature on Earth will adore me.",
+   "sub": "Behold: the Adoration Ray.\nOne shot, and every creature\non Earth will adore me."
+  },
+  {
+   "id": "L5",
+   "who": "CLEO",
+   "text": "Every creature?"
+  },
+  {
+   "id": "L6",
+   "who": "VERA",
+   "text": "Every. Single. One. On my count. Three...",
+   "asr": "Every single one. On my count. Three.",
+   "sub": "Every. Single. One.\nOn my count. Three..."
+  },
+  {
+   "id": "L7",
+   "who": "VERA",
+   "text": "I said on my count!"
+  },
+  {
+   "id": "L8",
+   "who": "CLEO",
+   "text": "You were taking forever."
+  },
+  {
+   "id": "L9",
+   "who": "VERA",
+   "text": "It's working."
+  },
+  {
+   "id": "L10",
+   "who": "CLEO",
+   "text": "It's pigeons."
+  },
+  {
+   "id": "L11",
+   "who": "VERA",
+   "text": "Pigeons are creatures."
+  },
+  {
+   "id": "L12",
+   "who": "VERA",
+   "text": "Stop. Stop looking at me like that... Okay, one more minute.",
+   "sub": "Stop. Stop looking\nat me like that...\nOkay, one more minute."
+  },
+  {
+   "id": "L13",
+   "who": "CLEO",
+   "text": "Rent's due Friday."
+  },
+  {
+   "id": "L14",
+   "who": "VERA",
+   "text": "My army will handle it."
+  },
+  {
+   "id": "L15",
+   "who": "CLEO",
+   "text": "That's a bottle cap."
+  }
+ ]
+}

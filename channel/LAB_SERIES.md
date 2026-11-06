@@ -89,5 +89,6 @@
 
 - 11/6: 디자인 v2(Vera, Cleo) 승인. 같은 세계관으로 묶기. 주 4회 편성(화·목 Void Mart, 토·월 The Lab)과 Void Mart 15화 승인.
 - 남은 것: 악당 디자인 v1 확인, Void Mart(Rae, Pip) 그림체를 애니풍으로 맞출지.
+- 11/7: 1화 *Day One* 제작(`vl01-day-one/`, 대본 `scripts/VL01_day_one.md`). 실험실 세트와 비둘기는 `brand/labkit.js`. 칠판의 PAY RENT 동그라미는 1화가 끝날 때 2개이고, 매 화 하나씩 늘린다.
 
 이전 안(v1: 피부가 어두운 Vera, 할머니 과학자, 토스터 로봇 Crumb)은 `brand/out/lab_options_v1.jpg`에 기록으로 남긴다.

@@ -1,0 +1,31 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Volt Labs set test</title>
+<style>html,body{margin:0;background:#000}canvas{display:block}</style></head>
+<body><canvas id="c" width="1080" height="1920"></canvas>
+<script>window.TL = { VO: [], SHOTS: [] }; window.CHARS = {};</script>
+<script src="toon.js"></script><script src="lab.js"></script><script src="vmkit.js"></script><script src="labkit.js"></script>
+<script>
+(async () => {
+  await toonFonts('fonts/');
+  buildLab();
+  const c = document.getElementById('c').getContext('2d');
+  const q = new URLSearchParams(location.search), what = q.get('what') || 'wide';
+  c.fillStyle = '#12302a'; c.fillRect(0, 0, 1080, 1920);
+  if (what === 'pigeons') {
+    c.fillStyle = '#1a4433'; c.fillRect(0, 0, 1080, 1920);
+    const P = [[{}, 'plain'], [{ heart: true }, 'heart'], [{ fly: true, flap: 1 }, 'fly up'], [{ fly: true, flap: 0 }, 'fly down'], [{ hold: 'fry', heart: true }, 'fry'], [{ hold: 'cap' }, 'cap'], [{ back: true }, 'back'], [{ peck: 1 }, 'peck'], [{ dir: -1, heart: true }, 'left']];
+    P.forEach(([o, n], i) => { const x = 180 + (i % 3) * 360, y = 400 + Math.floor(i / 3) * 500; drawPigeon(c, x, y, 260, o); tText(c, n, x, y + 80, 40, '#fff'); });
+  } else {
+    c.drawImage(LAB_STATIC.lab, 0, 0);
+    drawWindow(c, 3, q.get('open') ? 1 : 0);
+    drawRentCircles(c, 1, .5);
+    drawRay(c, 0, { charge: .5, dial: .3 });
+    drawFridge(c, q.get('open') ? 1 : 0);
+    drawVera2(c, VERA.x, LCT, VERA.s, { expr: 'scheme', point: q.get('open') ? 1 : 0, mouth: { a: .6, shape: 'a' } });
+    drawCleo2(c, CLEO.x, LCT, CLEO.s, { expr: 'deadpan', press: q.get('open') ? 1 : 0 });
+    if (q.get('open')) { drawBeam(c, 1, 1); drawPigeon(c, VERA.x, VERAFACE - 120, 110, { heart: true }); drawPigeon(c, 640, LCT, 110, { heart: true, hold: 'fry', dir: -1 }); }
+    c.drawImage(LAB_STATIC.front, 0, LCT);
+  }
+  window.READY = true;
+})().catch(e => { window.INIT_ERROR = String(e.stack || e); });
+</script></body></html>

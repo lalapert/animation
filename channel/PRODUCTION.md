@@ -15,7 +15,7 @@ Each run makes **one** episode, the one whose series is closest to running out o
 | Series | Plan | Slots (KST) | Template folder |
 |---|---|---|---|
 | Void Mart | `channel/SEASON1.md` §4 (15 episodes, 11/14 → 12/31) | Tue, Thu 09:00 (and the 11/14 Sat premiere) | the latest `vmNN-*` folder (now `vm02-exact-change/`) |
-| Volt Labs | `channel/LAB_SERIES.md` §2 (20 episodes, 11/28 → 2/1) | Sat, Mon 09:00 | none yet: build `channel/brand/labkit.js` first (§2.3) |
+| Volt Labs | `channel/LAB_SERIES.md` §2 (20 episodes, 11/28 → 2/1) | Sat, Mon 09:00 | the latest `vlNN-*` folder (now `vl01-day-one/`) |
 | Horror (*STILL RECORDING*, own channel) | `channel/HORROR_SERIES.md` §3 (30 tapes, 11/23 → 1/30) | Mon, Thu, Sat 13:00 | none yet: build `channel/brand/tapekit.js` first (§2.6) |
 
 1. For each series, list its next post dates and which of them already have a scheduled Metricool post or a finished folder. Banked = finished, not yet published.
@@ -39,7 +39,7 @@ Copy the template folder to `<prefix><NN>-<slug>/` (Void Mart: `vm03-dennis/`), 
 - US calendar: Thanksgiving 11/26, Black Friday 11/27 (Void Mart 12/1 is "the day after Black Friday"), Christmas Eve, New Year's Eve.
 
 ### 2.3 Picture
-- Shared kit: `channel/brand/toon.js` (characters: `drawRae2`, `drawPip2`, `drawMags`, `drawDennis`; options `expr`, `mouth`, `blink`, `look`, `mug`, `hold`, `wave`, `wavePhase`, `reach`, `sweat`) and `channel/brand/vmkit.js` (store set, cameras `VMCAM`, `mouthFor` lip sync from character timings, `blinkAt`, burned-in subtitles, `composeFrame`). The Lab: `channel/brand/lab.js` (`drawVera2`, `drawCleo2`, `drawBright`); if `channel/brand/labkit.js` (basement-lab set, cameras, the same lip-sync/subtitle helpers) does not exist, build it first from `vmkit.js` and the look of `channel/brand/out/lab_design_v2.jpg`, render a test sheet, check it, commit it.
+- Shared kit: `channel/brand/toon.js` (characters: `drawRae2`, `drawPip2`, `drawMags`, `drawDennis`; options `expr`, `mouth`, `blink`, `look`, `mug`, `hold`, `wave`, `wavePhase`, `reach`, `sweat`) and `channel/brand/vmkit.js` (store set, cameras `VMCAM`, `mouthFor` lip sync from character timings, `blinkAt`, burned-in subtitles, `composeFrame`). Volt Labs: `channel/brand/lab.js` (`drawVera2` options `expr` cool|scheme|fluster|laugh, `mouth`, `blink`, `point` 0..1, `tube`, `goggles`; `drawCleo2` options `expr` deadpan|sleepy|surprised|smug, `mouth`, `blink`, `look`, `press` 0..1; `drawBright`) and `channel/brand/labkit.js` (basement-lab set `buildLab`, cameras `LABCAM`, `drawWindow`, `drawRentCircles`, `drawFridge`, `drawRay`/`drawBeam`, `drawPigeon`, `drawHeart`; load toon.js, lab.js, vmkit.js, labkit.js in that order: lip sync, subtitles and shots come from vmkit). Test sheet: `channel/brand/labkit_test.html`. Volt Labs subtitle colours: Vera `#d8ff7a`, Cleo `#c9b8ff`. Rent circles on the board: one more each episode (ep 1 ends with 2).
 - `film.js` holds only this episode: props, shots, character states per shot, screen-space effects, `window.EV` sound cues.
 - **Every hand gesture comes with its arm.** No floating hands: if a hand reaches, holds or waves, that arm is drawn to it (see `reachArm` in `vm01-first-shift/film.js`, `hold` and `wave` in `drawPip2`). Count the hands in every still.
 - Subtitles: burned in at the bottom of the picture (`VIEW.mode = 'full'`, the owner's choice), coloured by speaker. Shorts safe zones: nothing important above y 180 or right of x 960 near the bottom.

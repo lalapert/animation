@@ -384,10 +384,11 @@ function drawVera2(c, x, y, s, o = {}) {
   for (const sx of [-1, 1]) {
     const ex = sx * 17, ey = -222;
     if (expr === 'laugh') { tCurve(c, ex - 10, ey - 2, ex, ey - 11, ex + 10, ey - 2, 5); continue; }
+    if (o.blink) { closedEye(c, ex, ey - 2, 11, false); continue; }
     if (expr === 'scheme') { animeEye(c, ex, ey, sx, { ...E, h: 13, w: 12 }); c.fillStyle = '#fff'; continue; }
     animeEye(c, ex, ey, sx, { ...E, lid: expr === 'cool' ? .26 : 0, look: expr === 'fluster' ? -2 : 1 });
   }
-  if (expr === 'scheme') for (const sx of [-1, 1]) { c.fillStyle = '#fff'; c.beginPath(); c.arc(sx * 17, -226, 5.5, 0, 6.2832); c.fill(); c.fillStyle = TOON.ink; c.beginPath(); c.arc(sx * 17, -226, 2.6, 0, 6.2832); c.fill(); }  // tiny manic pupils
+  if (expr === 'scheme' && !o.blink) for (const sx of [-1, 1]) { c.fillStyle = '#fff'; c.beginPath(); c.arc(sx * 17, -226, 5.5, 0, 6.2832); c.fill(); c.fillStyle = TOON.ink; c.beginPath(); c.arc(sx * 17, -226, 2.6, 0, 6.2832); c.fill(); }  // tiny manic pupils
   // brows: thin, sharp
   for (const sx of [-1, 1]) {
     const ex = sx * 17;
@@ -397,13 +398,17 @@ function drawVera2(c, x, y, s, o = {}) {
   }
   // nose
   tLine(c, [3, -206, 0, -201], 2.6);
-  // mouth
-  if (expr === 'cool') { tCurve(c, -8, -189, 2, -188, 10, -192, 3); tCurve(c, -4, -185, 0, -183, 5, -185, 1.8, V.lips); }
-  else if (expr === 'fluster') {
+  // mouth (o.mouth = {a, shape} from the lip sync replaces the expression's mouth while she talks)
+  const vTalk = o.mouth && o.mouth.a > .06 && expr !== 'laugh';
+  if (expr === 'fluster') {
     c.fillStyle = 'rgba(255,80,110,.5)'; c.beginPath(); c.ellipse(-24, -204, 11, 6, 0, 0, 6.2832); c.ellipse(24, -204, 11, 6, 0, 0, 6.2832); c.fill();
     for (const sx of [-1, 1]) for (let k = 0; k < 3; k++) tLine(c, [sx * (18 + k * 5), -200, sx * (22 + k * 5), -207], 2);
-    c.beginPath(); c.moveTo(-10, -188); c.bezierCurveTo(-5, -193, -2, -184, 2, -188); c.bezierCurveTo(6, -192, 9, -186, 11, -188); c.lineWidth = 3.2; c.strokeStyle = TOON.ink; c.lineCap = 'round'; c.stroke();
     tShape(c, '#9fe6ff', g => { g.moveTo(46, -246); g.quadraticCurveTo(54, -232, 50, -226); g.quadraticCurveTo(44, -222, 41, -230); g.quadraticCurveTo(40, -236, 46, -246); g.closePath(); }, 2.6);
+  }
+  if (vTalk) talkMouth(c, 1, -190, o.mouth.a, o.mouth.shape, .85);
+  else if (expr === 'cool') { tCurve(c, -8, -189, 2, -188, 10, -192, 3); tCurve(c, -4, -185, 0, -183, 5, -185, 1.8, V.lips); }
+  else if (expr === 'fluster') {
+    c.beginPath(); c.moveTo(-10, -188); c.bezierCurveTo(-5, -193, -2, -184, 2, -188); c.bezierCurveTo(6, -192, 9, -186, 11, -188); c.lineWidth = 3.2; c.strokeStyle = TOON.ink; c.lineCap = 'round'; c.stroke();
   } else {
     const big = expr === 'laugh';
     const m = g => { g.moveTo(-16, -194); g.quadraticCurveTo(0, -189, 17, -196); g.quadraticCurveTo(10, big ? -170 : -178, 0, big ? -170 : -178); g.quadraticCurveTo(-10, big ? -172 : -180, -16, -194); g.closePath(); };
@@ -418,9 +423,19 @@ function drawVera2(c, x, y, s, o = {}) {
   tCurve(c, -30, -276, -10, -284, 14, -280, 3.4, V.hairL); tCurve(c, 38, -260, 44, -240, 44, -220, 2.6, V.hairL);
   // lime bar hairpin on the left
   tShape(c, LAB.glow, g => { g.save(); g.translate(-38, -258); g.rotate(-.5); g.roundRect(-12, -3, 24, 6, 3); g.restore(); }, 2.6);
-  // arms: one hand in the coat pocket, the other holding up a glowing test tube
+  // o.goggles: lab goggles pulled down over the eyes
+  if (o.goggles) {
+    tLine(c, [-44, -228, -52, -236], 6); tLine(c, [44, -228, 52, -236], 6);
+    for (const sx of [-1, 1]) { tShape(c, 'rgba(190,255,120,.55)', g => g.ellipse(sx * 18, -222, 17, 14, 0, 0, 6.2832), 4.4); c.fillStyle = 'rgba(255,255,255,.7)'; c.beginPath(); c.ellipse(sx * 18 - 6, -227, 5, 3, -.4, 0, 6.2832); c.fill(); }
+    tLine(c, [-2, -222, 2, -222], 5);
+  }
+  // arms: one hand in the coat pocket; the other holds a glowing test tube (default), points (o.point: 0..1) or rests (o.tube false)
   tTube(c, [-64, -120, -80, -70, -74, -10], 24, LAB.coat);
-  if (o.tube !== false) {
+  if (o.point) {
+    const k = o.point, ex2 = 64 + 46 * k, ey2 = -120 - 70 * k, hx = 70 + 92 * k, hy = -96 - 150 * k;
+    tTube(c, [64, -120, 64 + 30 * k + 10 * (1 - k), -112 - 30 * k, ex2, ey2, (ex2 + hx) / 2, (ey2 + hy) / 2, hx, hy], 23, LAB.coat, LAB.coatS);
+    tHand(c, hx + 4, hy - 6, 9.5, V.skin, V.skinS, true);
+  } else if (o.tube !== false) {
     tTube(c, [64, -120, 90, -90, 84, -62, 80, -100, 70, -126], 23, LAB.coat, LAB.coatS);
     c.save(); c.translate(66, -164); c.rotate(.18);
     c.shadowColor = LAB.glow; c.shadowBlur = 20; tShape(c, 'rgba(220,255,240,.6)', g => g.roundRect(-7, -34, 14, 50, 7), 3.4); c.restore();
@@ -460,10 +475,11 @@ function drawCleo2(c, x, y, s, o = {}) {
   for (const sx of [-1, 1]) for (let k = 0; k < 3; k++) tLine(c, [sx * (20 + k * 5), -204, sx * (23 + k * 5), -210], 1.8, );
   // eyes: half-lidded
   const lid = { deadpan: .42, sleepy: .7, surprised: 0, smug: .5 }[expr] ?? .42;
-  for (const sx of [-1, 1]) animeEye(c, sx * 17, -220, sx, { skin: K.skin, iris: K.iris, irisD: K.irisD, w: 12.5, h: 14, lid, look: expr === 'smug' ? 2 * sx * -1 : 0 });
+  for (const sx of [-1, 1]) { if (o.blink) closedEye(c, sx * 17, -222, 11, false); else animeEye(c, sx * 17, -220, sx, { skin: K.skin, iris: K.iris, irisD: K.irisD, w: 12.5, h: 14, lid, look: o.look ?? (expr === 'smug' ? 2 * sx * -1 : 0) }); }
   // nose + mouth
   tLine(c, [2, -204, 0, -200], 2.4);
-  if (expr === 'surprised') tEllipse(c, 0, -189, 3.6, 4.6, '#4a1028', 2.8);
+  if (o.mouth && o.mouth.a > .06) talkMouth(c, 0, -190, o.mouth.a * .75, o.mouth.shape, .75);   // she never opens her mouth much
+  else if (expr === 'surprised') tEllipse(c, 0, -189, 3.6, 4.6, '#4a1028', 2.8);
   else if (expr === 'smug') tCurve(c, -5, -189, 2, -188, 7, -192, 2.8);
   else tLine(c, [-5, -189, 5, -189], 2.8);
   // front hair: choppy blunt bangs, jaw-length side locks, one cowlick
@@ -481,10 +497,12 @@ function drawCleo2(c, x, y, s, o = {}) {
   tTube(c, [53, -118, 70, -70, 50, -36, 36, -32, 22, -40], 18, K.tee, '#dcd4ee');
   if (o.remote !== false) {
     tShape(c, '#3a3350', g => g.roundRect(-20, -58, 40, 30, 7), 3.4);
-    c.save(); c.shadowColor = '#ff3355'; c.shadowBlur = 10; tShape(c, '#ff3355', g => g.ellipse(0, -48, 11, 8, 0, 0, 6.2832), 3); c.restore();
-    c.fillStyle = 'rgba(255,255,255,.8)'; c.beginPath(); c.ellipse(-3, -51, 4, 2, 0, 0, 6.2832); c.fill();
+    const pr = o.press || 0, by = -48 + 3 * pr;                                         // o.press 0..1: the button goes down
+    c.save(); c.shadowColor = '#ff3355'; c.shadowBlur = 10 + 30 * pr; tShape(c, '#ff3355', g => g.ellipse(0, by, 11, 8 - 2 * pr, 0, 0, 6.2832), 3); c.restore();
+    c.fillStyle = 'rgba(255,255,255,.8)'; c.beginPath(); c.ellipse(-3, by - 3, 4, 2, 0, 0, 6.2832); c.fill();
   }
   tHand(c, -20, -40, 8.5, K.glove, LAB.glowS); tHand(c, 20, -40, 8.5, K.glove, LAB.glowS);
+  if (o.press) tShape(c, K.glove, g => g.roundRect(4, -58 + 3 * o.press, 14, 9, 4), 3);   // right thumb on the button
   c.restore();
 }
 
