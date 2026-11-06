@@ -17,7 +17,7 @@ Read this whole file before you start. Each daily run makes **tomorrow's** episo
 ## 2. How to make it
 
 Copy the closest previous episode folder to `<slug>/` at the repo root (without its `out/` and `.venv`), run `ln -s ../.venv-daily <slug>/.venv`, and rewrite it; do not edit old episodes.
-- Shorts: template `the-magpies-share/` (shared `common.js`, data-driven `mix.json`, `tools/`).
+- Shorts: template `the-window-cat/` or `the-last-leaf/` (shared `common.js`, data-driven `mix.json` with generic `bed` events, `tools/`). Topics for an international audience (SERIES.md §3): no Korea-specific culture at the core; a picture question in the first 1–2 s; an ending that loops back. `the-magpies-share/` is archived (Korean topic), not a template for topics.
 - Serial: template = the latest serial episode, plus `characters/mina/` (rig, model sheet, `VOICES.md`). If `characters/mina/` does not exist yet, build it first (2.5D rig drawn with `engine.js` strokes: back, side, three-quarter views; stand, walk cycle, sit, hold letter, look up; palette and outfit from SERIES.md §2), render a model sheet, check it, commit it.
 
 Steps (each must pass before the next):
@@ -31,7 +31,7 @@ Steps (each must pass before the next):
 8. Checks on the final file: duration 40–50 s; about −14 LUFS; `blackdetect` finds nothing; ElevenLabs speech-to-text of the final audio matches the script; a contact sheet of the encoded file looks right.
 9. `tools/srt.py`, `poster.jpg`, `CREDITS` (every third-party asset and fact source), `build.sh`.
 
-Style rules (keep all): the watercolour brush look of the previous episodes (one paper sheet, translucent strokes with dry-brush bristles, washes with pooled edges, paper is the white, one accent colour, painting-in as the main motion, no vector outlines, no hard cuts). Shorts safe zones: nothing important above y 180, subtitles at y 1430–1490, nothing important right of x 920. Healing tone. No real brands, logos, or real people. Maps (if any) without borders. Facts checked by web search and listed in CREDITS.
+Characters (people, animals) get a patch of unpainted paper under their faces and bodies so their colours survive dark backgrounds (see `drawCat`, `drawGirl`). Style rules (keep all): the watercolour brush look of the previous episodes (one paper sheet, translucent strokes with dry-brush bristles, washes with pooled edges, paper is the white, one accent colour, painting-in as the main motion, no vector outlines, no hard cuts). Shorts safe zones: nothing important above y 180, subtitles at y 1430–1490, nothing important right of x 920. Healing tone. No real brands, logos, or real people. Maps (if any) without borders. Facts checked by web search and listed in CREDITS.
 
 ## 3. Publish
 
