@@ -43,6 +43,8 @@ Style rules (keep all): the watercolour brush look of the previous episodes (one
 
 ## 4. When something fails
 
+- **No Metricool tools in the session** (the scheduled task may run without connectors): still make, check, commit and push the episode, log it as `ready, not scheduled (no Metricool connector)` with the media URL, and say so first in the final message so the owner can schedule it or fix the connector.
+
 - One fix round per problem. If the episode still fails a check, do **not** schedule it. Schedule the oldest ready episode in `channel/buffer/` instead (move it out of the buffer), and log both.
 - If there is no buffer episode, log the failure and say so in the final message.
 - If ElevenLabs credits left are under 2,000, reuse existing effects, keep lines short, and note it in the log.
