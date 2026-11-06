@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Lab series character design v2</title>
+<style>html, body { margin: 0; background: #0d1a18; } canvas { display: block; }</style>
+</head>
+<body>
+<canvas id="c" width="1440" height="2560"></canvas>
+<script src="toon.js"></script>
+<script src="lab.js"></script>
+<script>
+'use strict';
+const W = 1440, H = 2560, c = document.getElementById('c').getContext('2d');
+const GL = LAB.glow;
+function label(s, x, y, size, color, align, font, weight) { tText(c, s, x, y, size, color || TOON.white, font || '"Fredoka"', align, weight); }
+function glowText(s, x, y, size) {
+  c.save(); c.font = `${size}px "Bungee"`; c.textAlign = 'center'; c.textBaseline = 'middle';
+  c.shadowColor = GL; c.shadowBlur = size * .45; c.fillStyle = GL; c.fillText(s, x, y); c.restore();
+  c.save(); c.font = `${size}px "Bungee"`; c.textAlign = 'center'; c.textBaseline = 'middle';
+  c.lineWidth = size * .09; c.strokeStyle = TOON.ink; c.lineJoin = 'round'; c.strokeText(s, x, y); c.fillStyle = '#e9ffc4'; c.fillText(s, x, y); c.restore();
+}
+function labRoom(x, y, w, h, seed) {
+  c.save(); c.beginPath(); c.roundRect(x, y, w, h, 28); c.clip();
+  const g = c.createLinearGradient(0, y, 0, y + h); g.addColorStop(0, '#1d3b35'); g.addColorStop(1, '#0f2420'); c.fillStyle = g; c.fillRect(x, y, w, h);
+  // brick lines (basement)
+  c.strokeStyle = 'rgba(0,0,0,.18)'; c.lineWidth = 3;
+  for (let r = 0; r * 46 < h; r++) { c.beginPath(); c.moveTo(x, y + r * 46); c.lineTo(x + w, y + r * 46); c.stroke(); for (let k = 0; k * 120 < w; k++) { const bx = x + k * 120 + (r % 2) * 60; c.beginPath(); c.moveTo(bx, y + r * 46); c.lineTo(bx, y + r * 46 + 46); c.stroke(); } }
+  // pipes
+  tShape(c, '#5d6e7a', gg => gg.rect(x, y + 40, w, 22), 4); tShape(c, '#5d6e7a', gg => gg.rect(x + w - 120, y + 40, 22, h), 4);
+  for (const px of [x + 300, x + 760]) tShape(c, '#7a8a96', gg => gg.rect(px, y + 34, 16, 34), 3);
+  // chalkboard plan
+  const bx0 = x + 500;
+  tShape(c, '#203a2a', gg => gg.roundRect(bx0, y + 110, 400, 250, 10), 6);
+  c.save(); c.strokeStyle = '#8a5a2c'; c.lineWidth = 12; c.strokeRect(bx0, y + 110, 400, 250); c.restore();
+  tShape(c, null, gg => gg.roundRect(bx0 - 6, y + 104, 412, 262, 12), 4);
+  label('THE PLAN', bx0 + 200, y + 150, 34, '#f3f7ee', 'center', '"Fredoka"');
+  label('1. BUILD DEATH RAY', bx0 + 40, y + 205, 30, '#f3f7ee', 'left');
+  label('2. RULE THE WORLD', bx0 + 40, y + 250, 30, '#f3f7ee', 'left');
+  label('3. PAY RENT', bx0 + 40, y + 295, 30, '#f3f7ee', 'left');
+  c.strokeStyle = '#ff8fb1'; c.lineWidth = 4; c.beginPath(); c.ellipse(bx0 + 140, y + 296, 112, 26, -.04, 0, 6.2832); c.stroke();
+  // hanging bulb
+  // shelf of glowing beakers on the right
+  if (seed !== 1) {
+  tShape(c, '#3a4a46', gg => gg.rect(x + w - 420, y + 200, 270, 14), 4);
+  [[GL, 40], ['#ff4fa3', 56], ['#7ef0ff', 34], [GL, 48]].forEach(([col, hh], i) => {
+    const bx = x + w - 400 + i * 62; c.save(); c.shadowColor = col; c.shadowBlur = 16;
+    tShape(c, col, gg => gg.roundRect(bx, y + 200 - hh, 34, hh, 8), 3.4); c.restore();
+  });
+  }
+  c.restore();
+  c.save(); c.beginPath(); c.roundRect(x, y, w, h, 28); c.lineWidth = 4; c.strokeStyle = '#2b5a4f'; c.stroke(); c.restore();
+}
+function bench(x, w, top) {
+  tShape(c, '#4b5a63', gg => gg.rect(x, top, w, 30), 5);
+  c.fillStyle = '#26323a'; c.fillRect(x, top + 32, w, 120);
+  tLine(c, [x, top + 30, x + w, top + 30], 5);
+}
+function tile(fn, cx, cy, s, headY, opts, name) {
+  c.save(); c.beginPath(); c.roundRect(cx - 130, cy - 150, 260, 290, 22); c.fillStyle = '#1d3b35'; c.fill(); c.clip();
+  fn(c, cx, cy + headY * s / 100, s, opts); c.restore();
+  label(name, cx, cy + 170, 30, '#cfe9e0');
+}
+
+toonFonts().then(() => {
+  c.fillStyle = '#0d1a18'; c.fillRect(0, 0, W, H); drawStars(c, W, 220, 60, 3);
+  glowText('THE LAB', W / 2, 92, 92);
+  label('CHARACTER DESIGN  ·  v2  ·  working title', W / 2, 180, 30, '#b6e3d4');
+
+  labRoom(60, 230, 1320, 800, 1);
+  const T = 930;
+  c.save(); c.beginPath(); c.roundRect(60, 230, 1320, 800, 28); c.clip();
+  drawVera2(c, 380, T, 200);
+  drawCleo2(c, 1080, T, 200);
+  bench(40, 1360, T); c.restore();
+  label('DR. VERA VOLT', 100, 980, 38, TOON.white, 'left');
+  label('looks composed · wants the world', 100, 1016, 26, '#cfe9e0', 'left');
+  label('CLEO', 1340, 980, 38, TOON.white, 'right');
+  label('deadpan · presses the red button to see what happens', 1340, 1016, 26, '#cfe9e0', 'right');
+
+  const P = (y0, title) => { c.save(); c.beginPath(); c.roundRect(60, y0, 1320, 480, 28); c.fillStyle = '#132b27'; c.fill(); c.lineWidth = 4; c.strokeStyle = '#2b5a4f'; c.stroke(); c.restore(); label(title, 100, y0 + 45, 30, GL, 'left'); };
+  P(1060, 'VERA  —  the calm face is a lie');
+  [['cool', 'cool'], ['scheme', 'scheming'], ['laugh', 'evil laugh'], ['fluster', 'praised (cannot cope)']].forEach(([e, n], i) => tile(drawVera2, 250 + i * 315, 1310, 150, 222, { expr: e, tube: false }, n));
+  P(1570, 'CLEO  —  never raises her voice');
+  [['deadpan', 'deadpan'], ['sleepy', 'sleepy'], ['smug', 'smug'], ['surprised', 'surprised (rare)']].forEach(([e, n], i) => tile(drawCleo2, 250 + i * 315, 1810, 150, 198, { expr: e, remote: false }, n));
+
+  label('PALETTE', 100, 2110, 28, TOON.white, 'left');
+  [LAB2.vera.hair, LAB2.vera.skin, LAB2.vera.iris, LAB2.vera.top, LAB.coat, LAB.glow, LAB2.cleo.hair, LAB2.cleo.iris, LAB2.cleo.apron, '#ff3355'].forEach((col, j) => tShape(c, col, gg => gg.arc(124 + j * 60, 2168, 22, 0, 6.2832), 3.5));
+  label('Kept from the references: the feel (cool blonde scientist, deadpan bob-haired', 100, 2240, 24, '#cfe9e0', 'left');
+  label('assistant, flat colour, heavy outline).', 100, 2276, 24, '#cfe9e0', 'left');
+  label('Changed on purpose: hair cut and colour, eye colour, outfits, accessories.', 100, 2320, 24, '#cfe9e0', 'left');
+  label('Waist-up behind the lab bench. Voices: Voice Design (new).', 100, 2364, 24, '#cfe9e0', 'left');
+  label('Lab accent = acid-green glow. Same universe as Void Mart.', 100, 2408, 24, '#cfe9e0', 'left');
+  window.READY = true;
+});
+</script>
+</body>
+</html>
