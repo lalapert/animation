@@ -1,0 +1,18 @@
+{
+  "brush1":      [1.5, "a wet watercolor brush stroke sweeping across textured cotton paper, close, quiet, soft bristle swish"],
+  "brush2":      [1.5, "a soft round watercolor brush dabbing and dragging across rough paper, close and quiet"],
+  "brush3":      [2.0, "a broad flat wash brush gliding across wet paper in one slow stroke, gentle swish"],
+  "brush_long":  [5.0, "slow continuous watercolor painting, several soft brush strokes on paper one after another, close and intimate, quiet"],
+  "pen":         [1.2, "a dip pen writing a short word on textured paper, light quiet scratching"],
+  "mist":        [1.6, "a soft airy breathy whoosh, gentle, like air moving over a sheet of paper"],
+  "page":        [1.5, "a large sheet of thick watercolor paper slid over a desk and laid down flat, soft paper rustle"],
+  "bloom":       [1.5, "a single drop of water falls onto wet watercolor paper and the paint spreads, tiny soft splash"],
+  "hang":        [1.0, "a small soft fruit tied onto a hanging cotton string, gentle tap and a tiny rope creak, quiet outdoors"],
+  "wind_autumn": [8.0, "gentle cold autumn wind under the wooden eaves of a traditional house, a few dry leaves, calm, no music"],
+  "wind_bell":   [3.0, "a small bronze wind bell hanging from temple eaves rings softly once in the breeze, long gentle decay"],
+  "magpie_call": [2.0, "an oriental magpie chattering call outdoors, a few harsh cheerful kak kak notes, close"],
+  "wings_land":  [1.5, "a medium bird flying in and landing on a wooden beam, several wing flaps then settling"],
+  "wings_off":   [1.5, "a medium bird taking off quickly from close by, strong wing flaps flying away"],
+  "peck":        [1.0, "a bird pecking twice at a soft fruit, small soft taps"],
+  "snow":        [8.0, "very quiet snowfall in a courtyard at dusk, soft hush, faint distant wind, no music"]
+}

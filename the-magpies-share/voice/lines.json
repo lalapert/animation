@@ -1,0 +1,55 @@
+{
+ "voice_id": "pFZP5JQG7iQjIQuC4Bku",
+ "voice_name": "Lily",
+ "model_id": "eleven_multilingual_v2",
+ "voice_settings": {
+  "stability": 0.6,
+  "similarity_boost": 0.75,
+  "style": 0.12,
+  "use_speaker_boost": true,
+  "speed": 0.9
+ },
+ "lines": [
+  {
+   "id": "L1",
+   "text": "Twelve persimmons, peeled and hung to dry.",
+   "sub": "Twelve persimmons,\npeeled and hung to dry."
+  },
+  {
+   "id": "L2",
+   "text": "In Korea, they're called gotgam.",
+   "sub": "In Korea, they're called gotgam."
+  },
+  {
+   "id": "L3",
+   "text": "No fire, no oven. Just cold air, and weeks of waiting.",
+   "sub": "No fire, no oven.\nJust cold air, and weeks of waiting."
+  },
+  {
+   "id": "L4",
+   "text": "Day by day, they darken, and soften.",
+   "sub": "Day by day, they darken, and soften."
+  },
+  {
+   "id": "L5",
+   "text": "Then one morning, a magpie took one.",
+   "sub": "Then one morning, a magpie took one."
+  },
+  {
+   "id": "L6",
+   "text": "Here, people leave the last few persimmons on the tree for the birds.",
+   "sub": "Here, people leave the last few persimmons\non the tree for the birds."
+  },
+  {
+   "id": "L7",
+   "text": "Kka-chi-bap. The magpie's share.",
+   "sub": "Kkachi-bap. The magpie's share.",
+   "asr": "Kachibap, the magpies share"
+  },
+  {
+   "id": "L8",
+   "text": "By the first snow, the rest had turned sweet.",
+   "sub": "By the first snow,\nthe rest had turned sweet."
+  }
+ ]
+}

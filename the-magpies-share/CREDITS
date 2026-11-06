@@ -1,0 +1,14 @@
+The Magpie's Share: credits and licences
+=========================================
+Picture: drawn entirely in code for this film (engine.js, common.js, film.js), headless Chromium.
+Style rules: "Watercolor Brush" style guide of the Lemo-Opuscar library (MIT); no code or artwork from it is used.
+Narration: ElevenLabs text-to-speech, premade voice "Lily", eleven_multilingual_v2 (account holder's plan; ElevenLabs terms apply).
+Sound effects: ElevenLabs Sound Effects, generated for this film (sfx/prompts.json). Room tone synthesised.
+Music: original score (tools/score.py) played with CC0 samples:
+  harp, glockenspiel, hand chimes: VCSL (Versilian Community Sample Library, CC0 1.0);
+  flute, viola and cello sections, violin and cello pizzicato: VSCO 2 Community Edition (CC0 1.0);
+  kalimba: FreePats (CC0 1.0).
+Fonts: Cormorant Garamond, Caveat, IBM Plex Mono (SIL OFL 1.1, texts in fonts/).
+Facts: gotgam air-dries for 4–8 weeks; the white powder is sugar (mostly glucose):
+  https://en.wikipedia.org/wiki/Dried_persimmon · https://www.koreascience.or.kr/article/JAKO199603041534343.page
+The person publishing this film is responsible for the materials used in it and for the terms of the services above.
