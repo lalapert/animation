@@ -1,0 +1,27 @@
+{
+ "MAGS": {
+  "voice_id": "WkUURyKtbzB9IM50qGdP",
+  "name": "VM MAGS",
+  "from_preview": 3
+ },
+ "Dennis": {
+  "voice_id": "4vRkwG6IFLYddvxhEKmU",
+  "name": "VM Dennis",
+  "from_preview": 2
+ },
+ "Vera": {
+  "voice_id": "buRySvQEB2e8Dcglym6i",
+  "name": "LAB Vera Volt",
+  "from_preview": 1
+ },
+ "Cleo": {
+  "voice_id": "biUhGlVm4NoNe58piPit",
+  "name": "LAB Cleo",
+  "from_preview": 2
+ },
+ "Bright": {
+  "voice_id": "g5QiE8eJceeEcuPGC2IM",
+  "name": "LAB Sterling Bright",
+  "from_preview": 1
+ }
+}
