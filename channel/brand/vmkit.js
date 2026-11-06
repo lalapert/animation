@@ -136,9 +136,9 @@ function toScreen(cam, sk, x, y) { const [cx, cy, z0, z1] = cam, z = lerp(z0, z1
 const vmShotsFrom = n => TL.SHOTS.filter(s => s[0] === n).map(s => s[1]);
 
 // ---------------------------------------------------------------- frame layout: picture on top, subtitle band below
-// The scene is drawn on a full 1080x1920 canvas as before; the frame shows its rows VIEW.off..VIEW.off+VIEW.h at the top,
-// and the English subtitles sit in their own dark band underneath, so they never cover the picture.
-const VIEW = { off: 240, h: 1360, band: '#0d0720' };
+// Default (owner's choice, 11/7): the full picture with subtitles burned in at the bottom, as in episode 1's first cut.
+// Alternative 'band': the frame shows scene rows VIEW.off..VIEW.off+VIEW.h at the top and the subtitles in a dark band underneath.
+const VIEW = { mode: 'full', off: 240, h: 1360, band: '#0d0720' };   // mode 'band' puts the subtitles in a band under the picture
 function wrapLines(g, text, maxW) {
   const out = [];
   for (const para of text.split('\n')) {
@@ -165,6 +165,7 @@ function bandSubtitle(g, t) {
 }
 function composeFrame(out, scene, t) {
   out.setTransform(1, 0, 0, 1, 0, 0);
+  if (VIEW.mode === 'full') { out.drawImage(scene, 0, 0); subtitle(out, t); return; }   // full picture, subtitles burned in at the bottom
   out.fillStyle = VIEW.band; out.fillRect(0, 0, W, H);
   out.drawImage(scene, 0, VIEW.off, W, VIEW.h, 0, 0, W, VIEW.h);
   out.fillStyle = 'rgba(255,255,255,.08)'; out.fillRect(0, VIEW.h, W, 3);

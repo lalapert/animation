@@ -111,9 +111,9 @@ function drawScene(t) {
     const z = lerp(.9, 1.25, ease(sk));
     drawSpace(c, t, z, 540, 820);
     const k = lerp(.55, 2.6, Math.pow(sk, 2.2));
-    drawStoreExterior(c, 540, 1120 - (k - .55) * 60, k);
+    drawStoreExterior(c, 540, 1060 - (k - .55) * 60, k);
     const la = clamp(1 - (sk - .6) / .3);
-    c.save(); c.globalAlpha = la; drawLogo(c, 540, 520, 74, { glow: .55 }); tText(c, 'EPISODE 1  ·  FIRST SHIFT', 540, 610, 34, '#f4eaff'); c.restore();
+    c.save(); c.globalAlpha = la; drawLogo(c, 540, 330, 74, { glow: .55 }); tText(c, 'EPISODE 1  ·  FIRST SHIFT', 540, 420, 34, '#f4eaff'); c.restore();
     return;
   }
   if (n === 'POV') {

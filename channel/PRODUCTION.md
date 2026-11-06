@@ -1,53 +1,76 @@
-# Paper Almanac — daily production runbook
+# Void Mart universe — production runbook (toon series)
 
-> **PAUSED (2026-11-06). Do not run.** The channel is moving to the toon sitcom *Void Mart* (see `SERIES.md`). This watercolour runbook will be replaced before the scheduled task is turned back on. If a run starts anyway, make nothing, schedule nothing, and report that the runbook is paused.
+Read this whole file before you start. Report progress and the result in Korean. Owner: 연 (call them 작가님).
 
-Read this whole file before you start. Each daily run makes **tomorrow's** episode (dates in Asia/Seoul) and schedules it for **09:00 KST**. Report progress and the result in Korean.
+Each run makes **one** episode, the one whose series is closest to running out of banked episodes, and schedules it on its slot. Goal: **every series always has 2 finished episodes waiting beyond the next post** (except at the end of a season).
 
-## 0. Setup (fresh container)
+## 0. Setup (fresh container only)
 
-1. Repository: `lalapert/animation`, branch `claude/wonderful-carson-ck1yo6` (the default branch; push only here). If it is not in the session, call `add_repo` (owner `lalapert`, repo `animation`, access `push`) and clone it.
-2. `sh channel/setup_daily.sh`: Python venv (numpy, scipy, soundfile, pillow) at `.venv-daily/` and the CC0 instrument samples (~1.1 GB) in `~/lemo-assets`. Our own scripts only; never run code from other repositories.
-3. Tools that are already there: Node + Playwright + Chromium (`require('playwright')`), ffmpeg 6.1 (our `tools/mux.sh` handles it), the ElevenLabs key (injected by the network proxy for `api.elevenlabs.io`; scripts send `xi-api-key: proxy-injected`), the Metricool connector.
+1. Repository `lalapert/animation`, branch `claude/wonderful-carson-ck1yo6` (push only here). If it is missing, `add_repo` (owner `lalapert`, repo `animation`, access `push`) and clone it.
+2. `sh channel/setup_daily.sh`: Python venv (numpy, scipy, soundfile, pillow) at `.venv-daily/` and the CC0 instrument samples in `~/lemo-assets`. Our own scripts only; never run code from other repositories.
+3. Already there: Node + Playwright + Chromium, ffmpeg 6.1, the ElevenLabs key (injected by the proxy for `api.elevenlabs.io`; scripts send `xi-api-key: proxy-injected`), the Metricool connector.
 
 ## 1. What to make
 
-- Calendar: `channel/SERIES.md` §4. After the listed dates, keep the rotation: **serial on Sun/Tue/Thu/Sat**, **shorts on Mon/Wed/Fri**. Serial episodes go in Season 1 order (§2 table, one place = 1–2 episodes). Shorts go in §3 order, then new seasonal ideas (one object, one season, one turn), never repeating a subject.
-- Check `channel/LOG.md` and the Metricool schedule for tomorrow first. If tomorrow already has a post, stop and log "already scheduled".
-- Length **40–50 s** (never over 50). Paid external APIs: ElevenLabs only (voice, effects, speech-to-text); no other paid services (vidIQ, Newtake, etc.), 1080×1920, 60 fps, English narration + burned-in English subtitles + `.srt`.
+| Series | Plan | Slots (KST) | Template folder |
+|---|---|---|---|
+| Void Mart | `channel/SEASON1.md` §4 (15 episodes, 11/14 → 12/31) | Tue, Thu 09:00 (and the 11/14 Sat premiere) | the latest `vmNN-*` folder (now `vm02-exact-change/`) |
+| The Lab | `channel/LAB_SERIES.md` §2 (20 episodes, 11/28 → 2/1) | Sat, Mon 09:00 | none yet: build `channel/brand/labkit.js` first (§2.3) |
+| Horror (*STILL RECORDING*) | `channel/HORROR_SERIES.md` | not decided | do not make yet (waiting for the owner's decisions in §5 of that file) |
 
-## 2. How to make it
+1. For each series, list its next post dates and which of them already have a scheduled Metricool post or a finished folder. Banked = finished, not yet published.
+2. Pick the series with the fewest banked episodes (ties: the earliest next slot). If every series already has 2 banked, make nothing and log "buffer full".
+3. Never post on Fridays. Never post two episodes of one series on the same day.
+4. Use the episode list in the plan in order; rewrite the line only if it no longer fits (log why).
 
-Copy the closest previous episode folder to `<slug>/` at the repo root (without its `out/` and `.venv`), run `ln -s ../.venv-daily <slug>/.venv`, and rewrite it; do not edit old episodes.
-- Shorts: template `the-window-cat/` or `the-last-leaf/` (shared `common.js`, data-driven `mix.json` with generic `bed` events, `tools/`). Topics for an international audience (SERIES.md §3): no Korea-specific culture at the core; a picture question in the first 1–2 s; an ending that loops back. `the-magpies-share/` is archived (Korean topic), not a template for topics.
-- Serial: template = the latest serial episode (or `the-last-leaf/` for the first one), plus `characters/mina/` (`mina.js` with `drawMina`/`drawMinaHead`, `model_sheet.jpg`, `VOICES.md`; load it with a relative `<script src="../characters/mina/mina.js">`). Keep her design exactly as the model sheet. If `characters/mina/` does not exist yet, build it first (2.5D rig drawn with `engine.js` strokes: back, side, three-quarter views; stand, walk cycle, sit, hold letter, look up; palette and outfit from SERIES.md §2), render a model sheet, check it, commit it.
+## 2. How to make a toon episode
 
-Steps (each must pass before the next):
-1. `TREATMENT.md`: three candidate structures and the choice, logline + setup/turn/ending, shot list (framing, move, duration, why), beat sheet, cue map (tempo, bars), sound table, facts with sources.
-2. Voice: `voice/lines.json` → `python3 tools/voice_eleven.py` → `python3 tools/asr_eleven.py` must exit 0 (use an `asr` field only for a correct pronunciation spelled differently). Shorts narrator: ElevenLabs "Lily" (`pFZP5JQG7iQjIQuC4Bku`, eleven_multilingual_v2, speed 0.9). Serial: voices in `characters/mina/VOICES.md`. Numbers spelled out in TTS text, digits in subtitles.
-3. `tools/timeline.py`: single source of truth. Subtitles hold ≥ max(1.8 s, speech + 0.6 s) and never overlap (the script asserts it). Title card ≥ 4 s.
-4. Sound effects: `sfx/prompts.json` → `python3 tools/sfx_eleven.py <new names>`; reuse existing effects when they fit.
-5. Picture `film.js`: render stills with `node tools/render.cjs stills out/review t…` and **look at them** (contact sheet with `tools/sheet.py`). Fix what you see. One fix round, then check again.
-6. `node tools/render.cjs events`, `tools/score.py` (balance stems with `tools/score_gain.json` to roughly: lead −30, accompaniment −33, pads −36 dB active RMS; vary instruments between episodes), `mix.json` + `tools/mix.py`.
-7. `node tools/render.cjs video 3`, `sh tools/mux.sh out/video.mp4 out/mix.wav <slug>.mp4`.
-8. Checks on the final file: duration 40–50 s; about −14 LUFS; `blackdetect` finds nothing; ElevenLabs speech-to-text of the final audio matches the script; a contact sheet of the encoded file looks right.
-9. `tools/srt.py`, `poster.jpg`, `CREDITS` (every third-party asset and fact source), `build.sh`.
+### 2.1 Folder
+Copy the template folder to `<prefix><NN>-<slug>/` (Void Mart: `vm03-dennis/`), without `out/`, `voice/out/` and `.venv`; `ln -s ../.venv-daily <folder>/.venv`; copy over effects you reuse from earlier `sfx/out/`. Do not edit old episodes.
 
-Characters (people, animals) get a patch of unpainted paper under their faces and bodies so their colours survive dark backgrounds (see `drawCat`, `drawGirl`). Style rules (keep all): the watercolour brush look of the previous episodes (one paper sheet, translucent strokes with dry-brush bristles, washes with pooled edges, paper is the white, one accent colour, painting-in as the main motion, no vector outlines, no hard cuts). Shorts safe zones: nothing important above y 180, subtitles at y 1430–1490, nothing important right of x 920. Healing tone. No real brands, logos, or real people. Maps (if any) without borders. Facts checked by web search and listed in CREDITS.
+### 2.2 Writing (the part that decides views)
+- English only, everywhere (`channel/tools/check_english.py`). No Korea-specific culture, places or names.
+- **0–2 s: the hook is a picture.** Open on the weird customer or the weird thing, never on greetings or explanations.
+- **At least 3 laughs in 45 s, at least one of them visual** (something you get with the sound off).
+- Deadpan Rae (rules), delighted Pip (kindness makes it worse), MAGS (every disaster is a sales opportunity); one-off customers carry the episode's idea.
+- End on a button (the incident counter, a MAGS line, a sip) that loops into the first frame.
+- Length 40–60 s; up to 75 s only for big story episodes (midpoint, finale).
+- Season threads and easter eggs: `SEASON1.md` §3, `LAB_SERIES.md` §2, `UNIVERSE.md` (one egg every 2–3 episodes per series, never explained).
+- US calendar: Thanksgiving 11/26, Black Friday 11/27 (Void Mart 12/1 is "the day after Black Friday"), Christmas Eve, New Year's Eve.
+
+### 2.3 Picture
+- Shared kit: `channel/brand/toon.js` (characters: `drawRae2`, `drawPip2`, `drawMags`, `drawDennis`; options `expr`, `mouth`, `blink`, `look`, `mug`, `hold`, `wave`, `wavePhase`, `reach`, `sweat`) and `channel/brand/vmkit.js` (store set, cameras `VMCAM`, `mouthFor` lip sync from character timings, `blinkAt`, burned-in subtitles, `composeFrame`). The Lab: `channel/brand/lab.js` (`drawVera2`, `drawCleo2`, `drawBright`); if `channel/brand/labkit.js` (basement-lab set, cameras, the same lip-sync/subtitle helpers) does not exist, build it first from `vmkit.js` and the look of `channel/brand/out/lab_design_v2.jpg`, render a test sheet, check it, commit it.
+- `film.js` holds only this episode: props, shots, character states per shot, screen-space effects, `window.EV` sound cues.
+- **Every hand gesture comes with its arm.** No floating hands: if a hand reaches, holds or waves, that arm is drawn to it (see `reachArm` in `vm01-first-shift/film.js`, `hold` and `wave` in `drawPip2`). Count the hands in every still.
+- Subtitles: burned in at the bottom of the picture (`VIEW.mode = 'full'`, the owner's choice), coloured by speaker. Shorts safe zones: nothing important above y 180 or right of x 960 near the bottom.
+- New one-off characters are drawn in the same anime-flat style (heavy outline, flat colour, one shade).
+- Render stills across the whole episode (`node tools/render.cjs stills out/review t…`, `tools/sheet.py`) and **look at them**. Fix what you see (one round), look again.
+
+### 2.4 Voices, sound, music
+- Cast and settings: `channel/voices/VOICES.md`. Rae is Kar2 pitched 1.5 semitones down (the `pitch` field in `voice/lines.json` does it). One-off customers: an ElevenLabs stock voice, never the same one two episodes running. Model `eleven_v4`.
+- `python3 tools/voice_eleven.py` → `python3 tools/asr_eleven.py` must exit 0 (an `asr` field only for a correct read spelled differently, e.g. Rae/Ray).
+- `tools/timeline.py`: gaps before each line (comic timing), shots, events; subtitles never overlap (it asserts).
+- Effects: `sfx/prompts.json` → `python3 tools/sfx_eleven.py <new names>`; reuse earlier ones.
+- `tools/score.py`: the show's jazzy bed (contrabass pizzicato walk, brushes, vibraphone), silence under punchlines, a xylophone button at the end; MAGS always gets the glockenspiel jingle. Balance with `tools/score_gain.json`.
+- `node tools/render.cjs events`, `tools/mix.py`, `node tools/render.cjs video 3`, `sh tools/mux.sh out/video.mp4 out/mix.wav <folder>.mp4`, `tools/srt.py`, `poster.jpg`, `CREDITS`, `build.sh`.
+
+### 2.5 Checks on the final file (all must pass)
+Duration in range; about −14 LUFS; `blackdetect` finds nothing; ElevenLabs speech-to-text of the final audio contains every line (bracketed sound tags like `[chime]` are fine); `check_english.py` passes on `film.js`, `timeline.js`, `voice/lines.json`, the `.srt`, `CREDITS` and the post text; a contact sheet of the encoded file looks right (count the hands).
 
 ## 3. Publish
 
-1. Commit `<slug>/` and push to `claude/wonderful-carson-ck1yo6` (retry with backoff on network errors).
-2. Media URL: `https://raw.githubusercontent.com/lalapert/animation/<commit sha>/<slug>/<slug>.mp4`. Check it returns 200 and the full size.
-3. Brand: "Paper Almanac" (id 7923229, holds the channel's YouTube account; confirm with `getBrandSettings`). **Provider: YouTube only.** Never post to Instagram, Facebook, Threads or any other brand.
-4. `createScheduledPost`: date tomorrow 09:00 `Asia/Seoul`, `autoPublish: true`, `draft: false`, text = 2–4 short lines + hashtags (end with `#shorts`), `youtubeData` = {title ≤ 100 chars ending with `#shorts`, type `short`, privacy `public`, tags, category `FILM_ANIMATION`, madeForKids false, isAiGeneratedContent false}.
-5. Append to `channel/LOG.md`: date, slug, track, duration, LUFS, checks, Metricool post id, ElevenLabs credits left, anything that went wrong. Commit and push.
+1. Commit the folder and push (retry with backoff on network errors).
+2. Media URL: `https://raw.githubusercontent.com/lalapert/animation/<commit sha>/<folder>/<folder>.mp4`; check it returns 200 and the full size.
+3. Metricool brand **7923229** (YouTube @thevoidmart + Instagram voidmartshow). Never any other brand.
+4. `createScheduledPost`: the series slot (09:00 `Asia/Seoul`), `autoPublish: true`, `draft: false`, providers youtube + instagram.
+   - text: 2–3 short English lines + `Void Mart, episode N.` (or `The Lab, episode N.`) + `#animation #cartoon #scifi #comedy #shorts`
+   - youtubeData: title ≤ 100 chars ending `| Void Mart Ep N #shorts`, type `short`, privacy `public`, tags, category `FILM_ANIMATION`, madeForKids false, isAiGeneratedContent false
+   - instagramData: type `REEL`, showReelOnFeed true, isAiGenerated true
+5. Append to `channel/LOG.md` (Void Mart / The Lab tables): date, folder, series, length, LUFS, checks, Metricool post id, ElevenLabs credits used and left, anything that went wrong. Commit and push.
 
 ## 4. When something fails
 
-- **No Metricool tools in the session** (the scheduled task may run without connectors): still make, check, commit and push the episode, log it as `ready, not scheduled (no Metricool connector)` with the media URL, and say so first in the final message so the owner can schedule it or fix the connector.
-
-- One fix round per problem. If the episode still fails a check, do **not** schedule it. Schedule the oldest ready episode in `channel/buffer/` instead (move it out of the buffer), and log both.
-- If there is no buffer episode, log the failure and say so in the final message.
-- If ElevenLabs credits left are under 2,000, reuse existing effects, keep lines short, and note it in the log.
-- Never change environment settings, permissions or other scheduled tasks; never delete posts.
+- No Metricool tools in the session: still make, check, commit and push; log `ready, not scheduled (no Metricool connector)` with the media URL; say so first in the final message.
+- One fix round per problem. If a check still fails, do not schedule; log it and say so.
+- ElevenLabs credits under 5,000: reuse effects, keep retakes to one, say so in the log.
+- Never change environment settings, permissions or other scheduled tasks; never delete posts (to cancel, set `draft: true` and tell the owner).

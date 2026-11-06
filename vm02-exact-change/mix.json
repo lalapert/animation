@@ -1,0 +1,18 @@
+{
+  "room_db": -60,
+  "voice_over_music_db": 12,
+  "beds": {},
+  "foley": {
+    "whoosh":  { "fx": "whoosh", "g": -16, "fin": 0.01, "fout": 0.15 },
+    "sizzle":  { "fx": "sizzle", "g": -11, "align": true, "fin": 0.002, "fout": 0.4 },
+    "beep":    { "fx": "scan_beep", "g": -18, "align": true, "dur": 0.3, "fin": 0.002, "fout": 0.08 },
+    "sparkle": { "fx": "sparkle", "g": -18, "fin": 0.01, "fout": 0.3 },
+    "ignite":  { "fx": "ignite", "g": -13, "fin": 0.01, "fout": 0.3 },
+    "pat":     { "fx": "pat", "g": -13, "fin": 0.01, "fout": 0.2 },
+    "blip":    { "fx": "mags_blip", "g": -17, "align": true, "fin": 0.002, "fout": 0.15 },
+    "fall":    { "fx": "fall", "g": -14, "fin": 0.01, "fout": 0.1 },
+    "thud":    { "fx": "thud", "g": -8, "align": true, "fin": 0.002, "fout": 0.5 },
+    "flip":    { "fx": "flip", "g": -12, "align": true, "fin": 0.002, "fout": 0.15 },
+    "sip":     { "fx": "sip", "g": -12, "fin": 0.02, "fout": 0.2 }
+  }
+}

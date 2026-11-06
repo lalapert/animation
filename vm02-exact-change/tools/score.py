@@ -1,9 +1,7 @@
-"""Original score for Void Mart 1 "First Shift" (F major, 120 BPM): a jazzy sitcom bed that gets out of the way of the jokes.
-Cosmic vibes shimmer on the void; a bass-and-brushes bump as Pip arrives; silence under "We hire someone new.";
-tiptoe pizzicato for the peel; a store jingle under MAGS; silence before "Please see previous answer.";
-a muted-trumpet droop on the frozen grin; low brass and timpani for the thing at the door; a xylophone button on the flip.
-Contrabass pizzicato, vibraphone, glockenspiel, xylophone, violins pizzicato, muted trumpet, tuba, timpani, drum kit, triangle:
-CC0 samples (VSCO 2 CE, VCSL, FreePats).
+"""Original score for Void Mart 2 "Exact Change" (F major, 120 BPM): the show's jazzy bed, out of the way of the jokes.
+A xylophone run and crash when the star hits; silence under "Your hair is on fire."; the MAGS jingle;
+a falling trombone and timpani for the moon; a floating vibraphone arpeggio while things orbit; silence under "Expired.";
+a xylophone button at the end. CC0 samples (VSCO 2 CE, VCSL, FreePats).
   .venv/bin/python tools/score.py            → out/music.wav
 """
 import json, os, sys
@@ -66,53 +64,41 @@ def vchord(t, names, beats, vel=.36, inst="vibraphone"):
 
 
 FM7, BB7, C7, DM7, GM7 = ["F3", "A3", "C4", "E4"], ["Bb3", "D4", "F4", "A4"], ["C3", "E3", "G3", "Bb3"], ["D3", "F3", "A3", "C4"], ["G3", "Bb3", "D4", "F4"]
-# 0–2: the void. A bowed shimmer, then a pickup into Pip's entrance
-vchord(0.05, ["F4", "A4", "C5", "E5"], 3.6, .34, "vibraphone_bowed")
-N(0.1, "glockenspiel", "C6", 2, .2, .3, 2.0)
-for k, n in enumerate(["C2", "D2", "E2"]): N(1.25 + k * B / 2, "contrabass_pizz", n, .45, .55, -.1, .2, stem="bass")
-# 2–15: the bump, then a light bed under the first exchange
-t0 = V["L1"]["t"]
-perc(t0, "drum_kit", "kick_drum_left", .55); perc(t0, "drum_kit", "crash_right", .32, .3)
-vchord(t0, FM7, 2, .42); N(t0, "xylophone", "F5", .5, .4, .2, .3); N(t0 + B * .5, "xylophone", "A5", .5, .36, .2, .3); N(t0 + B, "xylophone", "C6", 1, .38, .2, .5)
-bed_end = V["L5"]["t"] - .15
-walk(t0, bed_end, ["F2", "A2", "C3", "D3", "Bb2", "D3", "F3", "D3", "C3", "E3", "G3", "Bb2", "F2", "A2", "C3", "A2"], .42)
-brushes(t0 + 2 * B, bed_end, .22)
-for i, ch in enumerate([BB7, C7, FM7, DM7, GM7, C7]):
-    tt = t0 + BAR * (i + 1)
-    if tt < bed_end - .5: vchord(tt, ch, 3, .26)
-# 15.2–17.3: "We hire someone new." Nothing.
-# the peel: tiptoe pizzicato, falling
-p0, p1 = TL["PEEL"]
-for i, n in enumerate(["E5", "D5", "C5", "B4", "Bb4", "A4"]):
-    N(p0 + (p1 - p0) * i / 5, "violins_pizz", n, .4, .42, .2 - i * .06, .2, stem="strings")
-# MAGS: a store jingle, bright and corporate
-mg = V["L6"]["t"]
+# 0: the star hits the counter: a bright xylophone run and a crash, then the bed comes in under the first exchange
+st = TL["STAR"]
+for i, n in enumerate(["F5", "A5", "C6", "F6"]): N(st - .12 + i * .04, "xylophone", n, .4, .42, .2, .3)
+perc(st, "drum_kit", "crash_right", .3, .3); perc(st, "drum_kit", "kick_drum_left", .5)
+bed_end = V["L5"]["t"] - .1
+walk(V["L1"]["t"], bed_end, ["F2", "A2", "C3", "D3", "Bb2", "D3", "F3", "D3", "C3", "E3", "G3", "Bb2", "F2", "A2", "C3", "A2"], .4)
+brushes(V["L1"]["t"] + 2 * B, bed_end, .22)
+for i, ch in enumerate([FM7, BB7, C7, FM7, DM7]):
+    tt = V["L1"]["t"] + BAR * i
+    if tt < bed_end - .5: vchord(tt, ch, 3, .24)
+# "Your hair is on fire." in silence; "Only a little!" gets a tiny pizzicato shrug
+for i, n in enumerate(["G5", "E5"]): N(V["L6"]["t"] + .2 + i * .18, "violins_pizz", n, .3, .4, .2, .15, stem="strings")
+# MAGS: the store jingle again (the show's sound for MAGS)
+mg = V["L7"]["t"]
 for i, n in enumerate(["C5", "F5", "A5", "C6"]): N(mg - .05 + i * .11, "glockenspiel", n, 1, .3, .1, .9)
-walk(mg + .5, end("L7") - .1, ["F2", "C3", "F2", "C3", "Bb2", "F2", "C3", "G2"], .36)
-brushes(mg + .5, end("L7") - .1, .18)
-for i, ch in enumerate([FM7, BB7, FM7, C7]):
-    tt = mg + .5 + BAR * i
-    if tt < end("L7") - .3: vchord(tt, ch, 3, .22)
-# … pause, then "Please see previous answer." in silence
-# the frozen grin: a muted-trumpet droop
-f0 = TL["FREEZE"][0] + .25
-for i, (n, bt) in enumerate([("Bb4", 1), ("A4", 1), ("Ab4", 1), ("G4", 3)]):
-    N(f0 + i * B * 1.1, "trumpet_mute", n, bt, .5, .15, .4 if i < 3 else .8, stem="brass")
-# the thing at the door: low brass, timpani
-mo = TL["MONSTER"] + .25
-perc(mo - .15, "timpani", "drum1", .7, 0, stem="fx"); perc(mo + .35, "timpani", "drum1", .55, 0, stem="fx")
-N(mo, "tuba", "F1", 5, .55, -.1, 1.0, .15, stem="brass"); N(mo + .02, "contrabass", "Gb1", 5, .5, .1, 1.0, .3, stem="strings")
-N(mo + .4, "violins_trem", "B5", 4, .2, .3, .8, .8, stem="strings") if "violins_trem" in audio.index() else None
-# "Psst. Pip." a sneaky little figure
-w0 = V["L11"]["t"]
-for i, n in enumerate(["C5", "Db5", "C5", "B4", "C5"]):
-    N(w0 + .3 + i * B * .5, "violins_pizz", n, .3, .3, .25, .15, stem="strings")
-# the flip: a xylophone button
-fl = TL["FLIP"]
-for i, n in enumerate(["C5", "F5", "A5", "C6"]): N(fl + .05 + i * .07, "xylophone", n, .6 if i < 3 else 2, .46, -.2 + i * .13, .3 if i < 3 else 1.2)
-vchord(fl + .33, ["F3", "A3", "C4", "F4"], 4, .34)
-perc(fl + .33, "triangle", "open", .32, .3, stem="fx")
-N(fl + .33, "contrabass_pizz", "F2", 2, .55, -.1, .6, stem="bass")
+walk(mg + .5, V["L8"]["t"] + 1.6, ["F2", "C3", "F2", "C3", "Bb2", "F2", "C3", "G2"], .34)
+for i, ch in enumerate([FM7, BB7]): vchord(mg + .5 + BAR * i, ch, 3, .2)
+# the moon: a falling trombone line, timpani on the impact, then a floating vibraphone arpeggio while things orbit
+mo = TL["MOON"]
+for i, n in enumerate(["F4", "Db4", "Bb3", "F3"]): N(mo - .6 + i * .12, "trombone", n, .5, .45, 0, .2, stem="brass")
+perc(mo + .15, "timpani", "drum1", .8, 0, stem="fx"); perc(mo + .15, "drum_kit", "crash_right", .35, -.2)
+N(mo + .15, "contrabass_pizz", "F1", 2, .6, 0, .8, stem="bass")
+t = mo + 1.2
+arp = ["C5", "E5", "G5", "Bb5", "G5", "E5"]
+i = 0
+while t < V["L11"]["t"] - .3:
+    N(t, "vibraphone", arp[i % 6], .5, .24, .3 - (i % 6) * .1, .6); t += B / 2; i += 1
+# "Expired." lands in silence; a sneaky pizzicato under "You didn't even look at it."
+for i, n in enumerate(["C5", "Db5", "C5", "B4"]): N(V["L12"]["t"] + .1 + i * B * .5, "violins_pizz", n, .3, .28, .25, .15, stem="strings")
+# button on "Everything here is expired." and the sip
+en = V["L13"]["t"] + V["L13"]["dur"] + .2
+for i, n in enumerate(["C5", "F5", "A5", "C6"]): N(en + i * .07, "xylophone", n, .6 if i < 3 else 2, .44, -.2 + i * .13, .3 if i < 3 else 1.2)
+vchord(en + .28, ["F3", "A3", "C4", "F4"], 4, .32)
+N(en + .28, "contrabass_pizz", "F2", 2, .55, -.1, .6, stem="bass")
+perc(en + .28, "triangle", "open", .3, .3, stem="fx")
 
 
 def active_rms(x):
