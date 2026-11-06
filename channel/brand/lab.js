@@ -435,7 +435,9 @@ function drawVera2(c, x, y, s, o = {}) {
     const k = o.point, ex2 = 64 + 46 * k, ey2 = -120 - 70 * k, hx = 70 + 92 * k, hy = -96 - 150 * k;
     tTube(c, [64, -120, 64 + 30 * k + 10 * (1 - k), -112 - 30 * k, ex2, ey2, (ex2 + hx) / 2, (ey2 + hy) / 2, hx, hy], 23, LAB.coat, LAB.coatS);
     tHand(c, hx + 4, hy - 6, 9.5, V.skin, V.skinS, true);
-  } else if (o.tube !== false) {
+  } else if (o.tube === false) {
+    tTube(c, [64, -120, 80, -70, 74, -10], 24, LAB.coat, LAB.coatS);           // arm down at her side
+  } else {
     tTube(c, [64, -120, 90, -90, 84, -62, 80, -100, 70, -126], 23, LAB.coat, LAB.coatS);
     c.save(); c.translate(66, -164); c.rotate(.18);
     c.shadowColor = LAB.glow; c.shadowBlur = 20; tShape(c, 'rgba(220,255,240,.6)', g => g.roundRect(-7, -34, 14, 50, 7), 3.4); c.restore();
