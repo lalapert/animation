@@ -64,4 +64,4 @@ Void Mart, episode 5.
 
 - 검색어 2개: animated sitcom, convenience store
 - 훅 카드: HIS MILK IS SOLD OUT (5단어, 0~2.5초)
-- `channel/tools/postlint.sh` 결과: (게시 전에 채움)
+- `channel/tools/postlint.sh` 결과: VERDICT READY, 휴머나이저 변경 0, 제목 훅 점수 51

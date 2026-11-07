@@ -506,7 +506,7 @@ function drawRae2(c, x, y, s, o = {}) {
   const mx = 40 + (6 - 40) * me, my = -16 + (-176 + 16) * me;
   if (o.arms !== false) {
     // left arm: forearm on the counter, or reaching for o.reachL = {x, y} (local units)
-    if (o.reachL) { const r = o.reachL; tTube(c, [-58, -122, -84, -78, (-84 + r.x) / 2 - 6, (-78 + r.y) / 2 + 10, r.x - 4, r.y + 2], 24, R.hood); tHand(c, r.x, r.y, 9.5, R.skin, R.skinS); }
+    if (o.reachL) { const r = o.reachL, mx = (-84 + r.x) / 2 - 6, my = (-78 + r.y) / 2 + 10; tTube(c, [-58, -122, -84, -78, mx, my, (mx + r.x) / 2, (my + r.y) / 2, r.x - 4, r.y + 2], 24, R.hood); tHand(c, r.x, r.y, 9.5, R.skin, R.skinS); }   // 11/8: the arm reaches the hand
     else { tTube(c, [-58, -122, -76, -72, -72, -26, -44, -20, -12, -22], 24, R.hood); tHand(c, -8, -23, 9.5, R.skin, R.skinS); }
     if (o.scanner !== false) {                     // the scanner lies on the counter while she drinks
       tShape(c, '#9aa0b8', g => g.roundRect(8, -40, 34, 14, 5), 3.4);

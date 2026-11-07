@@ -1,0 +1,14 @@
+{
+ "store_hum": [10.0, "a quiet convenience store at night: soft fridge hum, fluorescent light buzz, faint distant space wind, loopable, no voices, no music"],
+ "chime": [1.4, "a convenience store automatic door opening with a bright two-note electronic entry chime"],
+ "slide": [1.2, "a large wet slimy creature sliding across a smooth floor, a soft squelchy glide"],
+ "droop": [0.6, "a soft cartoon deflating droop, a small sad wobble sound"],
+ "carton": [0.5, "a milk carton set down on a counter, a light cardboard tap"],
+ "blip": [0.5, "a short friendly electronic computer blip"],
+ "melt": [1.6, "a cartoon slime creature melting into a puddle: a long sad squelchy goo slide downward"],
+ "pop": [0.8, "a cartoon slime creature springing back up into shape: a bouncy squelch boing"],
+ "tears": [2.4, "cartoon tears gushing like two little fountains, splashing water, comedic"],
+ "squeak": [1.0, "a wet mop squeaking and splashing on a slimy floor, someone slipping, comedic"],
+ "flip": [0.6, "a mechanical flip-number sign flipping over once, a plastic clack"],
+ "cart": [1.6, "a heavy shopping cart full of boxes rolling away with a squeaky wheel"]
+}

@@ -234,5 +234,27 @@
    540,
    1120
   ]
+ },
+ {
+  "folder": "vm05-dennis",
+  "t": 25.75,
+  "series": "vm",
+  "ep": 5,
+  "lines": [
+   "HIS MILK",
+   "IS GONE"
+  ],
+  "hl": [
+   "GONE"
+  ],
+  "focus": [
+   540,
+   1000
+  ],
+  "zoom": 1.2,
+  "place": [
+   540,
+   1150
+  ]
  }
 ]

@@ -1,0 +1,129 @@
+{
+ "model_id": "eleven_v4",
+ "cast": {
+  "PIP": {
+   "voice_id": "BiP91t4ozM9IZajOdSu2",
+   "name": "Win2",
+   "settings": {
+    "stability": 0.3,
+    "similarity_boost": 0.8,
+    "style": 0.65,
+    "speed": 1.05
+   }
+  },
+  "RAE": {
+   "voice_id": "oy557F0mOsPZZqdz8oK6",
+   "name": "Kar2",
+   "settings": {
+    "stability": 0.6,
+    "similarity_boost": 0.8,
+    "style": 0.2,
+    "speed": 0.9
+   },
+   "pitch": -1.5
+  },
+  "MAGS": {
+   "voice_id": "WkUURyKtbzB9IM50qGdP",
+   "name": "VM MAGS",
+   "settings": {
+    "stability": 0.45,
+    "similarity_boost": 0.8,
+    "style": 0.5,
+    "speed": 1.0
+   }
+  },
+  "DENNIS": {
+   "voice_id": "4vRkwG6IFLYddvxhEKmU",
+   "name": "VM Dennis",
+   "settings": {
+    "stability": 0.4,
+    "similarity_boost": 0.8,
+    "style": 0.55,
+    "speed": 1.0
+   }
+  }
+ },
+ "lines": [
+  {
+   "id": "L1",
+   "who": "DENNIS",
+   "text": "[booming, cheerful] Evening, Rae! The usual!",
+   "plain": "Evening, Rae! The usual!",
+   "sub": "Evening, Rae!\nThe usual!",
+   "asr": "Evening, Ray! The usual!"
+  },
+  {
+   "id": "L2",
+   "who": "RAE",
+   "text": "[flatly] We're out.",
+   "plain": "We're out.",
+   "sub": "We're out."
+  },
+  {
+   "id": "L3",
+   "who": "DENNIS",
+   "text": "[stunned whisper] ...Out?",
+   "plain": "...Out?",
+   "sub": "...Out?"
+  },
+  {
+   "id": "L4",
+   "who": "PIP",
+   "text": "[eager, panicking] We have oat milk! Almond milk! Moon milk!",
+   "plain": "We have oat milk! Almond milk! Moon milk!",
+   "sub": "We have oat milk!\nAlmond milk! Moon milk!"
+  },
+  {
+   "id": "L5",
+   "who": "DENNIS",
+   "text": "[wounded, dignified] Nine years. Same milk. Every night.",
+   "plain": "Nine years. Same milk. Every night.",
+   "sub": "Nine years.\nSame milk. Every night."
+  },
+  {
+   "id": "L6",
+   "who": "RAE",
+   "text": "[deadpan] Eleven.",
+   "plain": "Eleven.",
+   "sub": "Eleven."
+  },
+  {
+   "id": "L7",
+   "who": "MAGS",
+   "text": "[bright sales voice] Great news! Milk is now a subscription! Only ninety-nine ninety-nine a month!",
+   "plain": "Great news! Milk is now a subscription! Only ninety-nine ninety-nine a month!",
+   "sub": "Great news! Milk is now a subscription!\nOnly ninety-nine ninety-nine a month!",
+   "asr": "Great news! Milk is now a subscription! Only $99.99 a month!"
+  },
+  {
+   "id": "L8",
+   "who": "DENNIS",
+   "text": "[heartbroken wail] Noooo...",
+   "plain": "Noooo...",
+   "sub": "Noooo...",
+   "asr": "No!"
+  },
+  {
+   "id": "L9",
+   "who": "RAE",
+   "text": "[deadpan, matter-of-fact] Relax. I hid one.",
+   "plain": "Relax. I hid one.",
+   "sub": "Relax. I hid one."
+  },
+  {
+   "id": "L10",
+   "who": "DENNIS",
+   "text": "[sobbing with joy] Rae... you DO care!",
+   "plain": "Rae... you DO care!",
+   "sub": "Rae...\nyou DO care!",
+   "asr": "Ray... you DO care!"
+  },
+  {
+   "id": "L11",
+   "who": "RAE",
+   "text": "[deadpan] You leave a trail when you cry.",
+   "plain": "You leave a trail when you cry.",
+   "sub": "You leave a trail\nwhen you cry."
+  }
+ ]
+}
