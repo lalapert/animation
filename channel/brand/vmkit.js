@@ -118,9 +118,13 @@ function glassStreaks(g, a) {
 function subtitle(g, t) {
   for (const v of TL.VO) {
     if (t < v.s0 || t > v.s1) continue;
-    const ls = v.sub.split('\n'), lh = 76, y1 = 1470;
+    const ls = v.sub.split('\n'), y1 = 1470;
     const a = clamp((t - v.s0) / .08) * clamp((v.s1 - t) / .08);
-    g.save(); g.globalAlpha = a; g.font = '600 62px "Fredoka"'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.lineJoin = 'round';
+    g.save(); g.globalAlpha = a; g.textAlign = 'center'; g.textBaseline = 'middle'; g.lineJoin = 'round';
+    // keep every line inside x 120..960: the Reels/Shorts button rail covers the right edge (11/8). Long lines shrink, never wrap.
+    let size = 62; g.font = `600 ${size}px "Fredoka"`;
+    while (size > 46 && ls.some(s => g.measureText(s).width > 840)) { size -= 4; g.font = `600 ${size}px "Fredoka"`; }
+    const lh = Math.round(size * 1.23);
     ls.forEach((s, i) => { const y = y1 - (ls.length - 1 - i) * lh; g.lineWidth = 12; g.strokeStyle = '#120a2a'; g.strokeText(s, W / 2, y); g.fillStyle = v.col; g.fillText(s, W / 2, y); });
     g.restore();
   }

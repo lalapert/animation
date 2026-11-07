@@ -8,7 +8,8 @@ Each run makes **one** episode, the unmade one that airs soonest (§1), and sche
 
 1. Repository `lalapert/animation`, branch `claude/wonderful-carson-ck1yo6` (push only here). If it is missing, `add_repo` (owner `lalapert`, repo `animation`, access `push`) and clone it.
 2. `sh channel/setup_daily.sh`: Python venv (numpy, scipy, soundfile, pillow) at `.venv-daily/` and the CC0 instrument samples in `~/lemo-assets`. Our own scripts only; never run code from other repositories.
-3. Already there: Node + Playwright + Chromium, ffmpeg 6.1, the ElevenLabs key (injected by the proxy for `api.elevenlabs.io`; scripts send `xi-api-key: proxy-injected`), the Metricool connector.
+3. The Instagram skills (`.claude/skills/ig-*`, reviewed 11/8: standard-library Python, no network; the one outside code the owner asked us to use) read their files from `~/.claude/instagram/`: `mkdir -p ~/.claude/instagram && cp channel/ig/voice.md ~/.claude/instagram/voice.md && ln -sf "$PWD/channel/ig/log.md" ~/.claude/instagram/log.md`. How we use them: `channel/IG_SKILLS.md`.
+4. Already there: Node + Playwright + Chromium, ffmpeg 6.1, the ElevenLabs key (injected by the proxy for `api.elevenlabs.io`; scripts send `xi-api-key: proxy-injected`), the Metricool connector.
 
 ## 1. What to make
 
@@ -35,13 +36,16 @@ Copy the template folder to `<prefix><NN>-<slug>/` (Void Mart: `vm03-dennis/`), 
 
 ### 2.2 Writing (the part that decides views)
 - **Write the script file first** (owner, 11/7): `channel/scripts/<PREFIX><NN>_<slug>.md` from `channel/scripts/TEMPLATE.md` (example: `VL03_help_wanted.md`). It has three parts:
-  1. **The English-speaking-audience check** (US/UK): score every row 1–5 with reasons, weakest points first (hook, premise in one line, relatability, laugh density, natural English, no insider/Korean/copyright references, ending loop, comment bait; the horror table for tapes). Under 32 in total, or any row at 1–2: rewrite and score again before producing. Say whether it leans American or British, the biggest risk and its fix, and two title ideas.
+  1. **The English-speaking-audience check** (US/UK): score every row 1–5 with reasons, weakest points first (hook, premise in one line, relatability, laugh density, natural English, no insider/Korean/copyright references, ending loop, comment bait; the horror table for tapes). Under 32 in total, or any row at 1–2: rewrite and score again before producing. Say whether it leans American or British, the biggest risk and its fix, and **three title candidates from three different formulas in `.claude/skills/ig-reel/hooks.json`**, scored with `python3 -I .claude/skills/ig-reel/hookscore.py --hook "<title>"`. Pick the funniest one that names something concrete (a number, a name, an object); the score is advice, not a gate (it was built on talking-head hooks, `channel/IG_SKILLS.md`).
   2. **The script table**: id, who, the emotion direction as an eleven_v4 audio tag, the English line (exactly the subtitle; ` / ` for a subtitle line break), and the action direction (what each character does, `expr`, hands always with their arms, the shot, sound and music). Stage-only rows have no id.
   3. Easter egg, season thread, running gag.
+  4. **The post**: the caption (format in §3.4) with its two search terms, and the hook card if the episode has one.
 - Then `python3 channel/tools/script_to_lines.py channel/scripts/<file>.md <folder>` writes `voice/lines.json` from the table (tags in `text`, the line in `plain` and `sub`); the picture follows the action column. If production changes a line, change the script file too, so it stays the record.
 - Report the audience-check total and the weakest row in the final message.
 - English only, everywhere (`channel/tools/check_english.py`). No Korea-specific culture, places or names.
 - **0–2 s: the hook is a picture.** Open on the weird customer or the weird thing, never on greetings or explanations.
+- **Hook card (experiment, 4 episodes: VL4, VM5, VL5, VM6):** from frame 1 to 2.5 s, one English card of 6 words or fewer at the top (y 250–400, inside the Reels/Shorts safe zone), so a muted scroller gets the situation before the first line. Judge it at the 12/7 audit against the episodes without one; drop it at once if the owner does not like it.
+- Subtitles stay inside x 120–960 (the button rail covers the right edge): `subtitle()` in vmkit.js shrinks a line wider than 840 px.
 - **At least 3 laughs in 45 s, at least one of them visual** (something you get with the sound off).
 - Deadpan Rae (rules), delighted Pip (kindness makes it worse), MAGS (every disaster is a sales opportunity); one-off customers carry the episode's idea.
 - End on a button (the incident counter, a MAGS line, a sip) that loops into the first frame.
@@ -75,7 +79,7 @@ Duration in range; about −14 LUFS; `blackdetect` finds nothing; ElevenLabs spe
 - Engine `channel/brand/tapekit.js` (build it first if missing): a 2.5D canvas renderer for the Halloway Galleria (corridors, storefronts with shutters, escalators, fountain, food court, parking, security office) seen through two kinds of camera: CCTV (high fixed angle, green-grey, a few frames a second, `CAM 07 — EAST ESCALATOR` and timestamp) and camcorder (handheld sway, colour, red REC dot, battery, date, autofocus hunting); VHS effects (noise, chroma shift, tracking lines, dropouts). Vertical layout: a 4:3 tape window (1080×810) in the middle, the tape label above, the episode's rule below; no other subtitles unless someone speaks.
 - Writing: one wrong thing per tape, visible from the first frame for the second viewing; slow tension; the reveal where the two cameras disagree or a rule breaks; cut to static and back to the first frame. PG-13: no gore, no screaming jump scares. Nothing from the Backrooms community (names, levels, entities). English text only. Each tape hides one number or letter in one frame (the ARG; keep a list in `HORROR_SERIES.md`).
 - Length 30–50 s. Voices only for the mall PA and the guard (Voice Design voices, add them to `VOICES.md` when made).
-- Post text: 1–2 lines in the archive's voice + `#analoghorror #foundfootage #horror #scary #shorts`; youtubeData category `FILM_ANIMATION`, title `TAPE NN: <title> | STILL RECORDING #shorts`; description ends with `A work of fiction.`
+- Post text (YouTube description only): one question for the viewer ("How many did you count?"), 1–2 lines in the archive's voice with the search terms `analog horror` and `found footage` written as words, then `#analoghorror #foundfootage #horror #scary`; run `channel/tools/postlint.sh` on it like the toons (from tape 5 on); youtubeData category `FILM_ANIMATION`, title `TAPE NN: <title> | STILL RECORDING #shorts`; description ends with `A work of fiction.`
 
 ### 2.7 Inserts borrowed from the Lemo-Opuscar library (owner's decision 11/7)
 Read the style text only (`curl -sS https://raw.githubusercontent.com/lemomo-ai/lemo-opuscar/main/styles/<slug>/STYLE.md`, or `~/lemo-opuscar/styles/<slug>/STYLE.md` if it is there). **Never run the library's code**; write our own in `channel/brand/`. No library names, logos or demo content in our films; English only.
@@ -92,11 +96,21 @@ Read the style text only (`curl -sS https://raw.githubusercontent.com/lemomo-ai/
 2. Media URL: `https://raw.githubusercontent.com/lalapert/animation/<commit sha>/<folder>/<folder>.mp4`; check it returns 200 and the full size.
 3. Metricool brand **7923229** for Void Mart and Volt Labs (YouTube @thevoidmart + Instagram voidmartshow); **7927149** for the horror tapes (§2.6). Never any other brand.
 4. `createScheduledPost`: the series slot (`Asia/Seoul`), `autoPublish: true`, `draft: false`, providers youtube + instagram.
-   - text: 2–3 short English lines + `Void Mart, episode N.` (or `Volt Labs, episode N.`) + `#animation #cartoon #scifi #comedy #shorts`
+   - text (the Instagram caption and the YouTube description; the video carries the hook, the caption asks and gets found), saved as `channel/ig/posts/<folder>.txt`:
+     ```
+     <one question a viewer can answer from their own life, tied to this episode's joke>
+     <Void Mart is an animated sitcom about the night shift at the last convenience store in the universe. | Volt Labs is an animated sitcom about a broke mad scientist and her deadpan assistant.> <one line about this episode>
+
+     Void Mart, episode N.        (or Volt Labs, episode N.)
+
+     #animation #cartoon #comedy #retail        (Volt Labs: #madscientist; 4 tags, all below the "more" cut)
+     ```
+     The question is the only ask (no "follow for more", no tagging, no link, no emoji). Then `channel/tools/postlint.sh channel/ig/posts/<folder>.txt "animated sitcom,<convenience store|night shift|mad scientist|the episode's subject>" "<title>"`: VERDICT READY and nothing changed by the humanizer, or fix and run again. Add a row to `channel/ig/log.md` (hook formula id, title, first line, hook card yes/no).
    - youtubeData: title ≤ 100 chars ending `| Void Mart Ep N #shorts` (or `| Volt Labs Ep N #shorts`), type `short`, privacy `public`, tags, category `FILM_ANIMATION`, madeForKids false, isAiGeneratedContent false
    - instagramData: type `REEL`, showReelOnFeed true, isAiGenerated true
 5. **Cover (thumbnail), every episode, both channels:** add the episode to `channel/thumbs/specs.json` (frame time `t` at the punchline or the clearest look at the anomaly, 2–5 words in `lines`, `hl` = the word to colour; toons: `focus` = the face, `zoom`, `place`; tapes: `focus`, `zoom` on the anomaly) and run `node channel/tools/thumbs.cjs <folder>`. Look at it: text and faces inside the middle 3:4 band (y 240–1680, what the Instagram grid shows), and nothing important in the grid's top-right corner (reel icon) or bottom-left corner (view count); under 2 MB, English only. The compositor's layout already keeps those corners clear; keep `lines` short (2–4 words a line). Commit it with the episode and pass `videoThumbnailUrl: https://raw.githubusercontent.com/lalapert/animation/<sha>/channel/thumbs/<folder>.jpg` in `createScheduledPost` (one image serves the YouTube Short and the Instagram Reel).
-6. Append to `channel/LOG.md` (Void Mart / Volt Labs tables): date, folder, series, length, LUFS, checks, Metricool post id, ElevenLabs credits used and left, anything that went wrong. Commit and push.
+6. Every two weeks from 12/7: `/ig-audit` on the Metricool analytics of both brands (outlier multiple against the median, shares per reach, follows per reach, watch time; grouped by the formula ids in `channel/ig/log.md`). Write the findings in `channel/ig/AUDIT.md` and tell the owner in Korean.
+7. Append to `channel/LOG.md` (Void Mart / Volt Labs tables): date, folder, series, length, LUFS, checks, Metricool post id, ElevenLabs credits used and left, anything that went wrong. Commit and push.
 
 ## 4. When something fails
 

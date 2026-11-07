@@ -32,7 +32,11 @@
 
 - 미국식과 영국식 중 어디에 맞췄는지, 둘 다 통하는지:
 - 이 편의 가장 큰 위험(지루한 구간, 안 터질 농담)과 대책:
-- 제목과 썸네일 각도(유튜브 제목 후보 2개):
+- 썸네일 각도:
+- 유튜브 제목 후보 3개(서로 다른 훅 공식, `.claude/skills/ig-reel/hooks.json`의 번호와 점수. `python3 -I .claude/skills/ig-reel/hookscore.py --hook "..."`). 점수는 참고, 숫자·이름·물건 하나는 넣는다:
+  | 공식 | 제목 | 점수 |
+  |---|---|---|
+  | | | |
 
 ## 2. 대본
 
@@ -49,3 +53,20 @@
 ## 3. 숨긴 장치와 줄기
 
 - 이스터에그(`UNIVERSE.md`), 시즌 줄기, 반복 장치:
+
+## 4. 게시 문구 (`channel/ig/posts/<폴더>.txt`에 그대로 저장)
+
+형식과 규칙은 `PRODUCTION.md` §3.4, 이유는 `IG_SKILLS.md`. 첫 줄은 시청자가 자기 경험으로 답할 질문, 둘째 줄은 시리즈 소개(검색어 2개)와 이 편 한 줄, 해시태그 4개는 맨 아래.
+
+```
+<질문>
+<소개 + 이 편 한 줄>
+
+<Series>, episode N.
+
+#animation #cartoon #comedy #<retail|madscientist>
+```
+
+- 검색어 2개:
+- 훅 카드(실험 대상 편만, 6단어 이하, 첫 2.5초):
+- `channel/tools/postlint.sh` 결과: VERDICT ___, 휴머나이저 변경 ___
