@@ -29,6 +29,12 @@ Each run makes **one** episode, the one whose series is closest to running out o
 Copy the template folder to `<prefix><NN>-<slug>/` (Void Mart: `vm03-dennis/`), without `out/`, `voice/out/` and `.venv`; `ln -s ../.venv-daily <folder>/.venv`; copy over effects you reuse from earlier `sfx/out/`. Do not edit old episodes.
 
 ### 2.2 Writing (the part that decides views)
+- **Write the script file first** (owner, 11/7): `channel/scripts/<PREFIX><NN>_<slug>.md` from `channel/scripts/TEMPLATE.md` (example: `VL03_help_wanted.md`). It has three parts:
+  1. **The English-speaking-audience check** (US/UK): score every row 1–5 with reasons, weakest points first (hook, premise in one line, relatability, laugh density, natural English, no insider/Korean/copyright references, ending loop, comment bait; the horror table for tapes). Under 32 in total, or any row at 1–2: rewrite and score again before producing. Say whether it leans American or British, the biggest risk and its fix, and two title ideas.
+  2. **The script table**: id, who, the emotion direction as an eleven_v4 audio tag, the English line (exactly the subtitle; ` / ` for a subtitle line break), and the action direction (what each character does, `expr`, hands always with their arms, the shot, sound and music). Stage-only rows have no id.
+  3. Easter egg, season thread, running gag.
+- Then `python3 channel/tools/script_to_lines.py channel/scripts/<file>.md <folder>` writes `voice/lines.json` from the table (tags in `text`, the line in `plain` and `sub`); the picture follows the action column. If production changes a line, change the script file too, so it stays the record.
+- Report the audience-check total and the weakest row in the final message.
 - English only, everywhere (`channel/tools/check_english.py`). No Korea-specific culture, places or names.
 - **0–2 s: the hook is a picture.** Open on the weird customer or the weird thing, never on greetings or explanations.
 - **At least 3 laughs in 45 s, at least one of them visual** (something you get with the sound off).
