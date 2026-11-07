@@ -1,0 +1,23 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Inserts test: hologram scan + case file</title>
+<style>html,body{margin:0;background:#000}canvas{display:block}</style></head>
+<body><canvas id="c" width="1080" height="1920"></canvas>
+<script src="toon.js"></script><script src="lab.js"></script><script src="inserts.js"></script>
+<script>
+// A sample insert for Volt Labs (no voice): Vera scans the free BrightCap, then the scan prints as Sterling Bright's case file.
+const g = document.getElementById('c').getContext('2d');
+const CAP = capModel();
+const HUD = { title: 'BRIGHTCAP', sub: 'FREE SMART HAT  /  MODEL BS-01', model: () => CAP, solidT: 3.15, lockT: 1.7, verdictT: 3.5, outT: 4.15,
+  parts: [{ label: 'PRICE', value: '$0.00 FREE', p: [0, .02, 1.6], side: 1 }, { label: 'SMILE MODULE', value: 'ALWAYS ON', p: [0, -.42, 1.0], side: -1 }, { label: 'RECEIVER', value: 'MIND CTRL 99.8%', p: [0, -1.15, 0], side: 1 }],
+  verdict: 'EVIL. AND NOT MINE.' };
+const FILE = { code: 'CASE FILE  VL-016', date: '12/28', title: 'STERLING BRIGHT', sub: 'CEO, BRIGHTSIDE  /  "MAKE THE WORLD SMILE"', photoLabel: 'SUBJECT, SMILING (ALWAYS)',
+  photo: (c, w, h) => drawBright(c, w / 2, h + 30, 215, { expr: 'public' }),
+  fields: [['KNOWN FOR', 'SMILING'], ['GIVES AWAY', 'FREE HATS'], ['THREAT', '99.8%'], ['FILED BY', 'DR. V. VOLT']],
+  exhibit: (c, w, h) => drawBrightCap(c, w / 2, h * .72, 2.7, -.08), exhibitT: 2.3,
+  stamps: [{ t: 2.9, text: 'CLASSIFIED', x: 330, y: 640, size: 64, col: INS.red, rot: -.18, seed: 3 }, { t: 3.6, text: 'SMILES TOO MUCH', x: 600, y: 1010, size: 46, col: INS.ink, rot: .12, seed: 8 },
+           { t: 4.4, text: "THAT'S MY JOB!", x: 530, y: 1735, size: 78, col: INS.red, rot: -.07, seed: 13 }] };
+const T1 = 4.6; window.DUR = 10.4;
+window.render = t => { if (t < T1) hudScan(g, t, HUD); else dossier(g, t - T1, FILE); };
+window.EV = [{ fx: 'lab_hum', t: 0, g: -24, len: T1 }, { fx: 'click', t: 1.7 }, { fx: 'click', t: 2.25 }, { fx: 'click', t: 2.8 }, { fx: 'zap', t: 3.15, g: -6 }, { fx: 'click', t: 3.5 }, { fx: 'whoosh', t: 4.15 },
+  { fx: 'stamp', t: T1 + 2.9 }, { fx: 'stamp', t: T1 + 3.6 }, { fx: 'stamp', t: T1 + 4.4 }, { fx: 'thud', t: T1 + 4.42, g: -4 }];
+Promise.all([toonFonts(), insFonts('fonts/')]).then(() => { window.render(0); window.READY = true; });
+</script></body></html>
