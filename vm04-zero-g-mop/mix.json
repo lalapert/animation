@@ -1,0 +1,78 @@
+{
+  "room_db": -60,
+  "voice_over_music_db": 12,
+  "beds": {},
+  "foley": {
+    "float": {
+      "fx": "float",
+      "g": -18,
+      "fin": 0.02,
+      "fout": 0.3
+    },
+    "blip": {
+      "fx": "mags_blip",
+      "g": -17,
+      "align": true,
+      "fin": 0.002,
+      "fout": 0.15
+    },
+    "sip": {
+      "fx": "sip",
+      "g": -12,
+      "fin": 0.02,
+      "fout": 0.2
+    },
+    "launch": {
+      "fx": "launch",
+      "g": -12,
+      "fin": 0.005,
+      "fout": 0.2
+    },
+    "descend": {
+      "fx": "descend",
+      "g": -15,
+      "fin": 0.01,
+      "fout": 0.2
+    },
+    "swish": {
+      "fx": "swish",
+      "g": -15,
+      "fin": 0.005,
+      "fout": 0.1
+    },
+    "splat": {
+      "fx": "splat",
+      "g": -11,
+      "align": true,
+      "fin": 0.002,
+      "fout": 0.2
+    },
+    "gravity": {
+      "fx": "gravity",
+      "g": -12,
+      "align": true,
+      "fin": 0.002,
+      "fout": 0.3
+    },
+    "crash": {
+      "fx": "crash",
+      "g": -12,
+      "align": true,
+      "fin": 0.002,
+      "fout": 0.3
+    },
+    "drip": {
+      "fx": "drip",
+      "g": -19,
+      "fin": 0.01,
+      "fout": 0.3
+    },
+    "flip": {
+      "fx": "flip",
+      "g": -12,
+      "align": true,
+      "fin": 0.002,
+      "fout": 0.15
+    }
+  }
+}

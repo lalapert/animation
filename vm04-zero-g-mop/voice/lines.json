@@ -1,0 +1,112 @@
+{
+ "model_id": "eleven_v4",
+ "cast": {
+  "PIP": {
+   "voice_id": "BiP91t4ozM9IZajOdSu2",
+   "name": "Win2",
+   "settings": {
+    "stability": 0.35,
+    "similarity_boost": 0.8,
+    "style": 0.45,
+    "speed": 1.05
+   }
+  },
+  "RAE": {
+   "voice_id": "oy557F0mOsPZZqdz8oK6",
+   "name": "Kar2",
+   "settings": {
+    "stability": 0.85,
+    "similarity_boost": 0.8,
+    "style": 0.0,
+    "speed": 0.9
+   },
+   "pitch": -1.5
+  },
+  "MAGS": {
+   "voice_id": "WkUURyKtbzB9IM50qGdP",
+   "name": "VM MAGS",
+   "settings": {
+    "stability": 0.7,
+    "similarity_boost": 0.8,
+    "style": 0.25,
+    "speed": 1.0
+   }
+  }
+ },
+ "lines": [
+  {
+   "id": "L1",
+   "who": "MAGS",
+   "text": "Attention, staff. Gravity is temporarily... optional.",
+   "sub": "Attention, staff. Gravity is\ntemporarily... optional."
+  },
+  {
+   "id": "L2",
+   "who": "PIP",
+   "text": "Rae! Everything's floating!",
+   "asr": "Ray! Everything's floating!"
+  },
+  {
+   "id": "L3",
+   "who": "RAE",
+   "text": "Staff boots are magnetic."
+  },
+  {
+   "id": "L4",
+   "who": "PIP",
+   "text": "Mine are on backwards!"
+  },
+  {
+   "id": "L5",
+   "who": "RAE",
+   "text": "Pip?"
+  },
+  {
+   "id": "L6",
+   "who": "PIP",
+   "text": "Hi! I'm mopping the ceiling!"
+  },
+  {
+   "id": "L7",
+   "who": "RAE",
+   "text": "The ceiling is the floor now."
+  },
+  {
+   "id": "L8",
+   "who": "MAGS",
+   "text": "Great news! Floating items are now half price.",
+   "sub": "Great news! Floating items\nare now half price."
+  },
+  {
+   "id": "L12",
+   "who": "RAE",
+   "text": "We don't do sales."
+  },
+  {
+   "id": "L13",
+   "who": "MAGS",
+   "text": "We do now."
+  },
+  {
+   "id": "L9",
+   "who": "PIP",
+   "text": "How do I get down?"
+  },
+  {
+   "id": "L14",
+   "who": "RAE",
+   "text": "Wait."
+  },
+  {
+   "id": "L10",
+   "who": "MAGS",
+   "text": "Gravity restored in three... two...",
+   "asr": "Gravity restored in three, two, one"
+  },
+  {
+   "id": "L11",
+   "who": "RAE",
+   "text": "One."
+  }
+ ]
+}
