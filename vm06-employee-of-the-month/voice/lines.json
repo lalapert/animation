@@ -1,0 +1,133 @@
+{
+ "model_id": "eleven_v4",
+ "cast": {
+  "PIP": {
+   "voice_id": "BiP91t4ozM9IZajOdSu2",
+   "name": "Win2",
+   "settings": {
+    "stability": 0.3,
+    "similarity_boost": 0.8,
+    "style": 0.65,
+    "speed": 1.05
+   }
+  },
+  "RAE": {
+   "voice_id": "oy557F0mOsPZZqdz8oK6",
+   "name": "Kar2",
+   "settings": {
+    "stability": 0.6,
+    "similarity_boost": 0.8,
+    "style": 0.2,
+    "speed": 0.9
+   },
+   "pitch": -1.5
+  },
+  "MAGS": {
+   "voice_id": "WkUURyKtbzB9IM50qGdP",
+   "name": "VM MAGS",
+   "settings": {
+    "stability": 0.45,
+    "similarity_boost": 0.8,
+    "style": 0.5,
+    "speed": 1.0
+   }
+  }
+ },
+ "lines": [
+  {
+   "id": "L1",
+   "who": "PIP",
+   "text": "[fired up, determined] This month, Employee of the Month is ME!",
+   "plain": "This month, Employee of the Month is ME!",
+   "sub": "This month,\nEmployee of the Month is ME!"
+  },
+  {
+   "id": "L2",
+   "who": "RAE",
+   "text": "[flatly] It's always MAGS.",
+   "plain": "It's always MAGS.",
+   "sub": "It's always MAGS."
+  },
+  {
+   "id": "L3",
+   "who": "PIP",
+   "text": "[indignant] It's a CAMERA!",
+   "plain": "It's a CAMERA!",
+   "sub": "It's a CAMERA!"
+  },
+  {
+   "id": "L4",
+   "who": "MAGS",
+   "text": "[smug, bright] A camera that never takes a break, Pip.",
+   "plain": "A camera that never takes a break, Pip.",
+   "sub": "A camera that never\ntakes a break, Pip."
+  },
+  {
+   "id": "L5",
+   "who": "MAGS",
+   "text": "[bright, announcer] Aisle three restocked! Great work, MAGS!",
+   "plain": "Aisle three restocked! Great work, MAGS!",
+   "sub": "Aisle three restocked!\nGreat work, MAGS!"
+  },
+  {
+   "id": "L6",
+   "who": "PIP",
+   "text": "[outraged] I did that!",
+   "plain": "I did that!",
+   "sub": "I did that!",
+   "noctx": true
+  },
+  {
+   "id": "L7",
+   "who": "MAGS",
+   "text": "[smug, smooth] And I watched. That's management.",
+   "plain": "And I watched. That's management.",
+   "sub": "And I watched.\nThat's management."
+  },
+  {
+   "id": "L8",
+   "who": "MAGS",
+   "text": "[game-show host] The votes are in! MAGS, one. Pip, zero.",
+   "plain": "The votes are in! MAGS, one. Pip, zero.",
+   "sub": "The votes are in!\nMAGS, one. Pip, zero."
+  },
+  {
+   "id": "L9",
+   "who": "PIP",
+   "text": "[devastated gasp] Who voted?!",
+   "plain": "Who voted?!",
+   "sub": "Who voted?!",
+   "noctx": true
+  },
+  {
+   "id": "L10",
+   "who": "MAGS",
+   "text": "[proudly, matter-of-fact] Me.",
+   "plain": "Me.",
+   "sub": "Me.",
+   "noctx": true
+  },
+  {
+   "id": "L11",
+   "who": "RAE",
+   "text": "[deadpan] I voted Pip.",
+   "plain": "I voted Pip.",
+   "sub": "I voted Pip."
+  },
+  {
+   "id": "L12",
+   "who": "MAGS",
+   "text": "[bright, quick] A tie! Photo finish!",
+   "plain": "A tie! Photo finish!",
+   "sub": "A tie!\nPhoto finish!"
+  },
+  {
+   "id": "L13",
+   "who": "PIP",
+   "text": "[delighted, breathless] I'm in it!",
+   "plain": "I'm in it!",
+   "sub": "I'm in it!",
+   "noctx": true
+  }
+ ]
+}

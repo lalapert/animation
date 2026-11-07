@@ -1,0 +1,5 @@
+worker 0: 0/927 frames, 0 s
+worker 0: 300/927 frames, 33 s
+worker 0: 600/927 frames, 65 s
+worker 0: 900/927 frames, 94 s
+video → /home/user/animation/vm06-employee-of-the-month/out/video.mp4 (2780 frames, 102 s)

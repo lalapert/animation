@@ -1,0 +1,50 @@
+{
+ "store_hum": [
+  10.0,
+  "a quiet convenience store at night: soft fridge hum, fluorescent light buzz, faint distant space wind, loopable, no voices, no music"
+ ],
+ "chime": [
+  1.4,
+  "a convenience store automatic door opening with a bright two-note electronic entry chime"
+ ],
+ "blip": [
+  0.5,
+  "a short friendly electronic computer blip"
+ ],
+ "whoosh": [
+  0.6,
+  "a quick soft cartoon whoosh swish"
+ ],
+ "step": [
+  0.5,
+  "one soft footstep of a shoe on a concrete basement floor"
+ ],
+ "sparkle": [
+  1.0,
+  "a tiny cartoon sparkle twinkle"
+ ],
+ "hop": [
+  0.5,
+  "a small light cartoon hop landing, a soft springy bounce, short and cute"
+ ],
+ "can": [
+  0.5,
+  "a tin can set down on a metal store shelf, one small bright clink"
+ ],
+ "holo": [
+  0.8,
+  "a futuristic hologram display popping up, a bright digital shimmer"
+ ],
+ "ballot": [
+  0.6,
+  "a folded paper slip dropped into a cardboard ballot box, a soft papery thump"
+ ],
+ "shutter": [
+  1.0,
+  "an old camera flash firing: a bright pop and a mechanical shutter click"
+ ],
+ "frame": [
+  0.6,
+  "a picture frame landing on a wall nail, a small wooden knock and rattle"
+ ]
+}

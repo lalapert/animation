@@ -278,5 +278,27 @@
    540,
    1300
   ]
+ },
+ {
+  "folder": "vm06-employee-of-the-month",
+  "t": 3.95,
+  "series": "vm",
+  "ep": 6,
+  "lines": [
+   "36 MONTHS",
+   "SAME WINNER"
+  ],
+  "hl": [
+   "WINNER"
+  ],
+  "focus": [
+   540,
+   960
+  ],
+  "zoom": 1.0,
+  "place": [
+   540,
+   960
+  ]
  }
 ]
