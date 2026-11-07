@@ -9,15 +9,15 @@ window.render = t => {
   const G = YARD.ground, trip = 2.9, vx = t < trip ? lerp(430, 980, sm(.3, trip, t)) : 980, cx = t < 1.0 ? 380 : lerp(380, 1560, sm(1.0, 6.9, t));
   const camX = clamp(lerp(620, 1300, sm(.6, 6.6, t)), 540, YARD.w - 540);
   g.setTransform(1, 0, 0, 1, 0, 0); g.fillStyle = '#7ec8f5'; g.fillRect(0, 0, 1080, 1920);
-  const z = 1.18; g.setTransform(z, 0, 0, z, 540 - camX * z, 960 - 1330 * z);
+  const z = 1.3; g.setTransform(z, 0, 0, z, 540 - camX * z, 960 - 1330 * z);
   g.drawImage(YARD.img, 0, 0);
   drawHose(g, t, t > trip - .1 && t < trip + .3 ? 1 : 0);
   const fall = sm(trip, trip + .45, t);
-  if (t < trip) drawFull('vera', g, vx, G, 150, { act: 'walk', phase: t * 9, dir: 1, expr: 'scheme', tube: false, blink: blinkAt(0, t) });
-  else drawFull('vera', g, vx, G, 150, { act: 'trip', fall, dir: 1, expr: 'fluster', tube: false });
+  if (t < trip) drawFull('vera', g, vx, G, 98, { act: 'walk', phase: t * 9, dir: 1, expr: 'scheme', tube: false, blink: blinkAt(0, t) });
+  else drawFull('vera', g, vx, G, 98, { act: 'trip', fall, dir: 1, expr: 'fluster', tube: false });
   // Cleo does not go around her: she walks right over Vera's back, deadpan
-  const onBack = t > trip + .5 ? clamp(1 - Math.abs(cx - (vx + 150)) / 170) : 0, lift = Math.min(1, onBack * 1.6) * 62;
-  drawFull('cleo', g, cx, G - lift, 150, { act: 'walk', phase: t * 8, dir: 1, expr: 'deadpan', blink: blinkAt(1, t) });
+  const onBack = t > trip + .5 ? clamp(1 - Math.abs(cx - (vx + 330)) / 330) : 0, lift = Math.min(1, onBack * 1.6) * 52;
+  drawFull('cleo', g, cx, G - lift, 98, { act: 'walk', phase: t * 8, dir: 1, expr: 'deadpan', blink: blinkAt(1, t) });
   if (t > trip + .4 && t < trip + 1.2) { g.save(); g.globalAlpha = 1 - (t - trip - .4) / .8; for (let i = 0; i < 5; i++) tShape(g, '#e8dcc6', gg => gg.arc(vx + 160 + i * 40, G - 20 - i * 6, 22 + i * 4, 0, 6.2832), 2); g.restore(); }
 };
 (async () => { await toonFonts('fonts/'); buildYard(); render(0); window.READY = true; })();

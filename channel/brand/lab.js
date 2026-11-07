@@ -435,6 +435,7 @@ function drawVera2(c, x, y, s, o = {}) {
     for (const sx of [-1, 1]) { tTube(c, [sx * 64, -120, sx * 96, -150, sx * 92, -200, sx * 90, -228, sx * 86, -250], 23, LAB.coat, sx > 0 ? LAB.coatS : null); tHand(c, sx * 86, -262, 10, V.skin, V.skinS, true); }
     c.restore(); return;
   }
+  if (o.armsDown) { hangingArms(c, o, 64, -120, 116, 24, LAB.coat, LAB.coatS, V.skin, V.skinS); c.restore(); return; }
   tTube(c, [-64, -120, -80, -70, -74, -10], 24, LAB.coat);
   if (o.clipboard) {
     tTube(c, [64, -120, 84, -76, 60, -70, 40, -72, 26, -84], 23, LAB.coat, LAB.coatS);
@@ -507,6 +508,7 @@ function drawCleo2(c, x, y, s, o = {}) {
   c.restore();
   c.restore();
   // arms: lime gloves, a remote with a big red button
+  if (o.armsDown) { hangingArms(c, o, 53, -118, 102, 19, K.tee, '#dcd4ee', K.glove, LAB.glowS); c.restore(); return; }
   if (o.reachL) { const r = o.reachL, mx = (-76 + r.x) / 2 - 4, my = (-76 + r.y) / 2 + 6; tTube(c, [-53, -118, -76, -76, mx, my, (mx + r.x) / 2, (my + r.y) / 2, r.x - 2, r.y - 4], 18, K.tee); }
   else tTube(c, [-53, -118, -70, -70, -50, -36, -36, -32, -22, -40], 18, K.tee);
   tTube(c, [53, -118, 70, -70, 50, -36, 36, -32, 22, -40], 18, K.tee, '#dcd4ee');

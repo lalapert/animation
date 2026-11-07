@@ -1,0 +1,15 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Full bodies close</title><style>html,body{margin:0;background:#000}canvas{display:block}</style></head>
+<body><canvas id="c" width="1080" height="1920"></canvas>
+<script src="toon.js"></script><script src="lab.js"></script><script src="vmkit.js"></script><script src="labkit.js"></script><script src="bodies.js"></script>
+<script>
+const g = document.getElementById('c').getContext('2d');
+window.render = t => {
+  g.setTransform(1, 0, 0, 1, 0, 0); g.fillStyle = '#d9ecf7'; g.fillRect(0, 0, 1080, 1920); g.fillStyle = '#b9c9a8'; g.fillRect(0, 1700, 1080, 220);
+  // height chart: Vera, Cleo, Rae, Pip side by side, standing, at one scale
+  drawFull('vera', g, 170, 1700, 125, { act: 'stand', expr: 'cool' });
+  drawFull('cleo', g, 420, 1700, 125, { act: 'stand', expr: 'deadpan' });
+  drawFull('rae', g, 670, 1700, 125, { act: 'stand', expr: 'deadpan', scanner: false });
+  drawFull('pip', g, 920, 1700, 125, { act: 'walk', phase: t * 9, dir: -1, expr: 'grin' });
+};
+(async () => { await toonFonts('fonts/'); render(.3); window.READY = true; })();
+</script></body></html>

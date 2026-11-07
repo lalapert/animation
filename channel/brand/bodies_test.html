@@ -5,12 +5,12 @@
 const g = document.getElementById('c').getContext('2d');
 window.render = t => {
   g.setTransform(1, 0, 0, 1, 0, 0); g.fillStyle = '#8fd3ff'; g.fillRect(0, 0, 1080, 1920); g.fillStyle = '#7bc96f'; g.fillRect(0, 900, 1080, 1020);
-  drawFull('vera', g, 220, 880, 130, { act: 'stand', expr: 'cool', tube: false });
-  drawFull('cleo', g, 540, 880, 130, { act: 'walk', phase: t * 9, dir: 1, expr: 'deadpan' });
-  drawFull('vera', g, 860, 880, 130, { act: 'run', phase: t * 15, dir: -1, expr: 'fluster', tube: false });
-  drawFull('rae', g, 220, 1800, 130, { act: 'walk', phase: t * 9 + 1, dir: -1, expr: 'deadpan', scanner: false, arms: true });
-  drawFull('pip', g, 540, 1800, 130, { act: 'jump', air: .6 + .4 * Math.sin(t * 3), expr: 'grin', wave: true, wavePhase: t * 9 });
-  drawFull('cleo', g, 860, 1800, 130, { act: 'trip', fall: (t % 2) / 1.2, dir: 1, expr: 'deadpan' });
+  drawFull('vera', g, 200, 880, 70, { act: 'stand', expr: 'cool', tube: false });
+  drawFull('cleo', g, 540, 880, 70, { act: 'walk', phase: t * 9, dir: 1, expr: 'deadpan' });
+  drawFull('vera', g, 880, 880, 70, { act: 'run', phase: t * 15, dir: -1, expr: 'fluster', tube: false });
+  drawFull('rae', g, 200, 1800, 70, { act: 'walk', phase: t * 9 + 1, dir: -1, expr: 'deadpan', scanner: false, arms: true });
+  drawFull('pip', g, 540, 1800, 70, { act: 'jump', air: .6 + .4 * Math.sin(t * 3), expr: 'grin', wave: true, wavePhase: t * 9 });
+  drawFull('cleo', g, 860, 1800, 70, { act: 'trip', fall: (t % 2) / 1.2, dir: 1, expr: 'deadpan' });
 };
 (async () => { await toonFonts('fonts/'); render(.3); window.READY = true; })();
 </script></body></html>
