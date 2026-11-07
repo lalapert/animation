@@ -1,0 +1,137 @@
+{
+ "model_id": "eleven_v4",
+ "cast": {
+  "VERA": {
+   "voice_id": "buRySvQEB2e8Dcglym6i",
+   "name": "LAB Vera Volt",
+   "settings": {
+    "stability": 0.3,
+    "similarity_boost": 0.8,
+    "style": 0.7,
+    "speed": 1.0
+   }
+  },
+  "CLEO": {
+   "voice_id": "biUhGlVm4NoNe58piPit",
+   "name": "LAB Cleo",
+   "settings": {
+    "stability": 0.6,
+    "similarity_boost": 0.8,
+    "style": 0.25,
+    "speed": 0.92
+   }
+  }
+ },
+ "lines": [
+  {
+   "id": "L1",
+   "who": "VERA",
+   "text": "[grand, interviewing] Name?",
+   "plain": "Name?",
+   "sub": "Name?"
+  },
+  {
+   "id": "L2",
+   "who": "CLEO",
+   "text": "[bored] Cleo.",
+   "plain": "Cleo.",
+   "sub": "Cleo."
+  },
+  {
+   "id": "L3",
+   "who": "VERA",
+   "text": "[leaning in, scheming] Experience with evil?",
+   "plain": "Experience with evil?",
+   "sub": "Experience with evil?"
+  },
+  {
+   "id": "L4",
+   "who": "CLEO",
+   "text": "[deadpan] I worked retail.",
+   "plain": "I worked retail.",
+   "sub": "I worked retail."
+  },
+  {
+   "id": "L5",
+   "who": "VERA",
+   "text": "[impressed whisper] Ooh.",
+   "plain": "Ooh.",
+   "sub": "Ooh."
+  },
+  {
+   "id": "L6",
+   "who": "VERA",
+   "text": "[serious, businesslike] Greatest weakness?",
+   "plain": "Greatest weakness?",
+   "sub": "Greatest weakness?"
+  },
+  {
+   "id": "L7",
+   "who": "CLEO",
+   "text": "I press buttons.",
+   "plain": "I press buttons.",
+   "sub": "I press buttons.",
+   "settings": {
+    "stability": 0.85,
+    "similarity_boost": 0.8,
+    "style": 0.0,
+    "speed": 0.88
+   }
+  },
+  {
+   "id": "L8",
+   "who": "VERA",
+   "text": "[dramatic, warning] Then whatever you do, do NOT press the—",
+   "plain": "Then whatever you do, do NOT press the—",
+   "sub": "Then whatever you do,\ndo NOT press the—"
+  },
+  {
+   "id": "L9",
+   "who": "VERA",
+   "text": "[coughing, stunned] You didn't even hesitate.",
+   "plain": "You didn't even hesitate.",
+   "sub": "You didn't even hesitate."
+  },
+  {
+   "id": "L10",
+   "who": "CLEO",
+   "text": "[matter-of-fact] You said \"whatever I do.\"",
+   "plain": "You said \"whatever I do.\"",
+   "sub": "You said \"whatever I do.\""
+  },
+  {
+   "id": "L11",
+   "who": "VERA",
+   "text": "[delighted, manic laugh] You're hired!",
+   "plain": "You're hired!",
+   "sub": "You're hired!"
+  },
+  {
+   "id": "L12",
+   "who": "CLEO",
+   "text": "Do I get dental?",
+   "plain": "Do I get dental?",
+   "sub": "Do I get dental?",
+   "settings": {
+    "stability": 0.85,
+    "similarity_boost": 0.8,
+    "style": 0.0,
+    "speed": 0.9
+   }
+  },
+  {
+   "id": "L13",
+   "who": "VERA",
+   "text": "[proud] You get a fire extinguisher.",
+   "plain": "You get a fire extinguisher.",
+   "sub": "You get a fire extinguisher."
+  },
+  {
+   "id": "L14",
+   "who": "VERA",
+   "text": "[exasperated] Not again!",
+   "plain": "Not again!",
+   "sub": "Not again!"
+  }
+ ]
+}

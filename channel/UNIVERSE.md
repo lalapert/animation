@@ -26,7 +26,7 @@
 | 화 | 날짜 | 무엇을 | 아는 사람만 아는 것 |
 |---|---|---|---|
 | 1 *Day One* | 11/28 | 냉장고 문이 열릴 때 노란 MILK 통 (만듦: 광선 발사 반동으로 미니 냉장고가 1초 열린다) | Dennis가 매일 사는 우유 |
-| 3 *Help Wanted (Evil)* | 12/5 | 쓰레기통의 주황색 Void Mart 비닐봉지 | 단골이다 |
+| 3 *Help Wanted (Evil)* | 12/5 | 쓰레기통의 주황색 Void Mart 비닐봉지 (만듦: 탁자 오른쪽 휴지통, "VM" 글자) | 단골이다 |
 | 5 *3 AM Run* | 12/12 | **교차 출연.** 순간이동 장치가 켜질 때 Void Mart 차임벨 소리, 계산대 앞에 떨어진 Vera에게 Rae: *"Exact change only."* | VM 2화 *Exact Change* |
 | 7 *Rocket Boots* | 12/19 | 실험실 벽의 "DAYS SINCE LAST INCIDENT: 0" 판 | Void Mart에서 사 온 표지판 |
 | 9 *On the News* | 12/26 | Cleo의 리모컨에 붙은 별 스티커 | Pip의 명찰과 같은 스티커 |

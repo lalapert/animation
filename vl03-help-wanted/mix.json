@@ -1,0 +1,85 @@
+{
+  "room_db": -60,
+  "voice_over_music_db": 12,
+  "beds": {},
+  "foley": {
+    "tear": {
+      "fx": "tear",
+      "g": -14,
+      "align": true,
+      "fin": 0.002,
+      "fout": 0.1
+    },
+    "whoosh": {
+      "fx": "whoosh",
+      "g": -18,
+      "fin": 0.01,
+      "fout": 0.15
+    },
+    "scribble": {
+      "fx": "scribble",
+      "g": -20,
+      "fin": 0.01,
+      "fout": 0.15
+    },
+    "click": {
+      "fx": "click",
+      "g": -14,
+      "align": true,
+      "fin": 0.002,
+      "fout": 0.05
+    },
+    "boom": {
+      "fx": "boom",
+      "g": -7,
+      "align": true,
+      "fin": 0.002,
+      "fout": 0.6
+    },
+    "rattle": {
+      "fx": "rattle",
+      "g": -17,
+      "fin": 0.01,
+      "fout": 0.3
+    },
+    "cough": {
+      "fx": "cough",
+      "g": -16,
+      "fin": 0.01,
+      "fout": 0.2
+    },
+    "thud": {
+      "fx": "thud",
+      "g": -12,
+      "align": true,
+      "fin": 0.002,
+      "fout": 0.2
+    },
+    "pop": {
+      "fx": "pop",
+      "g": -13,
+      "align": true,
+      "fin": 0.002,
+      "fout": 0.3
+    },
+    "coo": {
+      "fx": "coo",
+      "g": -20,
+      "fin": 0.01,
+      "fout": 0.2
+    },
+    "stamp": {
+      "fx": "stamp",
+      "g": -12,
+      "align": true,
+      "fin": 0.002,
+      "fout": 0.15
+    },
+    "chalk": {
+      "fx": "chalk",
+      "g": -18,
+      "fin": 0.02,
+      "fout": 0.15
+    }
+  }
+}

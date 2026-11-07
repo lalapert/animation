@@ -429,9 +429,21 @@ function drawVera2(c, x, y, s, o = {}) {
     for (const sx of [-1, 1]) { tShape(c, 'rgba(190,255,120,.55)', g => g.ellipse(sx * 18, -222, 17, 14, 0, 0, 6.2832), 4.4); c.fillStyle = 'rgba(255,255,255,.7)'; c.beginPath(); c.ellipse(sx * 18 - 6, -227, 5, 3, -.4, 0, 6.2832); c.fill(); }
     tLine(c, [-2, -222, 2, -222], 5);
   }
-  // arms: one hand in the coat pocket; the other holds a glowing test tube (default), points (o.point: 0..1) or rests (o.tube false)
+  // arms: one hand in the coat pocket; the other holds a glowing test tube (default), points (o.point: 0..1), rests (o.tube false),
+  // holds a clipboard (o.clipboard), reaches to a local point (o.reachR = {x, y}); o.cheer raises both arms
+  if (o.cheer) {
+    for (const sx of [-1, 1]) { tTube(c, [sx * 64, -120, sx * 96, -150, sx * 92, -200, sx * 90, -228, sx * 86, -250], 23, LAB.coat, sx > 0 ? LAB.coatS : null); tHand(c, sx * 86, -262, 10, V.skin, V.skinS, true); }
+    c.restore(); return;
+  }
   tTube(c, [-64, -120, -80, -70, -74, -10], 24, LAB.coat);
-  if (o.point) {
+  if (o.clipboard) {
+    tTube(c, [64, -120, 84, -76, 60, -70, 40, -72, 26, -84], 23, LAB.coat, LAB.coatS);
+    c.save(); c.translate(10, -98); c.rotate(-.12); tShape(c, '#c9a24a', g => g.roundRect(-34, -44, 68, 88, 6), 3); tShape(c, '#fbf7ff', g => g.rect(-28, -34, 56, 72), 2);
+    for (let i = 0; i < 5; i++) tLine(c, [-22, -24 + i * 12, 18 - (i % 2) * 10, -24 + i * 12], 1.6); tShape(c, '#7a8098', g => g.roundRect(-12, -50, 24, 10, 3), 2.4); c.restore();
+    tHand(c, 26, -84, 9.5, V.skin, V.skinS);
+  } else if (o.reachR) {
+    const r = o.reachR; tTube(c, [64, -120, 90, -80, (90 + r.x) / 2 + 6, (-80 + r.y) / 2, r.x + 4, r.y - 4], 23, LAB.coat, LAB.coatS); tHand(c, r.x, r.y, 9.5, V.skin, V.skinS);
+  } else if (o.point) {
     const k = o.point, ex2 = 64 + 46 * k, ey2 = -120 - 70 * k, hx = 70 + 92 * k, hy = -96 - 150 * k;
     tTube(c, [64, -120, 64 + 30 * k + 10 * (1 - k), -112 - 30 * k, ex2, ey2, (ex2 + hx) / 2, (ey2 + hy) / 2, hx, hy], 23, LAB.coat, LAB.coatS);
     tHand(c, hx + 4, hy - 6, 9.5, V.skin, V.skinS, true);
@@ -495,7 +507,8 @@ function drawCleo2(c, x, y, s, o = {}) {
   c.restore();
   c.restore();
   // arms: lime gloves, a remote with a big red button
-  tTube(c, [-53, -118, -70, -70, -50, -36, -36, -32, -22, -40], 18, K.tee);
+  if (o.reachL) { const r = o.reachL; tTube(c, [-53, -118, -76, -76, (-76 + r.x) / 2 - 4, (-76 + r.y) / 2 + 6, r.x - 2, r.y - 4], 18, K.tee); }
+  else tTube(c, [-53, -118, -70, -70, -50, -36, -36, -32, -22, -40], 18, K.tee);
   tTube(c, [53, -118, 70, -70, 50, -36, 36, -32, 22, -40], 18, K.tee, '#dcd4ee');
   if (o.remote !== false) {
     tShape(c, '#3a3350', g => g.roundRect(-20, -58, 40, 30, 7), 3.4);
@@ -503,7 +516,7 @@ function drawCleo2(c, x, y, s, o = {}) {
     c.save(); c.shadowColor = '#ff3355'; c.shadowBlur = 10 + 30 * pr; tShape(c, '#ff3355', g => g.ellipse(0, by, 11, 8 - 2 * pr, 0, 0, 6.2832), 3); c.restore();
     c.fillStyle = 'rgba(255,255,255,.8)'; c.beginPath(); c.ellipse(-3, by - 3, 4, 2, 0, 0, 6.2832); c.fill();
   }
-  tHand(c, -20, -40, 8.5, K.glove, LAB.glowS); tHand(c, 20, -40, 8.5, K.glove, LAB.glowS);
+  tHand(c, o.reachL ? o.reachL.x : -20, o.reachL ? o.reachL.y : -40, 8.5, K.glove, LAB.glowS); tHand(c, 20, -40, 8.5, K.glove, LAB.glowS);
   if (o.press) tShape(c, K.glove, g => g.roundRect(4, -58 + 3 * o.press, 14, 9, 4), 3);   // right thumb on the button
   c.restore();
 }

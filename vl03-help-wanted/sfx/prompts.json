@@ -1,0 +1,62 @@
+{
+ "lab_hum": [
+  10.0,
+  "a basement laboratory ambience: soft electrical hum, gentle bubbling beakers, an old pipe ticking, loopable, no voices, no music"
+ ],
+ "hum": [
+  3.0,
+  "a sci-fi ray cannon idling: a low warm electrical hum with a soft sparkle"
+ ],
+ "click": [
+  0.5,
+  "a single small plastic remote control button click, close"
+ ],
+ "zap": [
+  2.0,
+  "a huge cartoon sci-fi ray blast: a deep electric boom with a sparkly magical shimmer, short tail"
+ ],
+ "rattle": [
+  1.2,
+  "glass beakers and metal shelves rattling briefly from a shockwave, short"
+ ],
+ "coo": [
+  1.2,
+  "one pigeon cooing softly, close, natural"
+ ],
+ "chalk": [
+  1.2,
+  "chalk drawing a big circle on a chalkboard, one continuous scrape"
+ ],
+ "tear": [
+  0.6,
+  "a strip of paper torn off a flyer, one quick rip"
+ ],
+ "whoosh": [
+  0.6,
+  "a quick soft cartoon whoosh swish"
+ ],
+ "scribble": [
+  1.0,
+  "a pen scribbling quickly on paper on a clipboard"
+ ],
+ "boom": [
+  2.0,
+  "a big cartoon laboratory explosion: a deep boom, glass rattling, debris pattering down"
+ ],
+ "cough": [
+  1.2,
+  "a woman coughing twice in smoke, light, comedic"
+ ],
+ "thud": [
+  0.8,
+  "a heavy metal fire extinguisher slammed down on a lab bench, a solid clank"
+ ],
+ "pop": [
+  0.8,
+  "a small cartoon explosion puff, a soft pop and a fizzle"
+ ],
+ "stamp": [
+  0.6,
+  "a rubber stamp slammed onto paper on a wall, a firm thump"
+ ]
+}

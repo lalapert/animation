@@ -1,0 +1,8 @@
+Volt Labs, episode 3: "Help Wanted (Evil)" (2026). Original characters, story, pictures and music. Part of the Void Mart universe.
+
+Pictures: drawn in code (canvas 2D) with the Volt Labs kit (channel/brand/lab.js, channel/brand/labkit.js) and the shared toon kit (channel/brand/toon.js, channel/brand/vmkit.js).
+Fonts: Bungee (The Bungee Project Authors) and Fredoka (The Fredoka Project Authors), SIL Open Font License 1.1.
+Voices: ElevenLabs text-to-speech, model eleven_v4.
+  Dr. Vera Volt: "LAB Vera Volt" and Cleo: "LAB Cleo" (ElevenLabs Voice Design, made for this show).
+Sound effects: generated with ElevenLabs Sound Effects (prompts in sfx/prompts.json).
+Music: original score (tools/score.py) played with CC0 samples from VSCO 2 Community Edition and VCSL.

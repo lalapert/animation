@@ -13,6 +13,7 @@ for ln in open(script, encoding="utf-8"):
     cells = [c.strip() for c in ln.strip().strip("|").split("|")]
     if len(cells) < 4: continue
     lid, who, tag, line = cells[0], cells[1].upper(), cells[2].strip("`").strip(), cells[3]
+    tag = " ".join(re.findall(r"\[[^\]]*\]", tag))       # only [audio tags]; a note like "(no tag: ...)" means no tag
     if not re.fullmatch(r"L\d+[a-z]?", lid) or not line: continue
     plain = line.replace(" / ", " ")
     rows.append({"id": lid, "who": who, "text": (tag + " " if tag else "") + plain, "plain": plain, "sub": line.replace(" / ", "\n")})
