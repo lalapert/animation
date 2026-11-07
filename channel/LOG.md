@@ -56,3 +56,10 @@
 - First measurement: the old captions failed the caption lint (no search terms, no ask, hashtags in the visible window); titles scored 30–44 (all WEAK, weakest: specificity).
 - Rewrote the captions of VL1, VM2, VL2, VM3, VL3, VM4 (question first, search terms, 4 hashtags below the cut; all READY) and four titles (VL1, VM2, VL2, VL3). Media and covers unchanged. New Metricool ids (uuid unchanged): VL1 420093756, VM2 420093816, VL2 420093878, VM3 420093948, VL3 420094001, VM4 420094053.
 - `vmkit.js subtitle()`: lines wider than 840 px shrink (keeps x 120–960, clear of the button rail). Applies to new renders only.
+
+## 11/8 03:10 KST — owner: every invention different, no animal gags, more movement
+- Volt Labs 2 *The Obedience Megaphone*: the tripod ray became a handheld megaphone (line 3 re-recorded, shouts through a megaphone filter), new cover; Metricool 420136383 (was 420093878).
+- Volt Labs 4 *Laser Pointer*: rewritten without cats. Wrist gauntlet; the landlord (stock voice "Bill") sees the red dot on his chest and runs; Cleo's pen laser: "My paycheck?" "Next month is fine!" 40.1 s, −14.1 LUFS, peak −1.1 dB, 11 lines heard, black 0, Korean 0. New cover "THE LANDLORD RAN". Metricool 420144749 (was 420111462).
+- Volt Labs 5: the audience is plants ("Your plants died."), re-recorded.
+- Plans: `LAB_SERIES.md` rewritten (a different invention every episode, outdoor episodes, 15 *Drone Army*, 41 megaphone reverse broadcast), rules in `PRODUCTION.md` §2.2 and the script template (9th row).
+- Rigs fixed: Vera/Cleo/Rae reach arms now reach the hand (lab.js, toon.js). New: `channel/brand/bodies.js` (full bodies: walk, run, jump, trip, sit), the lab backyard set (`buildYard` in labkit.js). Sample: `channel/brand/yard_sample.html`.

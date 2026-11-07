@@ -11,3 +11,5 @@
 | 11/13 09:00 | vm04-zero-g-mop | 24 The Reveal | The gravity went optional at work | What would you do first if the gravity at work went off? | no |
 | 11/14 09:00 | vl04-laser-pointer | 24 The Reveal + twist | She spent the rent on a doomsday laser. The cats won | What's the dumbest thing your cat ever chased? Tell me. | yes |
 | 11/15 09:00 | vm05-dennis | 2 Negative Command | Never tell a slug his milk is sold out | What's the one thing you buy every single time? Tell me. | yes |
+| (changed 11/8) | vl02-obedience-ray | 23 The Statistic | She made 8 billion people obey her. Politely | What would you make everyone do with an obedience megaphone? | no |
+| (changed 11/8) | vl04-laser-pointer | 24 The Reveal + twist | She spent the rent on a doomsday laser. The landlord ran | What would you do with a doomsday laser? Be honest. | yes |

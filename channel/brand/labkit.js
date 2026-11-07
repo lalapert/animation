@@ -360,3 +360,47 @@ function drawLaserDot(g, x, y, r = 7, a = 1) {
   g.fillStyle = '#ffd6d6'; g.beginPath(); g.arc(x - r * .25, y - r * .25, r * .4, 0, 6.2832); g.fill();
   g.restore();
 }
+
+// ---------------------------------------------------------------- the backyard behind the lab building (11/8: outdoor episodes)
+// World 2160 wide (the camera can pan), ground line YARD.ground. The building's back wall is on the left with the basement window and the back door.
+const YARD = { w: 2160, ground: 1660, door: { x: 420, y: 1380 }, hose: { x: 1080 } };
+function buildYard() {
+  const b = document.createElement('canvas'); b.width = YARD.w; b.height = 2400; const g = b.getContext('2d');
+  const sky = g.createLinearGradient(0, 0, 0, 1300); sky.addColorStop(0, '#7ec8f5'); sky.addColorStop(1, '#ffe2b8'); g.fillStyle = sky; g.fillRect(0, 0, YARD.w, 1920);
+  // far rooftops
+  const R = (() => { let a = 11; return () => { a = a * 16807 % 2147483647; return a / 2147483647; }; })();
+  for (let x = -40; x < YARD.w; x += 150 + R() * 90) { const h = 260 + R() * 260, w = 140 + R() * 80; tShape(g, ['#b7a7c9', '#a99bc0', '#c3b4d3'][(R() * 3) | 0], gg => gg.rect(x, 1180 - h, w, h + 40), 3); for (let wy = 1180 - h + 40; wy < 1140; wy += 70) for (let wx = x + 22; wx < x + w - 30; wx += 46) tShape(g, R() < .3 ? '#fff2b0' : '#8d80a8', gg => gg.rect(wx, wy, 22, 30), 2); }
+  // the wooden fence
+  for (let x = 0; x < YARD.w; x += 64) tShape(g, '#c98f5a', gg => { gg.moveTo(x + 4, 1500); gg.lineTo(x + 4, 1130); gg.lineTo(x + 32, 1104); gg.lineTo(x + 60, 1130); gg.lineTo(x + 60, 1500); gg.closePath(); }, 3);
+  tShape(g, '#a9733f', gg => gg.rect(0, 1190, YARD.w, 22), 3); tShape(g, '#a9733f', gg => gg.rect(0, 1400, YARD.w, 22), 3);
+  // ground: grass with a dirt path
+  tShape(g, '#79c46b', gg => gg.rect(-10, 1480, YARD.w + 20, 940), 4);
+  tShape(g, '#c9a477', gg => { gg.moveTo(-10, 1620); gg.bezierCurveTo(600, 1590, 1400, 1700, YARD.w + 10, 1630); gg.lineTo(YARD.w + 10, 1730); gg.bezierCurveTo(1400, 1790, 600, 1700, -10, 1720); gg.closePath(); }, 3);
+  for (let i = 0; i < 160; i++) { const x = R() * YARD.w, y = 1490 + R() * 420; if (y > 1600 && y < 1740) continue; tLine(g, [x, y, x - 4, y - 12], 2.4); }
+  // the lab building's back wall, left: bricks, the basement window at ground level, the back door with steps
+  const bw = 560;
+  g.save(); g.beginPath(); g.rect(0, 0, bw, 1500); g.clip();
+  g.fillStyle = '#9a5a46'; g.fillRect(0, 0, bw, 1500);
+  for (let r = 0, y = 0; y < 1500; r++, y += 44) for (let x = (r % 2) * -50; x < bw; x += 100) { g.fillStyle = R() < .5 ? '#a8634d' : '#8f533f'; g.fillRect(x + 3, y + 3, 94, 38); }
+  g.restore();
+  tShape(g, null, gg => gg.rect(0, 0, bw, 1500), 4);
+  tShape(g, '#2b2f3e', gg => gg.rect(150, 1410, 230, 80), 3.4); tShape(g, '#bfe7ff', gg => gg.rect(160, 1418, 210, 64), 2.4);   // basement window
+  tShape(g, '#5b4636', gg => gg.rect(330, 1100, 180, 300), 4); tEllipse(g, 488, 1260, 9, 9, '#ffd23f', 2.6);                     // back door
+  tShape(g, '#fff6c8', gg => gg.rect(358, 1150, 124, 40), 2.6); tText(g, 'VOLT LABS', 420, 1171, 20, TOON.ink, '"Bungee"', 'center', 400);
+  for (let i = 0; i < 3; i++) tShape(g, '#8a8f9e', gg => gg.rect(310 - i * 10, 1400 + i * 30, 220 + i * 20, 30), 3);
+  // laundry line with two lab coats; trash cans; a junk pile with the first ray lying in it
+  tLine(g, [700, 900, 700, 1500], 8); tLine(g, [1500, 900, 1500, 1500], 8); tCurve(g, 700, 920, 1100, 990, 1500, 920, 3);
+  for (const cx of [900, 1180]) { tShape(g, '#f4f1fb', gg => { gg.moveTo(cx - 60, 960); gg.lineTo(cx + 60, 962); gg.lineTo(cx + 70, 1130); gg.lineTo(cx - 70, 1128); gg.closePath(); }, 3); tLine(g, [cx, 960, cx, 1128], 2.4); tShape(g, '#b6ff3b', gg => gg.rect(cx - 26, 952, 10, 16), 2); }
+  for (const x of [1700, 1800]) { tShape(g, '#8a93ab', gg => gg.roundRect(x, 1420, 80, 110, 8), 3.4); tShape(g, '#6c7590', gg => gg.roundRect(x - 6, 1408, 92, 18, 6), 3); }
+  tShape(g, '#5f6a82', gg => gg.roundRect(1930, 1450, 180, 70, 14), 3.4); tShape(g, '#d9873a', gg => gg.roundRect(1960, 1440, 16, 90, 5), 2.4); tShape(g, '#ff8fb8', gg => gg.arc(2108, 1484, 30, 0, 6.2832), 3);   // the old ray, on its side
+  YARD.img = b;
+}
+// the garden hose across the path (a trip hazard); k > 0 snaps it taut when someone trips
+function drawHose(g, t, k = 0) {
+  const x = YARD.hose.x, y = YARD.ground - 6;
+  g.save(); g.lineCap = 'round';
+  g.strokeStyle = TOON.ink; g.lineWidth = 18; g.beginPath(); g.moveTo(x - 300, y + 30); g.bezierCurveTo(x - 120, y - 10 - k * 20, x + 80, y + 20, x + 260, y - 4); g.stroke();
+  g.strokeStyle = '#3fae6a'; g.lineWidth = 11; g.stroke();
+  g.restore();
+  tShape(g, '#3fae6a', gg => gg.ellipse(x - 340, y + 40, 60, 22, 0, 0, 6.2832), 3); tShape(g, '#2f8a52', gg => gg.ellipse(x - 340, y + 40, 32, 11, 0, 0, 6.2832), 2.4);
+}
