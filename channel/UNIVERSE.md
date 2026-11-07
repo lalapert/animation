@@ -10,16 +10,16 @@
 4. **교차 출연은 시즌에 두 번만**(Volt Labs 5화, 15화). 이 두 화도 빈도에 포함한다.
 5. 영상 속 글자는 영어만(`SERIES.md` 0절).
 
-## Void Mart 시즌 1 (15화)
+## Void Mart 시즌 1 (17화, 화 번호는 공개 순서)
 
 | 화 | 날짜 | 무엇을 | 아는 사람만 아는 것 |
 |---|---|---|---|
-| 3 *Dennis* | 11/19 | 배경: 새벽 3시, 흰 가운에 백금발 단발인 손님 뒷모습이 건전지 400개를 계산한다 | 9일 뒤 나오는 Vera |
-| 5 *Leftovers* | 11/26 | 진열대의 "FREE! BrightCap" 상자. Rae: *"Nothing is free."* | Volt Labs 10화의 악당 계획 |
-| 8 *Security Footage* | 12/8 | 가게 TV에 소리 끈 Sterling Bright 광고 | Volt Labs의 악당 |
-| 10 *The Note* | 12/15 | 분실물 상자 안의 시험관 머리핀 | Volt Labs 5화(12/12)에 Cleo가 왔다 갔다 |
-| 13 *Holiday Hours* | 12/24 | Dennis: *"Last drop tonight is a basement. Very polite lady. Very loud lab."* | Dennis가 Vera에게도 배달한다 |
-| 15 *Countdown* | 12/31 | 가게 TV 자막 띠: "BRIGHTSIDE STOCK HITS RECORD HIGH" | Volt Labs 2막 시작 직후 |
+| 5 *Dennis* | 11/19 | 배경: 새벽 3시, 흰 가운에 백금발 단발인 손님 뒷모습이 건전지 400개를 계산한다 | 9일 뒤 나오는 Vera |
+| 7 *Leftovers* | 11/26 | 진열대의 "FREE! BrightCap" 상자. Rae: *"Nothing is free."* | Volt Labs 10화의 악당 계획 |
+| 10 *Security Footage* | 12/8 | 가게 TV에 소리 끈 Sterling Bright 광고 | Volt Labs의 악당 |
+| 12 *The Note* | 12/15 | 분실물 상자 안의 시험관 머리핀 | Volt Labs 5화(12/12)에 Cleo가 왔다 갔다 |
+| 15 *Holiday Hours* | 12/24 | Dennis: *"Last drop tonight is a basement. Very polite lady. Very loud lab."* | Dennis가 Vera에게도 배달한다 |
+| 17 *Countdown* | 12/31 | 가게 TV 자막 띠: "BRIGHTSIDE STOCK HITS RECORD HIGH" | Volt Labs 2막 시작 직후 |
 
 ## Volt Labs 시즌 1 (20화)
 
@@ -32,7 +32,7 @@
 | 9 *On the News* | 12/26 | Cleo의 리모컨에 붙은 별 스티커 | Pip의 명찰과 같은 스티커 |
 | 12 *Cleo Goes Viral* | 1/4 | 화면에 뜬 댓글 하나: "pip_at_voidmart: CLEO!!!" | Pip가 팬이다 |
 | 15 *Supply Run* | 1/16 | **교차 출연.** Dennis의 화물선이 부품을 내려 준다 | Dennis가 화물 운전사인 이유 |
-| 17 *Launch Day* | 1/23 | 뉴스 몽타주에 BrightCap을 거절하는 Void Mart 창가의 Rae | VM 5화의 *"Nothing is free."* |
+| 17 *Launch Day* | 1/23 | 뉴스 몽타주에 BrightCap을 거절하는 Void Mart 창가의 Rae | VM 7화의 *"Nothing is free."* |
 | 20 *Hero* | 2/1 | 퍼레이드 군중 속 손 흔드는 Pip, 무표정한 Rae, 가로등의 돔 카메라 | 세 사람 다 Void Mart |
 
 - 시즌 2용으로 남겨 둘 씨앗: MAGS의 업데이트 화면에 "BrightSide OS"가 잠깐 뜬다. BrightSide가 Void Mart까지 사들였다는 암시. 시즌 1에는 넣지 않는다.

@@ -14,9 +14,9 @@ Each run makes **one** episode, the one whose series is closest to running out o
 
 | Series | Plan | Slots (KST) | Template folder |
 |---|---|---|---|
-| Void Mart | `channel/SEASON1.md` §4 (15 episodes, 11/14 → 12/31) | Tue, Thu 09:00 (and the 11/14 Sat premiere) | the latest `vmNN-*` folder (now `vm02-exact-change/`) |
+| Void Mart | `channel/SEASON1.md` §4 (17 episodes, 11/7 → 12/31; episode numbers = air order) | Tue, Thu 09:00 (and the 11/7 Sat premiere) | the latest `vmNN-*` folder (now `vm02-exact-change/`) |
 | Volt Labs | `channel/LAB_SERIES.md` §2 (20 episodes, 11/28 → 2/1) | Sat, Mon 09:00 | the latest `vlNN-*` folder (now `vl01-day-one/`) |
-| Horror (*STILL RECORDING*, own channel) | `channel/HORROR_SERIES.md` §3 (30 tapes, 11/23 → 1/30) | Mon, Thu, Sat 13:00 | none yet: build `channel/brand/tapekit.js` first (§2.6) |
+| Horror (*STILL RECORDING*, own channel) | `channel/HORROR_SERIES.md` §3 (37 tapes, 11/7 → 1/30) | Mon, Thu, Sat 13:00 | the latest `srNN-*` folder (now `sr01-closing-announcement/`) |
 
 1. For each series, list its next post dates and which of them already have a scheduled Metricool post or a finished folder. Banked = finished, not yet published.
 2. Pick the series with the fewest banked episodes (ties: the earliest next slot). If every series already has 2 banked, make nothing and log "buffer full".

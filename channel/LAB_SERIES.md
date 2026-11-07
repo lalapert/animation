@@ -81,7 +81,7 @@
 | 토 | 금 저녁 7시 | The Lab |
 | 월 | 일 저녁 7시 | The Lab |
 
-- Void Mart는 11/14(토) 첫 화, 그다음부터 화·목. 12/31(목) 피날레까지 **15화**가 된다. `SEASON1.md`의 21화 중 독립 에피소드 6개(*Self-Checkout*, *Lost & Found*, *Zero-G Mop*, *Inventory Night*, *Returns*, *Gift Receipt*)를 빼서 비축분과 시즌 2로 돌린다. 추수감사절(11/26 목), 크리스마스이브(12/24 목), 피날레(12/31 목)는 모두 Void Mart 요일에 맞는다.
+- Void Mart는 11/7(토) 첫 화(11/7 작가님 결정, 원래 11/14), 그다음부터 화·목. 12/31(목) 피날레까지 **17화**가 된다(`SEASON1.md` 4절). `SEASON1.md`의 21화 중 독립 에피소드 6개(*Self-Checkout*, *Lost & Found*, *Zero-G Mop*, *Inventory Night*, *Returns*, *Gift Receipt*)를 빼서 비축분과 시즌 2로 돌린다. 추수감사절(11/26 목), 크리스마스이브(12/24 목), 피날레(12/31 목)는 모두 Void Mart 요일에 맞는다.
 - The Lab은 11/28(토) 첫 화, 2/1(월) 마지막 화까지 20화.
 - 11/21(토), 11/23(월)은 실험실 시작 전이라 비운다.
 
