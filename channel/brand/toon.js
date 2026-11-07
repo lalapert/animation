@@ -500,24 +500,27 @@ function drawRae2(c, x, y, s, o = {}) {
     g.lineTo(sx * 17, -236); g.quadraticCurveTo(sx * 10, -258, sx * 2, -266); g.closePath(); });
   tCurve(c, -10, -284, -30, -276, -38, -250, 2.6, R.hairL);
   tCurve(c, 2, -291, 6, -308, 16, -312, 3.2); tCurve(c, -4, -291, -12, -306, -6, -316, 3.2);
+  // coffee mug: o.mug 0 = on the counter, 1 = at the mouth. Lifted, it is held by her right hand, and that arm goes up with it.
+  const mk = o.mug != null ? Math.min(1, Math.max(0, o.mug)) : 0, me = mk * mk * (3 - 2 * mk), lifted = o.mug != null && mk > .05;
+  const mx = 40 + (6 - 40) * me, my = -16 + (-176 + 16) * me;
   if (o.arms !== false) {
-    tTube(c, [-58, -122, -76, -72, -72, -26, -44, -20, -12, -22], 24, R.hood);
-    tTube(c, [58, -122, 76, -72, 74, -24, 50, -16, 20, -18], 24, R.hood, R.hoodS);
-    tHand(c, -8, -23, 9.5, R.skin, R.skinS);
-    if (o.scanner !== false) {
+    // left arm: forearm on the counter, or reaching for o.reachL = {x, y} (local units)
+    if (o.reachL) { const r = o.reachL; tTube(c, [-58, -122, -84, -78, (-84 + r.x) / 2 - 6, (-78 + r.y) / 2 + 10, r.x - 4, r.y + 2], 24, R.hood); tHand(c, r.x, r.y, 9.5, R.skin, R.skinS); }
+    else { tTube(c, [-58, -122, -76, -72, -72, -26, -44, -20, -12, -22], 24, R.hood); tHand(c, -8, -23, 9.5, R.skin, R.skinS); }
+    if (o.scanner !== false) {                     // the scanner lies on the counter while she drinks
       tShape(c, '#9aa0b8', g => g.roundRect(8, -40, 34, 14, 5), 3.4);
       tShape(c, '#ff3355', g => g.roundRect(34, -37, 7, 8, 2), 2.2);
       tShape(c, '#7a8098', g => { g.moveTo(14, -28); g.lineTo(24, -28); g.lineTo(21, -16); g.lineTo(13, -16); g.closePath(); }, 3.2);
     }
-    tHand(c, 22, -19, 9.5, R.skin, R.skinS);
+    if (lifted) { tTube(c, [58, -122, 80, -76 - 20 * me, (80 + mx) / 2 + 14, (-76 + my) / 2 + 8, mx + 4, my + 8], 24, R.hood, R.hoodS); }
+    else { tTube(c, [58, -122, 76, -72, 74, -24, 50, -16, 20, -18], 24, R.hood, R.hoodS); tHand(c, 22, -19, 9.5, R.skin, R.skinS); }
   }
-  if (o.mug != null) {   // coffee mug: 0 = on the counter, 1 = at the mouth
-    const k = Math.min(1, Math.max(0, o.mug)), e = k * k * (3 - 2 * k), mx = 40 + (6 - 40) * e, my = -16 + (-176 + 16) * e;
+  if (o.mug != null) {
     tShape(c, '#fbf7ff', g => g.roundRect(mx - 15, my - 26, 30, 32, 5), 3.4);
     tShape(c, '#fbf7ff', g => g.arc(mx + 17, my - 10, 8, -1.3, 1.3), 3.4);
     tShape(c, TOON.orange, g => g.rect(mx - 15, my - 16, 30, 7), 2.2);
-    if (k > .05) tHand(c, mx - 4, my - 2, 9.5, R.skin, R.skinS);
-    if (k > .4) for (let i = 0; i < 2; i++) tCurve(c, mx - 6 + i * 10, my - 30, mx - 2 + i * 10, my - 42, mx - 7 + i * 10, my - 54, 2.4, 'rgba(255,255,255,.6)');
+    if (lifted) tHand(c, mx - 4, my - 2, 9.5, R.skin, R.skinS);
+    if (mk > .4) for (let i = 0; i < 2; i++) tCurve(c, mx - 6 + i * 10, my - 30, mx - 2 + i * 10, my - 42, mx - 7 + i * 10, my - 54, 2.4, 'rgba(255,255,255,.6)');
   }
   c.restore();
 }
