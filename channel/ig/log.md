@@ -13,3 +13,4 @@
 | 11/15 09:00 | vm05-dennis | 2 Negative Command | Never tell a slug his milk is sold out | What's the one thing you buy every single time? Tell me. | yes |
 | (changed 11/8) | vl02-obedience-ray | 23 The Statistic | She made 8 billion people obey her. Politely | What would you make everyone do with an obedience megaphone? | no |
 | (changed 11/8) | vl04-laser-pointer | 24 The Reveal + twist | She spent the rent on a doomsday laser. The landlord ran | What would you do with a doomsday laser? Be honest. | yes |
+| 11/16 09:00 | vl05-the-monologue | 2 Negative Command | Never time a villain's monologue | Who do you know whose story never ends? Tell me. | yes |
