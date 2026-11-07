@@ -1,0 +1,47 @@
+{
+ "model_id": "eleven_v4",
+ "cast": {
+  "TOY": {
+   "voice_id": "cgSgspJ2msm6clMCkdW9",
+   "name": "Jessica (stock), toy voice box",
+   "settings": {
+    "stability": 0.6,
+    "similarity_boost": 0.8,
+    "style": 0.4,
+    "speed": 0.95
+   },
+   "pitch": 4
+  },
+  "TOY2": {
+   "voice_id": "cgSgspJ2msm6clMCkdW9",
+   "name": "Jessica (stock), toy voice box running down",
+   "settings": {
+    "stability": 0.7,
+    "similarity_boost": 0.8,
+    "style": 0.2,
+    "speed": 0.8
+   },
+   "pitch": -4
+  }
+ },
+ "lines": [
+  {
+   "id": "L1",
+   "who": "TOY",
+   "text": "Hello! Let's be friends!",
+   "sub": "HELLO! LET'S BE FRIENDS!"
+  },
+  {
+   "id": "L2",
+   "who": "TOY",
+   "text": "Nobody winds me anymore.",
+   "sub": "NOBODY WINDS ME ANYMORE."
+  },
+  {
+   "id": "L3",
+   "who": "TOY2",
+   "text": "Wind me up.",
+   "sub": "WIND ME UP."
+  }
+ ]
+}
