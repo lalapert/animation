@@ -1,0 +1,86 @@
+{
+  "room_db": -60,
+  "voice_over_music_db": 12,
+  "beds": {},
+  "foley": {
+    "sparkle": {
+      "fx": "sparkle",
+      "g": -18,
+      "fin": 0.01,
+      "fout": 0.3
+    },
+    "blip": {
+      "fx": "mags_blip",
+      "g": -17,
+      "align": true,
+      "fin": 0.002,
+      "fout": 0.15
+    },
+    "chime": {
+      "fx": "chime",
+      "g": -15,
+      "align": true,
+      "fin": 0.002,
+      "fout": 0.3
+    },
+    "boing": {
+      "fx": "boing",
+      "g": -16,
+      "fin": 0.005,
+      "fout": 0.15
+    },
+    "blorp": {
+      "fx": "blorp",
+      "g": -13,
+      "align": true,
+      "fin": 0.002,
+      "fout": 0.15
+    },
+    "beep": {
+      "fx": "scan_beep",
+      "g": -18,
+      "align": true,
+      "dur": 0.3,
+      "fin": 0.002,
+      "fout": 0.08
+    },
+    "scoot": {
+      "fx": "scoot",
+      "g": -16,
+      "fin": 0.005,
+      "fout": 0.15
+    },
+    "alarm": {
+      "fx": "alarm",
+      "g": -19,
+      "fin": 0.01,
+      "fout": 0.05
+    },
+    "sip": {
+      "fx": "sip",
+      "g": -12,
+      "fin": 0.02,
+      "fout": 0.2
+    },
+    "unplug": {
+      "fx": "unplug",
+      "g": -11,
+      "align": true,
+      "fin": 0.002,
+      "fout": 0.1
+    },
+    "powerdown": {
+      "fx": "powerdown",
+      "g": -13,
+      "fin": 0.005,
+      "fout": 0.3
+    },
+    "flip": {
+      "fx": "flip",
+      "g": -12,
+      "align": true,
+      "fin": 0.002,
+      "fout": 0.15
+    }
+  }
+}
