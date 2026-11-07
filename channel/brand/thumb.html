@@ -12,7 +12,7 @@ function bigText(lines, hl, col, y0, size) {
   g.save(); g.translate(540, y0); g.rotate(-.035);
   g.font = `${size}px "Bungee"`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.lineJoin = 'round';
   lines.forEach((ln, i) => {
-    let s = size; g.font = `${s}px "Bungee"`; while (g.measureText(ln).width > 980 && s > 60) { s -= 4; g.font = `${s}px "Bungee"`; }
+    let s = size; g.font = `${s}px "Bungee"`; while (g.measureText(ln).width > 820 && s > 56) { s -= 4; g.font = `${s}px "Bungee"`; }
     const y = i * size * 1.08, words = ln.split(' '), W = g.measureText(ln).width; let x = -W / 2;
     for (const w of words) {
       const ww = g.measureText(w + ' ').width, cx = x + g.measureText(w).width / 2;
@@ -27,35 +27,34 @@ async function toon(spec, frame) {
   const im = await img(frame), z = spec.zoom || 1, [fx, fy] = spec.focus || [540, 900], [px, py] = spec.place || [540, 1020];
   g.fillStyle = '#120a2a'; g.fillRect(0, 0, 1080, 1920);
   g.drawImage(im, px - fx * z, py - fy * z, 1080 * z, 1920 * z);
-  const tg = g.createLinearGradient(0, 180, 0, 760); tg.addColorStop(0, 'rgba(18,8,40,.82)'); tg.addColorStop(.75, 'rgba(18,8,40,.45)'); tg.addColorStop(1, 'rgba(18,8,40,0)');
-  g.fillStyle = tg; g.fillRect(0, 0, 1080, 760);
+  const tg = g.createLinearGradient(0, 180, 0, 820); tg.addColorStop(0, 'rgba(18,8,40,.82)'); tg.addColorStop(.75, 'rgba(18,8,40,.45)'); tg.addColorStop(1, 'rgba(18,8,40,0)');
+  g.fillStyle = tg; g.fillRect(0, 0, 1080, 820);
   const c = COL[spec.series];
-  bigText(spec.lines, spec.hl || [], c.hl, 390, spec.size || 112);
-  // series pill
-  g.save(); g.font = '40px "Bungee"'; const label = `${c.name}  ·  EP ${spec.ep}`, w = g.measureText(label).width + 70;
-  g.fillStyle = 'rgba(20,10,36,.85)'; g.beginPath(); g.roundRect(540 - w / 2 - 6, 1560 - 6, w + 12, 96, 48); g.fill();
-  g.fillStyle = c.pill; g.beginPath(); g.roundRect(540 - w / 2, 1560, w, 84, 42); g.fill();
-  g.fillStyle = c.pillText; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(label, 540, 1604); g.restore();
+  bigText(spec.lines, spec.hl || [], c.hl, 430, spec.size || 100);
+  // series pill, right under the headline
+  g.save(); g.font = '34px "Bungee"'; const label = `${c.name}  ·  EP ${spec.ep}`, w = g.measureText(label).width + 56, by = 430 + spec.lines.length * (spec.size || 100) * 1.08 + 10;
+  g.fillStyle = 'rgba(20,10,36,.85)'; g.beginPath(); g.roundRect(540 - w / 2 - 5, by - 5, w + 10, 78, 39); g.fill();
+  g.fillStyle = c.pill; g.beginPath(); g.roundRect(540 - w / 2, by, w, 68, 34); g.fill();
+  g.fillStyle = c.pillText; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(label, 540, by + 35); g.restore();
 }
 async function tape(spec, frame) {
-  // the CCTV picture of the archive viewer (source y 518..1332), zoomed onto the anomaly, inside the band y 470..1490
-  const im = await img(frame), sy = 518, sh = 814, z = spec.zoom || 1, k = 1020 / sh * z, [fx, fy] = spec.focus || [540, 925];
+  // the CCTV picture of the archive viewer (source y 518..1332), zoomed onto the anomaly, inside the band y 640..1640;
+  // the hook sits up top, away from the Instagram grid's reel icon (top right) and view count (bottom left)
+  const im = await img(frame), sy = 518, sh = 814, B0 = 640, BH = 1000, z = spec.zoom || 1, k = BH / sh * z, [fx, fy] = spec.focus || [540, 925];
   g.fillStyle = '#060606'; g.fillRect(0, 0, 1080, 1920);
-  g.save(); g.beginPath(); g.rect(0, 470, 1080, 1020); g.clip();
-  let dx = 540 - fx * k, dy = 980 - (fy - sy) * k;
-  dx = Math.min(0, Math.max(1080 - 1080 * k, dx)); dy = Math.min(470, Math.max(1490 - sh * k, dy));
+  g.save(); g.beginPath(); g.rect(0, B0, 1080, BH); g.clip();
+  let dx = 540 - fx * k, dy = B0 + BH / 2 - (fy - sy) * k;
+  dx = Math.min(0, Math.max(1080 - 1080 * k, dx)); dy = Math.min(B0, Math.max(B0 + BH - sh * k, dy));
   g.drawImage(im, 0, sy, 1080, sh, dx, dy, 1080 * k, sh * k);
-  g.fillStyle = 'rgba(0,0,0,.16)'; for (let y = 470; y < 1490; y += 4) g.fillRect(0, y, 1080, 1.5);     // scanlines
-  const vg = g.createRadialGradient(540, 980, 300, 540, 980, 760); vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,.55)'); g.fillStyle = vg; g.fillRect(0, 470, 1080, 1020);
+  g.fillStyle = 'rgba(0,0,0,.16)'; for (let y = B0; y < B0 + BH; y += 4) g.fillRect(0, y, 1080, 1.5);
+  const vg = g.createRadialGradient(540, B0 + BH / 2, 300, 540, B0 + BH / 2, 760); vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,.55)'); g.fillStyle = vg; g.fillRect(0, B0, 1080, BH);
   g.restore();
-  // top: STILL RECORDING, tape label with REC
-  insText(g, 'STILL RECORDING', 540, 300, 34, 'rgba(242,242,234,.7)', '"VT323"', 'center');
-  g.fillStyle = '#ff2a2a'; g.beginPath(); g.arc(250, 390, 22, 0, 6.2832); g.fill();
-  insText(g, spec.tape, 290, 392, 120, '#f2f2ea', '"VT323"');
-  // bottom: the hook
-  g.save(); g.textAlign = 'center'; g.textBaseline = 'middle'; g.font = '86px "SpecialElite"'; g.lineWidth = 12; g.strokeStyle = '#000'; g.lineJoin = 'round';
-  spec.lines.forEach((ln, i) => { g.strokeText(ln, 540, 1560 + i * 92); g.fillStyle = '#f2f2ea'; g.fillText(ln, 540, 1560 + i * 92); });
+  g.fillStyle = '#ff2a2a'; g.beginPath(); g.arc(300, 330, 18, 0, 6.2832); g.fill();
+  insText(g, spec.tape, 334, 332, 92, '#f2f2ea', '"VT323"');
+  g.save(); g.textAlign = 'center'; g.textBaseline = 'middle'; g.font = '74px "SpecialElite"'; g.lineWidth = 10; g.strokeStyle = '#000'; g.lineJoin = 'round';
+  spec.lines.forEach((ln, i) => { g.strokeText(ln, 540, 452 + i * 82); g.fillStyle = '#f2f2ea'; g.fillText(ln, 540, 452 + i * 82); });
   g.restore();
+  insText(g, 'STILL RECORDING', 540, 1680, 30, 'rgba(242,242,234,.6)', '"VT323"', 'center');
 }
 window.compose = async (spec, frame) => { await (spec.series === 'sr' ? tape(spec, frame) : toon(spec, frame)); window.OUT = document.getElementById('c').toDataURL('image/jpeg', .9); return true; };
 Promise.all([toonFonts(), insFonts('fonts/')]).then(() => { window.READY = true; });
