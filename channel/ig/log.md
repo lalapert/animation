@@ -14,3 +14,4 @@
 | (changed 11/8) | vl02-obedience-ray | 23 The Statistic | She made 8 billion people obey her. Politely | What would you make everyone do with an obedience megaphone? | no |
 | (changed 11/8) | vl04-laser-pointer | 24 The Reveal + twist | She spent the rent on a doomsday laser. The landlord ran | What would you do with a doomsday laser? Be honest. | yes |
 | 11/16 09:00 | vl05-the-monologue | 2 Negative Command | Never time a villain's monologue | Who do you know whose story never ends? Tell me. | yes |
+| 11/17 09:00 | vm06-employee-of-the-month | 17 Head To Head | Pip vs. a security camera for Employee of the Month | Who took credit for your work? Tell me. | yes |
