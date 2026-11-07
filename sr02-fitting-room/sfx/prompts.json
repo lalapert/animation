@@ -1,0 +1,10 @@
+{
+  "static":    [2.0, "harsh analog VHS tape static, loud white noise hiss with crackle and a low hum, a tape ending on a blank channel"],
+  "chime":     [2.5, "an old 1990s shopping mall public address chime, three slow descending electronic tones from ceiling speakers, slightly warped tape, empty hall echo"],
+  "glitch":    [0.6, "a very short VHS tape tracking glitch: a warbling distorted electrical crackle and a brief buzz"],
+  "tape_hiss": [8.0, "constant soft analog videotape hiss and faint mechanical motor whir, steady, loopable"],
+  "store_hum": [10.0, "a small closed clothing store at night: quiet ventilation hum and a faint fluorescent light buzz, no people, no music, loopable"],
+  "shuffle":   [1.5, "a soft shuffle of several pairs of shoes on carpet behind a curtain, close, quiet"],
+  "knock":     [0.7, "one slow muffled knock on a thin wooden partition wall, from the other side"],
+  "rings":     [1.0, "metal curtain rings sliding a few centimetres along a rail, one slow scrape"]
+}

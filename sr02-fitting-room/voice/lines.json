@@ -1,0 +1,35 @@
+{
+ "model_id": "eleven_v4",
+ "cast": {
+  "PA": {
+   "voice_id": "ZPgDKQUoTzQKZTHhQYAM",
+   "name": "HA Mall PA",
+   "settings": {
+    "stability": 0.75,
+    "similarity_boost": 0.8,
+    "style": 0.1,
+    "speed": 0.9
+   }
+  }
+ },
+ "lines": [
+  {
+   "id": "L1",
+   "who": "PA",
+   "text": "Attention shoppers. Our fitting rooms are now closed.",
+   "sub": "ATTENTION SHOPPERS.\nOUR FITTING ROOMS ARE NOW CLOSED."
+  },
+  {
+   "id": "L2",
+   "who": "PA",
+   "text": "Please return all items to the racks.",
+   "sub": "PLEASE RETURN ALL ITEMS\nTO THE RACKS."
+  },
+  {
+   "id": "L3",
+   "who": "PA",
+   "text": "Fitting room three. Your time is up.",
+   "sub": "FITTING ROOM THREE.\nYOUR TIME IS UP."
+  }
+ ]
+}
