@@ -1,1 +1,6 @@
 .venv-daily/
+
+# episode work files (renders, mixes, review stills) and the venv link stay local
+/*/out/
+/*/.venv
+__pycache__/
