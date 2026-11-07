@@ -70,5 +70,17 @@
  "knock": [
   1.2,
   "three polite knocks on a wooden door"
+ ],
+ "feedback": [
+  2.0,
+  "a big electric megaphone powering up: a rising high-pitched audio feedback squeal getting louder, comedic, no voice"
+ ],
+ "blast": [
+  1.6,
+  "a giant megaphone sonic blast: a booming distorted whoomp of sound pressure, windows rattling, short tail"
+ ],
+ "mega_click": [
+  0.5,
+  "a plastic megaphone trigger switch clicked on, close"
  ]
 }

@@ -14,6 +14,7 @@ const WX0 = LWIN.x - LWIN.w / 2, WY0 = LWIN.y - LWIN.h / 2, WALK = WY0 + LWIN.h 
 // ---------------------------------------------------------------- cameras for this episode
 const CAM = Object.assign({}, LABCAM, {
   WIDE_IN: [545, 905, 1.42, 1.58],
+  RAY_SHOT: [VERA.x + 110, VERAFACE + 90, 1.9, 2.0],
   VERA_COUNT: [VERA.x + 10, VERAFACE + 75, 2.45, 2.7],
   WIDE_FIRE: [540, 980, 1.26, 1.2],
   WIDE_DUCK: [540, 1000, 1.2, 1.25],
@@ -94,16 +95,55 @@ function steam(g, t, x, y, a) {
   g.restore();
 }
 
+// ---------------------------------------------------------------- the Obedience Megaphone (11/8: replaces the ray; every invention looks different)
+// pose: where Vera's hand is (world), which way it points; before she picks it up it lies on the bench
+function megaPose(t) {
+  if (t < V.L3.t - .1) return { hx: 470, hy: LCT - 14, ang: -.05, held: false };
+  const up = ease((t - V.L3.t + .1) / .35), mouth = ease((t - V.L4.t) / .35), down = ease((t - TL.DUCK + .3) / .3);
+  const hx = lerp(lerp(470, VERA.x + 92 * VERA.s / 100, up), VERA.x + 38 * VERA.s / 100, mouth);
+  const hy = lerp(lerp(LCT - 14, LCT - 150 * VERA.s / 100, up), LCT - 203 * VERA.s / 100, mouth) + down * 380;
+  return { hx, hy, ang: lerp(lerp(-.05, -.42, up), -.3, mouth), held: true, toMouth: mouth };
+}
+function drawMegaphone(g, t, P, glow) {
+  g.save(); g.translate(P.hx, P.hy); g.rotate(P.ang);
+  // handle under the grip
+  tShape(g, '#3a3546', gg => gg.roundRect(-14, 0, 26, 56, 8), 3);
+  // body: mouthpiece behind the grip, cone opening forward
+  tShape(g, '#2c2a36', gg => gg.roundRect(-70, -18, 44, 36, 10), 3);
+  const cone = gg => { gg.moveTo(-30, -22); gg.lineTo(150, -78); gg.lineTo(150, 78); gg.lineTo(-30, 22); gg.closePath(); };
+  tShape(g, '#7d4dd8', cone); tShade(g, cone, '#5b31b0', gg => gg.rect(-40, 8, 200, 80));
+  for (const x of [20, 70]) tLine(g, [x, -22 - (x + 30) * .31, x, 22 + (x + 30) * .31], 3);
+  g.save(); g.shadowColor = '#c9a8ff'; g.shadowBlur = 10 + 50 * glow;
+  tShape(g, `rgb(${200 + 55 * glow | 0},${170 + 70 * glow | 0},255)`, gg => gg.ellipse(150, 0, 18, 80, 0, 0, 6.2832), 3.4); g.restore();
+  // crown emblem and a little antenna with a blinking light
+  tShape(g, '#ffd23f', gg => { gg.moveTo(30, 12); gg.lineTo(26, -10); gg.lineTo(38, 0); gg.lineTo(46, -14); gg.lineTo(54, 0); gg.lineTo(66, -10); gg.lineTo(62, 12); gg.closePath(); }, 2.4);
+  tLine(g, [104, -64, 100, -104], 3);                                // antenna on the cone, away from her face
+  g.fillStyle = (Math.sin(t * 8) > 0 || glow > .3) ? '#ff3355' : '#7a2030'; g.beginPath(); g.arc(100, -106, 6, 0, 6.2832); g.fill();
+  g.save(); g.translate(60, 40); g.rotate(-.04); tShape(g, '#fff6c8', gg => gg.rect(-48, -10, 96, 20), 2.2); tText(g, 'OBEDIENCE', 0, 1, 11, TOON.ink, '"Bungee"', 'center', 400); g.restore();
+  g.restore();
+}
+function bellOf(P) { return [P.hx + Math.cos(P.ang) * 150, P.hy + Math.sin(P.ang) * 150]; }
+// rings of sound from the bell to the window (the street). k: strength 0..1
+function drawWaves(g, t, P, k) {
+  if (k <= 0 || !P.held) return;
+  const [bx, by] = bellOf(P), tx = LWIN.x, ty = LWIN.y + 20, a = Math.atan2(ty - by, tx - bx), L = Math.hypot(tx - bx, ty - by);
+  g.save(); g.lineCap = 'round';
+  for (let i = 0; i < 5; i++) {
+    const p = ((t * 1.6 + i / 5) % 1), x = bx + Math.cos(a) * L * p, y = by + Math.sin(a) * L * p, r = 50 + 120 * p;
+    g.globalAlpha = k * (1 - p * .7); g.strokeStyle = '#d9c4ff'; g.lineWidth = 10 * (1 - p * .5);
+    g.beginPath(); g.arc(x - Math.cos(a) * r, y - Math.sin(a) * r, r, a - .55, a + .55); g.stroke();
+  }
+  g.restore();
+}
+
 // ---------------------------------------------------------------- character states per shot
 function veraState(t, n) {
-  let expr = 'scheme', point = 0, tube = true, goggles = false;
-  if (n === 'RAY_SHOT') { point = ease((t - V.L3.t - .15) / .5); tube = false; }
-  if (n === 'VERA_COUNT') { goggles = t > V.L4.t + .3; tube = false; }
-  if (n === 'WIDE_FIRE') { goggles = true; tube = false; }
-  if (t >= V.L5.t) tube = false;
+  let expr = 'scheme', point = 0, tube = true, goggles = false, reachR = null;
+  const M = megaPose(t);
+  if (M.held) { tube = false; reachR = { x: (M.hx - VERA.x) / VERA.s * 100, y: (M.hy - LCT) / VERA.s * 100 }; }
   if (t >= V.L8.t) expr = 'scheme';
   if (t >= V.L11.t - .2) expr = 'fluster';
-  return { expr, point, tube, goggles, mouth: mouthFor('VERA', t), blink: !goggles && blinkAt(0, t) };
+  return { expr, point, tube, goggles, reachR, mouth: mouthFor('VERA', t), blink: !goggles && blinkAt(0, t) };
 }
 function cleoState(t, n) {
   let expr = 'deadpan', look = 0;
@@ -125,17 +165,19 @@ function drawScene(t) {
   drawPigeon(c, LWIN.x + 120, LWIN.y + LWIN.h / 2 + 8, 56, { dir: -1, bob: Math.sin(t * 5) * 1.2 });   // one stayed on the sill
   drawRentCircles(c, t > TL.BOARDT + 1.1 ? 3 : 2, t > TL.BOARDT + .2 && t <= TL.BOARDT + 1.1 ? (t - TL.BOARDT - .2) / .9 : 0);
   if (n === 'BOARD') drawChalkArm(c, t, 2);
-  const charge = t < V.L4.t ? .25 + .15 * Math.sin(t * 3) : t < FIRE ? .3 + .7 * clamp((t - V.L4.t) / (FIRE - V.L4.t)) : Math.max(.2, 1 - (t - FIRE) / .8);
-  drawRay(c, t, { charge, recoil: t > FIRE && t < FIRE + .4 ? Math.sin((t - FIRE) / .4 * Math.PI) : 0, dial: t < FIRE ? .3 : 1, lens: 'crown', label: 'OBEDIENCE RAY' });
-  drawPigeon(c, 590, 760, 58, { dir: -1, bob: Math.sin(t * 4) * 1.2, peck: Math.sin(t * 1.7) > .95 ? .6 : 0 });   // another on the barrel
+  const charge = t < V.L4.t ? 0 : t < FIRE ? clamp((t - V.L4.t) / (FIRE - V.L4.t)) : Math.max(0, 1 - (t - FIRE) / .8);
   drawFridge(c, 0);
+  drawPigeon(c, 75, 944, 58, { dir: 1, bob: Math.sin(t * 4) * 1.2, peck: Math.sin(t * 1.7) > .95 ? .6 : 0 });   // another on the fridge
   const duck = ease((t - TL.DUCK) / .45);
   const bobV = Math.sin(t * 2.1) * 2, bobC = Math.sin(t * 1.7 + 1) * 1.5;
   drawVera2(c, VERA.x, LCT + bobV + duck * 380, VERA.s, veraState(t, n));
   drawCleo2(c, CLEO.x, LCT + bobC, CLEO.s, cleoState(t, n));
   drawPigeon(c, CLEO.x + 8, LCT - 262 * CLEO.s / 100 + bobC, 62, { dir: 1, bob: Math.sin(t * 5 + 1) });   // and one on Cleo's head
-  drawBeam(c, t, t > FIRE && t < FIRE + 1.0 ? 1 - ease((t - FIRE - .6) / .4) : 0, 'crown');
+  const M = megaPose(t);
+  if (M.held && t < TL.DUCK + .2) drawMegaphone(c, t, M, charge);
+  drawWaves(c, t, M, t > FIRE && t < FIRE + 1.0 ? 1 - ease((t - FIRE - .6) / .4) : (speaking('VERA', t) && t > V.L5.t - .1 && t < V.L9.t ? .55 : 0));
   c.drawImage(LAB_STATIC.front, 0, LCT);
+  if (!M.held) drawMegaphone(c, t, M, 0);
   steam(c, t, VERA.x, LCT - 10, duck * (1 - ease((t - TL.DUCK - 3) / .6)));
   tShape(c, 'rgba(220,255,240,.35)', gg => gg.roundRect(560, LCT - 50, 44, 58, 6), 3); tShape(c, LAB.glow, gg => gg.rect(562, LCT - 22, 40, 28), 0);
   if (t > FIRE && t < FIRE + .45) { c.setTransform(1, 0, 0, 1, 0, 0); c.fillStyle = `rgba(230,215,255,${.8 * (1 - (t - FIRE) / .45)})`; c.fillRect(0, 0, W, H); }
@@ -151,7 +193,7 @@ window.render = render;
 window.EV = [
   { type: 'bed', fx: 'lab_hum', t: 0, t1: DUR + .5, g: -31 },
   { type: 'bed', fx: 'street', t: 0, t1: DUR + .5, g: -34 },
-  { type: 'hum', t: 0.0, dur: 3.2 },
+  { type: 'mega_click', t: V.L4.t - .05 },
   { type: 'coo', t: V.L2.t + 1.4 },
   { type: 'charge', t: V.L4.t, dur: FIRE - V.L4.t },
   { type: 'zap', t: FIRE },

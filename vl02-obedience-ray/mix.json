@@ -16,13 +16,13 @@
       "fout": 0.2
     },
     "charge": {
-      "fx": "charge",
+      "fx": "feedback",
       "g": -17,
       "fin": 0.05,
       "fout": 0.05
     },
     "zap": {
-      "fx": "zap",
+      "fx": "blast",
       "g": -8,
       "align": true,
       "fin": 0.002,
@@ -77,6 +77,13 @@
       "g": -18,
       "fin": 0.02,
       "fout": 0.15
+    },
+    "mega_click": {
+      "fx": "mega_click",
+      "g": -14,
+      "align": true,
+      "fin": 0.002,
+      "fout": 0.08
     }
   }
 }
