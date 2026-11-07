@@ -3,21 +3,23 @@
 <script src="toon.js"></script><script src="lab.js"></script><script src="vmkit.js"></script><script src="labkit.js"></script><script src="bodies.js"></script>
 <script>
 // Sample (no voice): Vera strides out of the back door, Cleo follows; Vera trips on the hose; Cleo hops over her and keeps walking.
-const g = document.getElementById('c').getContext('2d'); window.DUR = 7.0;
+const g = document.getElementById('c').getContext('2d'); window.DUR = 6.2;
 const sm = (a, b, t) => ease(clamp((t - a) / (b - a)));
 window.render = t => {
-  const G = YARD.ground, trip = 2.9, vx = t < trip ? lerp(430, 980, sm(.3, trip, t)) : 980, cx = t < 1.0 ? 380 : lerp(380, 1560, sm(1.0, 6.9, t));
-  const camX = clamp(lerp(620, 1300, sm(.6, 6.6, t)), 540, YARD.w - 540);
+  const G = YARD.ground;
+  const VW = walkTo('vera', 'walk', t, .3, 260, 1000, 98), trip = VW.arrive - .02, vx = VW.x;   // she reaches the hose and goes down
+  const CW = walkTo('cleo', 'walk', t, 1.2, 120, 1760, 98);                               // Cleo follows, and does not go around
+  const camX = clamp((vx + CW.x) / 2 + 160, 540, YARD.w - 540);
   g.setTransform(1, 0, 0, 1, 0, 0); g.fillStyle = '#7ec8f5'; g.fillRect(0, 0, 1080, 1920);
   const z = 1.3; g.setTransform(z, 0, 0, z, 540 - camX * z, 960 - 1330 * z);
   g.drawImage(YARD.img, 0, 0);
   drawHose(g, t, t > trip - .1 && t < trip + .3 ? 1 : 0);
   const fall = sm(trip, trip + .45, t);
-  if (t < trip) drawFull('vera', g, vx, G, 98, { act: 'walk', phase: t * 9, dir: 1, expr: 'scheme', tube: false, blink: blinkAt(0, t) });
+  if (t < trip) drawFull('vera', g, vx, G, 98, { act: 'walk', dist: VW.dist, dir: 1, expr: 'scheme', blink: blinkAt(0, t) });
   else drawFull('vera', g, vx, G, 98, { act: 'trip', fall, dir: 1, expr: 'fluster', tube: false });
   // Cleo does not go around her: she walks right over Vera's back, deadpan
-  const onBack = t > trip + .5 ? clamp(1 - Math.abs(cx - (vx + 330)) / 330) : 0, lift = Math.min(1, onBack * 1.6) * 52;
-  drawFull('cleo', g, cx, G - lift, 98, { act: 'walk', phase: t * 8, dir: 1, expr: 'deadpan', blink: blinkAt(1, t) });
+  const onBack = t > trip + .5 ? clamp(1 - Math.abs(CW.x - (vx + 330)) / 330) : 0, lift = Math.min(1, onBack * 1.6) * 52;
+  drawFull('cleo', g, CW.x, G - lift, 98, { act: CW.moving ? 'walk' : 'stand', dist: CW.dist, dir: 1, expr: 'deadpan', blink: blinkAt(1, t) });
   if (t > trip + .4 && t < trip + 1.2) { g.save(); g.globalAlpha = 1 - (t - trip - .4) / .8; for (let i = 0; i < 5; i++) tShape(g, '#e8dcc6', gg => gg.arc(vx + 160 + i * 40, G - 20 - i * 6, 22 + i * 4, 0, 6.2832), 2); g.restore(); }
 };
 (async () => { await toonFonts('fonts/'); buildYard(); render(0); window.READY = true; })();

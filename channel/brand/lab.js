@@ -379,6 +379,7 @@ function drawVera2(c, x, y, s, o = {}) {
   const face = g => { g.moveTo(0, -272); g.bezierCurveTo(28, -272, 40, -256, 40, -232); g.bezierCurveTo(40, -212, 28, -190, 0, -174); g.bezierCurveTo(-28, -190, -40, -212, -40, -232); g.bezierCurveTo(-40, -256, -28, -272, 0, -272); g.closePath(); };
   tShape(c, V.skin, face);
   tShade(c, face, V.skinS, g => { g.moveTo(26, -278); g.bezierCurveTo(36, -240, 30, -200, 4, -168); g.lineTo(60, -168); g.lineTo(60, -278); g.closePath(); });
+  c.save(); c.translate((o.turn || 0) * 12, 0); c.scale(1 - Math.abs(o.turn || 0) * .1, 1);   // 3/4 turn (bodies.js): the features slide toward where she faces
   // eyes
   const E = { skin: V.skin, iris: V.iris, irisD: V.irisD, w: 12.5, h: 12 };
   for (const sx of [-1, 1]) {
@@ -417,6 +418,7 @@ function drawVera2(c, x, y, s, o = {}) {
     tShape(c, null, m, 3.2);
     if (big) for (const sx of [-1, 1]) { tLine(c, [sx * 48, -232, sx * 58, -238], 3); tLine(c, [sx * 48, -220, sx * 60, -220], 3); }
   }
+  c.restore();
   // front hair: side part, swept bangs, one long lock on the right
   tShape(c, V.hair, g => { g.moveTo(44, -272); g.quadraticCurveTo(30, -294, -10, -292); g.quadraticCurveTo(-42, -286, -48, -250); clumps(g, [[-48, -250], [-44, -226], [-36, -250], [-27, -232], [-18, -254], [-2, -234], [6, -256], [26, -222], [30, -246], [46, -206]]); g.quadraticCurveTo(54, -244, 44, -272); g.closePath(); });
   tShape(c, V.hair, g => { g.moveTo(42, -250); g.quadraticCurveTo(54, -212, 46, -170); g.lineTo(40, -184); g.lineTo(36, -172); g.quadraticCurveTo(34, -210, 34, -238); g.closePath(); });
@@ -488,6 +490,7 @@ function drawCleo2(c, x, y, s, o = {}) {
   tShape(c, K.skin, face);
   tShade(c, face, K.skinS, g => { g.moveTo(28, -274); g.bezierCurveTo(38, -238, 30, -200, 6, -170); g.lineTo(60, -170); g.lineTo(60, -274); g.closePath(); });
   for (const sx of [-1, 1]) for (let k = 0; k < 3; k++) tLine(c, [sx * (20 + k * 5), -204, sx * (23 + k * 5), -210], 1.8, );
+  c.save(); c.translate((o.turn || 0) * 12, 0); c.scale(1 - Math.abs(o.turn || 0) * .1, 1);   // 3/4 turn (bodies.js): the features slide toward where she faces
   // eyes: half-lidded
   const lid = { deadpan: .42, sleepy: .7, surprised: 0, smug: .5 }[expr] ?? .42;
   for (const sx of [-1, 1]) { if (o.blink) closedEye(c, sx * 17, -222, 11, false); else animeEye(c, sx * 17, -220, sx, { skin: K.skin, iris: K.iris, irisD: K.irisD, w: 12.5, h: 14, lid, look: o.look ?? (expr === 'smug' ? 2 * sx * -1 : 0) }); }
@@ -497,6 +500,7 @@ function drawCleo2(c, x, y, s, o = {}) {
   else if (expr === 'surprised') tEllipse(c, 0, -189, 3.6, 4.6, '#4a1028', 2.8);
   else if (expr === 'smug') tCurve(c, -5, -189, 2, -188, 7, -192, 2.8);
   else tLine(c, [-5, -189, 5, -189], 2.8);
+  c.restore();
   // front hair: choppy blunt bangs, jaw-length side locks, one cowlick
   tShape(c, K.hair, g => { g.moveTo(47, -236); g.quadraticCurveTo(52, -284, 0, -286); g.quadraticCurveTo(-52, -284, -47, -236); clumps(g, [[-47, -236], [-42, -226], [-34, -250], [-26, -230], [-16, -252], [-6, -232], [2, -254], [12, -230], [20, -252], [30, -232], [38, -250], [47, -228]]); g.closePath(); });
   for (const sx of [-1, 1]) tShape(c, K.hair, g => { g.moveTo(sx * 42, -248); g.quadraticCurveTo(sx * 54, -214, sx * 48, -178); g.lineTo(sx * 42, -190); g.lineTo(sx * 39, -176); g.quadraticCurveTo(sx * 35, -206, sx * 35, -236); g.closePath(); });

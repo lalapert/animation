@@ -324,7 +324,8 @@ function drawDennis(c, x, y, s, o = {}) {
 function hangingArms(c, o, sh, shy, len, w, col, colS, skin, skinS) {
   const A = o.armsDown;
   for (const sx of [-1, 1]) {
-    const sw = (sx < 0 ? A.l : A.r) || 0, hx = sx * (sh + 10) + sw, hy = len - Math.abs(sw) * .25, ex = sx * (sh + 16) + sw * .45, ey = (shy + hy) / 2 - 6;
+    const bend = A.bend || 0, sw = (sx < 0 ? A.l : A.r) || 0, ex = sx * (sh + 14) + sw * .5, ey = shy + (len - shy) * .48;
+    const hx = sx * (sh + 10) + sw * (1 + bend * .3), hy = len - Math.abs(sw) * .25 - bend * (len - shy) * .45;   // bent: the forearm comes up
     tTube(c, [sx * sh, shy, sx * (sh + 12), shy + 30, ex, ey, (ex + hx) / 2, (ey + hy) / 2, hx, hy - 8], w, col, sx > 0 ? colS : null);
     tHand(c, hx, hy, w * .5, skin, skinS);
     if (A.hold && sx > 0) A.hold(c, hx, hy);
@@ -482,6 +483,7 @@ function drawRae2(c, x, y, s, o = {}) {
   const face = g => { g.moveTo(0, -272); g.bezierCurveTo(27, -272, 39, -256, 39, -232); g.bezierCurveTo(39, -210, 27, -188, 0, -175); g.bezierCurveTo(-27, -188, -39, -210, -39, -232); g.bezierCurveTo(-39, -256, -27, -272, 0, -272); g.closePath(); };
   tShape(c, R.skin, face);
   tShade(c, face, R.skinS, g => { g.moveTo(24, -278); g.bezierCurveTo(35, -240, 30, -200, 4, -170); g.lineTo(60, -170); g.lineTo(60, -278); g.closePath(); });
+  c.save(); c.translate((o.turn || 0) * 12, 0); c.scale(1 - Math.abs(o.turn || 0) * .1, 1);   // 3/4 turn (bodies.js): the features slide toward where she faces
   // eyes: heavy-lidded
   const lid = { deadpan: .52, smirk: .44, annoyed: .64, shocked: 0, sigh: 1 }[expr] ?? .52;
   for (const sx of [-1, 1]) {
@@ -506,6 +508,7 @@ function drawRae2(c, x, y, s, o = {}) {
   else if (expr === 'shocked') tEllipse(c, 0, -188, 4, 5.5, '#4a1028', 2.8);
   else if (expr === 'sigh') { tEllipse(c, -2, -189, 3.4, 2.8, '#4a1028', 2.6); tCurve(c, -14, -186, -22, -182, -20, -176, 2.4, 'rgba(255,255,255,.8)'); }
   else tLine(c, [-8, -189, 8, -189.5], 3);
+  c.restore();
   // front hair: middle part, long curtains in clumps, two antenna strands
   for (const sx of [-1, 1]) tShape(c, R.hair, g => {
     g.moveTo(sx * 2, -292); g.quadraticCurveTo(sx * 32, -290, sx * 45, -254); g.quadraticCurveTo(sx * 49, -224, sx * 46, -194);
@@ -561,6 +564,7 @@ function drawPip2(c, x, y, s, o = {}) {
   c.fillStyle = expr === 'sheepish' ? 'rgba(255,100,135,.55)' : 'rgba(255,120,150,.35)';
   c.beginPath(); c.ellipse(-27, -158, 10, 5.5, 0, 0, 6.2832); c.ellipse(27, -158, 10, 5.5, 0, 0, 6.2832); c.fill();
   for (const sx of [-1, 1]) for (let k = 0; k < 3; k++) tLine(c, [sx * (21 + k * 5), -155, sx * (24 + k * 5), -161], 1.8);
+  c.save(); c.translate((o.turn || 0) * 12, 0); c.scale(1 - Math.abs(o.turn || 0) * .1, 1);   // 3/4 turn (bodies.js): the features slide toward where she faces
   // eyes: big and sparkly
   for (const sx of [-1, 1]) {
     const ex = sx * 18, ey = -170;
@@ -588,6 +592,7 @@ function drawPip2(c, x, y, s, o = {}) {
   } else if (expr === 'worried') {
     c.beginPath(); c.moveTo(-9, -145); c.bezierCurveTo(-5, -150, -2, -141, 2, -145); c.bezierCurveTo(5, -149, 8, -144, 9, -146); c.lineWidth = 3.2; c.strokeStyle = TOON.ink; c.lineCap = 'round'; c.stroke();
   } else if (expr === 'sad') tCurve(c, -8, -141, 0, -148, 8, -141, 3.4);
+  c.restore();
   // front hair: blunt bangs in clumps, side locks curling in, star clip
   tShape(c, P.hair, g => { g.moveTo(50, -168); g.quadraticCurveTo(58, -238, 0, -240); g.quadraticCurveTo(-58, -238, -50, -168); clumps(g, [[-50, -168], [-45, -178], [-40, -198], [-32, -186], [-24, -202], [-14, -188], [-6, -204], [4, -188], [12, -204], [22, -188], [30, -202], [38, -186], [44, -198], [50, -168]]); g.closePath(); });
   for (const sx of [-1, 1]) tShape(c, P.hair, g => { g.moveTo(sx * 48, -186); g.quadraticCurveTo(sx * 60, -158, sx * 50, -138); g.quadraticCurveTo(sx * 44, -132, sx * 38, -138); g.quadraticCurveTo(sx * 46, -146, sx * 44, -158); g.quadraticCurveTo(sx * 42, -172, sx * 42, -184); g.closePath(); });
