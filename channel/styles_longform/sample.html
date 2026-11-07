@@ -1,0 +1,17 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Long-form style study</title>
+<style>html,body{margin:0;background:#000}canvas{display:block}</style></head>
+<body><canvas id="c"></canvas>
+<script src="../brand/toon.js"></script><script src="../brand/lab.js"></script>
+<script src="engine.js"></script><script src="scenes.js"></script>
+<script>
+const q = new URLSearchParams(location.search), style = STYLES[q.get('style') || 'A'], scene = q.get('scene') || 'store', frame = q.get('frame') || 'wide';
+const cv = document.getElementById('c');
+[cv.width, cv.height] = frame === 'wide' ? [2560, 1440] : [1440, 2560];
+toonFonts('../brand/fonts/').then(() => {
+  const P = new Painter(cv, style, CAMS[scene][frame], { tilt: frame === 'wide' ? [.12, .9] : [.1, .92] });
+  P.main.fillStyle = '#000'; P.main.fillRect(0, 0, cv.width, cv.height);
+  (scene === 'store' ? sceneStore : sceneLab)(P);
+  P.finish();
+  window.READY = true;
+}).catch(e => { console.error(e.stack || e); });
+</script></body></html>
