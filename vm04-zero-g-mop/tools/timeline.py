@@ -2,7 +2,8 @@
   .venv/bin/python tools/timeline.py
 Void Mart 3 "Self-Checkout": corporate sends a self-checkout kiosk that is more deadpan than Rae.
 """
-import json, os
+import json, os, re
+TAGS = re.compile(r"\[[^\]]*\]\s*")              # eleven_v4 audio tags: direction, never shown
 
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BPM = 120.0
@@ -21,9 +22,11 @@ for k in order:
     if k == "L5": T["LAUNCH"] = round(t + 0.12, 3)                    # Pip's boots are on backwards: up she goes
     if k == "L6": T["DESCEND"] = round(t + 0.25, 3)                   # she drifts back down from the top, upside down, with a mop
     if k == "L8": T["SPLIT"] = round(t + 0.25, 3)                     # the mop hits the big slush blob: it splits into little ones
-    if k == "L11": T["DROP"] = round(t - durs["L10"] + 2.75, 3)       # gravity comes back early, on "two"
+    if k == "L11":                                                    # gravity comes back early, on "two"
+        W10 = json.load(open(os.path.join(HERE, "voice", "out", "L10.json")))["words"]
+        T["DROP"] = round(t - durs["L10"] + [w for w in W10 if w["w"].lower().startswith("two")][0]["t0"] + .15, 3)
     d = durs[k]
-    VO.append({"id": k, "who": lines[k]["who"], "t": round(start, 3), "dur": d, "sub": lines[k].get("sub", lines[k]["text"]),
+    VO.append({"id": k, "who": lines[k]["who"], "t": round(start, 3), "dur": d, "sub": lines[k].get("sub", TAGS.sub("", lines[k]["text"]).strip()),
                "col": SUBCOL[lines[k]["who"]], "gain_db": lines[k].get("gain_db", 0)})
     t = start + d
 END_BEAT = 3.0

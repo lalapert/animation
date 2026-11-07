@@ -5,9 +5,9 @@
    "voice_id": "BiP91t4ozM9IZajOdSu2",
    "name": "Win2",
    "settings": {
-    "stability": 0.35,
+    "stability": 0.3,
     "similarity_boost": 0.8,
-    "style": 0.45,
+    "style": 0.65,
     "speed": 1.05
    }
   },
@@ -15,9 +15,9 @@
    "voice_id": "oy557F0mOsPZZqdz8oK6",
    "name": "Kar2",
    "settings": {
-    "stability": 0.85,
+    "stability": 0.6,
     "similarity_boost": 0.8,
-    "style": 0.0,
+    "style": 0.2,
     "speed": 0.9
    },
    "pitch": -1.5
@@ -26,9 +26,9 @@
    "voice_id": "WkUURyKtbzB9IM50qGdP",
    "name": "VM MAGS",
    "settings": {
-    "stability": 0.7,
+    "stability": 0.45,
     "similarity_boost": 0.8,
-    "style": 0.25,
+    "style": 0.5,
     "speed": 1.0
    }
   },
@@ -36,9 +36,9 @@
    "voice_id": "onwK4e9ZLuTAKqWW03F9",
    "name": "Daniel (stock)",
    "settings": {
-    "stability": 0.95,
+    "stability": 0.85,
     "similarity_boost": 0.8,
-    "style": 0.0,
+    "style": 0.1,
     "speed": 0.92
    }
   }
@@ -47,65 +47,93 @@
   {
    "id": "L1",
    "who": "MAGS",
-   "text": "Good news! Corporate sent a self-checkout. It never sleeps. It never smiles.",
-   "sub": "Good news! Corporate sent\na self-checkout. It never sleeps.\nIt never smiles."
+   "text": "[cheerful, salesy] Good news! Corporate sent a self-checkout. It never sleeps. It never smiles.",
+   "sub": "Good news! Corporate sent\na self-checkout. It never sleeps.\nIt never smiles.",
+   "plain": "Good news! Corporate sent a self-checkout. It never sleeps. It never smiles."
   },
   {
    "id": "L2",
    "who": "RAE",
-   "text": "Neither do I."
+   "text": "[flatly] Neither do I.",
+   "plain": "Neither do I.",
+   "sub": "Neither do I."
   },
   {
    "id": "L3",
    "who": "MAGS",
-   "text": "It does it for less."
+   "text": "[smug] It does it for less.",
+   "plain": "It does it for less.",
+   "sub": "It does it for less."
   },
   {
    "id": "L4",
    "who": "PIP",
-   "text": "I'm naming him Kevin!"
+   "text": "[gasps, delighted] I'm naming him Kevin!",
+   "plain": "I'm naming him Kevin!",
+   "sub": "I'm naming him Kevin!"
   },
   {
    "id": "L5",
    "who": "KIOSK",
-   "text": "Unexpected item in bagging area."
+   "text": "Unexpected item in bagging area.",
+   "plain": "Unexpected item in bagging area.",
+   "sub": "Unexpected item in bagging area."
   },
   {
    "id": "L6",
    "who": "KIOSK",
-   "text": "Please place item in bagging area."
+   "text": "Please place item in bagging area.",
+   "plain": "Please place item in bagging area.",
+   "sub": "Please place item in bagging area."
   },
   {
    "id": "L7",
    "who": "KIOSK",
-   "text": "Unexpected item in bagging area."
+   "text": "[slightly irritated] Unexpected item in bagging area.",
+   "plain": "Unexpected item in bagging area.",
+   "sub": "Unexpected item in bagging area."
   },
   {
    "id": "L8",
    "who": "PIP",
-   "text": "He's doing his best!"
+   "text": "[pleading, defensive] He's doing his best!",
+   "plain": "He's doing his best!",
+   "sub": "He's doing his best!"
   },
   {
    "id": "L9",
    "who": "KIOSK",
-   "text": "Assistance required. Assistance required.",
-   "sub": "Assistance required.\nAssistance required."
+   "text": "[robotic, increasingly frantic] Assistance required. Assistance required.",
+   "sub": "Assistance required.\nAssistance required.",
+   "plain": "Assistance required. Assistance required."
   },
   {
    "id": "L10",
    "who": "RAE",
-   "text": "Assistance provided."
+   "text": "Assistance provided.",
+   "plain": "Assistance provided.",
+   "settings": {
+    "stability": 0.5,
+    "similarity_boost": 0.8,
+    "style": 0.3,
+    "speed": 0.88
+   },
+   "sub": "Assistance provided."
   },
   {
    "id": "L11",
    "who": "PIP",
-   "text": "No! Kevin!"
+   "text": "[heartbroken wail] No! Kevin!",
+   "plain": "No! Kevin!",
+   "sub": "No! Kevin!"
   },
   {
    "id": "L12",
    "who": "MAGS",
-   "text": "Noted. Rae stays.",
-   "asr": "Noted. Ray stays."
+   "text": "[cheerful] Noted. Rae stays.",
+   "asr": "Noted. Ray stays.",
+   "plain": "Noted. Rae stays.",
+   "sub": "Noted. Rae stays."
   }
  ]
 }

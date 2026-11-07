@@ -10,6 +10,7 @@ NUM = {"23": "twenty three", "9": "nine", "1": "one", "13": "thirteen"}
 
 
 def norm(s):
+    s = re.sub(r"\[[^\]]*\]", " ", s)          # audio tags and sound events are not words
     s = s.lower().replace("-", " ")
     s = re.sub(r"\d+", lambda m: NUM.get(m.group(0), m.group(0)), s)
     return re.sub(r"[^a-z' ]+", " ", s).split()

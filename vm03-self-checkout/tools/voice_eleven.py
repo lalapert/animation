@@ -37,6 +37,18 @@ def words_from(chars, t0s, t1s):
     return words
 
 
+def strip_tags(ch, a, b):
+    """eleven_v4 audio tags ([excited], [sighs] ...) are direction, not speech: drop their characters from the timings"""
+    out, depth = [], 0
+    for c, x, y in zip(ch, a, b):
+        if c == "[": depth += 1; continue
+        if c == "]": depth = max(0, depth - 1); continue
+        if depth: continue
+        if c.isspace() and (not out or out[-1][0].isspace()): continue
+        out.append((c, x, y))
+    return [o[0] for o in out], [o[1] for o in out], [o[2] for o in out]
+
+
 def duration(path):
     return float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", path],
                                 capture_output=True, text=True, check=True).stdout.strip())
@@ -64,7 +76,7 @@ def main():
         else:
             os.replace(raw, mp3)
         al = d.get("normalized_alignment") or d["alignment"]
-        ch, a, b = al["characters"], al["character_start_times_seconds"], al["character_end_times_seconds"]
+        ch, a, b = strip_tags(al["characters"], al["character_start_times_seconds"], al["character_end_times_seconds"])
         json.dump({"id": ln["id"], "who": ln["who"], "text": ln["text"], "chars": [[c, round(x, 3), round(y, 3)] for c, x, y in zip(ch, a, b)],
                    "words": words_from(ch, a, b)}, open(os.path.join(OUT, ln["id"] + ".json"), "w"))
         print("ok", ln["id"], ln["who"], flush=True)

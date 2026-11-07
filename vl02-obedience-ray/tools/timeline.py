@@ -2,7 +2,8 @@
   .venv/bin/python tools/timeline.py
 Volt Labs 2 "The Obedience Ray": everyone will do exactly what Vera says. It makes the whole street unbearably polite.
 """
-import json, os
+import json, os, re
+TAGS = re.compile(r"\[[^\]]*\]\s*")              # eleven_v4 audio tags: direction, never shown
 
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BPM = 132.0
@@ -23,7 +24,7 @@ for k in order:
     if k == "L9": T["KNEEL"] = round(t + 0.3, 3)                     # the gentleman kneels: his face appears in the window
     if k == "L13": T["DUCK"] = round(t + 0.15, 3); T["KNOCK"] = round(t + 0.9, 3)
     d = durs[k]
-    VO.append({"id": k, "who": lines[k]["who"], "t": round(start, 3), "dur": d, "sub": lines[k].get("sub", lines[k]["text"]),
+    VO.append({"id": k, "who": lines[k]["who"], "t": round(start, 3), "dur": d, "sub": lines[k].get("sub", TAGS.sub("", lines[k]["text"]).strip()),
                "col": SUBCOL[lines[k]["who"]], "gain_db": lines[k].get("gain_db", 0), **({"fx": "outside"} if lines[k]["who"] in OUTSIDE else {})})
     t = start + d
 T["BOARDT"] = round(t + 0.3, 3)

@@ -2,7 +2,8 @@
   .venv/bin/python tools/timeline.py
 Volt Labs 1 "Day One": the Adoration Ray. Cleo fires it early; only pigeons answer.
 """
-import json, os
+import json, os, re
+TAGS = re.compile(r"\[[^\]]*\]\s*")              # eleven_v4 audio tags: direction, never shown
 
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BPM = 132.0
@@ -12,7 +13,9 @@ lines = {l["id"]: l for l in cfg["lines"]}
 order = [l["id"] for l in cfg["lines"]]
 durs = json.load(open(os.path.join(HERE, "voice", "out", "durations.json")))
 SUBCOL = {"VERA": "#d8ff7a", "CLEO": "#c9b8ff"}
-CUT = {"L6": 4.35}                     # Cleo fires during "Three...": the line is cut off by the zap
+W6 = json.load(open(os.path.join(HERE, "voice", "out", "L6.json")))["words"]
+THREE = [w for w in W6 if w["w"].lower().startswith("three")][0]["t0"]   # where "Three..." starts in this take
+CUT = {"L6": round(THREE + .5, 3)}     # Cleo fires during "Three...": the line is cut off by the zap
 # pause before each line (comic timing); the big beats get their own room below
 GAP = {"L1": 0.9, "L2": 0.35, "L3": 0.3, "L4": 0.5, "L5": 0.4, "L6": 0.35, "L7": 1.3, "L8": 0.3, "L9": 2.1, "L10": 0.35,
        "L11": 0.3, "L12": 0.9, "L13": 1.25, "L14": 0.35, "L15": 0.8}
@@ -26,11 +29,11 @@ for k in order:
     if k == "L15": T["CAPT"] = round(t + 0.35, 3)
     start = t + GAP[k]
     d = CUT.get(k, durs[k])
-    VO.append({"id": k, "who": lines[k]["who"], "t": round(start, 3), "dur": d, "sub": lines[k].get("sub", lines[k]["text"]),
+    VO.append({"id": k, "who": lines[k]["who"], "t": round(start, 3), "dur": d, "sub": lines[k].get("sub", TAGS.sub("", lines[k]["text"]).strip()),
                "col": SUBCOL[lines[k]["who"]], "gain_db": lines[k].get("gain_db", 0), **({"cut": d} if k in CUT else {})})
     t = start + d
     if k == "L6":
-        T["PRESS"] = round(start + 4.05, 3); T["FIRE"] = round(start + 4.3, 3)
+        T["PRESS"] = round(start + THREE + .2, 3); T["FIRE"] = round(start + THREE + .45, 3)
 END_BEAT = 1.7
 DUR = round(t + END_BEAT, 2)
 for i, v in enumerate(VO):

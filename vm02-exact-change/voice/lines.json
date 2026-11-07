@@ -5,9 +5,9 @@
    "voice_id": "BiP91t4ozM9IZajOdSu2",
    "name": "Win2",
    "settings": {
-    "stability": 0.35,
+    "stability": 0.3,
     "similarity_boost": 0.8,
-    "style": 0.45,
+    "style": 0.65,
     "speed": 1.05
    }
   },
@@ -15,9 +15,9 @@
    "voice_id": "oy557F0mOsPZZqdz8oK6",
    "name": "Kar2",
    "settings": {
-    "stability": 0.85,
+    "stability": 0.6,
     "similarity_boost": 0.8,
-    "style": 0.0,
+    "style": 0.2,
     "speed": 0.9
    },
    "pitch": -1.5
@@ -26,9 +26,9 @@
    "voice_id": "WkUURyKtbzB9IM50qGdP",
    "name": "VM MAGS",
    "settings": {
-    "stability": 0.7,
+    "stability": 0.45,
     "similarity_boost": 0.8,
-    "style": 0.25,
+    "style": 0.5,
     "speed": 1.0
    }
   },
@@ -36,9 +36,9 @@
    "voice_id": "N2lVS1w4EtoT3dr4eOWO",
    "name": "Callum (stock)",
    "settings": {
-    "stability": 0.5,
+    "stability": 0.4,
     "similarity_boost": 0.8,
-    "style": 0.35,
+    "style": 0.5,
     "speed": 1.0
    }
   }
@@ -47,80 +47,108 @@
   {
    "id": "L1",
    "who": "CUST",
-   "text": "One coffee. Keep the change."
+   "text": "[gruff, proud] One coffee. Keep the change.",
+   "plain": "One coffee. Keep the change.",
+   "sub": "One coffee. Keep the change."
   },
   {
    "id": "L2",
    "who": "RAE",
-   "text": "We don't take stars."
+   "text": "[flatly] We don't take stars.",
+   "plain": "We don't take stars.",
+   "sub": "We don't take stars."
   },
   {
    "id": "L3",
    "who": "CUST",
-   "text": "It's a small one."
+   "text": "[offended] It's a small one.",
+   "plain": "It's a small one.",
+   "sub": "It's a small one."
   },
   {
    "id": "L4",
    "who": "PIP",
-   "text": "It's so warm! Rae, it's like holding a puppy!",
+   "text": "[overjoyed] It's so warm! Rae, it's like holding a puppy!",
    "sub": "It's so warm! Rae,\nit's like holding a puppy!",
-   "asr": "It's so warm! Ray, it's like holding a puppy!"
+   "asr": "It's so warm! Ray, it's like holding a puppy!",
+   "plain": "It's so warm! Rae, it's like holding a puppy!"
   },
   {
    "id": "L5",
    "who": "RAE",
-   "text": "Pip. Your hair is on fire."
+   "text": "[calmly] Pip. Your hair is on fire.",
+   "plain": "Pip. Your hair is on fire.",
+   "sub": "Pip. Your hair is on fire."
   },
   {
    "id": "L6",
    "who": "PIP",
-   "text": "Only a little!"
+   "text": "[panicked but cheerful] Only a little!",
+   "plain": "Only a little!",
+   "sub": "Only a little!"
   },
   {
    "id": "L7",
    "who": "MAGS",
-   "text": "Reminder: all currency must be cooler than the store.",
-   "sub": "Reminder: all currency must be\ncooler than the store."
+   "text": "[cheerful, salesy] Reminder: all currency must be cooler than the store.",
+   "sub": "Reminder: all currency must be\ncooler than the store.",
+   "plain": "Reminder: all currency must be cooler than the store."
   },
   {
    "id": "L8",
    "who": "CUST",
-   "text": "Fine. I'll pay with a moon."
+   "text": "[huffy] Fine. I'll pay with a moon.",
+   "plain": "Fine. I'll pay with a moon.",
+   "sub": "Fine. I'll pay with a moon."
   },
   {
    "id": "L8a",
    "who": "PIP",
-   "text": "Ooh! Can we keep it?"
+   "text": "[squealing with excitement] Ooh! Can we keep it?",
+   "plain": "Ooh! Can we keep it?",
+   "sub": "Ooh! Can we keep it?"
   },
   {
    "id": "L8b",
    "who": "RAE",
-   "text": "No."
+   "text": "[flatly] No.",
+   "plain": "No.",
+   "sub": "No."
   },
   {
    "id": "L9",
    "who": "RAE",
-   "text": "Do you have anything... normal?"
+   "text": "[tired sigh] Do you have anything... normal?",
+   "plain": "Do you have anything... normal?",
+   "sub": "Do you have anything... normal?"
   },
   {
    "id": "L10",
    "who": "CUST",
-   "text": "A coupon?"
+   "text": "[hopeful] A coupon?",
+   "plain": "A coupon?",
+   "sub": "A coupon?"
   },
   {
    "id": "L11",
    "who": "RAE",
-   "text": "Expired."
+   "text": "[deadpan] Expired.",
+   "plain": "Expired.",
+   "sub": "Expired."
   },
   {
    "id": "L12",
    "who": "CUST",
-   "text": "You didn't even look at it."
+   "text": "[outraged] You didn't even look at it.",
+   "plain": "You didn't even look at it.",
+   "sub": "You didn't even look at it."
   },
   {
    "id": "L13",
    "who": "RAE",
-   "text": "Everything here is expired."
+   "text": "[bored] Everything here is expired.",
+   "plain": "Everything here is expired.",
+   "sub": "Everything here is expired."
   }
  ]
 }

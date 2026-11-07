@@ -5,9 +5,9 @@
    "voice_id": "buRySvQEB2e8Dcglym6i",
    "name": "LAB Vera Volt",
    "settings": {
-    "stability": 0.4,
+    "stability": 0.3,
     "similarity_boost": 0.8,
-    "style": 0.45,
+    "style": 0.7,
     "speed": 1.0
    }
   },
@@ -15,9 +15,9 @@
    "voice_id": "biUhGlVm4NoNe58piPit",
    "name": "LAB Cleo",
    "settings": {
-    "stability": 0.85,
+    "stability": 0.6,
     "similarity_boost": 0.8,
-    "style": 0.0,
+    "style": 0.25,
     "speed": 0.92
    }
   },
@@ -25,9 +25,9 @@
    "voice_id": "JBFqnCBsd6RMkjVDRZzb",
    "name": "George (stock)",
    "settings": {
-    "stability": 0.5,
+    "stability": 0.4,
     "similarity_boost": 0.8,
-    "style": 0.3,
+    "style": 0.5,
     "speed": 1.0
    }
   },
@@ -35,9 +35,9 @@
    "voice_id": "pFZP5JQG7iQjIQuC4Bku",
    "name": "Lily (stock)",
    "settings": {
-    "stability": 0.5,
+    "stability": 0.4,
     "similarity_boost": 0.8,
-    "style": 0.3,
+    "style": 0.5,
     "speed": 1.0
    }
   },
@@ -45,9 +45,9 @@
    "voice_id": "pqHfZKP75CvOlQylNhV4",
    "name": "Bill (stock)",
    "settings": {
-    "stability": 0.55,
+    "stability": 0.45,
     "similarity_boost": 0.8,
-    "style": 0.25,
+    "style": 0.45,
     "speed": 0.95
    }
   }
@@ -56,75 +56,100 @@
   {
    "id": "L1",
    "who": "VERA",
-   "text": "Yesterday, pigeons. Today, obedience."
+   "text": "[scheming] Yesterday, pigeons. Today, obedience.",
+   "plain": "Yesterday, pigeons. Today, obedience.",
+   "sub": "Yesterday, pigeons. Today, obedience."
   },
   {
    "id": "L2",
    "who": "CLEO",
-   "text": "The pigeons are still here."
+   "text": "[bored] The pigeons are still here.",
+   "plain": "The pigeons are still here.",
+   "sub": "The pigeons are still here."
   },
   {
    "id": "L3",
    "who": "VERA",
-   "text": "The Obedience Ray. One shot, and everyone does exactly what I say.",
-   "sub": "The Obedience Ray. One shot, and\neveryone does exactly what I say."
+   "text": "[dramatic, theatrical] The Obedience Ray. One shot, and everyone does exactly what I say.",
+   "sub": "The Obedience Ray. One shot, and\neveryone does exactly what I say.",
+   "plain": "The Obedience Ray. One shot, and everyone does exactly what I say."
   },
   {
    "id": "L4",
    "who": "VERA",
-   "text": "Three, two, one!"
+   "text": "[thrilled] Three, two, one!",
+   "plain": "Three, two, one!",
+   "sub": "Three, two, one!"
   },
   {
    "id": "L5",
    "who": "VERA",
-   "text": "People of Earth! Kneel before me!"
+   "text": "[shouting, triumphant] People of Earth! Kneel before me!",
+   "plain": "People of Earth! Kneel before me!",
+   "sub": "People of Earth! Kneel before me!"
   },
   {
    "id": "L6",
    "who": "MAN",
-   "text": "Oh, terribly sorry. After you."
+   "text": "[politely apologetic] Oh, terribly sorry. After you.",
+   "plain": "Oh, terribly sorry. After you.",
+   "sub": "Oh, terribly sorry. After you."
   },
   {
    "id": "L7",
    "who": "WOMAN",
-   "text": "No, no, I insist. After you."
+   "text": "[politely insistent] No, no, I insist. After you.",
+   "plain": "No, no, I insist. After you.",
+   "sub": "No, no, I insist. After you."
   },
   {
    "id": "L8",
    "who": "VERA",
-   "text": "I said kneel!"
+   "text": "[frustrated, shouting] I said kneel!",
+   "plain": "I said kneel!",
+   "sub": "I said kneel!"
   },
   {
    "id": "L9",
    "who": "MAN",
-   "text": "Of course! Can I get you anything? A cup of tea?",
-   "sub": "Of course! Can I get you anything?\nA cup of tea?"
+   "text": "[warm, delighted] Of course! Can I get you anything? A cup of tea?",
+   "sub": "Of course! Can I get you anything?\nA cup of tea?",
+   "plain": "Of course! Can I get you anything? A cup of tea?"
   },
   {
    "id": "L10",
    "who": "CLEO",
-   "text": "He's very obedient."
+   "text": "[deadpan] He's very obedient.",
+   "plain": "He's very obedient.",
+   "sub": "He's very obedient."
   },
   {
    "id": "L11",
    "who": "VERA",
-   "text": "Stop being nice to me!"
+   "text": "[flustered, embarrassed] Stop being nice to me!",
+   "plain": "Stop being nice to me!",
+   "sub": "Stop being nice to me!"
   },
   {
    "id": "L12",
    "who": "MAN",
-   "text": "You're doing a wonderful job, love."
+   "text": "[kindly, warm] You're doing a wonderful job, love.",
+   "plain": "You're doing a wonderful job, love.",
+   "sub": "You're doing a wonderful job, love."
   },
   {
    "id": "L13",
    "who": "LANDLORD",
-   "text": "About the rent, dear. No rush at all.",
-   "sub": "About the rent, dear.\nNo rush at all."
+   "text": "[kindly] About the rent, dear. No rush at all.",
+   "sub": "About the rent, dear.\nNo rush at all.",
+   "plain": "About the rent, dear. No rush at all."
   },
   {
    "id": "L14",
    "who": "CLEO",
-   "text": "Leave it on."
+   "text": "[quietly, smug] Leave it on.",
+   "plain": "Leave it on.",
+   "sub": "Leave it on."
   }
  ]
 }

@@ -1,7 +1,8 @@
 """Single source of truth for timing: writes timeline.js (for the page) and out/timeline.json (for score, mix, srt).
   .venv/bin/python tools/timeline.py
 """
-import json, os
+import json, os, re
+TAGS = re.compile(r"\[[^\]]*\]\s*")              # eleven_v4 audio tags: direction, never shown
 
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BPM = 120.0
@@ -19,7 +20,7 @@ for k in order:
     start = t + GAP[k]
     if k == "L8a": T["MOON"] = round(t + 0.35, 3)          # the moon lands
     d = durs[k]
-    VO.append({"id": k, "who": lines[k]["who"], "t": round(start, 3), "dur": d, "sub": lines[k].get("sub", lines[k]["text"]),
+    VO.append({"id": k, "who": lines[k]["who"], "t": round(start, 3), "dur": d, "sub": lines[k].get("sub", TAGS.sub("", lines[k]["text"]).strip()),
                "col": SUBCOL[lines[k]["who"]], "gain_db": lines[k].get("gain_db", 0)})
     t = start + d
 T["STAR"] = 0.15                                              # the star hits the counter

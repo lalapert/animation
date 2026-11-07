@@ -2,7 +2,8 @@
   .venv/bin/python tools/timeline.py
 Void Mart 3 "Self-Checkout": corporate sends a self-checkout kiosk that is more deadpan than Rae.
 """
-import json, os
+import json, os, re
+TAGS = re.compile(r"\[[^\]]*\]\s*")              # eleven_v4 audio tags: direction, never shown
 
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BPM = 120.0
@@ -23,7 +24,7 @@ for k in order:
     if k == "L7": T["ON"] = round(t + 0.2, 3)                                             # and back on
     if k == "L10": T["STARE"] = round(t + 0.1, 3); T["PLUG"] = round(t + 1.05, 3); T["DARK"] = round(t + 1.5, 3)
     d = durs[k]
-    VO.append({"id": k, "who": lines[k]["who"], "t": round(start, 3), "dur": d, "sub": lines[k].get("sub", lines[k]["text"]),
+    VO.append({"id": k, "who": lines[k]["who"], "t": round(start, 3), "dur": d, "sub": lines[k].get("sub", TAGS.sub("", lines[k]["text"]).strip()),
                "col": SUBCOL[lines[k]["who"]], "gain_db": lines[k].get("gain_db", 0), **({"fx": "speaker"} if lines[k]["who"] == "KIOSK" else {})})
     t = start + d
 END_BEAT = 3.0
