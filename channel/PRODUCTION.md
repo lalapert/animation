@@ -2,7 +2,7 @@
 
 Read this whole file before you start. Report progress and the result in Korean. Owner: 연 (call them 작가님).
 
-Each run makes **one** episode, the unmade one that airs soonest (§1), and schedules it on its date. Goal: **every series always has 2 finished episodes waiting beyond the next post** (except at the end of a season).
+Each run makes **one** episode, the unmade one that airs soonest (§1), and schedules it on its date. Goal (owner, 11/7 night: keep stacking the bank): **every series keeps 5 finished episodes waiting beyond its next post** (except at the end of a season). Below that, never skip a run.
 
 ## 0. Setup (fresh container only)
 
@@ -23,8 +23,8 @@ Owner's decision (11/7 evening): **every series posts exactly every two days, Fr
 The date of every episode is in its plan table; use that date. From 11/28 the Void Mart channel posts every day (Void Mart and Volt Labs take turns).
 
 1. For each series, list its next post dates and which of them already have a scheduled Metricool post or a finished folder. Banked = finished, not yet published.
-2. Make the unmade episode with the **soonest air date** across the three series (ties: the series with fewer banked episodes, then horror, Void Mart, Volt Labs). If every series already has 2 banked beyond its next post, make nothing and log "buffer full".
-3. The pace is about 1.5 episodes a day from 11/28 and there are two runs a day, so a failed run eats the buffer. If any series is down to 1 banked episode, say so first in the report.
+2. Make the unmade episode with the **soonest air date** across the three series (ties: the series with fewer banked episodes, then horror, Void Mart, Volt Labs). If every series already has 5 banked beyond its next post, make nothing and log "buffer full".
+3. The pace is about 1 episode a day until 11/28 and 1.5 a day after; there are two runs a day, so the bank grows by about one a day until 11/28 and half a day after. A failed run eats into it. If any series is down to 2 banked episodes or fewer, say so first in the report.
 4. Never post two episodes of one series on the same day. Fridays are normal days.
 5. Use the episode list in the plan in order; rewrite the line only if it no longer fits (log why). Multi-part episodes (Volt Labs 21–22, 29–31) must each work alone: say "PART 2" in the first two seconds and show one picture from the last part.
 
@@ -82,7 +82,7 @@ Read the style text only (`curl -sS https://raw.githubusercontent.com/lemomo-ai/
 
 | Library style | Where we use it | Rules |
 |---|---|---|
-| `hologram-hud` (Hologram HUD) | Volt Labs: a 2–3 s "spec scan" insert when a new invention is unveiled (wireframe, target boxes on its parts, numbers rolling into place). Kit: `hudScan(g, t, spec)` in `channel/brand/inserts.js` (sample: `channel/brand/inserts_test.html`, `brand/out/inserts_test_v1.mp4`); first use Volt Labs 4 *Doomsday Weather* (12/4) | Every 2–3 episodes at most, never two in a row, so it stays a treat and not a template. The numbers are jokes (e.g. `EVIL OUTPUT 3%`), in English |
+| `hologram-hud` (Hologram HUD) | Volt Labs: a 2–3 s "spec scan" insert when a new invention is unveiled (wireframe, target boxes on its parts, numbers rolling into place). Kit: `hudScan(g, t, spec)` in `channel/brand/inserts.js` (sample: `channel/brand/inserts_test.html`, `brand/out/inserts_test_v2.mp4`); first use Volt Labs 4 *Doomsday Weather* (12/4) | Every 2–3 episodes at most, never two in a row, so it stays a treat and not a template. The numbers are jokes (e.g. `EVIL OUTPUT 3%`), in English |
 | `halftone-dossier` (Halftone Dossier) | Case-file inserts: Sterling Bright's file in Volt Labs 16 *Someone Else's Plan*; the archive's case card that opens horror tape 38 *Demolition Survey*. Kit: `dossier(g, t, spec)` in `channel/brand/inserts.js`. The two can run back to back (scan, then "PRINTING CASE FILE..." into the file), as in the sample | Two or three times a season. Print look (cream paper, halftone, stamps) only inside the insert; the episode around it keeps its own look |
 | `backrooms` (Liminal Found Footage) | Horror from tape 6 *First Night* (11/17): every guard tape cuts between the guard-office monitors (CCTV, as now) and Leon's camcorder. Kit: extend `channel/brand/tapekit.js` with a handheld camcorder walk (first-person, his hand and torch in frame, focus hunting, exposure pumping, camcorder OSD, tape damage at the worst moment, light that pools and dies) and a guard-office monitor wall | Tapes 1–5 stay CCTV only. Our own rule stays: "it" never has a face; Leon's face is never shown clearly either. Borrow the camera grammar, not the library's rules or spaces. **Build the walk kit and Leon's voice (ElevenLabs voice design: a tired American night guard in his 40s, low and quiet; add to `channel/voices/VOICES.md`) with tape 6, before 11/13, so tape 6 has its 2-episode buffer.** His log line opens most guard tapes ("Night log. December third. Two fourteen AM.") |
 

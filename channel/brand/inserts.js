@@ -34,7 +34,7 @@ function insProject(p, yaw, pitch, cx, cy, sc) {
   const f = 4.2 / (4.2 + z); return [cx + x * sc * f, cy + y * sc * f, z];
 }
 function hudScan(g, t, spec) {
-  const W = 1080, H = 1920, cx = 540, cy = 900, sc = 250, tl = spec.lockT || 99, yaw = -0.6 + Math.min(t, tl) * .55 + Math.max(0, t - tl) * .06, pitch = .38;
+  const W = 1080, H = 1920, cx = 540, cy = 900, sc = 250, tl = spec.lockT || 99, yaw = (spec.yaw0 ?? 2.0) + Math.sin(Math.min(t, tl) * 1.1) * .55 + Math.max(0, t - tl) * .05, pitch = spec.pitch ?? .62;
   g.save(); g.setTransform(1, 0, 0, 1, 0, 0);
   g.fillStyle = INS.navy; g.fillRect(0, 0, W, H);
   const vg = g.createRadialGradient(540, 860, 100, 540, 900, 1100); vg.addColorStop(0, 'rgba(20,70,110,.55)'); vg.addColorStop(1, 'rgba(0,0,0,0)'); g.fillStyle = vg; g.fillRect(0, 0, W, H);
@@ -104,10 +104,17 @@ function capModel() {
   const dome = (a, b) => [Math.cos(a) * Math.cos(b) * Rr, -Math.sin(b) * Rr * .8, Math.sin(a) * Math.cos(b) * Rr];
   for (let j = 0; j <= 4; j++) { const b = j / 5 * 1.45; for (let i = 0; i < N; i++) { const a0 = i / N * 6.2832, a1 = (i + 1) / N * 6.2832; lines.push([...dome(a0, b), ...dome(a1, b)]); } }
   for (let i = 0; i < N; i += 2) { const a = i / N * 6.2832; for (let j = 0; j < 5; j++) lines.push([...dome(a, j / 5 * 1.45), ...dome(a, (j + 1) / 5 * 1.45)]); }
-  // visor: a flat half-annulus in front (+z)
-  const vis = (a, r) => [Math.cos(a) * r, .02, Math.sin(a) * r * 1.0];
-  for (let i = 0; i < 12; i++) { const a0 = .25 + i / 12 * (Math.PI - .5), a1 = .25 + (i + 1) / 12 * (Math.PI - .5); lines.push([...vis(a0, 1), ...vis(a1, 1)], [...vis(a0, 1.75), ...vis(a1, 1.75)]); if (i % 3 === 0) lines.push([...vis(a0, 1), ...vis(a0, 1.75)]); }
-  lines.push([...vis(Math.PI - .25, 1), ...vis(Math.PI - .25, 1.75)]);
+  // visor: a brim with some thickness in front (+z), so it reads as a cap from any angle
+  const vis = (a, r, y) => [Math.cos(a) * r, y, Math.sin(a) * r];
+  const A0 = .3, A1 = Math.PI - .3, NV = 14;
+  for (let i = 0; i < NV; i++) {
+    const a0 = A0 + i / NV * (A1 - A0), a1 = A0 + (i + 1) / NV * (A1 - A0);
+    for (const y of [0, .09]) { lines.push([...vis(a0, 1.65, y), ...vis(a1, 1.65, y)]); }
+    lines.push([...vis(a0, 1, .02), ...vis(a1, 1, .02)]);
+    if (i % 2 === 0) lines.push([...vis(a0, 1, .02), ...vis(a0, 1.65, 0)], [...vis(a0, 1.65, 0), ...vis(a0, 1.65, .09)]);
+    faces.push([vis(a0, 1, .02), vis(a1, 1, .02), vis(a1, 1.65, 0), vis(a0, 1.65, 0)]);
+  }
+  for (const a of [A0, A1]) lines.push([...vis(a, 1, .02), ...vis(a, 1.65, 0)], [...vis(a, 1.65, 0), ...vis(a, 1.65, .09)]);
   // sun badge on the front of the dome
   const sunC = [0, -.42, 1.0]; for (let i = 0; i < 12; i++) { const a0 = i / 12 * 6.28, a1 = (i + 1) / 12 * 6.28; lines.push([sunC[0] + Math.cos(a0) * .2, sunC[1] + Math.sin(a0) * .2, sunC[2] - .02, sunC[0] + Math.cos(a1) * .2, sunC[1] + Math.sin(a1) * .2, sunC[2] - .02]); }
   for (let i = 0; i < 8; i++) { const a = i / 8 * 6.28; lines.push([Math.cos(a) * .26, -.42 + Math.sin(a) * .26, .97, Math.cos(a) * .36, -.42 + Math.sin(a) * .36, .93]); }
