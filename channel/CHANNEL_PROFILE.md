@@ -26,7 +26,7 @@ Rae has worked nights here for three years. She has seen everything and refunds 
 Pip started this week. She wants to be friends with every customer, including the ones made of fire.
 MAGS is the store's AI manager. Always watching. Always upselling.
 
-An original animated sitcom in 45-second episodes. New episodes three times a week.
+An original animated sitcom in 45-second episodes. New episodes every day.
 
 Every frame is drawn in code. Voices are synthetic.
 ```
@@ -61,7 +61,7 @@ Void Mart, episode <N>.
 ```
 The last convenience store before the edge of the universe.
 Two night-shift clerks. Every customer is a problem.
-New episodes 3x a week ↓
+New episodes every day ↓
 ```
 
 **링크:** 유튜브 채널 주소 하나. 인스타는 링크를 여러 개 넣을 수 있다는 자료도 있지만, 하나만 두는 게 클릭이 덜 흩어진다.
@@ -104,8 +104,8 @@ New episodes 3x a week ↓
 
 | 재생목록 이름 | 설명 |
 |---|---|
-| **Void Mart \| Season 1** | Pip's first season at the last convenience store before the edge of the universe. Watch in order: the shelves restock themselves, a third clerk shows up on camera, and the incident counter never gets past zero. New episodes every Tuesday and Thursday. |
-| **Volt Labs \| Season 1** | Dr. Vera Volt will rule the world. Right after she pays the rent. A basement lab, a deadpan assistant, and a big red button nobody should press. New episodes every Saturday and Monday. |
+| **Void Mart \| Season 1** | Pip's first season at the last convenience store before the edge of the universe. Watch in order: the shelves restock themselves, a third clerk shows up on camera, and the incident counter never gets past zero. New episodes every other day. |
+| **Volt Labs \| Season 1** | Dr. Vera Volt will rule the world. Right after she pays the rent. A basement lab, a deadpan assistant, and a big red button nobody should press. New episodes every other day. |
 | **Start Here: The Void Mart Universe** | Episode 1 of every show. Same universe, same 3 AM. |
 
 - 과학자 시리즈의 제목은 아직 가제(*Volt Labs*)다. 재생목록과 영상 제목에 들어가므로 **Volt Labs**로 정하는 걸 제안한다(과학자 Vera Volt의 지하 연구소 이름). "The Lab"은 검색어로 너무 흔하다.

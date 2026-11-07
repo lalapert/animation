@@ -2,7 +2,7 @@
 
 Read this whole file before you start. Report progress and the result in Korean. Owner: 연 (call them 작가님).
 
-Each run makes **one** episode, the one whose series is closest to running out of banked episodes, and schedules it on its slot. Goal: **every series always has 2 finished episodes waiting beyond the next post** (except at the end of a season).
+Each run makes **one** episode, the unmade one that airs soonest (§1), and schedules it on its date. Goal: **every series always has 2 finished episodes waiting beyond the next post** (except at the end of a season).
 
 ## 0. Setup (fresh container only)
 
@@ -12,16 +12,21 @@ Each run makes **one** episode, the one whose series is closest to running out o
 
 ## 1. What to make
 
+Owner's decision (11/7 evening): **every series posts exactly every two days, Fridays included.** Vertical Shorts stay; the seasons are longer (more episodes) and carry multi-episode arcs.
+
 | Series | Plan | Slots (KST) | Template folder |
 |---|---|---|---|
-| Void Mart | `channel/SEASON1.md` §4 (17 episodes, 11/7 → 12/31; episode numbers = air order) | Tue, Thu 09:00 (and the 11/7 Sat premiere) | the latest `vmNN-*` folder (now `vm02-exact-change/`) |
-| Volt Labs | `channel/LAB_SERIES.md` §2 (20 episodes, 11/28 → 2/1) | Sat, Mon 09:00 | the latest `vlNN-*` folder (now `vl01-day-one/`) |
-| Horror (*STILL RECORDING*, own channel) | `channel/HORROR_SERIES.md` §3 (37 tapes, 11/7 → 1/30) | Mon, Thu, Sat 13:00 | the latest `srNN-*` folder (now `sr01-closing-announcement/`) |
+| Void Mart | `channel/SEASON1.md` §4.1 (season 1, 28 episodes, 11/7 → 12/31) then §4.2 (season 2, 15 episodes, 1/2 → 1/30); episode numbers = air order and keep counting in season 2 (29, 30, …) | every two days from 11/7 (11/7, 11/9, 11/11 …) at 09:00 | the latest `vmNN-*` folder (now `vm04-zero-g-mop/`) |
+| Volt Labs | `channel/LAB_SERIES.md` §2 (33 episodes, 11/28 → 1/31) | every two days from 11/28 (11/28, 11/30, 12/2 …) at 09:00 | the latest `vlNN-*` folder (now `vl03-help-wanted/`) |
+| Horror (*STILL RECORDING*, own channel) | `channel/HORROR_SERIES.md` §3 (43 tapes, 11/7 → 1/30) | every two days from 11/7 (11/7, 11/9, 11/11 …) at 13:00 | the latest `srNN-*` folder (now `sr04-toy-garden/`) |
+
+The date of every episode is in its plan table; use that date. From 11/28 the Void Mart channel posts every day (Void Mart and Volt Labs take turns).
 
 1. For each series, list its next post dates and which of them already have a scheduled Metricool post or a finished folder. Banked = finished, not yet published.
-2. Pick the series with the fewest banked episodes (ties: the earliest next slot). If every series already has 2 banked, make nothing and log "buffer full".
-3. Never post on Fridays. Never post two episodes of one series on the same day.
-4. Use the episode list in the plan in order; rewrite the line only if it no longer fits (log why).
+2. Make the unmade episode with the **soonest air date** across the three series (ties: the series with fewer banked episodes, then horror, Void Mart, Volt Labs). If every series already has 2 banked beyond its next post, make nothing and log "buffer full".
+3. The pace is about 1.5 episodes a day from 11/28 and there are two runs a day, so a failed run eats the buffer. If any series is down to 1 banked episode, say so first in the report.
+4. Never post two episodes of one series on the same day. Fridays are normal days.
+5. Use the episode list in the plan in order; rewrite the line only if it no longer fits (log why). Multi-part episodes (Volt Labs 21–22, 29–31) must each work alone: say "PART 2" in the first two seconds and show one picture from the last part.
 
 ## 2. How to make a toon episode
 
@@ -42,7 +47,7 @@ Copy the template folder to `<prefix><NN>-<slug>/` (Void Mart: `vm03-dennis/`), 
 - End on a button (the incident counter, a MAGS line, a sip) that loops into the first frame.
 - Length 40–60 s; up to 75 s only for big story episodes (midpoint, finale).
 - Season threads and easter eggs: `SEASON1.md` §3, `LAB_SERIES.md` §2, `UNIVERSE.md` (one egg every 2–3 episodes per series, never explained).
-- US calendar: Thanksgiving 11/26, Black Friday 11/27 (Void Mart 12/1 is "the day after Black Friday"), Christmas Eve, New Year's Eve.
+- US calendar: Thanksgiving 11/26, Black Friday 11/27, Christmas Eve, New Year's Eve. 09:00 KST is 7 PM the evening before on the US East Coast, so Void Mart 11 *Leftovers* (11/27 KST) lands on Thanksgiving evening, Void Mart 12 *Restock* (11/29) the day after Black Friday, Void Mart 25 *Holiday Hours* (12/25) on Christmas Eve evening, Volt Labs 18 *Resolutions* (1/1) on New Year's Eve evening.
 
 ### 2.3 Picture
 - Shared kit: `channel/brand/toon.js` (characters: `drawRae2`, `drawPip2`, `drawMags`, `drawDennis`; options `expr`, `mouth`, `blink`, `look`, `mug` (Rae's right arm lifts with the mug), `reachL` (Rae's left hand to a local point), `hold`, `wave`, `wavePhase`, `reach`, `sweat`) and `channel/brand/vmkit.js` (store set, cameras `VMCAM`, `mouthFor` lip sync from character timings, `blinkAt`, burned-in subtitles, `composeFrame`). Volt Labs: `channel/brand/lab.js` (`drawVera2` options `expr` cool|scheme|fluster|laugh, `mouth`, `blink`, `point` 0..1, `tube`, `goggles`; `drawCleo2` options `expr` deadpan|sleepy|surprised|smug, `mouth`, `blink`, `look`, `press` 0..1; `drawBright`) and `channel/brand/labkit.js` (basement-lab set `buildLab`, cameras `LABCAM`, `drawWindow`, `drawRentCircles`, `drawFridge`, `drawRay`/`drawBeam`, `drawPigeon`, `drawHeart`; load toon.js, lab.js, vmkit.js, labkit.js in that order: lip sync, subtitles and shots come from vmkit). Test sheet: `channel/brand/labkit_test.html`. Volt Labs subtitle colours: Vera `#d8ff7a`, Cleo `#c9b8ff`. Rent circles on the board: one more each episode (ep 1 ends with 2).
