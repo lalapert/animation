@@ -1,17 +1,58 @@
 {
- "lab_hum": [10.0, "a basement laboratory ambience: soft electrical hum, gentle bubbling beakers, an old pipe ticking, loopable, no voices, no music"],
- "sheet": [0.8, "a large cloth sheet yanked off a big machine, a quick fabric whoosh and flap"],
- "scan": [3.4, "a futuristic hologram scanner sweeping: soft digital chirps, data ticking and rolling numbers, sci-fi interface beeps, clean"],
- "lever": [0.8, "a big heavy metal lever pulled down hard, a mechanical clunk"],
- "charge": [2.0, "a huge sci-fi cannon powering up: a rising electrical whine getting higher and louder, lights buzzing, building tension, no explosion"],
- "pew": [0.5, "a tiny weak toy laser pointer sound, one small cute pew, very quiet and pathetic"],
- "meow": [1.0, "one curious house cat meowing once, close, natural"],
- "crash": [1.4, "glass beakers knocked off a lab bench by a cat, glass clinking and shattering, a few rolling"],
- "meows": [2.5, "a crowd of many house cats meowing at once outside a window, a chorus of meows, natural"],
- "chaos": [3.0, "many cats running and scrambling around a room: paws skittering, things knocked over, meows, pigeons flapping away, cartoon chaos"],
- "flutter": [1.2, "a few pigeons flapping their wings and flying away in a hurry"],
- "purr": [4.0, "several cats purring loudly and contentedly together, close, loopable"],
- "scratch": [1.2, "cat claws scratching across a chalkboard in one quick circle, a scrape, not too harsh"],
- "whoosh": [0.6, "a quick soft cartoon whoosh swish"],
- "thump": [0.6, "a cat landing softly on a wooden table, a light thump"]
+ "lab_hum": [
+  10.0,
+  "a basement laboratory ambience: soft electrical hum, gentle bubbling beakers, an old pipe ticking, loopable, no voices, no music"
+ ],
+ "sheet": [
+  0.8,
+  "a large cloth sheet yanked off a big machine, a quick fabric whoosh and flap"
+ ],
+ "scan": [
+  3.4,
+  "a futuristic hologram scanner sweeping: soft digital chirps, data ticking and rolling numbers, sci-fi interface beeps, clean"
+ ],
+ "lever": [
+  0.8,
+  "a big heavy metal lever pulled down hard, a mechanical clunk"
+ ],
+ "charge": [
+  2.0,
+  "a huge sci-fi cannon powering up: a rising electrical whine getting higher and louder, lights buzzing, building tension, no explosion"
+ ],
+ "pew": [
+  0.5,
+  "a tiny weak toy laser pointer sound, one small cute pew, very quiet and pathetic"
+ ],
+ "whoosh": [
+  0.6,
+  "a quick soft cartoon whoosh swish"
+ ],
+ "knock": [
+  1.0,
+  "knuckles knocking hard three times on a window pane, impatient"
+ ],
+ "keys": [
+  0.8,
+  "a big ring of keys jingling and shaking"
+ ],
+ "gulp": [
+  0.6,
+  "a man's nervous loud cartoon gulp"
+ ],
+ "run": [
+  1.6,
+  "heavy footsteps of a man running away fast on a pavement, fading out"
+ ],
+ "click": [
+  0.5,
+  "a tiny cheap pen laser pointer button click"
+ ],
+ "servo": [
+  0.8,
+  "a mechanical arm gauntlet powering on: a short servo whir and two clicks"
+ ],
+ "chalk": [
+  1.2,
+  "chalk drawing a big circle on a chalkboard, one continuous scrape"
+ ]
 }

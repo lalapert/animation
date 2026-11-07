@@ -215,24 +215,24 @@
  },
  {
   "folder": "vl04-laser-pointer",
-  "t": 27.4,
+  "t": 24.3,
   "series": "vl",
   "ep": 4,
   "lines": [
-   "THE CATS",
-   "WON"
+   "THE LANDLORD",
+   "RAN"
   ],
   "hl": [
-   "CATS"
+   "RAN"
   ],
   "focus": [
-   540,
-   940
+   640,
+   900
   ],
-  "zoom": 1.2,
+  "zoom": 1.25,
   "place": [
    540,
-   1120
+   1150
   ]
  },
  {

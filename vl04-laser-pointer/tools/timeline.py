@@ -1,6 +1,6 @@
 """Single source of truth for timing: writes timeline.js (for the page) and out/timeline.json (for score, mix, srt).
   .venv/bin/python tools/timeline.py
-Volt Labs 4 "Laser Pointer": the doomsday laser is a cat toy. Script: channel/scripts/VL04_laser_pointer.md
+Volt Labs 4 "Laser Pointer": the doomsday laser is a laser pointer; the landlord runs. Script: channel/scripts/VL04_laser_pointer.md
 """
 import json, os, re
 TAGS = re.compile(r"\[[^\]]*\]\s*")              # eleven_v4 audio tags: direction, never shown
@@ -12,22 +12,23 @@ cfg = json.load(open(os.path.join(HERE, "voice", "lines.json")))
 lines = {l["id"]: l for l in cfg["lines"]}
 order = [l["id"] for l in cfg["lines"]]
 durs = json.load(open(os.path.join(HERE, "voice", "out", "durations.json")))
-SUBCOL = {"VERA": "#d8ff7a", "CLEO": "#c9b8ff"}
-GAP = {"L1": 0.75, "L2": 4.1, "L3": 0.35, "L4": 2.9, "L5": 0.35, "L6": 3.7, "L7": 0.35, "L8": 1.75, "L9": 0.35, "L10": 3.6}
+SUBCOL = {"VERA": "#d8ff7a", "CLEO": "#c9b8ff", "LANDLORD": "#ffd38a"}
+GAP = {"L1": 0.75, "L2": 4.1, "L3": 0.35, "L4": 2.9, "L5": 0.35, "L6": 1.6, "L7": 1.6, "L8": 1.9, "L9": 0.35, "L10": 1.2, "L11": 0.5}
 VO, t, T = [], 0.0, {}
 for k in order:
     start = t + GAP[k]
     if k == "L2": T["HUD0"] = round(t + 0.3, 3); T["HUD1"] = round(start - 0.3, 3)          # the spec scan, between "Behold" and "rent money"
     if k == "L4": T["CHARGE"] = round(t + 0.05, 3); T["PEW"] = round(t + 1.65, 3)           # power-up after "KNEEL!", then the dot
-    if k == "L6": T["WIN1"] = round(t + 0.2, 3); T["CATIN"] = round(t + 2.0, 3)             # the face at the glass; the cat comes in
-    if k == "L8": T["WIN2"] = round(t + 0.15, 3)                                              # the window full of cats
-    if k == "L10": T["FLOOD"] = round(t + 0.2, 3); T["PILE"] = round(start - 0.75, 3)        # cats pour in; then Vera under the pile
+    if k == "L6": T["KNOCK"] = round(t + 0.25, 3)                                             # the landlord knocks on the window
+    if k == "L7": T["LOOK"] = round(t + 0.2, 3); T["HANDS"] = round(t + 0.9, 3)              # he sees the dot on his chest; hands up
+    if k == "L8": T["RUN"] = round(t + 0.25, 3)                                               # he runs off down the pavement
+    if k == "L10": T["PEN"] = round(t + 0.15, 3)                                              # Cleo's two-dollar pen laser
     d = durs[k]
     VO.append({"id": k, "who": lines[k]["who"], "t": round(start, 3), "dur": d, "sub": lines[k].get("sub", TAGS.sub("", lines[k]["text"]).strip()),
                "col": SUBCOL[lines[k]["who"]], "gain_db": lines[k].get("gain_db", 0)})
     t = start + d
-T["BOARDT"] = round(t + 0.55, 3)                                     # the dot circles PAY RENT; the cat scratches the fifth circle
-END_BEAT = 3.4
+T["BOARDT"] = round(t + 0.6, 3)                                      # the fifth rent circle
+END_BEAT = 4.3
 DUR = round(t + END_BEAT, 2)
 for i, v in enumerate(VO):
     v["s0"] = round(max(0.0, v["t"] - 0.08), 3)
@@ -39,8 +40,6 @@ for a, b in zip(VO, VO[1:]):
 assert 38 <= DUR <= 62, DUR
 V = {v["id"]: v for v in VO}
 end = lambda k: V[k]["t"] + V[k]["dur"]
-T["LEVER"] = round(end("L3") - 0.35, 3)
-T["POUNCE"] = round(V["L7"]["t"] - 0.15, 3)
 SHOTS = [
     ["OPEN", 0.0, V["L1"]["t"] - .05],
     ["CANNON", V["L1"]["t"] - .05, T["HUD0"]],
@@ -50,16 +49,14 @@ SHOTS = [
     ["CHARGE", T["CHARGE"], T["PEW"] + .55],
     ["DOT_CU", T["PEW"] + .55, V["L4"]["t"]],
     ["CLEO_CU", V["L4"]["t"], V["L5"]["t"]],
-    ["VERA_CU", V["L5"]["t"], T["WIN1"]],
-    ["WINDOW_CAT", T["WIN1"], T["CATIN"]],
-    ["WIDE_CAT", T["CATIN"], V["L6"]["t"]],
-    ["CAT_CU", V["L6"]["t"], V["L7"]["t"] - .3],
-    ["WIDE_CHASE", V["L7"]["t"] - .3, T["WIN2"]],
-    ["WINDOW_CATS", T["WIN2"], V["L8"]["t"]],
+    ["VERA_CU", V["L5"]["t"], T["KNOCK"]],
+    ["WINDOW_LL", T["KNOCK"], T["LOOK"]],
+    ["DOT_CHEST", T["LOOK"], V["L7"]["t"]],
+    ["WINDOW_LL", V["L7"]["t"], T["RUN"]],
+    ["WINDOW_WIDE", T["RUN"], V["L8"]["t"]],
     ["VERA_CU", V["L8"]["t"], V["L9"]["t"]],
-    ["CLEO_CU", V["L9"]["t"], T["FLOOD"]],
-    ["WIDE_FLOOD", T["FLOOD"], T["PILE"]],
-    ["PILE", T["PILE"], T["BOARDT"]],
+    ["CLEO_CU", V["L9"]["t"], V["L11"]["t"]],
+    ["VERA_CU", V["L11"]["t"], T["BOARDT"]],
     ["BOARD_END", T["BOARDT"], DUR],
 ]
 SHOTS = [[n, round(a, 3), round(b, 3)] for n, a, b in SHOTS]

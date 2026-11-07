@@ -33,6 +33,7 @@
 |---|---|---|---|
 | 1 *Day One* | 11/8 | 냉장고 문이 열릴 때 노란 MILK 통 (만듦: 광선 발사 반동으로 미니 냉장고가 1초 열린다) | Dennis가 매일 사는 우유 |
 | 3 *Help Wanted (Evil)* | 11/12 |
+| 4 *Laser Pointer* | 11/14 | 도망간 집주인이 떨어뜨린 열쇠 꾸러미에 주황색 Void Mart 열쇠고리 | 집주인도 단골이다 |
 | 5 *The Monologue* | 11/16 | 독백 원고가 Void Mart 영수증 뒷면에 적혀 있다("THANK YOU FOR SHOPPING AT THE END OF THE UNIVERSE") | 단골이다 |
 | 8 *Invisible* | 11/22 | 투명해진 Vera, 허공에 떠 있는 건 가운과 주황색 Void Mart 비닐봉지뿐 | 봉지까지는 안 사라진다 |
 | 11 *Doorbuster* | 11/28 | 벽의 전단: "VOID MART. ALWAYS OPEN. NO SALES." | VM 4화의 *"We don't do sales."* | 쓰레기통의 주황색 Void Mart 비닐봉지 (만듦: 탁자 오른쪽 휴지통, "VM" 글자) | 단골이다 |

@@ -20,6 +20,16 @@
     "style": 0.25,
     "speed": 0.92
    }
+  },
+  "LANDLORD": {
+   "voice_id": "pqHfZKP75CvOlQylNhV4",
+   "name": "Bill (stock)",
+   "settings": {
+    "stability": 0.4,
+    "similarity_boost": 0.8,
+    "style": 0.55,
+    "speed": 1.0
+   }
   }
  },
  "lines": [
@@ -60,38 +70,48 @@
   },
   {
    "id": "L6",
-   "who": "CLEO",
-   "text": "[flatly] Earth is kneeling.",
-   "plain": "Earth is kneeling.",
-   "sub": "Earth is kneeling."
+   "who": "LANDLORD",
+   "text": "[gruff, impatient, shouting through glass] Miss Volt! Rent! Today!",
+   "plain": "Miss Volt! Rent! Today!",
+   "sub": "Miss Volt! Rent! Today!"
   },
   {
    "id": "L7",
-   "who": "VERA",
-   "text": "[panicking] No! Bad! That is a weapon!",
-   "plain": "No! Bad! That is a weapon!",
-   "sub": "No! Bad!\nThat is a weapon!"
+   "who": "LANDLORD",
+   "text": "[terrified, voice cracking] ...You know what? Next month is fine.",
+   "plain": "...You know what? Next month is fine.",
+   "sub": "...You know what?\nNext month is fine."
   },
   {
    "id": "L8",
    "who": "VERA",
-   "text": "[horrified whisper] How many cats are there?",
-   "plain": "How many cats are there?",
-   "sub": "How many cats are there?"
+   "text": "[stunned, then thrilled] It works!",
+   "plain": "It works!",
+   "sub": "It works!",
+   "noctx": true
   },
   {
    "id": "L9",
    "who": "CLEO",
-   "text": "[deadpan] Yes.",
-   "plain": "Yes.",
-   "sub": "Yes."
+   "text": "[deadpan] On landlords.",
+   "plain": "On landlords.",
+   "sub": "On landlords."
   },
   {
    "id": "L10",
+   "who": "CLEO",
+   "text": "[flatly] My paycheck?",
+   "plain": "My paycheck?",
+   "sub": "My paycheck?",
+   "noctx": true
+  },
+  {
+   "id": "L11",
    "who": "VERA",
-   "text": "[muffled, melting, soft] ...They're so warm.",
-   "plain": "...They're so warm.",
-   "sub": "...They're so warm."
+   "text": "[terrified squeak] Next month is fine!",
+   "plain": "Next month is fine!",
+   "sub": "Next month is fine!",
+   "noctx": true
   }
  ]
 }

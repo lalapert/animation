@@ -18,10 +18,10 @@
       "fout": 0.3
     },
     "lever": {
-      "fx": "lever",
-      "g": -12,
-      "align": true,
-      "fin": 0.002,
+      "fx": "servo",
+      "g": -15,
+      "align": false,
+      "fin": 0.01,
       "fout": 0.15
     },
     "charge": {
@@ -38,13 +38,6 @@
       "fin": 0.002,
       "fout": 0.1
     },
-    "meow": {
-      "fx": "meow",
-      "g": -14,
-      "align": false,
-      "fin": 0.01,
-      "fout": 0.2
-    },
     "whoosh": {
       "fx": "whoosh",
       "g": -19,
@@ -52,54 +45,47 @@
       "fin": 0.01,
       "fout": 0.15
     },
-    "thump": {
-      "fx": "thump",
-      "g": -16,
+    "knock": {
+      "fx": "knock",
+      "g": -12,
       "align": true,
       "fin": 0.002,
       "fout": 0.15
     },
-    "crash": {
-      "fx": "crash",
-      "g": -13,
+    "keys": {
+      "fx": "keys",
+      "g": -17,
+      "align": false,
+      "fin": 0.01,
+      "fout": 0.15
+    },
+    "gulp": {
+      "fx": "gulp",
+      "g": -14,
       "align": true,
       "fin": 0.002,
-      "fout": 0.3
+      "fout": 0.1
     },
-    "meows": {
-      "fx": "meows",
-      "g": -14,
+    "run": {
+      "fx": "run",
+      "g": -15,
       "align": false,
-      "fin": 0.05,
+      "fin": 0.02,
       "fout": 0.4
     },
-    "chaos": {
-      "fx": "chaos",
+    "click": {
+      "fx": "click",
       "g": -14,
-      "align": false,
-      "fin": 0.05,
-      "fout": 0.4
+      "align": true,
+      "fin": 0.002,
+      "fout": 0.05
     },
-    "flutter": {
-      "fx": "flutter",
+    "chalk": {
+      "fx": "chalk",
       "g": -18,
       "align": false,
       "fin": 0.02,
-      "fout": 0.3
-    },
-    "purr": {
-      "fx": "purr",
-      "g": -17,
-      "align": false,
-      "fin": 0.3,
-      "fout": 0.5
-    },
-    "scratch": {
-      "fx": "scratch",
-      "g": -17,
-      "align": false,
-      "fin": 0.02,
-      "fout": 0.2
+      "fout": 0.15
     }
   }
 }

@@ -1,8 +1,7 @@
 """Original score for Volt Labs 4 "Laser Pointer" (D minor, 132 BPM): a doomsday reveal that ends in a cat toy.
 Harp up the sheet; an organ chord and timpani on "Behold"; a glockenspiel data run under the spec scan with a horn stab on the verdict;
 the villain march under the rent money; tremolo strings climbing with the charge, cut dead by the dot; tip-toe pizzicato for the cat at
-the window; a xylophone chase; a low horn for the window full of cats; the march, loud, for the flood; a warm harp and vibraphone
-lullaby under the pile; the two-note bassoon button on the fifth circle. CC0 samples (VSCO 2 CE, VCSL).
+the window: brass hits for the landlord, a tremolo heartbeat for the dot on his chest, a xylophone run as he flees; the two-note bassoon button on the fifth circle. CC0 samples (VSCO 2 CE, VCSL).
   .venv/bin/python tools/score.py            → out/music.wav
 """
 import json, os, sys
@@ -78,35 +77,23 @@ while t < T["PEW"] - .05:
     N(t, "violins_trem", ["A4", "C5", "D#5", "F#5", "A5", "C6"][min(k, 5)], .5, .3 + .07 * k, .25, .05, .03, stem="strings")
     perc(t, "timpani", "drum1", .18 + .06 * k); perc(t + .14, "timpani", "drum1", .16 + .06 * k)
     t += .3; k += 1
-# the cat at the window: tip-toe pizzicato
-t = T["WIN1"] + .3; i = 0
-while t < V["L6"]["t"] - .1:
-    N(t, "violins_pizz", ["D4", "F4", "E4", "G4", "F4", "A4", "G#4", "A4"][i % 8], .4, .26, .15 * ((i % 2) * 2 - 1), .12, stem="strings")
-    t += B * .75; i += 1
-for k, n in enumerate(["D4", "A4"]): N(V["L6"]["t"] + .05, "violins_trem", n, 2.4, .2, -.1 + .2 * k, .3, stem="strings")
-# the chase: xylophone runs up and down
-t = T["POUNCE"]; i = 0
-run = ["D5", "E5", "F5", "G5", "A5", "Bb5", "C#6", "D6", "C#6", "Bb5", "A5", "G5", "F5", "E5", "D5", "C#5"]
-while t < T["WIN2"] - .15:
-    N(t, "xylophone", run[i % 16], .25, .34, .2 * ((i % 2) * 2 - 1), .1, stem="glock")
-    if i % 4 == 0: N(t, "contrabass_pizz", ["D2", "A1", "Bb1", "A1"][(i // 4) % 4], .5, .45, -.1, .15, stem="bass")
-    t += B * .5; i += 1
-# the window full of cats: a low horn chord
-for k, n in enumerate(["D2", "A2", "D3", "F3"]): N(T["WIN2"] + .05 + .004 * k, "horn", n, 2.6, .42, -.1 + .07 * k, .8, stem="winds")
-perc(T["WIN2"] + .05, "timpani", "drum1", .4)
-# the flood: the march, loud, with a cymbal
-perc(T["FLOOD"] + .05, "crash", "", .35)
-sneak(T["FLOOD"] + .05, T["PILE"] - .1, .5)
-t = T["FLOOD"] + .05; i = 0
-while t < T["PILE"] - .2:
-    N(t, "xylophone", run[(i * 3) % 16], .25, .3, .3 * ((i % 2) * 2 - 1), .1, stem="glock"); t += B * .5; i += 1
-# the pile: a warm lullaby, harp and vibraphone
-p0 = T["PILE"] + .05
-for j, ch in enumerate([["D3", "F3", "A3", "D4"], ["Bb2", "D3", "F3", "Bb3"], ["G2", "D3", "G3", "Bb3"], ["A2", "E3", "A3", "C#4"]]):
-    for k, n in enumerate(ch): N(p0 + j * 2 * B + k * .07, "harp", n, 2.5, .3, -.3 + .2 * k, 1.0, stem="glock")
-    N(p0 + j * 2 * B, "vibraphone", ch[-1].replace("3", "5").replace("4", "5"), 2, .22, .2, 1.0, stem="keys")
+# the landlord at the window: two low brass hits
+for k, (n, dt) in enumerate([("D2", 0), ("D2", .45)]):
+    N(T["KNOCK"] + .05 + dt, "tuba_stac", n, .5, .5, 0, .2, stem="bass"); N(T["KNOCK"] + .05 + dt, "horn_stac", "D3", .5, .38, .1, .2, stem="winds")
+# the dot on his chest: tremolo strings and a timpani heartbeat
+t = T["LOOK"]
+while t < T["RUN"] - .1:
+    perc(t, "timpani", "drum1", .22); t += .55
+for k, n in enumerate(["D4", "Eb4"]): N(T["LOOK"] + .02, "violins_trem", n, 6, .22, -.1 + .2 * k, .3, stem="strings")
+# he runs: a xylophone run down and away
+for i, n in enumerate(["D6", "C#6", "A5", "G5", "F5", "E5", "D5", "C#5", "A4", "G4", "F4", "D4"]): N(T["RUN"] + .25 + i * .07, "xylophone", n, .25, .34, .3 - i * .05, .1, stem="glock")
+# "It works!": a triumphant organ chord
+for k, n in enumerate(["D3", "F#3", "A3", "D4"]): N(V["L8"]["t"] + .05 + .005 * k, "organ", n, 3, .5, -.2 + .13 * k, 1.0, stem="keys")
+perc(V["L8"]["t"] + .05, "timpani", "drum1", .5)
+# Cleo's pen laser: the tremolo comes back, small
+for k, n in enumerate(["D4", "Eb4"]): N(T["PEN"] + .3, "violins_trem", n, 3, .16, -.1 + .2 * k, .3, stem="strings")
 # the fifth circle: the bassoon button
-bt = T["BOARDT"] + 2.0
+bt = T["BOARDT"] + 1.5
 N(bt, "bassoon", "A2", .9, .55, 0, .2)
 N(bt + 1.0 * B, "bassoon", "D2", 2.2, .6, 0, .8)
 N(bt + 1.0 * B, "contrabass_pizz", "D2", 2, .55, -.1, .6, stem="bass")
@@ -127,8 +114,8 @@ for k, v in stems.items():
     mus += v * GAIN.get(k, 1.0)
 mus = highpass(mus, 38)
 mus = room(mus, size=.3, mix=.16, damp=.55)
-# the dot: dead silence until the cat shows up at the window
-a, b = int((TL["PEW"] - .02) * SR), int((TL["WIN1"] + .25) * SR)
+# the dot: dead silence until the landlord knocks
+a, b = int((TL["PEW"] - .02) * SR), int((TL["KNOCK"] + .02) * SR)
 mus[a:b] = 0
 endi = int((DUR - .05) * SR); mus[endi:] *= 0
 mus = mus[:int(DUR * SR)]

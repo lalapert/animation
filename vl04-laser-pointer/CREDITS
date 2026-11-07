@@ -1,8 +1,8 @@
 Volt Labs, episode 4: "Laser Pointer" (2026). Original characters, story, pictures and music. Part of the Void Mart universe.
 
-Pictures: drawn in code (canvas 2D) with the Volt Labs kit (channel/brand/lab.js, channel/brand/labkit.js, cats included), the spec-scan insert (channel/brand/inserts.js) and the shared toon kit (channel/brand/toon.js, channel/brand/vmkit.js).
+Pictures: drawn in code (canvas 2D) with the Volt Labs kit (channel/brand/lab.js, channel/brand/labkit.js), the spec-scan insert (channel/brand/inserts.js) and the shared toon kit (channel/brand/toon.js, channel/brand/vmkit.js).
 Fonts: Bungee (The Bungee Project Authors), Fredoka (The Fredoka Project Authors) and VT323 (Peter Hull), SIL Open Font License 1.1.
 Voices: ElevenLabs text-to-speech, model eleven_v4.
-  Dr. Vera Volt: "LAB Vera Volt" and Cleo: "LAB Cleo" (ElevenLabs Voice Design, made for this show).
+  Dr. Vera Volt: "LAB Vera Volt" and Cleo: "LAB Cleo" (ElevenLabs Voice Design, made for this show). The landlord: "Bill" (ElevenLabs stock voice).
 Sound effects: generated with ElevenLabs Sound Effects (prompts in sfx/prompts.json).
 Music: original score (tools/score.py) played with CC0 samples from VSCO 2 Community Edition and VCSL.
