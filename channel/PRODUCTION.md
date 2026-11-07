@@ -18,7 +18,7 @@ Owner's decision (11/7 evening): **every series posts exactly every two days, Fr
 |---|---|---|---|
 | Void Mart | `channel/SEASON1.md` §4.1 (season 1, 28 episodes, 11/7 → 12/31) then §4.2 (season 2, 15 episodes, 1/2 → 1/30); episode numbers = air order and keep counting in season 2 (29, 30, …) | every two days from 11/7 (11/7, 11/9, 11/11 …) at 09:00 | the latest `vmNN-*` folder (now `vm04-zero-g-mop/`) |
 | Volt Labs | `channel/LAB_SERIES.md` §2 (33 episodes, 11/28 → 1/31) | every two days from 11/28 (11/28, 11/30, 12/2 …) at 09:00 | the latest `vlNN-*` folder (now `vl03-help-wanted/`) |
-| Horror (*STILL RECORDING*, own channel) | `channel/HORROR_SERIES.md` §3 (43 tapes, 11/7 → 1/30) | every two days from 11/7 (11/7, 11/9, 11/11 …) at 13:00 | the latest `srNN-*` folder (now `sr04-toy-garden/`) |
+| Horror (*STILL RECORDING*, own channel) | `channel/HORROR_SERIES.md` §3 (57 tapes, 11/7 → 2/27; from tape 6 the 1999 night guard Leon Marsh is the lead) | every two days from 11/7 (11/7, 11/9, 11/11 …) at 13:00 | the latest `srNN-*` folder (now `sr04-toy-garden/`) |
 
 The date of every episode is in its plan table; use that date. From 11/28 the Void Mart channel posts every day (Void Mart and Volt Labs take turns).
 
@@ -88,8 +88,8 @@ Read the style text only (`curl -sS https://raw.githubusercontent.com/lemomo-ai/
 | Library style | Where we use it | Rules |
 |---|---|---|
 | `hologram-hud` (Hologram HUD) | Volt Labs: a 2–3 s "spec scan" insert when a new invention is unveiled (wireframe, target boxes on its parts, numbers rolling into place). Kit: `channel/brand/hudkit.js`, build it with the first episode that needs it (Volt Labs 4 *Doomsday Weather*, 12/4) | Every 2–3 episodes at most, never two in a row, so it stays a treat and not a template. The numbers are jokes (e.g. `EVIL OUTPUT 3%`), in English |
-| `halftone-dossier` (Halftone Dossier) | Case-file inserts: Sterling Bright's file in Volt Labs 16 *Someone Else's Plan*; the archive's case card that opens horror tape 29 *Demolition Survey* | Two or three times a season. Print look (cream paper, halftone, stamps) only inside the insert; the episode around it keeps its own look |
-| `backrooms` (Liminal Found Footage) | Horror camcorder tapes (first: tape 11 *The Guard's Tape*, 11/27; then the camcorder tapes after it). Kit: extend `channel/brand/tapekit.js` with a handheld camcorder walk (first-person, focus hunting, exposure pumping, OSD, tape damage at the worst moment, light that pools and dies) | CCTV tapes keep the current look. Our own rule stays: "it" never has a face. Borrow the camera grammar, not the library's rules or spaces. Build the walk kit before 11/23 so tape 11 has its 2-episode buffer |
+| `halftone-dossier` (Halftone Dossier) | Case-file inserts: Sterling Bright's file in Volt Labs 16 *Someone Else's Plan*; the archive's case card that opens horror tape 38 *Demolition Survey* | Two or three times a season. Print look (cream paper, halftone, stamps) only inside the insert; the episode around it keeps its own look |
+| `backrooms` (Liminal Found Footage) | Horror from tape 6 *First Night* (11/17): every guard tape cuts between the guard-office monitors (CCTV, as now) and Leon's camcorder. Kit: extend `channel/brand/tapekit.js` with a handheld camcorder walk (first-person, his hand and torch in frame, focus hunting, exposure pumping, camcorder OSD, tape damage at the worst moment, light that pools and dies) and a guard-office monitor wall | Tapes 1–5 stay CCTV only. Our own rule stays: "it" never has a face; Leon's face is never shown clearly either. Borrow the camera grammar, not the library's rules or spaces. **Build the walk kit and Leon's voice (ElevenLabs voice design: a tired American night guard in his 40s, low and quiet; add to `channel/voices/VOICES.md`) with tape 6, before 11/13, so tape 6 has its 2-episode buffer.** His log line opens most guard tapes ("Night log. December third. Two fourteen AM.") |
 
 ## 3. Publish
 
