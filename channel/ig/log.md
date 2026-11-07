@@ -9,3 +9,4 @@
 | 11/11 09:00 | vm03-self-checkout | 21 Mid-Sentence Start (the machine's line) | Unexpected item in bagging area | Self-checkout or a real cashier: which one wins? | no |
 | 11/12 09:00 | vl03-help-wanted | 2 Negative Command | Never tell your new hire not to press the red button | What would you have done with the red button? Tell me honestly. | no |
 | 11/13 09:00 | vm04-zero-g-mop | 24 The Reveal | The gravity went optional at work | What would you do first if the gravity at work went off? | no |
+| 11/14 09:00 | vl04-laser-pointer | 24 The Reveal + twist | She spent the rent on a doomsday laser. The cats won | What's the dumbest thing your cat ever chased? Tell me. | yes |
