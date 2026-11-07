@@ -23,7 +23,7 @@ old = {l["id"]: l for l in cfg.get("lines", [])}
 for r in rows:                                   # keep a hand-made "asr" (Rae/Ray) and per-line settings if the line is unchanged
     o = old.get(r["id"])
     if o and o.get("plain") == r["plain"]:
-        for k in ("asr", "settings", "gain_db"):
+        for k in ("asr", "settings", "gain_db", "noctx"):
             if k in o: r[k] = o[k]
 missing = sorted({r["who"] for r in rows} - set(cfg["cast"]))
 cfg["lines"] = rows

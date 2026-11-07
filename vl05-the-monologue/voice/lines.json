@@ -1,0 +1,98 @@
+{
+ "model_id": "eleven_v4",
+ "cast": {
+  "VERA": {
+   "voice_id": "buRySvQEB2e8Dcglym6i",
+   "name": "LAB Vera Volt",
+   "settings": {
+    "stability": 0.3,
+    "similarity_boost": 0.8,
+    "style": 0.7,
+    "speed": 1.0
+   }
+  },
+  "CLEO": {
+   "voice_id": "biUhGlVm4NoNe58piPit",
+   "name": "LAB Cleo",
+   "settings": {
+    "stability": 0.6,
+    "similarity_boost": 0.8,
+    "style": 0.25,
+    "speed": 0.92
+   }
+  }
+ },
+ "lines": [
+  {
+   "id": "L1",
+   "who": "VERA",
+   "text": "[grand, clearing her throat] Every great villain needs a monologue.",
+   "plain": "Every great villain needs a monologue.",
+   "sub": "Every great villain\nneeds a monologue."
+  },
+  {
+   "id": "L2",
+   "who": "CLEO",
+   "text": "[flatly] Timer's on.",
+   "plain": "Timer's on.",
+   "sub": "Timer's on."
+  },
+  {
+   "id": "L3",
+   "who": "VERA",
+   "text": "[booming, theatrical] People of Earth! For too long you have laughed at me...",
+   "plain": "People of Earth! For too long you have laughed at me...",
+   "sub": "People of Earth!\nFor too long you have laughed at me..."
+  },
+  {
+   "id": "L4",
+   "who": "VERA",
+   "text": "[hoarse, triumphant] ...and THAT is why the Earth is mine. The end.",
+   "plain": "...and THAT is why the Earth is mine. The end.",
+   "sub": "...and THAT is why\nthe Earth is mine. The end."
+  },
+  {
+   "id": "L5",
+   "who": "CLEO",
+   "text": "[flatly] Three hours, eleven minutes.",
+   "plain": "Three hours, eleven minutes.",
+   "sub": "Three hours,\neleven minutes."
+  },
+  {
+   "id": "L6",
+   "who": "VERA",
+   "text": "[hopeful] Too short?",
+   "plain": "Too short?",
+   "sub": "Too short?"
+  },
+  {
+   "id": "L7",
+   "who": "CLEO",
+   "text": "[deadpan] Your audience left.",
+   "plain": "Your audience left.",
+   "sub": "Your audience left."
+  },
+  {
+   "id": "L8",
+   "who": "VERA",
+   "text": "[considering, then crisp] Fine. Short version.",
+   "plain": "Fine. Short version.",
+   "sub": "Fine.\nShort version."
+  },
+  {
+   "id": "L9",
+   "who": "VERA",
+   "text": "[snarling, quick] Kneel.",
+   "plain": "Kneel.",
+   "sub": "Kneel."
+  },
+  {
+   "id": "L10",
+   "who": "CLEO",
+   "text": "[flatly] Better.",
+   "plain": "Better.",
+   "sub": "Better.",
+   "noctx": true
+  }
+ ]
+}
