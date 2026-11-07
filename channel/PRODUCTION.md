@@ -82,6 +82,15 @@ Duration in range; about −14 LUFS; `blackdetect` finds nothing; ElevenLabs spe
 - Length 30–50 s. Voices only for the mall PA and the guard (Voice Design voices, add them to `VOICES.md` when made).
 - Post text: 1–2 lines in the archive's voice + `#analoghorror #foundfootage #horror #scary #shorts`; youtubeData category `FILM_ANIMATION`, title `TAPE NN: <title> | STILL RECORDING #shorts`; description ends with `A work of fiction.`
 
+### 2.7 Inserts borrowed from the Lemo-Opuscar library (owner's decision 11/7)
+Read the style text only (`curl -sS https://raw.githubusercontent.com/lemomo-ai/lemo-opuscar/main/styles/<slug>/STYLE.md`, or `~/lemo-opuscar/styles/<slug>/STYLE.md` if it is there). **Never run the library's code**; write our own in `channel/brand/`. No library names, logos or demo content in our films; English only.
+
+| Library style | Where we use it | Rules |
+|---|---|---|
+| `hologram-hud` (Hologram HUD) | Volt Labs: a 2–3 s "spec scan" insert when a new invention is unveiled (wireframe, target boxes on its parts, numbers rolling into place). Kit: `channel/brand/hudkit.js`, build it with the first episode that needs it (Volt Labs 4 *Doomsday Weather*, 12/4) | Every 2–3 episodes at most, never two in a row, so it stays a treat and not a template. The numbers are jokes (e.g. `EVIL OUTPUT 3%`), in English |
+| `halftone-dossier` (Halftone Dossier) | Case-file inserts: Sterling Bright's file in Volt Labs 16 *Someone Else's Plan*; the archive's case card that opens horror tape 29 *Demolition Survey* | Two or three times a season. Print look (cream paper, halftone, stamps) only inside the insert; the episode around it keeps its own look |
+| `backrooms` (Liminal Found Footage) | Horror camcorder tapes (first: tape 11 *The Guard's Tape*, 11/27; then the camcorder tapes after it). Kit: extend `channel/brand/tapekit.js` with a handheld camcorder walk (first-person, focus hunting, exposure pumping, OSD, tape damage at the worst moment, light that pools and dies) | CCTV tapes keep the current look. Our own rule stays: "it" never has a face. Borrow the camera grammar, not the library's rules or spaces. Build the walk kit before 11/23 so tape 11 has its 2-episode buffer |
+
 ## 3. Publish
 
 1. Commit the folder and push (retry with backoff on network errors).
