@@ -1,8 +1,7 @@
-"""Original score for Volt Labs 4 "Laser Pointer" (D minor, 132 BPM): a doomsday reveal that ends in a cat toy.
-Harp up the sheet; an organ chord and timpani on "Behold"; a glockenspiel data run under the spec scan with a horn stab on the verdict;
-the villain march under the rent money; tremolo strings climbing with the charge, cut dead by the dot; tip-toe pizzicato for the cat at
-the window; a xylophone chase; a low horn for the window full of cats; the march, loud, for the flood; a warm harp and vibraphone
-lullaby under the pile; the two-note bassoon button on the fifth circle. CC0 samples (VSCO 2 CE, VCSL).
+"""Original score for Volt Labs 5 "The Monologue" (D minor, 132 BPM): a villain speech that runs three hours.
+Harp down the receipt and an organ chord on the first line; the villain march under her pacing; running pizzicato bass and
+glockenspiel ticks through the three-hour montage, a harp sweep in and out; a tired organ chord on "The end."; dead silence
+under "Your plants died."; a timpani on "Kneel."; the two-note bassoon button on the sixth circle. CC0 samples (VSCO 2 CE, VCSL).
   .venv/bin/python tools/score.py            → out/music.wav
 """
 import json, os, sys
@@ -62,51 +61,27 @@ def gliss(t, names, dt=.035, vel=.42, inst="harp", stem="glock"):
 
 
 T = TL
-# the sheet: harp up; "Behold": organ chord and timpani
-gliss(0.02, ["D4", "F4", "A4", "D5", "F5", "A5", "D6"], .05, .38)
-for k, n in enumerate(["D3", "F3", "A3", "D4"]): N(V["L1"]["t"] + .05 + .005 * k, "organ", n, 4, .55, -.2 + .13 * k, 1.2, stem="keys")
-perc(V["L1"]["t"] + .05, "timpani", "drum1", .55)
-# the spec scan: a glockenspiel data run, a horn stab on the verdict
-h0 = T["HUD0"]
-for i in range(22): N(h0 + .2 + i * .13, "glockenspiel", ["D6", "A5", "F6", "E6", "A6", "D6", "C6", "A5"][i % 8], .25, .18 + .006 * i, .3 * ((i % 2) * 2 - 1), .2, stem="glock")
-for k, n in enumerate(["D3", "A3", "D4", "F4"]): N(h0 + 2.3 + .004 * k, "horn_stac", n, 1.2, .5, -.1 + .07 * k, .5, stem="winds")
-# the rent money: the villain march, quiet
-sneak(T["HUD1"] - .1, T["CHARGE"] - .1, .3)
-# the charge: tremolo violins climbing, timpani roll; everything stops on the dot
-t, k = T["CHARGE"], 0
-while t < T["PEW"] - .05:
-    N(t, "violins_trem", ["A4", "C5", "D#5", "F#5", "A5", "C6"][min(k, 5)], .5, .3 + .07 * k, .25, .05, .03, stem="strings")
-    perc(t, "timpani", "drum1", .18 + .06 * k); perc(t + .14, "timpani", "drum1", .16 + .06 * k)
-    t += .3; k += 1
-# the cat at the window: tip-toe pizzicato
-t = T["WIN1"] + .3; i = 0
-while t < V["L6"]["t"] - .1:
-    N(t, "violins_pizz", ["D4", "F4", "E4", "G4", "F4", "A4", "G#4", "A4"][i % 8], .4, .26, .15 * ((i % 2) * 2 - 1), .12, stem="strings")
-    t += B * .75; i += 1
-for k, n in enumerate(["D4", "A4"]): N(V["L6"]["t"] + .05, "violins_trem", n, 2.4, .2, -.1 + .2 * k, .3, stem="strings")
-# the chase: xylophone runs up and down
-t = T["POUNCE"]; i = 0
-run = ["D5", "E5", "F5", "G5", "A5", "Bb5", "C#6", "D6", "C#6", "Bb5", "A5", "G5", "F5", "E5", "D5", "C#5"]
-while t < T["WIN2"] - .15:
-    N(t, "xylophone", run[i % 16], .25, .34, .2 * ((i % 2) * 2 - 1), .1, stem="glock")
-    if i % 4 == 0: N(t, "contrabass_pizz", ["D2", "A1", "Bb1", "A1"][(i // 4) % 4], .5, .45, -.1, .15, stem="bass")
+M0, M1 = T["MONT0"], T["MONT1"]
+# the receipt unrolls: harp down; "Every great villain": organ chord
+gliss(0.1, ["D6", "A5", "F5", "D5", "A4", "F4", "D4"], .07, .36)
+for k, n in enumerate(["D3", "F3", "A3", "D4"]): N(V["L1"]["t"] + .05 + .005 * k, "organ", n, 3, .45, -.2 + .13 * k, 1.0, stem="keys")
+# the monologue: the villain march under her pacing
+sneak(T["PACE0"], M0, .32)
+# three hours: running pizzicato bass twice as fast, glockenspiel ticks; a harp sweep each way
+gliss(M0 + .05, ["D4", "F4", "A4", "D5", "F5", "A5", "D6"], .05, .34)
+t = M0 + .2; i = 0
+line = ["G2", "D2", "G2", "D2", "Eb2", "Bb2", "D2", "A2"]
+while t < M1 - .2:
+    N(t, "contrabass_pizz", line[i % 8], .45, .4, -.1, .12, stem="bass")
+    if i % 2 == 0: N(t, "glockenspiel", ["G5", "D6", "Bb5", "A5"][(i // 2) % 4], .25, .22, .25, .2, stem="glock")
     t += B * .5; i += 1
-# the window full of cats: a low horn chord
-for k, n in enumerate(["D2", "A2", "D3", "F3"]): N(T["WIN2"] + .05 + .004 * k, "horn", n, 2.6, .42, -.1 + .07 * k, .8, stem="winds")
-perc(T["WIN2"] + .05, "timpani", "drum1", .4)
-# the flood: the march, loud, with a cymbal
-perc(T["FLOOD"] + .05, "crash", "", .35)
-sneak(T["FLOOD"] + .05, T["PILE"] - .1, .5)
-t = T["FLOOD"] + .05; i = 0
-while t < T["PILE"] - .2:
-    N(t, "xylophone", run[(i * 3) % 16], .25, .3, .3 * ((i % 2) * 2 - 1), .1, stem="glock"); t += B * .5; i += 1
-# the pile: a warm lullaby, harp and vibraphone
-p0 = T["PILE"] + .05
-for j, ch in enumerate([["D3", "F3", "A3", "D4"], ["Bb2", "D3", "F3", "Bb3"], ["G2", "D3", "G3", "Bb3"], ["A2", "E3", "A3", "C#4"]]):
-    for k, n in enumerate(ch): N(p0 + j * 2 * B + k * .07, "harp", n, 2.5, .3, -.3 + .2 * k, 1.0, stem="glock")
-    N(p0 + j * 2 * B, "vibraphone", ch[-1].replace("3", "5").replace("4", "5"), 2, .22, .2, 1.0, stem="keys")
-# the fifth circle: the bassoon button
-bt = T["BOARDT"] + 2.0
+gliss(M1 - .45, ["D6", "A5", "F5", "D5", "A4", "F4", "D4"], .05, .32)
+# "The end.": a tired organ chord
+for k, n in enumerate(["D3", "F3", "A3", "C4"]): N(V["L4"]["t"] + V["L4"]["dur"] - .4 + .005 * k, "organ", n, 3, .4, -.2 + .13 * k, 1.0, stem="keys")
+# "Kneel.": a single timpani
+perc(V["L9"]["t"] + .05, "timpani", "drum1", .45)
+# the sixth circle: the bassoon button
+bt = T["BOARDT"] + 1.5
 N(bt, "bassoon", "A2", .9, .55, 0, .2)
 N(bt + 1.0 * B, "bassoon", "D2", 2.2, .6, 0, .8)
 N(bt + 1.0 * B, "contrabass_pizz", "D2", 2, .55, -.1, .6, stem="bass")
@@ -127,8 +102,8 @@ for k, v in stems.items():
     mus += v * GAIN.get(k, 1.0)
 mus = highpass(mus, 38)
 mus = room(mus, size=.3, mix=.16, damp=.55)
-# the dot: dead silence until the cat shows up at the window
-a, b = int((TL["PEW"] - .02) * SR), int((TL["WIN1"] + .25) * SR)
+# "Your plants died.": dead silence from the plants cut to the end of the line
+a, b = int((V["L7"]["t"] - .6) * SR), int((V["L7"]["t"] + V["L7"]["dur"] + .2) * SR)
 mus[a:b] = 0
 endi = int((DUR - .05) * SR); mus[endi:] *= 0
 mus = mus[:int(DUR * SR)]

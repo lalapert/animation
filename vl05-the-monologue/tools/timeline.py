@@ -1,6 +1,6 @@
 """Single source of truth for timing: writes timeline.js (for the page) and out/timeline.json (for score, mix, srt).
   .venv/bin/python tools/timeline.py
-Volt Labs 4 "Laser Pointer": the doomsday laser is a cat toy. Script: channel/scripts/VL04_laser_pointer.md
+Volt Labs 5 "The Monologue": the doomsday laser is a cat toy. Script: channel/scripts/VL05_the_monologue.md
 """
 import json, os, re
 TAGS = re.compile(r"\[[^\]]*\]\s*")              # eleven_v4 audio tags: direction, never shown
@@ -13,21 +13,20 @@ lines = {l["id"]: l for l in cfg["lines"]}
 order = [l["id"] for l in cfg["lines"]]
 durs = json.load(open(os.path.join(HERE, "voice", "out", "durations.json")))
 SUBCOL = {"VERA": "#d8ff7a", "CLEO": "#c9b8ff"}
-GAP = {"L1": 0.75, "L2": 4.1, "L3": 0.35, "L4": 2.9, "L5": 0.35, "L6": 3.7, "L7": 0.35, "L8": 1.75, "L9": 0.35, "L10": 3.6}
+GAP = {"L1": 1.6, "L2": 0.5, "L3": 0.6, "L4": 6.5, "L5": 0.6, "L6": 0.5, "L7": 1.1, "L8": 1.0, "L9": 0.9, "L10": 0.5}
 VO, t, T = [], 0.0, {}
 for k in order:
     start = t + GAP[k]
-    if k == "L2": T["HUD0"] = round(t + 0.3, 3); T["HUD1"] = round(start - 0.3, 3)          # the spec scan, between "Behold" and "rent money"
-    if k == "L4": T["CHARGE"] = round(t + 0.05, 3); T["PEW"] = round(t + 1.65, 3)           # power-up after "KNEEL!", then the dot
-    if k == "L6": T["WIN1"] = round(t + 0.2, 3); T["CATIN"] = round(t + 2.0, 3)             # the face at the glass; the cat comes in
-    if k == "L8": T["WIN2"] = round(t + 0.15, 3)                                              # the window full of cats
-    if k == "L10": T["FLOOD"] = round(t + 0.2, 3); T["PILE"] = round(start - 0.75, 3)        # cats pour in; then Vera under the pile
+    if k == "L3": T["PACE0"] = round(start - 0.2, 3)                                         # she starts pacing as she begins
+    if k == "L4": T["MONT0"] = round(t + 0.2, 3); T["MONT1"] = round(t + 6.2, 3)             # the three-hour montage (6 s)
+    if k == "L8": T["DROP"] = round(t + 0.25, 3)                                              # the last flower drops
+    if k == "L9": T["RIP"] = round(t + 0.35, 3)                                               # she tears off a tiny piece
     d = durs[k]
     VO.append({"id": k, "who": lines[k]["who"], "t": round(start, 3), "dur": d, "sub": lines[k].get("sub", TAGS.sub("", lines[k]["text"]).strip()),
                "col": SUBCOL[lines[k]["who"]], "gain_db": lines[k].get("gain_db", 0)})
     t = start + d
-T["BOARDT"] = round(t + 0.55, 3)                                     # the dot circles PAY RENT; the cat scratches the fifth circle
-END_BEAT = 3.4
+T["DING"] = round(t + 0.35, 3); T["BOARDT"] = round(t + 0.9, 3)
+END_BEAT = 4.0
 DUR = round(t + END_BEAT, 2)
 for i, v in enumerate(VO):
     v["s0"] = round(max(0.0, v["t"] - 0.08), 3)
@@ -39,27 +38,22 @@ for a, b in zip(VO, VO[1:]):
 assert 38 <= DUR <= 62, DUR
 V = {v["id"]: v for v in VO}
 end = lambda k: V[k]["t"] + V[k]["dur"]
-T["LEVER"] = round(end("L3") - 0.35, 3)
-T["POUNCE"] = round(V["L7"]["t"] - 0.15, 3)
+M0, M1 = T["MONT0"], T["MONT1"]
 SHOTS = [
-    ["OPEN", 0.0, V["L1"]["t"] - .05],
-    ["CANNON", V["L1"]["t"] - .05, T["HUD0"]],
-    ["HUD", T["HUD0"], T["HUD1"]],
-    ["CLEO_CU", T["HUD1"], V["L3"]["t"]],
-    ["VERA_CU", V["L3"]["t"], T["CHARGE"]],
-    ["CHARGE", T["CHARGE"], T["PEW"] + .55],
-    ["DOT_CU", T["PEW"] + .55, V["L4"]["t"]],
-    ["CLEO_CU", V["L4"]["t"], V["L5"]["t"]],
-    ["VERA_CU", V["L5"]["t"], T["WIN1"]],
-    ["WINDOW_CAT", T["WIN1"], T["CATIN"]],
-    ["WIDE_CAT", T["CATIN"], V["L6"]["t"]],
-    ["CAT_CU", V["L6"]["t"], V["L7"]["t"] - .3],
-    ["WIDE_CHASE", V["L7"]["t"] - .3, T["WIN2"]],
-    ["WINDOW_CATS", T["WIN2"], V["L8"]["t"]],
-    ["VERA_CU", V["L8"]["t"], V["L9"]["t"]],
-    ["CLEO_CU", V["L9"]["t"], T["FLOOD"]],
-    ["WIDE_FLOOD", T["FLOOD"], T["PILE"]],
-    ["PILE", T["PILE"], T["BOARDT"]],
+    ["OPEN", 0.0, V["L1"]["t"] - .1],
+    ["VERA_MED", V["L1"]["t"] - .1, V["L2"]["t"]],
+    ["CLEO_MICRO", V["L2"]["t"], T["PACE0"]],
+    ["PACE", T["PACE0"], M0 + 2.2],
+    ["MICRO_CU", M0 + 2.2, M0 + 3.6],
+    ["PACE_NIGHT", M0 + 3.6, M0 + 4.8],
+    ["PLANTS_CU", M0 + 4.8, M1],
+    ["VERA_CU", M1, V["L5"]["t"]],
+    ["CLEO_MICRO", V["L5"]["t"], V["L6"]["t"]],
+    ["VERA_CU", V["L6"]["t"], V["L7"]["t"] - .6],
+    ["PLANTS_CU", V["L7"]["t"] - .6, V["L8"]["t"]],
+    ["VERA_MED", V["L8"]["t"], V["L9"]["t"]],
+    ["VERA_CU", V["L9"]["t"], V["L10"]["t"]],
+    ["CLEO_CU", V["L10"]["t"], T["BOARDT"]],
     ["BOARD_END", T["BOARDT"], DUR],
 ]
 SHOTS = [[n, round(a, 3), round(b, 3)] for n, a, b in SHOTS]

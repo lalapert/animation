@@ -1,0 +1,91 @@
+{
+  "room_db": -60,
+  "voice_over_music_db": 12,
+  "beds": {},
+  "foley": {
+    "unroll": {
+      "fx": "unroll",
+      "g": -14,
+      "align": false,
+      "fin": 0.01,
+      "fout": 0.15
+    },
+    "beep": {
+      "fx": "beep",
+      "g": -15,
+      "align": true,
+      "fin": 0.002,
+      "fout": 0.05
+    },
+    "step": {
+      "fx": "step",
+      "g": -21,
+      "align": true,
+      "fin": 0.002,
+      "fout": 0.08
+    },
+    "tick": {
+      "fx": "tick",
+      "g": -19,
+      "align": false,
+      "fin": 0.02,
+      "fout": 0.2
+    },
+    "ffwd": {
+      "fx": "ffwd",
+      "g": -17,
+      "align": false,
+      "fin": 0.05,
+      "fout": 0.3
+    },
+    "wilt": {
+      "fx": "wilt",
+      "g": -17,
+      "align": false,
+      "fin": 0.01,
+      "fout": 0.15
+    },
+    "flop": {
+      "fx": "flop",
+      "g": -15,
+      "align": true,
+      "fin": 0.002,
+      "fout": 0.1
+    },
+    "munch": {
+      "fx": "munch",
+      "g": -20,
+      "align": false,
+      "fin": 0.01,
+      "fout": 0.15
+    },
+    "rip": {
+      "fx": "rip",
+      "g": -14,
+      "align": true,
+      "fin": 0.002,
+      "fout": 0.08
+    },
+    "ding": {
+      "fx": "ding",
+      "g": -13,
+      "align": true,
+      "fin": 0.002,
+      "fout": 0.4
+    },
+    "chalk": {
+      "fx": "chalk",
+      "g": -18,
+      "align": false,
+      "fin": 0.02,
+      "fout": 0.15
+    },
+    "whoosh": {
+      "fx": "whoosh",
+      "g": -19,
+      "align": false,
+      "fin": 0.01,
+      "fout": 0.15
+    }
+  }
+}

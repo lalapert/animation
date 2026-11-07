@@ -256,5 +256,27 @@
    540,
    1150
   ]
+ },
+ {
+  "folder": "vl05-the-monologue",
+  "t": 24.3,
+  "series": "vl",
+  "ep": 5,
+  "lines": [
+   "3 HOURS",
+   "11 MINUTES"
+  ],
+  "hl": [
+   "3 HOURS"
+  ],
+  "focus": [
+   560,
+   1000
+  ],
+  "zoom": 1.3,
+  "place": [
+   540,
+   1300
+  ]
  }
 ]

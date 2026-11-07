@@ -1,9 +1,9 @@
 #!/bin/sh
-# Rebuild Volt Labs 4 "Laser Pointer" from the voice takes and effects in this folder.
+# Rebuild Volt Labs 5 "The Monologue" from the voice takes and effects in this folder.
 set -e
 cd "$(dirname "$0")"
 PY=.venv/bin/python
-python3 ../channel/tools/script_to_lines.py ../channel/scripts/VL04_laser_pointer.md .   # the script is the source of the lines
+python3 ../channel/tools/script_to_lines.py ../channel/scripts/VL05_the_monologue.md .   # the script is the source of the lines
 python3 tools/voice_eleven.py          # only missing takes
 python3 tools/asr_eleven.py
 $PY tools/timeline.py
@@ -12,5 +12,5 @@ $PY tools/score.py
 node tools/render.cjs events
 $PY tools/mix.py
 node tools/render.cjs video 3
-sh tools/mux.sh out/video.mp4 out/mix.wav vl04-laser-pointer.mp4
+sh tools/mux.sh out/video.mp4 out/mix.wav vl05-the-monologue.mp4
 $PY tools/srt.py
