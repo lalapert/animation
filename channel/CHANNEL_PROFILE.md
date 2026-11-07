@@ -16,18 +16,18 @@
 
 **채널 이름:** Void Mart (유튜브 이름 한도 약 100자, 핸들 3~30자. 제3자 정리 자료 기준이라 유튜브 스튜디오에서 다시 확인 필요)
 
-**설명** (한도 1,000자, 이 안은 531자. 첫 150자 정도가 "더보기" 앞에 보이므로 첫 문장에 설정을 넣었다):
+**설명** (한도 1,000자, 이 안은 760자. 11/7 밤 두 시리즈·매일 공개에 맞춰 다시 씀. 첫 150자 정도가 "더보기" 앞에 보이므로 첫 줄에 채널이 무엇인지 넣었다):
 
 ```
-The last convenience store before the edge of the universe. Two night-shift clerks. Every customer is a problem.
+Two animated sitcoms. One universe. A new episode every day.
 
-Meet the night shift:
-Rae has worked nights here for three years. She has seen everything and refunds nothing.
-Pip started this week. She wants to be friends with every customer, including the ones made of fire.
-MAGS is the store's AI manager. Always watching. Always upselling.
+VOID MART: the last convenience store before the edge of the universe. Rae has worked nights here for three years. She has seen everything and refunds nothing. Pip started this week. She wants to be friends with every customer, including the ones made of fire. MAGS, the store's AI manager, is always watching. Always upselling.
 
-An original animated sitcom in 45-second episodes. New episodes every day.
+VOLT LABS: Dr. Vera Volt will rule the world, right after she pays the rent. A basement lab, a deadpan assistant named Cleo, and a big red button nobody should press.
 
+Same universe, same 3 AM. Watch closely: the two shows leave things in each other's corners.
+
+Void Mart and Volt Labs take turns, one episode a day.
 Every frame is drawn in code. Voices are synthetic.
 ```
 
@@ -55,13 +55,14 @@ Void Mart, episode <N>.
 
 **사용자 이름:** voidmartshow (한도 30자)
 
-**이름:** `Void Mart | animated sitcom` (27자. 이름 칸은 검색에 잡히므로 "animated sitcom"을 넣었다. 한도는 30자라는 자료와 64자라는 자료가 엇갈린다. 30자 안으로 맞춰 두면 둘 다 문제없다)
+**이름:** `Void Mart | animated sitcoms` (28자, 11/7 밤 두 시리즈라 복수형으로. 이름 칸은 검색에 잡히므로 "animated sitcom"을 넣었다. 한도는 30자라는 자료와 64자라는 자료가 엇갈린다. 30자 안으로 맞춰 두면 둘 다 문제없다)
 
-**소개** (한도 150자, 줄바꿈 포함 137자):
+**소개** (한도 150자, 줄바꿈 포함 137자, 11/7 밤 다시 씀):
 ```
-The last convenience store before the edge of the universe.
-Two night-shift clerks. Every customer is a problem.
-New episodes every day ↓
+Two animated sitcoms, one universe.
+Void Mart: a store at the edge of space.
+Volt Labs: a villain who can't pay rent.
+New episode daily ↓
 ```
 
 **링크:** 유튜브 채널 주소 하나. 인스타는 링크를 여러 개 넣을 수 있다는 자료도 있지만, 하나만 두는 게 클릭이 덜 흩어진다.
@@ -105,8 +106,8 @@ New episodes every day ↓
 | 재생목록 이름 | 설명 |
 |---|---|
 | **Void Mart \| Season 1** | Pip's first season at the last convenience store before the edge of the universe. Watch in order: the shelves restock themselves, a third clerk shows up on camera, and the incident counter never gets past zero. New episodes every other day. |
-| **Volt Labs \| Season 1** | Dr. Vera Volt will rule the world. Right after she pays the rent. A basement lab, a deadpan assistant, and a big red button nobody should press. New episodes every other day. |
-| **Start Here: The Void Mart Universe** | Episode 1 of every show. Same universe, same 3 AM. |
+| **Volt Labs \| Season 1** | Dr. Vera Volt will rule the world. Right after she pays the rent. A basement lab, a deadpan assistant, a big red button nobody should press, and a billionaire on TV who smiles too much. Watch in order. New episodes every other day. |
+| **Start Here: The Void Mart Universe** | Episode 1 of every show. Same universe, same 3 AM. Start with Void Mart, then Volt Labs. |
 
-- 과학자 시리즈의 제목은 아직 가제(*Volt Labs*)다. 재생목록과 영상 제목에 들어가므로 **Volt Labs**로 정하는 걸 제안한다(과학자 Vera Volt의 지하 연구소 이름). "The Lab"은 검색어로 너무 흔하다.
+- 과학자 시리즈 제목은 **Volt Labs**로 확정(11/6).
 - "Start Here"에는 각 시리즈 1화만 넣는다. 한 시리즈를 본 사람이 다른 시리즈로 넘어가게 하는 입구다.

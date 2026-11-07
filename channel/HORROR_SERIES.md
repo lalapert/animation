@@ -136,17 +136,23 @@
 ## 6. 채널 소개와 재생목록 (안)
 
 - 채널 이름: **Halloway Archive** / 핸들: **@hallowayarchive** (확정. 막히면 @hallowayarchives, @halloway.archive 순서)
-- 채널 설명:
+- 채널 설명 (11/7 밤 다시 씀: 3일에 한 편, 경비원 주인공. 451자 / 한도 1,000자):
 ```
 Recovered footage from the Halloway Galleria.
-The mall closed on December 31, 1999. The power was cut that night.
+The mall closed on December 31, 1999. The power was cut at midnight.
 The cameras are still recording.
 
+December 1999. Leon Marsh took the night shift for the mall's last month. He watched the monitors. He carried a camcorder. When the cameras disagreed, he went to look.
+
+These are the tapes, in the order the archive releases them.
 New tapes every three days.
+
 A work of fiction. All footage is animated.
 ```
 - 마지막 줄("A work of fiction.")은 넣는 걸 권한다. 실제 사건 영상처럼 보이는 콘텐츠는 오해를 부르고, 유튜브의 기만성 콘텐츠 정책에도 걸릴 수 있다. 설정 몰입은 채널 이름과 테이프 라벨로 충분하다.
-- 재생목록: **STILL RECORDING | Season 1** — "Recovered security and camcorder footage from the Halloway Galleria, closed December 31, 1999. Watch in order."
+- 재생목록: **STILL RECORDING | Season 1** — "Recovered security and camcorder footage from the Halloway Galleria, closed December 31, 1999, and the night guard who watched it all. Tapes marked RECOVERED come from his camcorder. Watch in order."
+- 채널 키워드(설정 > 기본 정보): `analog horror, found footage, horror shorts, scary, creepy, cctv, camcorder, vhs, abandoned mall, liminal, night shift, still recording, halloway archive`
+- 인스타그램: 없음(작가님 결정, 유튜브만).
 - 예전 "AI Video Lab" 영상은 비공개로 돌리는 걸 권한다.
 
 ## 7. ARG 목록 (테이프마다 숨긴 것)
