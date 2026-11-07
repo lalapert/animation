@@ -242,3 +242,121 @@ function heartsUp(g, t, x, y, seed, a = 1) {
   if (a <= 0) return;
   for (let i = 0; i < 2; i++) { const p = ((t * .7 + seed * .37 + i * .5) % 1); g.save(); g.globalAlpha = a * (1 - p); drawHeart(g, x + Math.sin(p * 7 + seed) * 10, y - p * 70, 7 + 3 * p, '#ff8fb8', 1.8); g.restore(); }
 }
+
+// ---------------------------------------------------------------- cats (Volt Labs 4 "Laser Pointer"; reused later)
+// drawCat(g, x, y, s, o): origin at the feet on the ground, faces right (o.dir -1 faces left). s = size (100 = about a pigeon and a half).
+// o.fur: key of CAT_FUR. o.pose: 'sit' | 'crouch' | 'run' | 'loaf'. o.pupil 0..1 (1 = hunting, round and huge), o.wiggle (crouch: rear sway),
+// o.phase (run: leg cycle), o.rot (run: body tilt, for leaps), o.tail (tail swish phase), o.eyes 'open' | 'closed', o.look -1..1 (eyes up/down)
+const CAT_FUR = {
+  ginger: { a: '#f4a35b', s: '#d77f37', c: '#fff1df', stripe: '#c96a28' },
+  black: { a: '#3d374b', s: '#2a2535', c: '#5d5670' },
+  tux: { a: '#34303f', s: '#24212d', c: '#fbf7ff' },
+  grey: { a: '#a9afc0', s: '#868da2', c: '#e6e9f1', stripe: '#8a90a4' },
+  calico: { a: '#fbf7ff', s: '#ddd6ea', c: '#fbf7ff', patch: ['#f4a35b', '#3d374b'] },
+  white: { a: '#fbf7ff', s: '#d9d3e6', c: '#ffffff' },
+};
+function catEyes(g, ex, ey, r, o, sep) {
+  const p = o.pupil || 0, look = o.look || 0;
+  for (const dx of [0, sep]) {
+    if (o.eyes === 'closed') { tCurve(g, ex + dx - r, ey, ex + dx, ey + r * .8, ex + dx + r, ey, 3); continue; }
+    tEllipse(g, ex + dx, ey, r, r * 1.08, '#cfe86a', 2.6);
+    g.fillStyle = TOON.ink; g.beginPath(); g.ellipse(ex + dx + r * .1, ey + look * r * .25, r * (.22 + .6 * p), r * (.8 + .1 * p), 0, 0, 6.2832); g.fill();
+    g.fillStyle = '#fff'; g.beginPath(); g.arc(ex + dx - r * .3, ey - r * .4, r * (.18 + .1 * p), 0, 6.2832); g.fill();
+  }
+}
+function catHead(g, hx, hy, r, F, o) {
+  // ears
+  for (const [ex, rot] of [[-r * .55, -.25], [r * .6, .3]]) {
+    g.save(); g.translate(hx + ex, hy - r * .55); g.rotate(rot);
+    tShape(g, F.a, gg => { gg.moveTo(-r * .38, r * .2); gg.lineTo(0, -r * .62); gg.lineTo(r * .38, r * .2); gg.closePath(); }, 3);
+    g.fillStyle = '#f7a8bf'; g.beginPath(); g.moveTo(-r * .2, r * .1); g.lineTo(0, -r * .38); g.lineTo(r * .2, r * .1); g.closePath(); g.fill();
+    g.restore();
+  }
+  const hp = gg => gg.ellipse(hx, hy, r * 1.12, r * .95, 0, 0, 6.2832);
+  tShape(g, F.a, hp, 3.2);
+  if (F.patch) { tShade(g, hp, F.patch[0], gg => gg.ellipse(hx - r * .7, hy - r * .5, r * .7, r * .6, .3, 0, 6.2832)); tShade(g, hp, F.patch[1], gg => gg.ellipse(hx + r * .8, hy - r * .6, r * .5, r * .45, 0, 0, 6.2832)); }
+  if (F.stripe) { g.save(); hp(g); g.clip(); g.strokeStyle = F.stripe; g.lineWidth = r * .12; g.lineCap = 'round'; for (const dx of [-.3, 0, .3]) { g.beginPath(); g.moveTo(hx + dx * r, hy - r); g.lineTo(hx + dx * r * .8, hy - r * .55); g.stroke(); } g.restore(); }
+  tShade(g, hp, F.c, gg => gg.ellipse(hx + r * .15, hy + r * .5, r * .75, r * .42, 0, 0, 6.2832));
+  catEyes(g, hx - r * .42, hy - r * .08, r * .28, o, r * .78);
+  // nose, mouth, whiskers
+  g.fillStyle = '#f07f9c'; g.beginPath(); g.moveTo(hx - r * .1 + r * .08, hy + r * .22); g.lineTo(hx + r * .2 + r * .08, hy + r * .22); g.lineTo(hx + r * .13, hy + r * .36); g.closePath(); g.fill();
+  tCurve(g, hx + r * .13, hy + r * .36, hx, hy + r * .52, hx - r * .12, hy + r * .42, 2.2); tCurve(g, hx + r * .13, hy + r * .36, hx + r * .26, hy + r * .52, hx + r * .38, hy + r * .42, 2.2);
+  g.strokeStyle = 'rgba(42,36,52,.55)'; g.lineWidth = 1.6;
+  for (const s of [-1, 1]) for (const dy of [-.04, .1]) { g.beginPath(); g.moveTo(hx + r * .13 + s * r * .55, hy + r * (.3 + dy)); g.lineTo(hx + r * .13 + s * r * 1.35, hy + r * (.22 + dy * 2)); g.stroke(); }
+}
+function drawCat(g, x, y, s, o = {}) {
+  const F = CAT_FUR[o.fur || 'ginger'], d = o.dir || 1, pose = o.pose || 'sit', sw = Math.sin((o.tail || 0) * 6.2832);
+  g.save(); g.translate(x, y); g.scale(d * s / 100, s / 100);
+  const leg = (x0, y0, x1, y1, w = 11) => tTube(g, [x0, y0, (x0 + x1) / 2, (y0 + y1) / 2, x1, y1], w, F.a);
+  const paw = (px, py) => tEllipse(g, px, py, 8, 5.5, F.c === '#ffffff' ? F.c : (F.patch ? F.a : F.c), 2.4);
+  if (pose === 'sit') {
+    tTube(g, [-22, -6, -52 + sw * 6, -2, -44 + sw * 10, -30], 10, F.a);                            // tail
+    const bp = gg => gg.ellipse(-4, -36, 30, 36, -.08, 0, 6.2832);
+    tShape(g, F.a, bp, 3.2); tShade(g, bp, F.s, gg => gg.ellipse(-24, -26, 18, 34, 0, 0, 6.2832));
+    tShade(g, bp, F.c, gg => gg.ellipse(14, -36, 13, 22, 0, 0, 6.2832));
+    leg(6, -26, 8, -4); leg(20, -28, 22, -4); paw(10, -2); paw(24, -2);
+    catHead(g, 14, -82, 28, F, o);
+  } else if (pose === 'crouch') {
+    const wg = Math.sin((o.wiggle || 0) * 6.2832) * 5;
+    tTube(g, [-44, -26, -64, -28 + sw * 4, -80, -34 + sw * 10], 10, F.a);
+    leg(-30, -18, -38 + wg * .3, -2, 13); paw(-36 + wg * .3, -1);
+    g.save(); g.translate(-30, -10); g.rotate(-.1 + wg * .01); g.translate(30, 10);
+    const bp = gg => gg.ellipse(-6, -24 + wg * .4, 44, 19, -.12, 0, 6.2832);
+    tShape(g, F.a, bp, 3.2); tShade(g, bp, F.s, gg => gg.ellipse(-10, -10, 44, 9, -.1, 0, 6.2832));
+    if (F.stripe) { g.save(); bp(g); g.clip(); g.strokeStyle = F.stripe; g.lineWidth = 5; for (const dx of [-28, -14, 0]) { g.beginPath(); g.moveTo(dx, -44); g.lineTo(dx + 4, -30); g.stroke(); } g.restore(); }
+    g.restore();
+    leg(26, -14, 42, -2); leg(18, -14, 32, -2); paw(44, -1); paw(34, -1);
+    catHead(g, 44, -26, 25, F, o);
+  } else if (pose === 'run') {
+    const ph = (o.phase || 0) * 6.2832, a = Math.sin(ph), b = Math.cos(ph);
+    g.rotate(o.rot || 0);
+    tTube(g, [-42, -36, -62, -44 - a * 6, -80, -56 + sw * 8], 10, F.a);
+    leg(-30, -26, -52 - a * 16, -8 + b * 4); leg(-22, -26, -40 + a * 16, -6 - b * 4);
+    const bp = gg => gg.ellipse(-4, -34, 46, 18, 0, 0, 6.2832);
+    tShape(g, F.a, bp, 3.2); tShade(g, bp, F.s, gg => gg.ellipse(-8, -20, 46, 9, 0, 0, 6.2832));
+    if (F.stripe) { g.save(); bp(g); g.clip(); g.strokeStyle = F.stripe; g.lineWidth = 5; for (const dx of [-26, -12, 2]) { g.beginPath(); g.moveTo(dx, -52); g.lineTo(dx + 4, -38); g.stroke(); } g.restore(); }
+    leg(28, -28, 52 + a * 14, -14 - b * 6); leg(20, -28, 42 - a * 14, -10 + b * 6);
+    catHead(g, 46, -44, 24, F, o);
+  } else {                                                                                         // loaf
+    tTube(g, [-30, -8, -40, -2, -16 + sw * 4, 0], 9, F.a);
+    const bp = gg => gg.ellipse(0, -22, 40, 22, 0, 0, 6.2832);
+    tShape(g, F.a, bp, 3.2); tShade(g, bp, F.s, gg => gg.ellipse(-6, -8, 40, 10, 0, 0, 6.2832));
+    if (F.patch) tShade(g, bp, F.patch[0], gg => gg.ellipse(-16, -30, 18, 12, 0, 0, 6.2832));
+    catHead(g, 26, -40, 22, F, o);
+  }
+  g.restore();
+}
+// a cat face pressed against glass, seen from the front (window shots). r = head radius. o.pupil, o.squish 0..1, o.fur
+function drawCatPressed(g, x, y, r, o = {}) {
+  const F = CAT_FUR[o.fur || 'ginger'], q = o.squish ?? 1;
+  g.save(); g.translate(x, y);
+  for (const s of [-1, 1]) { g.save(); g.translate(s * r * .62, -r * .7); g.rotate(s * .32); tShape(g, F.a, gg => { gg.moveTo(-r * .32, r * .2); gg.lineTo(0, -r * .55); gg.lineTo(r * .32, r * .2); gg.closePath(); }, 3); g.fillStyle = '#f7a8bf'; g.beginPath(); g.moveTo(-r * .16, r * .1); g.lineTo(0, -r * .32); g.lineTo(r * .16, r * .1); g.closePath(); g.fill(); g.restore(); }
+  const hp = gg => gg.ellipse(0, 0, r * (1.05 + .12 * q), r * (.95 - .05 * q), 0, 0, 6.2832);
+  tShape(g, F.a, hp, 3.4);
+  if (F.patch) { tShade(g, hp, F.patch[0], gg => gg.ellipse(-r * .6, -r * .5, r * .6, r * .5, .3, 0, 6.2832)); tShade(g, hp, F.patch[1], gg => gg.ellipse(r * .7, -r * .55, r * .45, r * .4, 0, 0, 6.2832)); }
+  if (F.stripe) { g.save(); hp(g); g.clip(); g.strokeStyle = F.stripe; g.lineWidth = r * .1; g.lineCap = 'round'; for (const dx of [-.28, 0, .28]) { g.beginPath(); g.moveTo(dx * r, -r); g.lineTo(dx * r * .8, -r * .55); g.stroke(); } g.restore(); }
+  // the squashed muzzle: a flat pale patch where it touches the glass
+  tShade(g, hp, F.c, gg => gg.ellipse(0, r * .42, r * (.55 + .15 * q), r * (.34 + .06 * q), 0, 0, 6.2832));
+  g.fillStyle = 'rgba(255,255,255,.35)'; g.beginPath(); g.ellipse(0, r * .38, r * .5 * q, r * .26 * q, 0, 0, 6.2832); g.fill();
+  catEyes(g, -r * .38, -r * .12, r * .3, o, r * .76);
+  g.fillStyle = '#f07f9c'; g.beginPath(); g.ellipse(0, r * .26, r * (.12 + .06 * q), r * (.08 + .02 * q), 0, 0, 6.2832); g.fill();
+  tCurve(g, 0, r * .33, -r * .12, r * .48, -r * .24, r * .4, 2.2); tCurve(g, 0, r * .33, r * .12, r * .48, r * .24, r * .4, 2.2);
+  // paws on the glass in front of the face, pink toe beans, forearms coming up from below
+  for (const s of [-1, 1]) {
+    tTube(g, [s * r * .95, r * 1.7, s * r * 1.0, r * 1.1, s * r * .98, r * .5], r * .4, F.a);
+    tEllipse(g, s * r * .98, r * .42, r * .3, r * .26, F.c, 2.4);
+    g.fillStyle = '#f7a8bf'; g.beginPath(); g.ellipse(s * r * .98, r * .48, r * .12, r * .09, 0, 0, 6.2832); g.fill();
+    for (const k of [-1, 0, 1]) { g.beginPath(); g.arc(s * r * .98 + k * r * .11, r * .29, r * .045, 0, 6.2832); g.fill(); }
+  }
+  g.restore();
+}
+// the red dot of a laser pointer, with a glow (world coordinates)
+function drawLaserDot(g, x, y, r = 7, a = 1) {
+  if (a <= 0) return;
+  g.save(); g.globalAlpha = a; g.globalCompositeOperation = 'lighter';
+  const gr = g.createRadialGradient(x, y, 0, x, y, r * 4); gr.addColorStop(0, 'rgba(255,60,60,.9)'); gr.addColorStop(.3, 'rgba(255,30,40,.45)'); gr.addColorStop(1, 'rgba(255,0,0,0)');
+  g.fillStyle = gr; g.beginPath(); g.arc(x, y, r * 4, 0, 6.2832); g.fill();
+  g.globalCompositeOperation = 'source-over'; g.fillStyle = '#ff2a3a'; g.beginPath(); g.arc(x, y, r, 0, 6.2832); g.fill();
+  g.fillStyle = '#ffd6d6'; g.beginPath(); g.arc(x - r * .25, y - r * .25, r * .4, 0, 6.2832); g.fill();
+  g.restore();
+}

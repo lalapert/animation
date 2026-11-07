@@ -1,0 +1,97 @@
+{
+ "model_id": "eleven_v4",
+ "cast": {
+  "VERA": {
+   "voice_id": "buRySvQEB2e8Dcglym6i",
+   "name": "LAB Vera Volt",
+   "settings": {
+    "stability": 0.3,
+    "similarity_boost": 0.8,
+    "style": 0.7,
+    "speed": 1.0
+   }
+  },
+  "CLEO": {
+   "voice_id": "biUhGlVm4NoNe58piPit",
+   "name": "LAB Cleo",
+   "settings": {
+    "stability": 0.6,
+    "similarity_boost": 0.8,
+    "style": 0.25,
+    "speed": 0.92
+   }
+  }
+ },
+ "lines": [
+  {
+   "id": "L1",
+   "who": "VERA",
+   "text": "[grand, triumphant] Behold. The Annihilator.",
+   "plain": "Behold. The Annihilator.",
+   "sub": "Behold.\nThe Annihilator."
+  },
+  {
+   "id": "L2",
+   "who": "CLEO",
+   "text": "[flatly] That was the rent money.",
+   "plain": "That was the rent money.",
+   "sub": "That was the rent money."
+  },
+  {
+   "id": "L3",
+   "who": "VERA",
+   "text": "[ignoring her, booming] Earth... KNEEL!",
+   "plain": "Earth... KNEEL!",
+   "sub": "Earth...\nKNEEL!"
+  },
+  {
+   "id": "L4",
+   "who": "CLEO",
+   "text": "[deadpan] Wow.",
+   "plain": "Wow.",
+   "sub": "Wow."
+  },
+  {
+   "id": "L5",
+   "who": "VERA",
+   "text": "[defensive, flustered] It's... warming up.",
+   "plain": "It's... warming up.",
+   "sub": "It's... warming up."
+  },
+  {
+   "id": "L6",
+   "who": "CLEO",
+   "text": "[flatly] Earth is kneeling.",
+   "plain": "Earth is kneeling.",
+   "sub": "Earth is kneeling."
+  },
+  {
+   "id": "L7",
+   "who": "VERA",
+   "text": "[panicking] No! Bad! That is a weapon!",
+   "plain": "No! Bad! That is a weapon!",
+   "sub": "No! Bad!\nThat is a weapon!"
+  },
+  {
+   "id": "L8",
+   "who": "VERA",
+   "text": "[horrified whisper] How many cats are there?",
+   "plain": "How many cats are there?",
+   "sub": "How many cats are there?"
+  },
+  {
+   "id": "L9",
+   "who": "CLEO",
+   "text": "[deadpan] Yes.",
+   "plain": "Yes.",
+   "sub": "Yes."
+  },
+  {
+   "id": "L10",
+   "who": "VERA",
+   "text": "[muffled, melting, soft] ...They're so warm.",
+   "plain": "...They're so warm.",
+   "sub": "...They're so warm."
+  }
+ ]
+}

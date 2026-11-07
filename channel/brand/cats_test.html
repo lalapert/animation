@@ -1,0 +1,14 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Cat sheet</title><style>html,body{margin:0;background:#000}canvas{display:block}</style></head>
+<body><canvas id="c" width="1080" height="1920"></canvas>
+<script src="toon.js"></script><script src="lab.js"></script><script src="vmkit.js"></script><script src="labkit.js"></script>
+<script>
+const g = document.getElementById('c').getContext('2d');
+(async () => { await toonFonts('fonts/');
+g.fillStyle = '#21463c'; g.fillRect(0, 0, 1080, 1920);
+const furs = Object.keys(CAT_FUR), poses = ['sit', 'crouch', 'run', 'loaf'];
+poses.forEach((p, j) => furs.forEach((f, i) => drawCat(g, 110 + i * 175, 260 + j * 300, 150, { fur: f, pose: p, pupil: j === 1 ? 1 : (j === 3 ? 0 : .3), eyes: j === 3 ? 'closed' : 'open', phase: i * .15, wiggle: i * .2, tail: i * .1 })));
+drawCatPressed(g, 280, 1560, 150, { fur: 'ginger', pupil: .2 });
+drawCatPressed(g, 760, 1560, 150, { fur: 'calico', pupil: 1 });
+drawLaserDot(g, 540, 1820, 9);
+window.READY = true; })();
+</script></body></html>
