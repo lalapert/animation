@@ -10,6 +10,18 @@ const LWIN = { x: 810, y: 320, w: 330, h: 190 };         // basement window, upp
 const LFRIDGE = { x: 0, y: 950, w: 150, h: LCT - 950 };  // mini fridge, far left behind the bench
 const RAY = { bx: 548, by: 905, ang: -1.12, len: 330 };  // the Adoration Ray: pivot, barrel angle (up and to the right), barrel length
 const LAB_STATIC = {};
+// style A (styleA.js) for the lab: the bare bulb is the key light; the window and the flask shelf add small pools
+const LAB_A = {
+  key: { x: 540, y: 236 },
+  lights: [
+    { x: 540, y: 300, r: 980, col: '#ffe6b0', a: .55 },   // the bare bulb
+    { x: 975, y: 415, r: 420, col: '#dfe9ff', a: .3 },    // basement window
+    { x: 1000, y: 780, r: 300, col: '#c8ff7a', a: .3 },   // glowing flasks on the shelf
+    { x: 540, y: 1250, r: 700, col: '#ffd9a0', a: .22 },  // bounce off the bench
+    { x: 540, y: 930, r: 900, col: '#fff1dc', a: .26 },   // key on the two of them (keeps faces and the white coats bright)
+  ],
+  ambient: '#ada5cc', rim: '#ffe7b8', shadow: '#33406e',
+};
 
 // standard cameras: [centre x, centre y, zoom at shot start, zoom at shot end]
 const LABCAM = {

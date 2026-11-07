@@ -107,5 +107,6 @@
 - 11/7: 1화 *Day One* 제작(`vl01-day-one/`, 대본 `scripts/VL01_day_one.md`). 실험실 세트와 비둘기는 `brand/labkit.js`. 칠판의 PAY RENT 동그라미는 1화가 끝날 때 2개이고, 매 화 하나씩 늘린다.
 - 11/7: 2화 *The Obedience Ray* 제작(`vl02-obedience-ray/`). 광선은 `drawRay`의 `lens: 'crown'`, `label`로 매 화 바꾼다. 1화의 비둘기 일부가 남아 있다(창틀, 광선포, Cleo 머리). 끝날 때 동그라미 3개.
 - 11/7 저녁: 작가님 결정으로 시리즈마다 이틀에 한 편(금요일 포함). Volt Labs는 11/28부터 짝수 날 간격으로 33화(1/31)까지 늘렸다. 3화는 12/5 → 12/2로 옮김. 새로 넣은 편: 5, 8, 10, 12, 14, 15, 18, 22, 23, 26, 27, 30(Showdown을 세 편으로), 32화.
+- 11/7 밤: 작가님 결정으로 Volt Labs는 1화부터 그림체 A(애니 시리즈 HD, `brand/styleA.js`). 예약된 1~3화를 같은 목소리로 다시 렌더해 교체. Void Mart는 시즌 1은 지금 그림체, 시즌 2(29화)부터 A.
 
 이전 안(v1: 피부가 어두운 Vera, 할머니 과학자, 토스터 로봇 Crumb)은 `brand/out/lab_options_v1.jpg`에 기록으로 남긴다.

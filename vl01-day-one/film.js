@@ -182,6 +182,7 @@ function drawScene(t) {
 function render(t) {
   t = clamp(t, 0, DUR - 1e-3);
   drawScene(t);
+  STYLE_A.frame(c, t);
   composeFrame(OUT, SC, t);
 }
 window.render = render;
@@ -211,6 +212,7 @@ window.EV = [
 (async () => {
   try {
     await toonFonts('../channel/brand/fonts/');
+    STYLE_A.on(LAB_A);
     buildLab();
     render(0);
     window.READY = true;

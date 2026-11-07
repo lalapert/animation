@@ -12,13 +12,14 @@ const TOON = {
   pip: { skin: '#f3c9a6', skinS: '#dca383', hair: '#47d3bd', hairS: '#2aa592', hairL: '#9af2e2', shirt: '#b9a6ff', shirtS: '#917ce6', blush: 'rgba(255,120,150,.45)', clip: '#ffd23f' },
   mags: { shell: '#eef0f7', shellS: '#c1c6d8', band: '#20183a', eye: '#ff2a3a' },
   LW: 4.2,
+  lineFn: null,      // style A (styleA.js): set outlines take a darker shade of their fill instead of the one ink
 };
 
 // ---------- drawing helpers (unit space) ----------
 function tShape(c, fill, path, lw) {
   c.beginPath(); path(c);
   if (fill) { c.fillStyle = fill; c.fill(); }
-  c.lineWidth = lw || TOON.LW; c.strokeStyle = TOON.ink; c.lineJoin = 'round'; c.lineCap = 'round'; c.stroke();
+  c.lineWidth = lw || TOON.LW; c.strokeStyle = TOON.lineFn ? TOON.lineFn(fill) : TOON.ink; c.lineJoin = 'round'; c.lineCap = 'round'; c.stroke();
 }
 function tShade(c, clipPath, color, shadePath) {
   c.save(); c.beginPath(); clipPath(c); c.clip();
@@ -37,7 +38,7 @@ function tCurve(c, x0, y0, cx, cy, x1, y1, lw, col) {
 function tTube(c, pts, w, fill, shade) {
   const run = () => { c.beginPath(); c.moveTo(pts[0], pts[1]); for (let i = 2; i < pts.length; i += 4) c.quadraticCurveTo(pts[i], pts[i + 1], pts[i + 2], pts[i + 3]); };
   c.lineCap = 'round'; c.lineJoin = 'round';
-  run(); c.lineWidth = w + TOON.LW * 2; c.strokeStyle = TOON.ink; c.stroke();
+  run(); c.lineWidth = w + TOON.LW * 2; c.strokeStyle = TOON.lineFn ? TOON.lineFn(fill) : TOON.ink; c.stroke();
   run(); c.lineWidth = w; c.strokeStyle = fill; c.stroke();
   if (shade) { run(); c.lineWidth = w * .34; c.strokeStyle = shade; c.save(); c.translate(w * .2, w * .08); c.stroke(); c.restore(); }
 }
