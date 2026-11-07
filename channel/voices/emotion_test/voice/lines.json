@@ -1,0 +1,104 @@
+{
+ "model_id": "eleven_v4",
+ "cast": {
+  "PIP": {
+   "voice_id": "BiP91t4ozM9IZajOdSu2",
+   "name": "Win2",
+   "settings": {
+    "stability": 0.3,
+    "similarity_boost": 0.8,
+    "style": 0.65,
+    "speed": 1.05
+   }
+  },
+  "RAE": {
+   "voice_id": "oy557F0mOsPZZqdz8oK6",
+   "name": "Kar2",
+   "settings": {
+    "stability": 0.6,
+    "similarity_boost": 0.8,
+    "style": 0.2,
+    "speed": 0.9
+   },
+   "pitch": -1.5
+  },
+  "MAGS": {
+   "voice_id": "WkUURyKtbzB9IM50qGdP",
+   "name": "VM MAGS",
+   "settings": {
+    "stability": 0.45,
+    "similarity_boost": 0.8,
+    "style": 0.5,
+    "speed": 1.0
+   }
+  },
+  "VERA": {
+   "voice_id": "buRySvQEB2e8Dcglym6i",
+   "name": "LAB Vera Volt",
+   "settings": {
+    "stability": 0.3,
+    "similarity_boost": 0.8,
+    "style": 0.7,
+    "speed": 1.0
+   }
+  },
+  "CLEO": {
+   "voice_id": "biUhGlVm4NoNe58piPit",
+   "name": "LAB Cleo",
+   "settings": {
+    "stability": 0.6,
+    "similarity_boost": 0.8,
+    "style": 0.25,
+    "speed": 0.92
+   }
+  }
+ },
+ "lines": [
+  {
+   "id": "P1",
+   "who": "PIP",
+   "text": "[gasps, delighted] I'm naming him Kevin!"
+  },
+  {
+   "id": "P2",
+   "who": "PIP",
+   "text": "[pleading, defensive] He's doing his best!"
+  },
+  {
+   "id": "P3",
+   "who": "PIP",
+   "text": "[heartbroken wail] No! Kevin!"
+  },
+  {
+   "id": "R1",
+   "who": "RAE",
+   "text": "Assistance provided.",
+   "settings": {
+    "stability": 0.5,
+    "similarity_boost": 0.8,
+    "style": 0.3,
+    "speed": 0.88
+   }
+  },
+  {
+   "id": "M1",
+   "who": "MAGS",
+   "text": "[cheerful, salesy] Good news! Corporate sent a self-checkout. It never sleeps. It never smiles."
+  },
+  {
+   "id": "V1",
+   "who": "VERA",
+   "text": "[furious, shrill] I said on my count!"
+  },
+  {
+   "id": "V2",
+   "who": "VERA",
+   "text": "[flustered, embarrassed] Stop. Stop looking at me like that... [softly, shy] Okay, one more minute."
+  },
+  {
+   "id": "C1",
+   "who": "CLEO",
+   "text": "[bored, sleepy] You were taking forever."
+  }
+ ]
+}
