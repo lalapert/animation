@@ -80,5 +80,5 @@ Duration in range; about −14 LUFS; `blackdetect` finds nothing; ElevenLabs spe
 
 - No Metricool tools in the session: still make, check, commit and push; log `ready, not scheduled (no Metricool connector)` with the media URL; say so first in the final message.
 - One fix round per problem. If a check still fails, do not schedule; log it and say so.
-- ElevenLabs credits under 5,000: reuse effects, keep retakes to one, say so in the log.
+- ElevenLabs credits under 5,000: reuse effects, keep retakes to one, say so in the log. The account is shared with the owner's other work, so the account total moves on its own: log this episode's own use (characters of its takes), not the change in the total.
 - Never change environment settings, permissions or other scheduled tasks; never delete posts (to cancel, set `draft: true` and tell the owner).
