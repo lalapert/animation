@@ -1,0 +1,90 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Void Mart style 2 design</title>
+<style>html,body{margin:0;background:#120a2a}canvas{display:block}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script src="toon.js"></script><script src="sitcom.js"></script>
+<script>
+// The store in style 2: flat colour, hard shadow shapes, flat colour bands outside the window, everything outlined and boiling.
+function storeS(c, W, H) {
+  const ink = SIT.ink, bg = SIT.lwBg;
+  c.fillStyle = '#3b2474'; c.fillRect(0, 0, W, H);
+  sitShape(c, pen().R(-20, -20, W + 40, 170), '#24124a', { lw: bg });                       // ceiling
+  for (const x of [80, 640]) sitShape(c, pen().R(x, 92, 360, 26, 8), '#eafcff', { lw: bg });
+  sitShape(c, pen().R(-20, 150, W + 40, 18), '#ff7a1a', { lw: bg });                         // brand trim
+  c.fillStyle = '#331f66'; c.fillRect(0, 168, W, 60);                                         // hard shadow band under the trim
+  // window to the void: flat bands, the bright edge of the universe at the bottom
+  const wx = 300, wy = 300, ww = 700, wh = 560;
+  sitShape(c, pen().R(wx - 22, wy - 22, ww + 44, wh + 44), '#1d1240', { lw: bg });
+  c.save(); c.beginPath(); c.rect(wx, wy, ww, wh); c.clip();
+  for (const [y0, col] of [[0, '#0d0720'], [.42, '#2a1158'], [.66, '#5a1f86'], [.82, '#b0368f'], [.92, '#ff8ab0']]) { c.fillStyle = col; c.fillRect(wx, wy + wh * y0, ww, wh); }
+  const R = mulberry32(5); c.fillStyle = '#fff6e6'; for (let i = 0; i < 46; i++) { const sx = wx + R() * ww, sy = wy + R() * wh * .6, r = R() < .85 ? 2 : 4; c.fillRect(sx - r, sy - .9, r * 2, 1.8); c.fillRect(sx - .9, sy - r, 1.8, r * 2); }
+  c.restore();
+  sitShape(c, pen().E(wx + 170, wy + 170, 56, 56), '#ff9f5a', { lw: bg, shade: pen().E(wx + 194, wy + 186, 50, 56), shadeCol: '#e0703a' });
+  sitLine(c, pen().M(wx + 70, wy + 196).Q(wx + 170, wy + 150, wx + 280, wy + 144), bg, '#ffd9a8');
+  sitShape(c, pen().R(wx + 450, wy + 120, 190, 80, 8), '#1f8a4c', { lw: bg });
+  sitText(c, 'LAST EXIT', wx + 545, wy + 150, 30, '#ffffff', { stroke: 4 });
+  sitText(c, 'END OF UNIVERSE 0.2 MI', wx + 545, wy + 182, 13, '#ffffff', { stroke: 2.5 });
+  sitShape(c, pen().R(wx + 540, wy + 200, 10, 140), '#8e8ab0', { lw: bg });
+  sitShape(c, pen().R(wx + ww / 2 - 9, wy, 18, wh), '#1d1240', { lw: bg });
+  sitText(c, 'OPEN 24/7', wx + 175, wy + 60, 40, '#ff6fb1', { stroke: 6 });
+  // incident board, top left
+  sitShape(c, pen().R(40, 250, 230, 130, 10), '#fbf7ff', { lw: bg, shade: pen().R(40, 352, 240, 40), shadeCol: '#d9d3ea' });
+  sitText(c, 'DAYS SINCE LAST', 155, 278, 17, ink, { stroke: false }); sitText(c, 'INCIDENT', 155, 300, 17, ink, { stroke: false });
+  sitShape(c, pen().R(122, 314, 66, 52, 6), '#e8364a', { lw: bg }); sitText(c, '0', 155, 342, 40, '#ffffff', { stroke: 5 });
+  // shelves at both edges
+  for (const [x0, x1] of [[0, 250], [1040, 1100]]) for (const sy of [560, 740, 920, 1100]) {
+    let bx = x0 + 10; const R2 = mulberry32(sy + x0);
+    while (bx < x1 - 30) { const w = 34 + R2() * 34, h = 60 + R2() * 60, col = ['#ff5f7a', '#ffd23f', '#4fc3ff', '#9be36a', '#c08bff', '#fff1de'][Math.floor(R2() * 6)]; sitShape(c, pen().R(bx, sy - h, w, h, 5), col, { lw: bg, shade: pen().R(bx + w * .65, sy - h - 4, w, h + 8), shadeCol: 'rgba(28,16,38,.28)' }); bx += w + 8; }
+    sitShape(c, pen().R(x0 - 10, sy, x1 - x0 + 20, 18), '#ff7a1a', { lw: bg });
+  }
+  c.fillStyle = '#2c1a5a'; c.fillRect(0, 1250, W, 60);                                         // shadow band behind the counter
+}
+function counterS(c, W, H, CT) {
+  sitShape(c, pen().R(-20, CT - 4, W + 40, 44), '#cfc8ec', { lw: SIT.lwBg });
+  sitShape(c, pen().R(-20, CT + 40, W + 40, H), '#ff7a1a', { lw: SIT.lwBg, shade: pen().R(-30, CT + 40, W + 60, 34), shadeCol: '#d65a0c' });
+  sitText(c, 'VOID MART', W / 2, CT + 190, 110, '#fff1de', { stroke: 14 });
+  // register
+  sitShape(c, pen().R(450, CT - 120, 180, 120, 12), '#5b5a7a', { lw: SIT.lwBg, shade: pen().R(580, CT - 126, 60, 132), shadeCol: '#454463' });
+  sitShape(c, pen().R(468, CT - 104, 144, 56, 6), '#7dffcf', { lw: SIT.lwBg });
+  sitText(c, '$0.00', 540, CT - 76, 30, '#0c4a3a', { stroke: false });
+}
+function frameS(c, W, H) {
+  SIT.begin(0);
+  const CT = 1290;
+  storeS(c, W, H);
+  drawMagsS(c, 820, 230, 120, { lid: .15, look: -.4 });
+  drawPipS(c, 300, CT, 190, { expr: 'grin', wave: true, look: .5 });
+  drawRaeS(c, 780, CT, 190, { expr: 'deadpan', mug: .2, look: -.6 });
+  counterS(c, W, H, CT);
+  sitCaption(c, 'Exact change only.', 'RAE', '#ffb066', W, 1700);
+}
+const Q = new URLSearchParams(location.search);
+toonFonts().then(() => {
+  if (Q.get('clip')) {                                  // one frame of the boil clip at time t (1080 x 1920)
+    const cv = document.getElementById('c'); cv.width = 1080; cv.height = 1920; const g = cv.getContext('2d'), t = +Q.get('t');
+    window.drawAt = t => { SIT.begin(t); const CT = 1290; storeS(g, 1080, 1920); drawMagsS(g, 820, 230, 120, { lid: .15, look: Math.sin(t * 1.3) * .5 });
+      drawPipS(g, 300, CT, 190, { expr: 'grin', wave: true, wavePhase: Math.floor(t * 12) / 12 * 9, look: .5, blink: (t % 2.4) > 2.25 });
+      drawRaeS(g, 780, CT, 190, { expr: t > 1.8 ? 'annoyed' : 'deadpan', mug: t > 1.8 ? Math.min(1, (t - 1.8) * 2.5) : .2, look: -.6, blink: (t % 3.1) > 2.95 });
+      counterS(g, 1080, 1920, CT); sitCaption(g, 'Exact change only.', 'RAE', '#ffb066', 1080, 1700); };
+    window.drawAt(t); window.READY = true; return;
+  }
+  const c = document.getElementById('c').getContext('2d');
+  c.fillStyle = '#120a2a'; c.fillRect(0, 0, 1920, 1080);
+  // left: the 9:16 frame
+  const f = document.createElement('canvas'); f.width = 1080; f.height = 1920; frameS(f.getContext('2d'), 1080, 1920);
+  c.drawImage(f, 30, 30, 574, 1020);
+  // right: the cast on flat panels
+  SIT.begin(0);
+  const panel = (x, y, w, h, col, label) => { c.fillStyle = col; c.beginPath(); c.roundRect(x, y, w, h, 18); c.fill(); sitText(c, label, x + w / 2, y + h - 26, 26, '#fff1de', { stroke: 5 }); };
+  const P = [[640, 30, 400, 500, '#2b1858', 'RAE'], [1060, 30, 400, 500, '#2b1858', 'RAE (ANNOYED)'], [1480, 30, 410, 500, '#3a2470', 'MAGS'],
+             [640, 550, 400, 500, '#24305a', 'PIP'], [1060, 550, 400, 500, '#24305a', 'PIP (GASP)'], [1480, 550, 410, 500, '#2a4a3a', 'DENNIS']];
+  for (const p of P) panel(...p);
+  const clipP = (i, fn) => { const [x, y, w, h] = P[i]; c.save(); c.beginPath(); c.roundRect(x, y, w, h - 52, 18); c.clip(); fn(); c.restore(); };
+  clipP(0, () => drawRaeS(c, 840, 470, 128, { expr: 'deadpan', mug: 0 }));
+  clipP(1, () => drawRaeS(c, 1260, 470, 128, { expr: 'annoyed', mug: .9 }));
+  clipP(2, () => drawMagsS(c, 1685, 260, 150, { lid: .25, look: .3, glow: .5 }));
+  clipP(3, () => drawPipS(c, 840, 990, 128, { expr: 'grin', wave: true }));
+  clipP(4, () => drawPipS(c, 1260, 990, 128, { expr: 'gasp', arms: true }));
+  clipP(5, () => drawDennisS(c, 1660, 960, 120, {}));
+  window.READY = true;
+});
+</script></body></html>
