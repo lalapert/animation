@@ -140,7 +140,7 @@ function drawFridge(g, open = 0) {
 }
 // the Adoration Ray: a big heart-lensed cannon on a tripod. o.charge 0..1 (glow), o.recoil 0..1, o.dial (needle 0..1)
 function drawRay(g, t, o = {}) {
-  const { bx, by, ang, len } = RAY, ch = o.charge || 0, rc = o.recoil || 0;
+  const { bx, by, ang, len } = RAY, ch = o.charge || 0, rc = o.recoil || 0, lens = o.lens || 'heart', label = o.label || 'ADORATION RAY';
   // tripod legs down to the floor behind the bench
   for (const dx of [-120, 0, 120]) tLine(g, [bx, by + 30, bx + dx, LCT + 10], 10);
   tShape(g, '#5f6a82', gg => gg.roundRect(bx - 46, by - 6, 92, 60, 10), 4);
@@ -154,16 +154,18 @@ function drawRay(g, t, o = {}) {
   tShade(g, gg => gg.roundRect(-40, -44, len * .78, 88, 22), '#6c7590', gg => gg.rect(-40, 14, len, 40));
   for (let i = 0; i < 5; i++) tShape(g, '#d9873a', gg => gg.roundRect(10 + i * 34, -50, 16, 100, 6), 3);
   tShape(g, '#5f6a82', gg => gg.roundRect(len * .7, -58, 60, 116, 14), 4);
-  // the heart lens at the muzzle
+  // the lens at the muzzle: a heart (Adoration Ray) or a crown (Obedience Ray)
   g.save(); g.translate(len * .78 + 54, 0); g.rotate(Math.PI / 2);
-  g.shadowColor = '#ff5fa2'; g.shadowBlur = 20 + 60 * ch;
-  heartPath(g, 0, 0, 52); g.fillStyle = `rgb(255,${95 + 80 * ch},${162 + 50 * ch})`; g.fill();
-  g.shadowBlur = 0; heartPath(g, 0, 0, 52); g.lineWidth = TOON.LW * 1.1; g.strokeStyle = TOON.ink; g.stroke();
+  const lp = lens === 'crown' ? (gg => { gg.beginPath(); gg.moveTo(-46, 34); gg.lineTo(-52, -30); gg.lineTo(-22, 0); gg.lineTo(0, -44); gg.lineTo(22, 0); gg.lineTo(52, -30); gg.lineTo(46, 34); gg.closePath(); }) : (gg => heartPath(gg, 0, 0, 52));
+  const lc = lens === 'crown' ? [164 + 60 * ch, 107 + 80 * ch, 255] : [255, 95 + 80 * ch, 162 + 50 * ch];
+  g.shadowColor = lens === 'crown' ? '#a46bff' : '#ff5fa2'; g.shadowBlur = 20 + 60 * ch;
+  lp(g); g.fillStyle = `rgb(${lc[0] | 0},${lc[1] | 0},${lc[2] | 0})`; g.fill();
+  g.shadowBlur = 0; lp(g); g.lineWidth = TOON.LW * 1.1; g.strokeStyle = TOON.ink; g.stroke();
   g.fillStyle = 'rgba(255,255,255,.65)'; g.beginPath(); g.ellipse(-16, -16, 10, 6, -.6, 0, 6.2832); g.fill();
   g.restore();
   g.restore();
   // a hand-lettered label taped to the base
-  g.save(); g.translate(bx, by - 20); g.rotate(-.06); tShape(g, '#fff6c8', gg => gg.rect(-62, -14, 124, 28), 2.6); tText(g, 'ADORATION RAY', 0, 1, 14, TOON.ink, '"Bungee"', 'center', 400); g.restore();
+  g.save(); g.translate(bx, by - 20); g.rotate(-.06); tShape(g, '#fff6c8', gg => gg.rect(-62, -14, 124, 28), 2.6); tText(g, label, 0, 1, 14, TOON.ink, '"Bungee"', 'center', 400); g.restore();
 }
 // muzzle position in world space (beam origin)
 function rayMuzzle(rc = 0) { const d = RAY.len * .78 + 54 - rc * 26; return [RAY.bx + Math.cos(RAY.ang) * d, RAY.by + Math.sin(RAY.ang) * d]; }
@@ -174,13 +176,14 @@ function heartPath(g, x, y, r) {
 }
 function drawHeart(g, x, y, r, fill = '#ff5fa2', lw = 2.6) { heartPath(g, x, y, r); g.fillStyle = fill; g.fill(); g.lineWidth = lw; g.strokeStyle = TOON.ink; g.stroke(); }
 // a thick pink beam from the muzzle out of the window, k 0..1 (strength), with floating hearts
-function drawBeam(g, t, k) {
+function drawBeam(g, t, k, kind = 'heart') {
   if (k <= 0) return;
-  const [mx, my] = rayMuzzle(0), tx = LWIN.x + 60, ty = LWIN.y - 40;
+  const [mx, my] = rayMuzzle(0), tx = LWIN.x + 60, ty = LWIN.y - 40, crown = kind === 'crown';
   g.save(); g.globalCompositeOperation = 'lighter'; g.lineCap = 'round';
-  for (const [w, a] of [[110, .25], [60, .5], [24, .9]]) { g.strokeStyle = `rgba(255,${120 + (24 / w) * 120},${190},${a * k})`; g.lineWidth = w * (.6 + .4 * k); g.beginPath(); g.moveTo(mx, my); g.lineTo(tx, ty); g.stroke(); }
+  for (const [w, a] of [[110, .25], [60, .5], [24, .9]]) { g.strokeStyle = crown ? `rgba(${170 + (24 / w) * 60},${120 + (24 / w) * 100},255,${a * k})` : `rgba(255,${120 + (24 / w) * 120},${190},${a * k})`; g.lineWidth = w * (.6 + .4 * k); g.beginPath(); g.moveTo(mx, my); g.lineTo(tx, ty); g.stroke(); }
   g.restore();
-  for (let i = 0; i < 6; i++) { const p = ((t * 2.2 + i / 6) % 1); drawHeart(g, lerp(mx, tx, p) + Math.sin(p * 9 + i) * 26, lerp(my, ty, p), 12 * k, '#ffd1e4', 2); }
+  for (let i = 0; i < 6; i++) { const p = ((t * 2.2 + i / 6) % 1), x = lerp(mx, tx, p) + Math.sin(p * 9 + i) * 26, y = lerp(my, ty, p);
+    if (crown) drawStar(g, x, y, 11 * k, '#e6d6ff', 2); else drawHeart(g, x, y, 12 * k, '#ffd1e4', 2); }
 }
 
 // ---------------------------------------------------------------- pigeons

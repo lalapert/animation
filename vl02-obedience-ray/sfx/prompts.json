@@ -1,0 +1,74 @@
+{
+ "lab_hum": [
+  10.0,
+  "a basement laboratory ambience: soft electrical hum, gentle bubbling beakers, an old pipe ticking, loopable, no voices, no music"
+ ],
+ "hum": [
+  3.0,
+  "a sci-fi ray cannon idling: a low warm electrical hum with a soft sparkle"
+ ],
+ "charge": [
+  2.0,
+  "a cartoon ray gun charging up: a rising electronic whine getting higher and faster"
+ ],
+ "click": [
+  0.5,
+  "a single small plastic remote control button click, close"
+ ],
+ "zap": [
+  2.0,
+  "a huge cartoon sci-fi ray blast: a deep electric boom with a sparkly magical shimmer, short tail"
+ ],
+ "rattle": [
+  1.2,
+  "glass beakers and metal shelves rattling briefly from a shockwave, short"
+ ],
+ "window": [
+  0.8,
+  "a small basement window flung open hard: latch clack and glass rattle"
+ ],
+ "coo": [
+  1.2,
+  "one pigeon cooing softly, close, natural"
+ ],
+ "coo_bed": [
+  8.0,
+  "a room full of pigeons cooing contentedly, many birds, gentle, loopable"
+ ],
+ "flap": [
+  1.0,
+  "a single pigeon flapping its wings and landing, close"
+ ],
+ "chalk": [
+  1.2,
+  "chalk drawing a big circle on a chalkboard, one continuous scrape"
+ ],
+ "street": [
+  10.0,
+  "a quiet residential street heard through an open basement window: distant traffic, a few birds, light breeze, no voices, loopable"
+ ],
+ "steps": [
+  2.0,
+  "two people walking toward each other on a pavement, footsteps from both sides, then stopping"
+ ],
+ "shuffle": [
+  0.8,
+  "two people politely side-stepping on a pavement at the same time, quick shuffle of shoes"
+ ],
+ "kneel": [
+  0.8,
+  "a man kneeling down on a pavement: a knee touching the ground, a small creak and rustle of a coat"
+ ],
+ "teacup": [
+  0.8,
+  "a china teacup set down on a saucer, a gentle clink"
+ ],
+ "steam": [
+  1.5,
+  "a cartoon kettle whistle of embarrassment, short rising steam whistle"
+ ],
+ "knock": [
+  1.2,
+  "three polite knocks on a wooden door"
+ ]
+}

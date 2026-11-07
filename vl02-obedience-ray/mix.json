@@ -1,0 +1,82 @@
+{
+  "room_db": -60,
+  "voice_over_music_db": 12,
+  "beds": {},
+  "foley": {
+    "hum": {
+      "fx": "hum",
+      "g": -24,
+      "fin": 0.3,
+      "fout": 0.6
+    },
+    "coo": {
+      "fx": "coo",
+      "g": -18,
+      "fin": 0.01,
+      "fout": 0.2
+    },
+    "charge": {
+      "fx": "charge",
+      "g": -17,
+      "fin": 0.05,
+      "fout": 0.05
+    },
+    "zap": {
+      "fx": "zap",
+      "g": -8,
+      "align": true,
+      "fin": 0.002,
+      "fout": 0.5
+    },
+    "rattle": {
+      "fx": "rattle",
+      "g": -17,
+      "fin": 0.01,
+      "fout": 0.3
+    },
+    "steps": {
+      "fx": "steps",
+      "g": -20,
+      "fin": 0.05,
+      "fout": 0.2
+    },
+    "shuffle": {
+      "fx": "shuffle",
+      "g": -19,
+      "fin": 0.01,
+      "fout": 0.15
+    },
+    "kneel": {
+      "fx": "kneel",
+      "g": -18,
+      "fin": 0.01,
+      "fout": 0.15
+    },
+    "teacup": {
+      "fx": "teacup",
+      "g": -17,
+      "align": true,
+      "fin": 0.002,
+      "fout": 0.15
+    },
+    "steam": {
+      "fx": "steam",
+      "g": -15,
+      "fin": 0.01,
+      "fout": 0.3
+    },
+    "knock": {
+      "fx": "knock",
+      "g": -12,
+      "align": true,
+      "fin": 0.002,
+      "fout": 0.2
+    },
+    "chalk": {
+      "fx": "chalk",
+      "g": -18,
+      "fin": 0.02,
+      "fout": 0.15
+    }
+  }
+}
