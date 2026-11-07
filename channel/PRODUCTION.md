@@ -95,7 +95,8 @@ Read the style text only (`curl -sS https://raw.githubusercontent.com/lemomo-ai/
    - text: 2–3 short English lines + `Void Mart, episode N.` (or `Volt Labs, episode N.`) + `#animation #cartoon #scifi #comedy #shorts`
    - youtubeData: title ≤ 100 chars ending `| Void Mart Ep N #shorts` (or `| Volt Labs Ep N #shorts`), type `short`, privacy `public`, tags, category `FILM_ANIMATION`, madeForKids false, isAiGeneratedContent false
    - instagramData: type `REEL`, showReelOnFeed true, isAiGenerated true
-5. Append to `channel/LOG.md` (Void Mart / Volt Labs tables): date, folder, series, length, LUFS, checks, Metricool post id, ElevenLabs credits used and left, anything that went wrong. Commit and push.
+5. **Cover (thumbnail), every episode, both channels:** add the episode to `channel/thumbs/specs.json` (frame time `t` at the punchline or the clearest look at the anomaly, 2–5 words in `lines`, `hl` = the word to colour; toons: `focus` = the face, `zoom`, `place`; tapes: `focus`, `zoom` on the anomaly) and run `node channel/tools/thumbs.cjs <folder>`. Look at it: text and faces inside the middle 3:4 band (y 240–1680, what the Instagram grid shows), under 2 MB, English only. Commit it with the episode and pass `videoThumbnailUrl: https://raw.githubusercontent.com/lalapert/animation/<sha>/channel/thumbs/<folder>.jpg` in `createScheduledPost` (one image serves the YouTube Short and the Instagram Reel).
+6. Append to `channel/LOG.md` (Void Mart / Volt Labs tables): date, folder, series, length, LUFS, checks, Metricool post id, ElevenLabs credits used and left, anything that went wrong. Commit and push.
 
 ## 4. When something fails
 
