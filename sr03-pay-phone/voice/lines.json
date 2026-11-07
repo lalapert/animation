@@ -1,0 +1,35 @@
+{
+ "model_id": "eleven_v4",
+ "cast": {
+  "CALLER": {
+   "voice_id": "EXAVITQu4vr4xnSDxMaL",
+   "name": "Sarah (stock)",
+   "settings": {
+    "stability": 0.55,
+    "similarity_boost": 0.8,
+    "style": 0.15,
+    "speed": 0.9
+   }
+  }
+ },
+ "lines": [
+  {
+   "id": "L1",
+   "who": "CALLER",
+   "text": "Hello? Is anyone there?",
+   "sub": "[PHONE] HELLO? IS ANYONE THERE?"
+  },
+  {
+   "id": "L2",
+   "who": "CALLER",
+   "text": "The mall is closed. You shouldn't be in there.",
+   "sub": "[PHONE] THE MALL IS CLOSED.\nYOU SHOULDN'T BE IN THERE."
+  },
+  {
+   "id": "L3",
+   "who": "CALLER",
+   "text": "Who is that breathing?",
+   "sub": "[PHONE] WHO IS THAT BREATHING?"
+  }
+ ]
+}

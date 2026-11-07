@@ -1,0 +1,46 @@
+{
+ "static": [
+  2.0,
+  "harsh analog VHS tape static, loud white noise hiss with crackle and a low hum, a tape ending on a blank channel"
+ ],
+ "chime": [
+  2.5,
+  "an old 1990s shopping mall public address chime, three slow descending electronic tones from ceiling speakers, slightly warped tape, empty hall echo"
+ ],
+ "glitch": [
+  0.6,
+  "a very short VHS tape tracking glitch: a warbling distorted electrical crackle and a brief buzz"
+ ],
+ "tape_hiss": [
+  8.0,
+  "constant soft analog videotape hiss and faint mechanical motor whir, steady, loopable"
+ ],
+ "breath": [
+  2.0,
+  "one slow quiet human exhale very close to a microphone, muffled, no voice"
+ ],
+ "ring": [
+  2.4,
+  "an old 1990s public pay phone ringing in an empty tiled corridor: two loud bell rings, echo"
+ ],
+ "pickup": [
+  0.8,
+  "a pay phone handset lifted off its metal hook: a plastic clack and a hook switch click"
+ ],
+ "hangup": [
+  0.5,
+  "a telephone line clicking dead, heard through a handset earpiece"
+ ],
+ "dial_tone": [
+  4.0,
+  "a continuous old telephone dial tone heard faintly from a handset earpiece, tinny, steady"
+ ],
+ "clatter": [
+  1.2,
+  "a heavy plastic telephone handset dropped onto a tiled floor, bouncing once, its metal cord rattling"
+ ],
+ "fluor_hum": [
+  10.0,
+  "an empty tiled corridor at night: a buzzing fluorescent light that flickers now and then, ventilation hum, no people, loopable"
+ ]
+}

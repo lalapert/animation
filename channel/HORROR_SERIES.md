@@ -121,3 +121,4 @@ A work of fiction. All footage is animated.
 |---|---|---|---|
 | 1 *Closing Announcement* | 16.9초, 6프레임 | 화면 왼쪽 위 카메라 번호가 CAM 01 → **CAM 13** | 13 |
 | 2 *Fitting Room 3* | 16.5초, 6프레임 | 3번 탈의실 번호판이 3 → **7** | 7 |
+| 3 *Pay Phone* | 9.0초, 6프레임 | 공중전화 요금표 25 CENTS → **4** CENTS | 4 |

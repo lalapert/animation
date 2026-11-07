@@ -1,0 +1,55 @@
+{
+  "room_db": -62,
+  "voice_over_music_db": 9,
+  "vo_pa": false,
+  "beds": {},
+  "foley": {
+    "static": {
+      "fx": "static",
+      "g": -10,
+      "fin": 0.003,
+      "fout": 0.04
+    },
+    "glitch": {
+      "fx": "glitch",
+      "g": -15,
+      "align": true,
+      "fin": 0.002,
+      "fout": 0.08
+    },
+    "ring": {
+      "fx": "ring",
+      "g": -12,
+      "align": true,
+      "fin": 0.002,
+      "fout": 0.3
+    },
+    "pickup": {
+      "fx": "pickup",
+      "g": -14,
+      "align": true,
+      "fin": 0.002,
+      "fout": 0.1
+    },
+    "breath": {
+      "fx": "breath",
+      "g": -19,
+      "fin": 0.05,
+      "fout": 0.4
+    },
+    "hangup": {
+      "fx": "hangup",
+      "g": -16,
+      "align": true,
+      "fin": 0.002,
+      "fout": 0.05
+    },
+    "clatter": {
+      "fx": "clatter",
+      "g": -13,
+      "align": true,
+      "fin": 0.002,
+      "fout": 0.3
+    }
+  }
+}
