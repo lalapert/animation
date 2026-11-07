@@ -28,12 +28,15 @@ const STYLE_A = (() => {
   }
   function shadeChar(L, F, side) {
     const lc = L.getContext('2d'); lc.save(); lc.setTransform(1, 0, 0, 1, 0, 0);
-    // form shadow: multiply inside the silhouette only (blend on a copy, paste back atop)
+    // form shadow (off by default: on faces it left blurry grey patches under the chin, 11/7). The rigs have their own cel shade.
+    if (cfg.shadowA > 0) {
     const sh = edge(L, 'e1', -side * .13 * F, .05 * F, cfg.shadow), t = get('tmp', L.width, L.height), tc = t.getContext('2d');
     tc.setTransform(1, 0, 0, 1, 0, 0); tc.globalCompositeOperation = 'copy'; tc.drawImage(L, 0, 0);
     tc.globalCompositeOperation = 'multiply'; tc.globalAlpha = cfg.shadowA; tc.filter = `blur(${Math.max(.5, .02 * F)}px)`; tc.drawImage(sh, 0, 0);
     tc.filter = 'none'; tc.globalAlpha = 1; tc.globalCompositeOperation = 'source-over';
     lc.globalCompositeOperation = 'source-atop'; lc.drawImage(t, 0, 0);
+    }
+    lc.globalCompositeOperation = 'source-atop';
     // rim light toward the key
     const rim = edge(L, 'e2', side * .032 * F, -.016 * F, cfg.rim);
     lc.globalAlpha = cfg.rimA; lc.filter = `blur(${Math.max(.4, .006 * F)}px)`; lc.drawImage(rim, 0, 0);
@@ -55,7 +58,7 @@ const STYLE_A = (() => {
 
   function on(o) {
     cfg = Object.assign({
-      ink: '#22142f', lw: 3.8, lineK: .55, shadow: '#3d4a7a', shadowA: .42, rim: '#ffe7b8', rimA: .85,
+      ink: '#22142f', lw: 3.8, lineK: .55, shadow: '#3d4a7a', shadowA: 0, rim: '#ffe7b8', rimA: .85,
       ambient: '#bdb6dc', lights: [], key: null, bloom: .6, bloomThr: 232, diffusion: .035, vignette: .42, grain: .045,
       chars: ['drawVera2', 'drawCleo2', 'drawBright', 'drawRae2', 'drawPip2', 'drawMags'],
     }, o);
