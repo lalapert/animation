@@ -136,7 +136,7 @@
 ## 6. 채널 소개와 재생목록 (안)
 
 - 채널 이름: **Halloway Archive** / 핸들: **@hallowayarchive** (확정. 막히면 @hallowayarchives, @halloway.archive 순서)
-- 채널 설명 (11/7 밤 다시 씀: 3일에 한 편, 경비원 주인공. 451자 / 한도 1,000자):
+- 채널 설명 (11/8 다시 씀: 검색어 analog horror, found footage와 숨긴 글자 한 줄 추가. 틱톡 소개는 아래 짧은 판):
 ```
 Recovered footage from the Halloway Galleria.
 The mall closed on December 31, 1999. The power was cut at midnight.
@@ -144,12 +144,14 @@ The cameras are still recording.
 
 December 1999. Leon Marsh took the night shift for the mall's last month. He watched the monitors. He carried a camcorder. When the cameras disagreed, he went to look.
 
+An analog horror series in found footage: CCTV tapes, camcorder tapes, one closed mall.
 These are the tapes, in the order the archive releases them.
-New tapes every three days.
+New tapes every three days. Every tape hides one number or letter.
 
 A work of fiction. All footage is animated.
 ```
 - 마지막 줄("A work of fiction.")은 넣는 걸 권한다. 실제 사건 영상처럼 보이는 콘텐츠는 오해를 부르고, 유튜브의 기만성 콘텐츠 정책에도 걸릴 수 있다. 설정 몰입은 채널 이름과 테이프 라벨로 충분하다.
+- 틱톡 소개(80자 한도): `Recovered tapes from a mall that closed in 1999. Analog horror. Fiction.` (73자)
 - 재생목록: **STILL RECORDING | Season 1** (작가님이 만듦. 영상은 작가님이 스튜디오에서 이틀에 한 번 넣는다. 11/8 다시 씀: 검색어 analog horror, found footage, 경비원 이름, 숨긴 글자, 픽션 표시) — "Recovered security and camcorder footage from the Halloway Galleria, a mall that closed on December 31, 1999. An analog horror series told in found footage: the mall's CCTV first, then the camcorder of Leon Marsh, the night guard who watched the monitors that December. Tapes marked RECOVERED come from his camcorder. Every tape hides one number or letter. Watch in order. New tapes every three days. A work of fiction. All footage is animated."
 - 채널 키워드(설정 > 기본 정보): `analog horror, found footage, horror shorts, scary, creepy, cctv, camcorder, vhs, abandoned mall, liminal, night shift, still recording, halloway archive`
 - 인스타그램: 없음(작가님 결정, 유튜브만).
