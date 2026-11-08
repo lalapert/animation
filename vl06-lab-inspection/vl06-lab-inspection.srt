@@ -1,0 +1,46 @@
+1
+00:00:00,220 --> 00:00:02,724
+City inspection!
+Open up!
+
+2
+00:00:02,764 --> 00:00:05,018
+Welcome to Volt's Bakery!
+
+3
+00:00:06,088 --> 00:00:09,295
+We got a report
+of a mad scientist.
+
+4
+00:00:09,335 --> 00:00:12,869
+Here? We just make bread.
+
+5
+00:00:14,739 --> 00:00:17,925
+Why does it smell
+like ozone?
+
+6
+00:00:17,965 --> 00:00:19,801
+Sourdough.
+
+7
+00:00:23,903 --> 00:00:26,954
+Clean. Quiet.
+Five stars.
+
+8
+00:00:26,994 --> 00:00:30,032
+Two dozen croissants.
+Pickup at eight.
+
+9
+00:00:30,791 --> 00:00:33,920
+Cleo.
+Can we bake?
+
+10
+00:00:33,960 --> 00:00:37,651
+No. And you ate
+the detonator.

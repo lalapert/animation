@@ -315,5 +315,28 @@
    980
   ],
   "zoom": 1.6
+ },
+ {
+  "folder": "vl06-lab-inspection",
+  "t": 5.95,
+  "series": "vl",
+  "ep": 6,
+  "lines": [
+   "HER FAKE BAKERY",
+   "GOT FIVE STARS"
+  ],
+  "hl": [
+   "FIVE",
+   "STARS"
+  ],
+  "focus": [
+   520,
+   1000
+  ],
+  "zoom": 1.25,
+  "place": [
+   540,
+   1150
+  ]
  }
 ]

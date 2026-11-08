@@ -1,0 +1,58 @@
+{
+ "lab_hum": [
+  10.0,
+  "a basement laboratory ambience: soft electrical hum, gentle bubbling beakers, an old pipe ticking, loopable, no voices, no music"
+ ],
+ "step": [
+  0.5,
+  "one soft footstep of a shoe on a concrete basement floor"
+ ],
+ "beep": [
+  0.5,
+  "a microwave oven button beep, one short electronic beep"
+ ],
+ "whoosh": [
+  0.6,
+  "a quick soft cartoon whoosh swish"
+ ],
+ "knock": [
+  1.0,
+  "three loud impatient knocks on a heavy basement door"
+ ],
+ "slam": [
+  0.6,
+  "a hand slamming a big chunky plastic button on a desk, a heavy thunk and a click"
+ ],
+ "panel": [
+  0.6,
+  "a heavy wall panel spinning around on a hidden pivot: a quick mechanical whirr and a solid clack"
+ ],
+ "pop": [
+  0.6,
+  "two wicker bread baskets springing up from under a counter with a cartoon boing"
+ ],
+ "run": [
+  0.5,
+  "one quick sneaker footstep running on a concrete floor"
+ ],
+ "click": [
+  0.5,
+  "a small plastic button pressed hard, a sharp click"
+ ],
+ "gulp": [
+  0.8,
+  "a cartoon gulp: someone swallowing something too big in one go, then a tiny metallic clunk"
+ ],
+ "stamp": [
+  0.6,
+  "a rubber stamp slammed onto a clipboard, a firm thump"
+ ],
+ "hic": [
+  0.6,
+  "a single loud cartoon hiccup from a woman, a short squeak"
+ ],
+ "puff": [
+  1.2,
+  "a small cartoon smoke puff, a soft poof with a little sputter"
+ ]
+}

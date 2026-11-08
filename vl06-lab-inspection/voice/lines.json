@@ -1,0 +1,111 @@
+{
+ "model_id": "eleven_v4",
+ "cast": {
+  "VERA": {
+   "voice_id": "buRySvQEB2e8Dcglym6i",
+   "name": "LAB Vera Volt",
+   "settings": {
+    "stability": 0.3,
+    "similarity_boost": 0.8,
+    "style": 0.7,
+    "speed": 1.0
+   }
+  },
+  "CLEO": {
+   "voice_id": "biUhGlVm4NoNe58piPit",
+   "name": "LAB Cleo",
+   "settings": {
+    "stability": 0.6,
+    "similarity_boost": 0.8,
+    "style": 0.25,
+    "speed": 0.92
+   }
+  },
+  "INSPECTOR": {
+   "voice_id": "XrExE9yKIg1WjnnlVkGX",
+   "name": "Matilda (stock), city inspector",
+   "settings": {
+    "stability": 0.4,
+    "similarity_boost": 0.8,
+    "style": 0.5,
+    "speed": 1.0
+   }
+  }
+ },
+ "lines": [
+  {
+   "id": "L1",
+   "who": "INSPECTOR",
+   "text": "[stern, shouting through a door] City inspection! Open up!",
+   "plain": "City inspection! Open up!",
+   "sub": "City inspection!\nOpen up!"
+  },
+  {
+   "id": "L2",
+   "who": "VERA",
+   "text": "[too bright, too fast] Welcome to Volt's Bakery!",
+   "plain": "Welcome to Volt's Bakery!",
+   "sub": "Welcome to Volt's Bakery!"
+  },
+  {
+   "id": "L3",
+   "who": "INSPECTOR",
+   "text": "[flat, suspicious] We got a report of a mad scientist.",
+   "plain": "We got a report of a mad scientist.",
+   "sub": "We got a report\nof a mad scientist."
+  },
+  {
+   "id": "L4",
+   "who": "VERA",
+   "text": "[nervous laugh] Here? We just make bread.",
+   "plain": "Here? We just make bread.",
+   "sub": "Here? We just make bread."
+  },
+  {
+   "id": "L5",
+   "who": "INSPECTOR",
+   "text": "[sniffing, suspicious] Why does it smell like ozone?",
+   "plain": "Why does it smell like ozone?",
+   "sub": "Why does it smell\nlike ozone?"
+  },
+  {
+   "id": "L6",
+   "who": "VERA",
+   "text": "[instantly] Sourdough.",
+   "plain": "Sourdough.",
+   "sub": "Sourdough.",
+   "noctx": true
+  },
+  {
+   "id": "L7",
+   "who": "INSPECTOR",
+   "text": "[pleased, brisk] Clean. Quiet. Five stars.",
+   "plain": "Clean. Quiet. Five stars.",
+   "sub": "Clean. Quiet.\nFive stars."
+  },
+  {
+   "id": "L8",
+   "who": "INSPECTOR",
+   "text": "[cheerful] Two dozen croissants. Pickup at eight.",
+   "plain": "Two dozen croissants. Pickup at eight.",
+   "sub": "Two dozen croissants.\nPickup at eight.",
+   "asr": "Two dozen croissants. Pick up at 8:00"
+  },
+  {
+   "id": "L9",
+   "who": "VERA",
+   "text": "[horrified whisper] Cleo. Can we bake?",
+   "plain": "Cleo. Can we bake?",
+   "sub": "Cleo.\nCan we bake?",
+   "noctx": true
+  },
+  {
+   "id": "L10",
+   "who": "CLEO",
+   "text": "[deadpan] No. And you ate the detonator.",
+   "plain": "No. And you ate the detonator.",
+   "sub": "No. And you ate\nthe detonator.",
+   "noctx": true
+  }
+ ]
+}
