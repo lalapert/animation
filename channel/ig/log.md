@@ -15,3 +15,4 @@
 | (changed 11/8) | vl04-laser-pointer | 24 The Reveal + twist | She spent the rent on a doomsday laser. The landlord ran | What would you do with a doomsday laser? Be honest. | yes |
 | 11/16 09:00 | vl05-the-monologue | 2 Negative Command | Never time a villain's monologue | Who do you know whose story never ends? Tell me. | yes |
 | 11/17 09:00 | vm06-employee-of-the-month | 17 Head To Head | Pip vs. a security camera for Employee of the Month | Who took credit for your work? Tell me. | yes |
+| 11/18 09:00 | vl06-lab-inspection | 25 Someone Else's Result | The city inspector gave her fake bakery five stars | What's the first thing you hide when someone knocks? Tell me. | no |
