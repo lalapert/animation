@@ -106,7 +106,7 @@ New episode daily ↓
 | 재생목록 이름 | 설명 |
 |---|---|
 | **Void Mart \| Season 1** | Pip's first season at the last convenience store before the edge of the universe. Watch in order: the shelves restock themselves, a third clerk shows up on camera, and the incident counter never gets past zero. New episodes every other day. |
-| **Volt Labs \| Season 1** | Dr. Vera Volt will rule the world. Right after she pays the rent. A basement lab, a deadpan assistant, a big red button nobody should press, and a billionaire on TV who smiles too much. Watch in order. New episodes every other day. |
+| **Volt Labs \| Season 1** | Dr. Vera Volt is going to rule the world, right after she pays the rent. Volt Labs is an animated sitcom about a broke mad scientist and her deadpan assistant, Cleo. Every episode brings a new doomsday invention, and every one goes wrong in a new way. Meanwhile, a billionaire on TV keeps smiling a little too much. Watch in order. New episodes every other day. |
 | **Start Here: The Void Mart Universe** | Episode 1 of every show. Same universe, same 3 AM. Start with Void Mart, then Volt Labs. |
 
 - 과학자 시리즈 제목은 **Volt Labs**로 확정(11/6).
