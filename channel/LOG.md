@@ -65,3 +65,11 @@
 - Volt Labs 5: the audience is plants ("Your plants died."), re-recorded.
 - Plans: `LAB_SERIES.md` rewritten (a different invention every episode, outdoor episodes, 15 *Drone Army*, 41 megaphone reverse broadcast), rules in `PRODUCTION.md` §2.2 and the script template (9th row).
 - Rigs fixed: Vera/Cleo/Rae reach arms now reach the hand (lab.js, toon.js). New: `channel/brand/bodies.js` (full bodies: walk, run, jump, trip, sit), the lab backyard set (`buildYard` in labkit.js). Sample: `channel/brand/yard_sample.html`.
+
+## 11/8 18:00 KST: TikTok added (owner: "앞으로는 틱톡에도 올릴거야")
+
+- Connected by the owner: TikTok "Void Mart" on brand 7923229, TikTok "Halloway Archive" on brand 7927149.
+- Already published episodes, TikTok only, three hours apart (US morning): VM1 *First Shift* 11/8 23:00 KST (420578223), VL1 *Day One* 11/9 02:00 KST (420578409); horror tape 1 *Closing Announcement* 11/9 13:00 KST on the horror TikTok (420578555, the series opener; same hour as the horror slot). New caption files: `channel/ig/posts/vm01-first-shift.txt`, `channel/tiktok/sr01-closing-announcement.txt` (both READY).
+- TikTok added to every scheduled post (ids changed): VM2 420579186, VL2 420579213, VM3 420579251, VL3 420579361, VM4 420579417, VL4 420579478, VM5 420579564, VL5 420579630, VM6 420579707; tapes 2–4 420578946, 420579007, 420579066.
+- Settings: TikTok title = caption (Metricool requires it), public, AI-generated label on (isAigc), no auto music.
+
