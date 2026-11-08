@@ -110,6 +110,6 @@ New episode daily ↓
 | **Start Here: The Void Mart Universe** | Episode 1 of every show. Same universe, same 3 AM. Start with Void Mart, then Volt Labs. |
 
 - 만든 재생목록(11/8): Void Mart | Season 1 = `PLVlLmG_oOOcs`, Volt Labs | Season 1 = `PLSL13ah6-ct0`.
-- **재생목록은 자동으로 못 넣는다(11/8 확인).** Metricool 연결 도구는 유튜브 재생목록 값을 받지 않는다(`playlistId`, `playlist`, `playlists` 모두 저장되지 않음). 작가님이 유튜브 스튜디오에서 일주일에 한 번 묶어서 넣거나, Metricool 플래너에서 예약 글마다 고른다.
+- **재생목록은 자동으로 못 넣는다(11/8 확인).** Metricool 연결 도구는 유튜브 재생목록 값을 받지 않는다(`playlistId`, `playlist`, `playlists` 모두 저장되지 않음). **작가님 결정(11/8): 유튜브 스튜디오에서 이틀에 한 번 작가님이 직접 넣는다.** 영상은 Metricool이 게시 시각에 올리므로 공개된 뒤에야 스튜디오에 보인다. 매 실행 보고 끝에 "재생목록에 넣을 영상"을 적는다(PRODUCTION.md §3 8번).
 - 과학자 시리즈 제목은 **Volt Labs**로 확정(11/6).
 - "Start Here"에는 각 시리즈 1화만 넣는다. 한 시리즈를 본 사람이 다른 시리즈로 넘어가게 하는 입구다.
