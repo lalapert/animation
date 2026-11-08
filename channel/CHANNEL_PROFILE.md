@@ -109,5 +109,7 @@ New episode daily ↓
 | **Volt Labs \| Season 1** | Dr. Vera Volt is going to rule the world, right after she pays the rent. Volt Labs is an animated sitcom about a broke mad scientist and her deadpan assistant, Cleo. Every episode brings a new doomsday invention, and every one goes wrong in a new way. Meanwhile, a billionaire on TV keeps smiling a little too much. Watch in order. New episodes every other day. |
 | **Start Here: The Void Mart Universe** | Episode 1 of every show. Same universe, same 3 AM. Start with Void Mart, then Volt Labs. |
 
+- 만든 재생목록(11/8): Void Mart | Season 1 = `PLVlLmG_oOOcs`, Volt Labs | Season 1 = `PLSL13ah6-ct0`.
+- **재생목록은 자동으로 못 넣는다(11/8 확인).** Metricool 연결 도구는 유튜브 재생목록 값을 받지 않는다(`playlistId`, `playlist`, `playlists` 모두 저장되지 않음). 작가님이 유튜브 스튜디오에서 일주일에 한 번 묶어서 넣거나, Metricool 플래너에서 예약 글마다 고른다.
 - 과학자 시리즈 제목은 **Volt Labs**로 확정(11/6).
 - "Start Here"에는 각 시리즈 1화만 넣는다. 한 시리즈를 본 사람이 다른 시리즈로 넘어가게 하는 입구다.
