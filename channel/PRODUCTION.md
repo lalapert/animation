@@ -19,7 +19,7 @@ Owner's decision (11/7 evening): **every series posts exactly every two days, Fr
 |---|---|---|---|
 | Void Mart | `channel/SEASON1.md` §4.1 (season 1, 28 episodes, 11/7 → 12/31) then §4.2 (season 2, 15 episodes, 1/2 → 1/30); episode numbers = air order and keep counting in season 2 (29, 30, …) | every two days from 11/7 (11/7, 11/9, 11/11 …) at 09:00 | the latest `vmNN-*` folder (now `vm04-zero-g-mop/`) |
 | Volt Labs | `channel/LAB_SERIES.md` §2 (43 episodes, 11/8 → 1/31) | every two days from 11/8 (11/8, 11/10, 11/12 …) at 09:00 | the latest `vlNN-*` folder (now `vl03-help-wanted/`) |
-| Horror (*STILL RECORDING*, own channel) | `channel/HORROR_SERIES.md` §3 (57 tapes, 11/7 → 4/24; from tape 6 the 1999 night guard Leon Marsh is the lead; tape 19 *Midnight* on 12/31) | **every three days from 11/7 (11/7, 11/10, 11/13, 11/16 …) at 13:00** (owner, 11/7 night; tapes 2–4 moved to 11/10, 11/13, 11/16) | the latest `srNN-*` folder (now `sr04-toy-garden/`) |
+| Horror (own channel, owner 11/9: B plan) | *STILL RECORDING*: `channel/HORROR_SERIES.md` §3 (57 tapes, re-dated 11/9; tape 15 *Midnight* on 12/31); a second horror series alternates with it (to be chosen, `channel/HORROR_NEW_SERIES.md`) | **every two days at 13:00, alternating: STILL RECORDING every four days from 11/13 (11/13, 11/17, 11/21 …), the new series on the days between (11/15, 11/19 … from its first episode)** | the latest `srNN-*` folder (now `sr05-screen-2/`) |
 
 The date of every episode is in its plan table; use that date. From 11/8 the Void Mart channel posts every day (Void Mart and Volt Labs take turns: 11/7 Void Mart, 11/8 Volt Labs, 11/9 Void Mart …).
 
