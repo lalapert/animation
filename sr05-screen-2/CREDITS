@@ -1,0 +1,7 @@
+STILL RECORDING, tape 5: "Screen 2" (2026). Halloway Archive. Original story, pictures, sound and music. A work of fiction.
+
+Pictures: drawn in code (canvas 2D) with the tape kit (channel/brand/tapekit.js): a 2.5D renderer, CCTV grading and VHS damage.
+Fonts: VT323 (The VT323 Project Authors), SIL Open Font License 1.1. Special Elite (Astigmatic), Apache License 2.0.
+Voice: ElevenLabs text-to-speech, model eleven_v4. The cinema announcements: "HA Mall PA" (ElevenLabs Voice Design, made for this series).
+Sound effects: generated with ElevenLabs Sound Effects (prompts in sfx/prompts.json).
+Music: original score (tools/score.py) played with CC0 samples from VSCO 2 Community Edition.

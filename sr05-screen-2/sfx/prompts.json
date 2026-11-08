@@ -1,0 +1,38 @@
+{
+ "static": [
+  2.0,
+  "harsh analog VHS tape static, loud white noise hiss with crackle and a low hum, a tape ending on a blank channel"
+ ],
+ "glitch": [
+  0.6,
+  "a very short VHS tape tracking glitch: a warbling distorted electrical crackle and a brief buzz"
+ ],
+ "mall_hum": [
+  10.0,
+  "an empty shopping mall at night, low steady air conditioning drone and faint fluorescent light hum, no people, no music, no footsteps, loopable"
+ ],
+ "tape_hiss": [
+  8.0,
+  "constant soft analog videotape hiss and faint mechanical motor whir, steady, loopable"
+ ],
+ "breath": [
+  2.0,
+  "one slow quiet human exhale very close to a microphone, muffled, no voice"
+ ],
+ "projector": [
+  8.0,
+  "the steady fan hum and faint electrical buzz of a video projector in an empty cinema auditorium, loopable, no music, no voices"
+ ],
+ "switch": [
+  0.5,
+  "an old security camera multiplexer switching channels: a dry relay click with a tiny burst of video buzz"
+ ],
+ "door": [
+  2.0,
+  "a heavy padded cinema door slowly swinging shut by itself, a long low creak and a soft thud"
+ ],
+ "seat": [
+  1.2,
+  "a folding cinema seat being pushed down as someone sits, a slow creak of old springs, in a large empty room"
+ ]
+}

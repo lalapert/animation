@@ -300,5 +300,20 @@
    540,
    960
   ]
+ },
+ {
+  "folder": "sr05-screen-2",
+  "t": 34.3,
+  "series": "sr",
+  "tape": "TAPE 05",
+  "lines": [
+   "SCREEN 2",
+   "WAS CLOSED."
+  ],
+  "focus": [
+   680,
+   980
+  ],
+  "zoom": 1.6
  }
 ]

@@ -1,0 +1,36 @@
+{
+ "model_id": "eleven_v4",
+ "cast": {
+  "PA": {
+   "voice_id": "ZPgDKQUoTzQKZTHhQYAM",
+   "name": "HA Mall PA",
+   "settings": {
+    "stability": 0.75,
+    "similarity_boost": 0.8,
+    "style": 0.1,
+    "speed": 0.9
+   }
+  }
+ },
+ "lines": [
+  {
+   "id": "L1",
+   "who": "PA",
+   "text": "Screen 2 is now closed.",
+   "sub": "SCREEN 2 IS NOW CLOSED.",
+   "asr": "Screen two is now closed."
+  },
+  {
+   "id": "L2",
+   "who": "PA",
+   "text": "Please remain in your seat.",
+   "sub": "PLEASE REMAIN IN YOUR SEAT."
+  },
+  {
+   "id": "L3",
+   "who": "PA",
+   "text": "Enjoy the show.",
+   "sub": "ENJOY THE SHOW."
+  }
+ ]
+}
