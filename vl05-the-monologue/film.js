@@ -205,7 +205,7 @@ function hookCard(g, t) {
   tText(g, 'VILLAIN SPEECH', 540, 388, 64, '#d8ff7a', '"Bungee"', 'center', 400);
   g.restore();
 }
-function render(t) { t = clamp(t, 0, DUR - 1e-3); drawScene(t); composeFrame(OUT, SC, t); hookCard(OUT, t); }
+function render(t) { t = clamp(t, 0, DUR - 1e-3); drawScene(t); composeFrame(OUT, SC, t); hookCard(OUT, t); endCard(OUT, t, 'vl'); }
 window.render = render;
 
 // sound cues: footsteps on her pacing beat (slow, then fast in the montage)

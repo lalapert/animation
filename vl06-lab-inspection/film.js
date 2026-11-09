@@ -332,7 +332,7 @@ function drawScene(t) {
   drawBench(c, t);
   hiccup(c, t);
 }
-function render(t) { t = clamp(t, 0, DUR - 1e-3); drawScene(t); composeFrame(OUT, SC, t); }
+function render(t) { t = clamp(t, 0, DUR - 1e-3); drawScene(t); composeFrame(OUT, SC, t); endCard(OUT, t, 'vl'); }
 window.render = render;
 
 // ---------------------------------------------------------------- sound cues

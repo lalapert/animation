@@ -228,7 +228,7 @@ function flash(g, t) {
   const k = t < TL.FLASH ? 0 : clamp(1 - (t - TL.FLASH - .08) / .45); if (k <= 0) return;
   g.save(); g.setTransform(1, 0, 0, 1, 0, 0); g.globalAlpha = k; g.fillStyle = '#fff'; g.fillRect(0, 0, W, H); g.restore();
 }
-function render(t) { t = clamp(t, 0, DUR - 1e-3); drawScene(t); composeFrame(OUT, SC, t); flash(OUT, t); hookCard(OUT, t); }
+function render(t) { t = clamp(t, 0, DUR - 1e-3); drawScene(t); composeFrame(OUT, SC, t); flash(OUT, t); hookCard(OUT, t); endCard(OUT, t, 'vm'); }
 window.render = render;
 
 // ---------------------------------------------------------------- sound cues

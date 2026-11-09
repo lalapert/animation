@@ -136,7 +136,7 @@ function drawScene(t) {
   if (t > TL.LAUNCH && t < TL.LAUNCH + .35) { c.save(); c.strokeStyle = 'rgba(255,255,255,.7)'; c.lineWidth = 6; for (let i = -2; i <= 2; i++) { c.beginPath(); c.moveTo(PIP.x + i * 40, 300); c.lineTo(PIP.x + i * 40, 900); c.stroke(); } c.restore(); }
   glassStreaks(c, .9);
 }
-function render(t) { t = clamp(t, 0, DUR - 1e-3); drawScene(t); composeFrame(OUT, SC, t); }
+function render(t) { t = clamp(t, 0, DUR - 1e-3); drawScene(t); composeFrame(OUT, SC, t); endCard(OUT, t, 'vm'); }
 window.render = render;
 
 window.EV = [

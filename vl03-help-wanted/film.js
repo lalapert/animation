@@ -181,6 +181,7 @@ function render(t) {
   drawScene(t);
   composeFrame(OUT, SC, t);
   timeCaption(OUT, t);
+  endCard(OUT, t, 'vl');   // owner 11/9: the cast and NEW EPISODE EVERY DAY in the last 1.25 s
 }
 window.render = render;
 

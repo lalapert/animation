@@ -210,7 +210,7 @@ function hookCard(g, t) {
   tText(g, 'SOLD OUT', 540, 388, 64, '#ffb066', '"Bungee"', 'center', 400);
   g.restore();
 }
-function render(t) { t = clamp(t, 0, DUR - 1e-3); drawScene(t); composeFrame(OUT, SC, t); hookCard(OUT, t); }
+function render(t) { t = clamp(t, 0, DUR - 1e-3); drawScene(t); composeFrame(OUT, SC, t); hookCard(OUT, t); endCard(OUT, t, 'vm'); }
 window.render = render;
 
 window.EV = [

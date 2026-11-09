@@ -407,7 +407,7 @@ function drawScene(t) {
   if (P.pressArm) pipPressHand(c, t, P.pressArm.k, bob);
   glassStreaks(c, .9);
 }
-function render(t) { t = clamp(t, 0, DUR - 1e-3); drawScene(t); composeFrame(OUT, SC, t); }
+function render(t) { t = clamp(t, 0, DUR - 1e-3); drawScene(t); composeFrame(OUT, SC, t); endCard(OUT, t, 'vm'); }
 window.render = render;
 
 // ---------------------------------------------------------------- sound cues

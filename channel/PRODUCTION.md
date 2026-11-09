@@ -62,6 +62,7 @@ Copy the template folder to `<prefix><NN>-<slug>/` (Void Mart: `vm03-dennis/`), 
 - **Every hand gesture comes with its arm.** No floating hands: if a hand reaches, holds or waves, that arm is drawn to it (see `reachArm` in `vm01-first-shift/film.js`, `hold` and `wave` in `drawPip2`). Count the hands in every still.
 - Subtitles: burned in at the bottom of the picture (`VIEW.mode = 'full'`, the owner's choice), coloured by speaker. Shorts safe zones: nothing important above y 180 or right of x 960 near the bottom.
 - New one-off characters are drawn in the same anime-flat style (heavy outline, flat colour, one shade).
+- **End card (owner, 11/9):** every toon episode ends with `endCard(OUT, t, 'vm' | 'vl')` as the last call in `render()` (in `vmkit.js`): the cast, NEW EPISODE EVERY DAY and tomorrow's show, at the top of the frame (y 230–590) in the last 1.25 s. Keep the final button readable under it (land it before the last 1.25 s or below y 600).
 - Render stills across the whole episode (`node tools/render.cjs stills out/review t…`, `tools/sheet.py`) and **look at them**. Fix what you see (one round), look again.
 
 ### 2.4 Voices, sound, music

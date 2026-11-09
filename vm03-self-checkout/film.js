@@ -164,7 +164,7 @@ function drawScene(t) {
   if (t < 3) for (let i = 0; i < 5; i++) { const a = i * 1.3 + t * 2, r = 120 + 20 * Math.sin(t * 3 + i); drawStar(c, KX + Math.cos(a) * r, CT - 160 + Math.sin(a) * r * .8, 8 + 4 * Math.sin(t * 6 + i), '#fff6c8', 2); }
   glassStreaks(c, .9);
 }
-function render(t) { t = clamp(t, 0, DUR - 1e-3); drawScene(t); composeFrame(OUT, SC, t); }
+function render(t) { t = clamp(t, 0, DUR - 1e-3); drawScene(t); composeFrame(OUT, SC, t); endCard(OUT, t, 'vm'); }
 window.render = render;
 
 window.EV = [
