@@ -92,3 +92,10 @@
 ## 11/9 KST: AI labels stay as they are (owner)
 
 - Compared the rules: YouTube exempts fictional animation (label off); Instagram and TikTok name realistic-sounding audio (our voices), so their labels stay on. Option of a TikTok caption disclosure instead of the label offered; owner: "걍 두자".
+
+## 11/9 KST: pause until the usage limit resets (owner)
+
+- Owner: the weekly usage limit has 10% left and resets on 11/12 (Thu) 11:00 KST; stop stacking the bank until then, do the work due through Thursday morning now, resume the daily analytics on Thursday.
+- Done now: pre-upload checks for every post through Thursday morning: 11/10 VL2 and tape 2, 11/11 VM3, 11/12 VL3 (all PASS, contact sheets looked at). No horror post on 11/11–11/12.
+- The scheduled runs before 11/12 11:00 KST answer one line and stop (trigger prompt updated); the 11/12 15:41 run resumes the full flow (analytics, the check of 11/13's posts, production).
+- Bank when paused: Void Mart 5 (VM3–7), Volt Labs 5 (VL2–6), horror 4 (tapes 2–5); posts covered through 11/19.
