@@ -175,3 +175,34 @@ function composeFrame(out, scene, t) {
   out.fillStyle = 'rgba(255,255,255,.08)'; out.fillRect(0, VIEW.h, W, 3);
   bandSubtitle(out, t);
 }
+
+// ---------------------------------------------------------------- end card (owner, 11/9): the cast and "NEW EPISODE EVERY DAY"
+// The last 1.25 s, at the top of the frame (inside the Shorts/Reels safe zone, clear of the subtitles at the bottom).
+// show: 'vm' (Rae, Pip, MAGS) or 'vl' (Vera, Cleo; needs lab.js). The two shows alternate daily on the channel, so the small
+// line names tomorrow's show. Call it last in render(): endCard(OUT, t, 'vm').
+function endCard(g, t, show) {
+  const t0 = TL.DUR - 1.25, a = clamp((t - t0) / .15); if (a <= 0) return;
+  const pop = 1 + .08 * Math.sin(Math.PI * clamp((t - t0) / .3)), vl = show === 'vl';
+  const acc = vl ? '#d8ff7a' : TOON.orangeL, x0 = 130, y0 = 230, w = 820, h = 360;
+  g.save(); g.setTransform(1, 0, 0, 1, 0, 0); g.globalAlpha = a;
+  g.translate(540, y0 + h / 2); g.scale(pop, pop); g.translate(-540, -(y0 + h / 2));
+  tShape(g, 'rgba(18,10,42,.92)', gg => gg.roundRect(x0, y0, w, h, 30), 5);
+  const cast = vl ? [['vera', 0], ['cleo', 1]] : [['pip', 0], ['rae', 1], ['mags', 2]];
+  const n = cast.length, r = 72, gap = 190, cy = y0 + 104;
+  cast.forEach(([who], i) => {
+    const cx = 540 + (i - (n - 1) / 2) * gap;
+    g.save(); g.beginPath(); g.arc(cx, cy, r, 0, 6.2832); g.fillStyle = vl ? '#2c4a3a' : '#3a2470'; g.fill(); g.clip();
+    const blink = false;
+    if (who === 'pip') drawPip2(g, cx, cy + 176 * 1.25 + 34, 125, { expr: 'grin', arms: false, blink });
+    else if (who === 'rae') drawRae2(g, cx + 4, cy + 222 * 1.15 + 30, 115, { expr: 'smirk', arms: false, look: 0, blink });
+    else if (who === 'mags') drawMags(g, cx - 10, cy - 100, 175, { glow: 30 });
+    else if (who === 'vera') drawVera2(g, cx, cy + 222 * 1.15 + 36, 115, { expr: 'scheme', arms: false, blink });
+    else if (who === 'cleo') drawCleo2(g, cx, cy + 200 * 1.2 + 34, 120, { expr: 'deadpan', arms: false, blink });
+    g.restore();
+    g.lineWidth = 5; g.strokeStyle = TOON.ink; g.beginPath(); g.arc(cx, cy, r, 0, 6.2832); g.stroke();
+    g.lineWidth = 3; g.strokeStyle = acc; g.beginPath(); g.arc(cx, cy, r - 5, 0, 6.2832); g.stroke();
+  });
+  tText(g, 'NEW EPISODE EVERY DAY', 540, y0 + 232, 52, '#fbf7ff', '"Bungee"', 'center', 400);
+  tText(g, 'TOMORROW: ' + (vl ? 'VOID MART' : 'VOLT LABS'), 540, y0 + 302, 36, acc, '"Bungee"', 'center', 400);
+  g.restore();
+}
