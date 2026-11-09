@@ -33,14 +33,14 @@
 | L6 | VERA | `[serious, businesslike]` | Greatest weakness? | Vera 클로즈업 |
 | L7 | CLEO | (태그 없음: 받아쓰기에서 단어가 뭉개짐) | I press buttons. | Cleo 클로즈업. 웃음 2 |
 | L8 | VERA | `[dramatic, warning]` | Then whatever you do, / do NOT press the— | 와이드. Vera가 탁자 위 빨간 버튼 리모컨을 가리킨다(point, 팔째로). "the—"에서 대사가 끊긴다. Cleo가 그 순간 손을 뻗어(팔째로) 누른다 |
-| — | | | | **폭발.** 화면 번쩍, 흔들림, 검은 연기. 실험실 전체가 그을림. Vera 머리가 부스스하게 부풀고 얼굴에 그을음. Cleo도 그을렸지만 표정 그대로. 웃음 3(소리 없이도) |
+| — | | | | **폭발.** 화면 번쩍, 흔들림, 검은 연기. 실험실 전체가 그을림. Vera 머리가 부스스하게 부풀고, Cleo는 표정 그대로(11/9: 얼굴 그을음은 얼룩처럼 보여 뺐다). 웃음 3(소리 없이도) |
 | L9 | VERA | `[coughing, stunned]` | You didn't even hesitate. | Vera 클로즈업, 연기 속, 기침. 표정 fluster |
 | L10 | CLEO | `[matter-of-fact]` | You said "whatever I do." | Cleo 클로즈업. 웃음 4 |
 | L11 | VERA | `[delighted, manic laugh]` | You're hired! | Vera 클로즈업, laugh 표정, 두 팔을 번쩍(팔째로). 오르간 화음 |
 | L12 | CLEO | (태그 없음: 태그를 넣으면 웃음이 붙음) | Do I get dental? | Cleo 클로즈업 |
 | L13 | VERA | `[proud]` | You get a fire extinguisher. | Vera가 소화기를 탁자에 쿵 올려놓는다(팔째로). 웃음 5 |
 | — | | | | **현재.** 왼쪽 위 자막 "TODAY". 와이드: 지금의 실험실(비둘기 두어 마리). Cleo가 리모컨 버튼을 누른다. 작은 펑, 연기 한 줄 |
-| L14 | VERA | `[exasperated]` | Not again! | Vera 클로즈업, 그을음 조금 |
+| L14 | VERA | `[exasperated]` | Not again! | Vera 클로즈업, 부스스한 머리 |
 | — | | | | 칠판 클로즈업: 벽에 붙은 그때의 전단에 빨간 "HIRED" 도장이 찍혀 있다(쾅 소리). 오른쪽에서 Cleo의 팔이 들어와 PAY RENT에 동그라미를 하나 더 그린다(4개). 바순 두 음 버튼 |
 
 ## 3. 숨긴 장치와 줄기

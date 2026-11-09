@@ -83,6 +83,7 @@ function smoke(g, t) {
   g.restore();
 }
 function sootFace(g, x, faceY, s, a) {
+  return;   // 11/9 review: the grey smudges read as stains on the faces (as in Volt Labs 6); the frizzed hair carries the blast
   if (a <= 0) return;
   g.save(); g.globalAlpha = a * .7; g.fillStyle = '#2a2430';
   g.beginPath(); g.ellipse(x - 26 * s / 100, faceY + 26 * s / 100, 16 * s / 100, 9 * s / 100, .3, 0, 6.2832); g.ellipse(x + 30 * s / 100, faceY + 6 * s / 100, 12 * s / 100, 7 * s / 100, -.2, 0, 6.2832); g.ellipse(x + 4 * s / 100, faceY - 40 * s / 100, 20 * s / 100, 8 * s / 100, 0, 0, 6.2832); g.fill();
