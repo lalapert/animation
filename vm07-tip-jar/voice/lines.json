@@ -1,0 +1,133 @@
+{
+ "model_id": "eleven_v4",
+ "cast": {
+  "PIP": {
+   "voice_id": "BiP91t4ozM9IZajOdSu2",
+   "name": "Win2",
+   "settings": {
+    "stability": 0.3,
+    "similarity_boost": 0.8,
+    "style": 0.65,
+    "speed": 1.05
+   }
+  },
+  "RAE": {
+   "voice_id": "oy557F0mOsPZZqdz8oK6",
+   "name": "Kar2",
+   "settings": {
+    "stability": 0.6,
+    "similarity_boost": 0.8,
+    "style": 0.2,
+    "speed": 0.9
+   },
+   "pitch": -1.5
+  },
+  "MAGS": {
+   "voice_id": "WkUURyKtbzB9IM50qGdP",
+   "name": "VM MAGS",
+   "settings": {
+    "stability": 0.45,
+    "similarity_boost": 0.8,
+    "style": 0.5,
+    "speed": 1.0
+   }
+  },
+  "CUST": {
+   "voice_id": "SOYHLrjzK2X1ezoPC6cr",
+   "name": "Harry (stock), space trucker",
+   "settings": {
+    "stability": 0.4,
+    "similarity_boost": 0.8,
+    "style": 0.5,
+    "speed": 1.0
+   }
+  }
+ },
+ "lines": [
+  {
+   "id": "L1",
+   "who": "PIP",
+   "text": "[excited, delighted] Our first tip!",
+   "plain": "Our first tip!",
+   "sub": "Our first tip!"
+  },
+  {
+   "id": "L2",
+   "who": "RAE",
+   "text": "[flatly] It's a comet.",
+   "plain": "It's a comet.",
+   "sub": "It's a comet."
+  },
+  {
+   "id": "L3",
+   "who": "CUST",
+   "text": "[gruff, generous] Keep the change.",
+   "plain": "Keep the change.",
+   "sub": "Keep the change."
+  },
+  {
+   "id": "L4",
+   "who": "RAE",
+   "text": "[deadpan] That's his tooth.",
+   "plain": "That's his tooth.",
+   "sub": "That's his tooth."
+  },
+  {
+   "id": "L5",
+   "who": "PIP",
+   "text": "[moved, teary] It's still warm!",
+   "plain": "It's still warm!",
+   "sub": "It's still warm!"
+  },
+  {
+   "id": "L6",
+   "who": "MAGS",
+   "text": "[bright, corporate] Tip policy update! Management keeps sixty percent.",
+   "plain": "Tip policy update! Management keeps sixty percent.",
+   "sub": "Tip policy update!\nManagement keeps sixty percent.",
+   "asr": "Tip policy update! Management keeps 60%."
+  },
+  {
+   "id": "L7",
+   "who": "PIP",
+   "text": "[outraged] You don't even have hands!",
+   "plain": "You don't even have hands!",
+   "sub": "You don't even\nhave hands!"
+  },
+  {
+   "id": "L8",
+   "who": "MAGS",
+   "text": "[smug, smooth] I have a claw.",
+   "plain": "I have a claw.",
+   "sub": "I have a claw."
+  },
+  {
+   "id": "L9",
+   "who": "MAGS",
+   "text": "[sweet, salesy] And now, Pip... would YOU like to leave a tip?",
+   "plain": "And now, Pip... would YOU like to leave a tip?",
+   "sub": "And now, Pip...\nwould YOU like to leave a tip?"
+  },
+  {
+   "id": "L10",
+   "who": "RAE",
+   "text": "[tired sigh] Pip.",
+   "plain": "Pip.",
+   "sub": "Pip."
+  },
+  {
+   "id": "L11",
+   "who": "PIP",
+   "text": "[small, ashamed] It was looking at me.",
+   "plain": "It was looking at me.",
+   "sub": "It was looking at me."
+  },
+  {
+   "id": "L12",
+   "who": "RAE",
+   "text": "[deadpan] No.",
+   "plain": "No.",
+   "sub": "No."
+  }
+ ]
+}

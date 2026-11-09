@@ -1,0 +1,126 @@
+{
+  "room_db": -60,
+  "voice_over_music_db": 12,
+  "beds": {},
+  "foley": {
+    "chime": {
+      "fx": "chime",
+      "g": -14,
+      "align": false,
+      "fin": 0.01,
+      "fout": 0.15
+    },
+    "hop": {
+      "fx": "hop",
+      "g": -20,
+      "align": false,
+      "fin": 0.01,
+      "fout": 0.15
+    },
+    "step": {
+      "fx": "step",
+      "g": -23,
+      "align": false,
+      "fin": 0.01,
+      "fout": 0.15
+    },
+    "holo": {
+      "fx": "holo",
+      "g": -18,
+      "align": false,
+      "fin": 0.01,
+      "fout": 0.15
+    },
+    "comet": {
+      "fx": "comet",
+      "g": -14,
+      "align": false,
+      "fin": 0.01,
+      "fout": 0.15
+    },
+    "flip": {
+      "fx": "flip",
+      "g": -19,
+      "align": false,
+      "fin": 0.01,
+      "fout": 0.15
+    },
+    "jar": {
+      "fx": "jar",
+      "g": -16,
+      "align": false,
+      "fin": 0.01,
+      "fout": 0.15
+    },
+    "tooth": {
+      "fx": "tooth",
+      "g": -14,
+      "align": false,
+      "fin": 0.01,
+      "fout": 0.15
+    },
+    "pod": {
+      "fx": "pod",
+      "g": -19,
+      "align": false,
+      "fin": 0.01,
+      "fout": 0.15
+    },
+    "pod_out": {
+      "fx": "pod_out",
+      "g": -20,
+      "align": false,
+      "fin": 0.01,
+      "fout": 0.15
+    },
+    "claw": {
+      "fx": "claw",
+      "g": -16,
+      "align": false,
+      "fin": 0.01,
+      "fout": 0.15
+    },
+    "claw_up": {
+      "fx": "claw_up",
+      "g": -18,
+      "align": false,
+      "fin": 0.01,
+      "fout": 0.15
+    },
+    "servo": {
+      "fx": "servo",
+      "g": -20,
+      "align": false,
+      "fin": 0.01,
+      "fout": 0.15
+    },
+    "lens": {
+      "fx": "lens",
+      "g": -18,
+      "align": false,
+      "fin": 0.01,
+      "fout": 0.15
+    },
+    "approve": {
+      "fx": "approve",
+      "g": -17,
+      "align": false,
+      "fin": 0.01,
+      "fout": 0.15
+    },
+    "coin": {
+      "fx": "coin",
+      "g": -16,
+      "align": false,
+      "fin": 0.01,
+      "fout": 0.15
+    },
+    "tap": {
+      "fx": "tap",
+      "g": -16,
+      "align": false,
+      "fin": 0.01,
+      "fout": 0.15
+    }
+  }
+}

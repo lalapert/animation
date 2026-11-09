@@ -338,5 +338,27 @@
    540,
    1150
   ]
+ },
+ {
+  "folder": "vm07-tip-jar",
+  "t": 28.25,
+  "series": "vm",
+  "ep": 7,
+  "lines": [
+   "THE TIP SCREEN",
+   "IS WATCHING"
+  ],
+  "hl": [
+   "WATCHING"
+  ],
+  "focus": [
+   480,
+   852
+  ],
+  "zoom": 1.0,
+  "place": [
+   540,
+   1170
+  ]
  }
 ]
