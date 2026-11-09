@@ -89,3 +89,6 @@
 - Metricool media swapped (commit 14af55f); new ids: VL2 421477191 (11/10), VM3 421477235 (11/11), VL3 421477279 (11/12, new cover too), VM4 421477351 (11/13), VL4 421477449 (11/14), VM5 421477598 (11/15), VL5 421477640 (11/16), VM6 421477739 (11/17), VL6 421477800 (11/18), VM7 421477872 (11/19).
 - Pre-upload check of VL2 (11/10) rerun on the new media: PASS (byte-for-byte, 14 subtitles, every line heard).
 
+## 11/9 KST: AI labels stay as they are (owner)
+
+- Compared the rules: YouTube exempts fictional animation (label off); Instagram and TikTok name realistic-sounding audio (our voices), so their labels stay on. Option of a TikTok caption disclosure instead of the label offered; owner: "걍 두자".
