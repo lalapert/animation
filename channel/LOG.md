@@ -81,3 +81,11 @@
 - The B plan (alternating with a second horror series) was dropped the same day: STILL RECORDING alone, every three days at 13:00, as before (tape 19 *Midnight* on 12/31). The second series is on hold (`channel/HORROR_NEW_SERIES.md`).
 - Reverted the B-plan commit (season dates, runbook) and moved the two posts back in Metricool: tape 4 *Toy Garden* 11/16 13:00 (421411830), tape 5 *Screen 2* 11/19 13:00 (421411893).
 
+## 11/9 17:10 KST: end card on the ten banked episodes (owner: "1. 처음부터 넣어")
+
+- `endCard()` (vmkit.js): the cast, NEW EPISODE EVERY DAY, tomorrow's show, top of the frame, last 1.25 s. Called last in `render()` of VM3–VM7 and VL2–VL6; new episodes inherit it (PRODUCTION.md §2.3).
+- Re-rendered all ten; audio copied unchanged from the previous final files (−14.0/−14.1 LUFS), black frames 0, durations unchanged. Picture before the card compared with the previous cut (PSNR): 61–70 dB for seven; VM3 30 dB (subtitles now follow the 11/8 width rule and are a little smaller), VM4 40 dB and VL3 47 dB (shared-kit changes since their render; looked at the frames, no defects).
+- VL3: Vera's and Cleo's soot smudges after the blast read as grey stains on the face (as in VL6), and the cover had the same smudge. Removed the soot (the frizzed hair carries the blast); new cover `channel/thumbs/vl03-help-wanted.jpg`.
+- Metricool media swapped (commit 14af55f); new ids: VL2 421477191 (11/10), VM3 421477235 (11/11), VL3 421477279 (11/12, new cover too), VM4 421477351 (11/13), VL4 421477449 (11/14), VM5 421477598 (11/15), VL5 421477640 (11/16), VM6 421477739 (11/17), VL6 421477800 (11/18), VM7 421477872 (11/19).
+- Pre-upload check of VL2 (11/10) rerun on the new media: PASS (byte-for-byte, 14 subtitles, every line heard).
+
