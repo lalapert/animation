@@ -99,3 +99,8 @@
 - Done now: pre-upload checks for every post through Thursday morning: 11/10 VL2 and tape 2, 11/11 VM3, 11/12 VL3 (all PASS, contact sheets looked at). No horror post on 11/11–11/12.
 - The scheduled runs before 11/12 11:00 KST answer one line and stop (trigger prompt updated); the 11/12 15:41 run resumes the full flow (analytics, the check of 11/13's posts, production).
 - Bank when paused: Void Mart 5 (VM3–7), Volt Labs 5 (VL2–6), horror 4 (tapes 2–5); posts covered through 11/19.
+
+## 11/10 KST: covers show the main cast (owner: "썸네일에는 주인공 라인이 주로", "클릭하고 싶게")
+
+- Rule in PRODUCTION.md §3.5. Redone: VL2 (published 11/10 with the bowler-hat customer; new file for the owner to swap by hand), VM3 (Pip crying, GOODBYE, KEVIN), VL4 (Vera and the gauntlet, SHE SPENT THE RENT ON THIS), VM6 (Pip, SHE LOST TO A CAMERA), VL6 (Vera, Sourdough frame). Covers of VM4, VM5, VL3, VL5, VM7 already show the main cast and stay.
+
