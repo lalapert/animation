@@ -63,7 +63,8 @@
   "place": [
    540,
    1200
-  ]
+  ],
+  "drawn": true
  },
  {
   "folder": "vm04-zero-g-mop",
@@ -233,7 +234,8 @@
   "place": [
    540,
    1160
-  ]
+  ],
+  "drawn": true
  },
  {
   "folder": "vm05-dennis",

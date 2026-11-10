@@ -10,6 +10,7 @@ const ROOT = path.resolve(__dirname, '..', '..'), SPECS = JSON.parse(fs.readFile
   const tp = await b.newPage({ viewport: { width: 1080, height: 1920 } }); tp.on('pageerror', e => console.error('[thumb]', e.message));
   await tp.goto('file://' + path.join(ROOT, 'channel/brand/thumb.html')); await tp.waitForFunction(() => window.READY === true);
   for (const s of SPECS.filter(s => !want.length || want.includes(s.folder))) {
+    if (s.drawn) { console.log('skip (drawn cover, use covers.cjs):', s.folder); continue; }
     const p = await b.newPage({ viewport: { width: 1080, height: 1920 } }); p.on('pageerror', e => console.error('[' + s.folder + ']', e.message));
     await p.goto('file://' + path.join(ROOT, s.folder, 'index.html'));
     await p.waitForFunction(() => window.READY === true || window.INIT_ERROR, null, { timeout: 120000 });
