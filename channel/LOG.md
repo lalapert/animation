@@ -104,3 +104,4 @@
 
 - Rule in PRODUCTION.md §3.5. Redone: VL2 (published 11/10 with the bowler-hat customer; new file for the owner to swap by hand), VM3 (Pip crying, GOODBYE, KEVIN), VL4 (Vera and the gauntlet, SHE SPENT THE RENT ON THIS), VM6 (Pip, SHE LOST TO A CAMERA), VL6 (Vera, Sourdough frame). Covers of VM4, VM5, VL3, VL5, VM7 already show the main cast and stay.
 
+- Metricool covers swapped (commit 68a3d1b); new ids: VM3 422689971 (11/11), VL4 422690019 (11/14), VM6 422690103 (11/17), VL6 422690150 (11/18). VL2 was already published: the owner swaps its cover by hand.
