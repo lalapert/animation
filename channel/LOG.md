@@ -110,3 +110,4 @@
 
 - Kit: channel/brand/cover.js, scenes in channel/brand/covers/, runner channel/tools/covers.cjs; specs with "drawn": true are skipped by thumbs.cjs. Rule in PRODUCTION.md §3.5.
 - VM3 (11/11) and VL4 (11/14) swapped to drawn covers. Still captured: VM4 (11/13), VM5, VL5, VM6, VL6, VM7; redrawn two per run from the 11/12 15:41 run, soonest first.
+- Metricool ids after the drawn-cover swap: VM3 422754413 (11/11), VL4 422754471 (11/14). Trigger prompt: covers drawn (step 4), and step 0 (다) redraws two banked covers per run.
