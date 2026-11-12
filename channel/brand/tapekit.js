@@ -198,6 +198,9 @@ const TK = {};
       g.drawImage(src, 0, 0); g.filter = 'none';
       g.globalCompositeOperation = 'multiply'; g.fillStyle = 'rgb(170,215,180)'; g.fillRect(0, 0, TW, TH);
       g.globalCompositeOperation = 'source-over';
+    } else if (look === 'mono') {                                   // 11/12 option: plain black and white (no green), harder blacks
+      g.filter = `grayscale(1) contrast(${o.contrast || 1.55}) brightness(${o.brightness || 1.2})`;
+      g.drawImage(src, 0, 0); g.filter = 'none';
     } else {
       g.filter = `saturate(.75) contrast(1.12) brightness(${o.brightness || 1.05}) sepia(.18)`;
       g.drawImage(src, 0, 0); g.filter = 'none';
@@ -207,7 +210,7 @@ const TK = {};
     g.fillStyle = vg; g.fillRect(0, 0, TW, TH);
     // grain
     const N = noiseTile(), fr = Math.floor(t * 30);
-    g.globalAlpha = look === 'cctv' ? .2 : .12; g.globalCompositeOperation = 'overlay';
+    g.globalAlpha = look === 'cctv' || look === 'mono' ? .2 : .12; g.globalCompositeOperation = 'overlay';
     g.drawImage(N[fr % N.length], -(fr * 37 % 60), -(fr * 53 % 40), TW + 80, TH + 60);
     g.globalCompositeOperation = 'source-over'; g.globalAlpha = 1;
     // scanlines

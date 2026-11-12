@@ -3,6 +3,7 @@
 // no knee joint, big round shoes, one step per beat with a body bob (lowest when the feet are apart, highest when they pass),
 // the swing foot lifts on an arc, the stance foot stays planted (moves back exactly as fast as the body moves forward).
 // Use: draw the legs first (they start at the waist line, local y 0), then the upper-body rig on top so the hem covers them.
+// Optional (11/12, taller option): L.seat = a pelvis block between the hem and the leg tops (floor = seat + len), L.hipX = leg spacing.
 'use strict';
 const LEGS = {
   pip: { len: 118, w: 30, hip: 22, pants: '#3b2f63', pantsS: '#2c2350', shoe: '#fbf7ff', sole: '#ff7a1a', shoeW: 34 },
@@ -23,10 +24,11 @@ function walkPose(p, kind, A = 28, lift = 30, bob = 9) {
 }
 // draw the two legs in rig-local units (call inside the rig's translate/scale), dir = +1 walking right, -1 left
 function drawLegs(g, kind, pose, dir = 1) {
-  const L = LEGS[kind];
+  const L = LEGS[kind], seat = L.seat || 0, hipX = L.hipX ?? L.hip * .55;
   const sorted = pose.feet.slice().sort((a, b) => (a.side === -dir ? -1 : 1));                  // the far leg first
+  g.save(); g.translate(0, seat);                                                              // optional pelvis block (seat > 0): the legs start lower
   for (const f of sorted) {
-    const far = f.side === -dir, hx = f.side * L.hip * .55, hy = 0, fx = f.x * dir, fy = f.y;
+    const far = f.side === -dir, hx = f.side * hipX, hy = 0, fx = f.x * dir, fy = f.y;
     const dx = fx - hx, dy = fy - hy, d = Math.hypot(dx, dy), slack = Math.max(0, L.len - d);
     const nx = dy / d * dir, ny = -dx / d * dir, bend = slack * .9 + 5;                         // the one bend points the way she walks
     const cx = (hx + fx) / 2 + nx * bend, cy = (hy + fy) / 2 + ny * bend;
@@ -42,5 +44,11 @@ function drawLegs(g, kind, pose, dir = 1) {
     tShape(g, far ? '#d9d4e6' : L.shoe, shoe);
     tShape(g, L.sole, gg => gg.rect(dir > 0 ? -sw * .55 : -sw * .8, 3, sw * 1.35, 6), 0); tShape(g, null, shoe);
     g.restore();
+  }
+  g.restore();
+  if (seat > 0) {                                                                              // the hips: pants from the hem down to the leg tops
+    const hw = L.hipW || hipX + L.w * .75;
+    const hips = gg => { gg.moveTo(-hw, -12); gg.lineTo(hw, -12); gg.lineTo(hw + 2, seat + 4); gg.quadraticCurveTo(hw * .5, seat + L.w * .55, 0, seat + 6); gg.quadraticCurveTo(-hw * .5, seat + L.w * .55, -hw - 2, seat + 4); gg.closePath(); };
+    tShape(g, L.pants, hips); tShade(g, hips, L.pantsS, gg => gg.rect(dir > 0 ? hw * .35 : -hw - 4, -14, hw * .7, seat + 30));
   }
 }

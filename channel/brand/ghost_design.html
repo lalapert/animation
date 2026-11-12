@@ -1,0 +1,203 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Ghost design options</title><style>html,body{margin:0;background:#000}canvas{display:block}</style></head>
+<body><canvas id="c" width="2340" height="2340"></canvas>
+<script src="tapekit.js"></script>
+<script>
+// STILL RECORDING: what "it" looks like (owner 11/12: "let's see how the ghost is made, and look at monochrome too").
+// Five designs, each as a clean card and inside the tape in three looks: CCTV green (now), plain black and white (new 'mono' grade), camcorder colour.
+// Rule kept from HORROR_SERIES.md: "it" never shows a face. PG-13: no blood, no gore.
+'use strict';
+const OUT = document.getElementById('c').getContext('2d');
+const mk = (w, h) => { const c = document.createElement('canvas'); c.width = w; c.height = h; return c; };
+const TW = TK.TW, TH = TK.TH;
+const RAWC = mk(TW, TH), RAWK = mk(TW, TH), WORK = mk(TW, TH), WIN = mk(TW, TH);
+const rgb = (c, k = 1) => `rgb(${Math.min(255, c[0] * k) | 0},${Math.min(255, c[1] * k) | 0},${Math.min(255, c[2] * k) | 0})`;
+function poly(g, pts, fill) { g.beginPath(); pts.forEach(([x, y], i) => i ? g.lineTo(x, y) : g.moveTo(x, y)); g.closePath(); g.fillStyle = fill; g.fill(); }
+function ell(g, x, y, rx, ry, fill, rot = 0) { g.beginPath(); g.ellipse(x, y, rx, ry, rot, 0, 6.2832); g.fillStyle = fill; g.fill(); }
+const mir = pts => pts.map(([x, y]) => [-x, y]);
+
+// ---------------------------------------------------------------- the designs (metres, feet at 0,0, up is -y)
+const GH = {
+  // A: the figure already used in tape 5 (2.05 m, no face, arms too low)
+  A: { h: 2.05, draw(g) {
+    const H = 2.05, W = H * .26, Y = y => -H + y, c = 'rgb(6,6,8)';
+    ell(g, 0, Y(H * .07), W * .3, H * .075, c);
+    poly(g, [[-W * .14, H * .13], [W * .14, H * .13], [W * .5, H * .2], [W * .46, H * .55], [W * .52, H * .62], [W * .36, H * .62], [W * .3, H * .58], [W * .24, H], [W * .04, H],
+      [0, H * .6], [-W * .04, H], [-W * .24, H], [-W * .3, H * .58], [-W * .36, H * .62], [-W * .52, H * .62], [-W * .46, H * .55], [-W * .5, H * .2]].map(([x, y]) => [x, Y(y)]), c);
+  } },
+  // B: a store mannequin in 1999 clothes, blank egg head, seams at the neck and wrists, head tilted
+  B: { h: 1.86, draw(g, o) {
+    const k = o.light, skin = [232, 226, 214], pants = [30, 30, 34], jacket = [40, 104, 116];
+    for (const s of [1, -1]) {
+      const P = s > 0 ? x => x : mir;
+      poly(g, P([[.02, -.92], [.17, -.92], [.15, -.06], [.04, -.06]]), rgb(pants, k));
+      ell(g, s * .095, -.035, .065, .032, rgb(skin, k * .9));
+      poly(g, P([[.19, -1.43], [.26, -1.46], [.30, -1.0], [.22, -.98]]), rgb(jacket, k * (s > 0 ? .78 : 1)));        // sleeve
+      ell(g, s * .265, -.915, .04, .072, rgb(skin, k * .95), s * .08);                                                 // smooth hand, no fingers
+      g.fillStyle = rgb([60, 56, 52], k); g.fillRect(s * .265 - .035, -.985, .07, .008);                               // wrist seam
+    }
+    poly(g, [[-.25, -1.47], [.25, -1.47], [.23, -1.38], [.18, -1.05], [.205, -.84], [-.205, -.84], [-.18, -1.05], [-.23, -1.38]], rgb(jacket, k));
+    poly(g, [[.02, -1.47], [.25, -1.47], [.23, -1.38], [.18, -1.05], [.205, -.84], [.02, -.84]], rgb(jacket, k * .8));        // shade side
+    poly(g, [[-.075, -1.47], [.075, -1.47], [0, -1.24]], rgb(skin, k));                                                  // bare chest V
+    g.fillStyle = rgb(skin, k); g.fillRect(-.04, -1.6, .08, .14);
+    g.fillStyle = rgb([60, 56, 52], k); g.fillRect(-.04, -1.535, .08, .007);                                             // neck seam
+    g.save(); g.translate(.005, -1.69); g.rotate(.22);
+    ell(g, 0, 0, .095, .125, rgb(skin, k));
+    g.save(); g.beginPath(); g.ellipse(0, 0, .095, .125, 0, 0, 6.2832); g.clip(); ell(g, .07, .02, .07, .14, rgb(skin, k * .78)); g.restore();
+    ell(g, -.03, -.05, .022, .04, `rgba(255,255,255,${.55 * Math.min(1, k)})`, -.3);                                    // gloss
+    g.restore();
+  } },
+  // C: an ordinary 1999 shopper seen from behind. When it turns round, the front is the back too (hair, scrunchie, jacket yoke), toes point away
+  C: { h: 1.72, draw(g, o) {
+    const k = o.light, jeans = [112, 132, 164], purple = [104, 58, 146], teal = [36, 146, 150], hair = [62, 42, 30], hand = [196, 156, 126];
+    for (const s of [1, -1]) {
+      const P = s > 0 ? x => x : mir;
+      poly(g, P([[.02, -.86], [.15, -.86], [.14, -.07], [.04, -.07]]), rgb(jeans, k * (s > 0 ? .85 : 1)));
+      ell(g, s * .09, -.045, .055, .05, rgb([226, 226, 226], k));                                                          // sneaker heel toward us
+      g.fillStyle = rgb([200, 60, 70], k); g.fillRect(s * .09 - .018, -.09, .036, .04);                                     // heel tab
+      poly(g, P([[.2, -1.38], [.27, -1.32], [.31, -.98], [.23, -.95]]), rgb(purple, k * (s > 0 ? .8 : 1)));                // puffy sleeve
+      ell(g, s * .27, -.9, .036, .055, rgb(hand, k));                                                                       // back of the hand (both sides)
+    }
+    poly(g, [[-.24, -1.42], [.24, -1.42], [.28, -1.1], [.25, -.84], [-.25, -.84], [-.28, -1.1]], rgb(purple, k));
+    poly(g, [[-.24, -1.42], [.24, -1.42], [.26, -1.27], [0, -1.22], [-.26, -1.27]], rgb(teal, k));                         // back yoke
+    g.fillStyle = rgb([235, 235, 235], k); g.fillRect(-.27, -1.24, .54, .025);                                              // white stripe
+    g.fillStyle = rgb(purple, k * .7); g.fillRect(-.25, -.88, .5, .04);                                                     // elastic hem
+    ell(g, 0, -1.42, .12, .045, rgb(teal, k * .85));                                                                        // folded hood
+    // the bag in the right hand
+    g.fillStyle = rgb([236, 232, 222], k); g.fillRect(.22, -.88, .17, .2);
+    g.strokeStyle = rgb([236, 232, 222], k); g.lineWidth = .012; g.beginPath(); g.moveTo(.25, -.88); g.quadraticCurveTo(.27, -.95, .3, -.88); g.stroke();
+    g.fillStyle = rgb([180, 40, 50], k); g.fillRect(.24, -.82, .13, .02);
+    // the head: all hair, a scrunchie and a ponytail on this side as well
+    ell(g, 0, -1.6, .1, .12, rgb(hair, k));
+    poly(g, [[-.035, -1.6], [.035, -1.6], [.03, -1.43], [0, -1.39], [-.03, -1.43]], rgb(hair, k * .8));
+    ell(g, 0, -1.6, .03, .022, rgb([226, 92, 150], k));
+  } },
+  // D: a night guard (1999 uniform) whose face is always blown out, as if a flashlight is on it
+  D: { h: 1.80, draw(g, o) {
+    const k = o.light, shirt = [122, 136, 160], navy = [30, 34, 56], skin = [190, 150, 120];
+    for (const s of [1, -1]) {
+      const P = s > 0 ? x => x : mir;
+      poly(g, P([[.02, -.9], [.16, -.9], [.15, -.06], [.04, -.06]]), rgb(navy, k * (s > 0 ? .8 : 1)));
+      ell(g, s * .1, -.035, .07, .035, rgb([16, 16, 18], 1));
+      poly(g, P([[.19, -1.42], [.25, -1.4], [.28, -.98], [.21, -.96]]), rgb(shirt, k * (s > 0 ? .78 : 1)));
+      ell(g, s * .25, -.91, .038, .06, rgb(skin, k));
+    }
+    g.save(); g.translate(.25, -.9); g.rotate(-.25); g.fillStyle = rgb([20, 20, 22], 1); g.fillRect(-.02, 0, .04, .2); g.restore();   // flashlight, off
+    poly(g, [[-.22, -1.43], [.22, -1.43], [.2, -1.1], [.19, -.88], [-.19, -.88], [-.2, -1.1]], rgb(shirt, k));
+    poly(g, [[.02, -1.43], [.22, -1.43], [.2, -1.1], [.19, -.88], [.02, -.88]], rgb(shirt, k * .82));
+    g.fillStyle = rgb(navy, k); g.fillRect(-.23, -1.44, .1, .03); g.fillRect(.13, -1.44, .1, .03);                        // epaulettes
+    g.fillStyle = rgb([16, 16, 18], 1); g.fillRect(-.195, -.93, .39, .05);                                                    // belt
+    g.fillStyle = rgb([24, 24, 26], 1); g.fillRect(-.18, -.98, .06, .1);                                                      // radio
+    ell(g, -.1, -1.32, .025, .03, rgb([206, 172, 80], k * 1.1));                                                               // badge
+    g.fillStyle = rgb(skin, k); g.fillRect(-.04, -1.56, .08, .13);
+    ell(g, 0, -1.64, .09, .115, rgb(skin, k));
+    poly(g, [[-.1, -1.72], [.1, -1.72], [.09, -1.8], [-.09, -1.8]], rgb(navy, k)); poly(g, [[-.1, -1.72], [.15, -1.72], [.13, -1.69], [-.1, -1.69]], rgb(navy, k * .7));
+    // the glare: the face is gone under it; a long horizontal streak, like a lens flare
+    g.save(); g.globalCompositeOperation = 'lighter';
+    const r = g.createRadialGradient(0, -1.63, 0, 0, -1.63, .42); r.addColorStop(0, 'rgba(255,255,255,1)'); r.addColorStop(.22, 'rgba(255,255,250,.95)'); r.addColorStop(.45, 'rgba(255,250,235,.35)'); r.addColorStop(1, 'rgba(255,250,235,0)');
+    g.fillStyle = r; g.beginPath(); g.arc(0, -1.63, .42, 0, 6.2832); g.fill();
+    const st = g.createLinearGradient(-1.1, 0, 1.1, 0); st.addColorStop(0, 'rgba(255,255,255,0)'); st.addColorStop(.5, 'rgba(255,255,255,.75)'); st.addColorStop(1, 'rgba(255,255,255,0)');
+    g.fillStyle = st; g.fillRect(-1.1, -1.645, 2.2, .03);
+    g.restore();
+    ell(g, 0, -1.63, .1, .12, '#fff');
+  } },
+  // E: only on tape. A person-shaped hole where the tape is damaged: the picture behind slides sideways, rows drop out
+  E: { h: 1.78, screen: true },
+};
+const HUMAN = [[-.05, -1.55], [.05, -1.55], [.21, -1.47], [.26, -1.38], [.28, -.88], [.22, -.86], [.2, -1.2], [.17, -.9], [.15, -.05], [.03, -.05], [0, -.82], [-.03, -.05], [-.15, -.05], [-.17, -.9], [-.2, -1.2], [-.22, -.86], [-.28, -.88], [-.26, -1.38], [-.21, -1.47]];
+function humanPath(g, fx, fy, u, hk = 1) {
+  g.beginPath();
+  HUMAN.forEach(([x, y], i) => { const X = fx + x * u, Y = fy + y * u * hk; i ? g.lineTo(X, Y) : g.moveTo(X, Y); }); g.closePath();
+  g.moveTo(fx + .095 * u, fy - 1.66 * u * hk); g.ellipse(fx, fy - 1.66 * u * hk, .095 * u, .12 * u * hk, 0, 0, 6.2832);
+}
+// E in screen space: copy the picture under the outline with sideways row shifts, dropout lines, a chroma edge
+function dropout(g, fx, fy, u, seed) {
+  const R = TK.rng(seed), snap = mk(g.canvas.width, g.canvas.height); snap.getContext('2d').drawImage(g.canvas, 0, 0);
+  const top = fy - 1.8 * u, bot = fy, bh = Math.max(2, Math.round(u * .035));
+  g.save(); humanPath(g, fx, fy, u); g.clip();
+  for (let y = top; y < bot; y += bh) {                                   // each band comes from somewhere else in the picture
+    const dx = (R() - .5) * u * 1.2, dy = (R() - .5) * u * .9;
+    g.drawImage(snap, 0, y + dy, snap.width, bh, dx, y, snap.width, bh);
+    const v = R(); if (v < .45) { g.fillStyle = `rgba(${v < .2 ? '235,235,235' : '10,10,12'},${.25 + R() * .4})`; g.fillRect(fx - .4 * u, y, .8 * u, bh); }
+  }
+  for (let i = 0; i < 18; i++) { const y = top + R() * (bot - top); g.fillStyle = `rgba(255,255,255,${.5 + R() * .45})`; g.fillRect(fx - .4 * u, y, .8 * u, Math.max(1, u * .006 + R() * u * .01)); }
+  g.restore();
+  g.save(); g.globalCompositeOperation = 'screen'; g.lineWidth = Math.max(1, u * .006);
+  g.translate(-u * .025, 0); humanPath(g, fx, fy, u); g.strokeStyle = 'rgba(40,220,255,.22)'; g.stroke();
+  g.translate(u * .05, 0); humanPath(g, fx, fy, u); g.strokeStyle = 'rgba(255,40,180,.2)'; g.stroke();
+  g.restore();
+}
+
+// ---------------------------------------------------------------- in the tape
+const CAM = { cctv: { x: 3.6, y: 4.2, z: .4, yaw: -.1, pitch: -.36, fov: 80 }, cam: { x: .4, y: 1.6, z: 3, yaw: .05, pitch: -.03, fov: 66 } };
+const SPOT = { cctv: { x: .7, z: 6.0, amb: 1.25, fog: .04 }, cam: { x: .55, z: 7.4, amb: .75, fog: .05 } };
+function project(cam, p) { const q = cam.toCam(p); return q[2] > .05 ? [cam.W / 2 + cam.f * q[0] / q[2], cam.H / 2 - cam.f * q[1] / q[2], q[2]] : null; }
+let CAMS = {};
+function placeGhost(g, key, which) {
+  const D = GH[key], cam = CAMS[which], sp = SPOT[which];
+  const feet = project(cam, [sp.x, 0, sp.z]), head = project(cam, [sp.x, D.h, sp.z]);
+  const u = (feet[1] - head[1]) / D.h, d = Math.hypot(sp.x - cam.x, -cam.y + 1, sp.z - cam.z), light = sp.amb * Math.exp(-d * sp.fog) * .9;
+  g.save(); g.fillStyle = 'rgba(0,0,0,.35)'; g.beginPath(); g.ellipse(feet[0], feet[1], .32 * u, .06 * u, 0, 0, 6.2832); g.fill(); g.restore();
+  if (D.screen) { dropout(g, feet[0], feet[1], u, 7); return; }
+  g.save(); g.translate(feet[0], feet[1]); g.rotate(-Math.atan2(head[0] - feet[0], feet[1] - head[1])); g.scale(u, u); D.draw(g, { light }); g.restore();
+}
+function tapePanel(key, look) {
+  const which = look === 'camcorder' ? 'cam' : 'cctv';
+  const w = WORK.getContext('2d'); w.setTransform(1, 0, 0, 1, 0, 0); w.drawImage(which === 'cam' ? RAWK : RAWC, 0, 0);
+  placeGhost(w, key, which);
+  const wg = WIN.getContext('2d'); wg.setTransform(1, 0, 0, 1, 0, 0);
+  TK.grade(wg, WORK, 1.0, look === 'camcorder' ? 'camcorder' : look);
+  TK.vhs(wg, 1.0, 1, 3);
+  TK.osd(wg, look === 'camcorder' ? 'camcorder' : 'cctv', 1.0, { cam: 'CAM 01', place: 'MAIN CONCOURSE', stamp: '12-31-1999  23:58:41', time: 'PM 11:58', date: 'DEC.31.1999' });
+  return WIN;
+}
+
+// ---------------------------------------------------------------- the clean design card
+const NOTES = {
+  A: ['A  THE TALL ONE', 'tape 5 now: 2.05 m, no face, arms too low'],
+  B: ['B  THE DISPLAY', 'a mannequin that is not where it was'],
+  C: ['C  THE LAST SHOPPER', 'back of the head on both sides'],
+  D: ['D  THE GLARE', 'a guard whose face is always blown out'],
+  E: ['E  THE DROPOUT', 'only on tape: a hole in the picture'],
+};
+function card(g, x0, y0, W, H, key) {
+  g.save(); g.translate(x0, y0); g.beginPath(); g.rect(0, 0, W, H); g.clip();
+  const bg = g.createLinearGradient(0, 0, 0, H); bg.addColorStop(0, '#4a4a52'); bg.addColorStop(1, '#2c2c32'); g.fillStyle = bg; g.fillRect(0, 0, W, H);
+  const floorY = H - 34, u = (floorY - 92) / 2.1;
+  g.strokeStyle = 'rgba(255,255,255,.12)'; g.lineWidth = 1.5; g.font = '22px "VT323"'; g.fillStyle = 'rgba(255,255,255,.35)'; g.textAlign = 'left';
+  for (let m = 0; m <= 2; m += .5) { const y = floorY - m * u; g.beginPath(); g.moveTo(14, y); g.lineTo(W - 14, y); g.stroke(); g.fillText(m.toFixed(1) + ' m', 16, y - 4); }
+  // a 1.75 m person for scale (dashed)
+  g.save(); g.setLineDash([6, 6]); g.strokeStyle = 'rgba(255,255,255,.28)'; g.lineWidth = 2; humanPath(g, W - 90, floorY, u * .985); g.stroke(); g.restore();
+  const D = GH[key];
+  if (key === 'E') {
+    for (let i = 0; i < 14; i++) { g.fillStyle = i % 2 ? '#5a5a62' : '#3a3a42'; g.fillRect(150 + i * 18, floorY - 2.0 * u, 18, 2.0 * u); }
+    dropout(g, W / 2 - 20, floorY, u, 5);
+  } else if (key === 'C') {
+    for (const [cx, lab] of [[W / 2 - 115, 'BACK'], [W / 2 + 55, 'FRONT']]) {
+      g.save(); g.translate(cx, floorY); g.scale(u, u); D.draw(g, { light: 1 }); g.restore();
+      g.fillStyle = 'rgba(255,255,255,.7)'; g.font = '26px "VT323"'; g.textAlign = 'center'; g.fillText(lab, cx, floorY + 26);
+    }
+  } else { g.save(); g.translate(W / 2 - 30, floorY); g.scale(u, u); D.draw(g, { light: 1 }); g.restore(); }
+  g.fillStyle = 'rgba(0,0,0,.55)'; g.fillRect(0, 0, W, 78);
+  g.fillStyle = '#efe9da'; g.textAlign = 'left'; g.font = '34px "Special Elite"'; g.fillText(NOTES[key][0], 16, 36);
+  g.fillStyle = 'rgba(239,233,218,.75)'; g.font = '26px "VT323"'; g.fillText(NOTES[key][1], 16, 66);
+  g.restore();
+}
+
+(async () => {
+  await TK.fonts('fonts/');
+  const S = TK.concourse({ lightsOn: z => (z % 12 === 3 ? .9 : 0) });
+  CAMS.cctv = TK.render(RAWC.getContext('2d'), S, CAM.cctv, { ambient: 1.25, fog: .04 });
+  CAMS.cam = TK.render(RAWK.getContext('2d'), S, CAM.cam, { ambient: .75, fog: .05 });
+  const PW = 560, PH = 420, GAP = 20, TOP = 120;
+  OUT.fillStyle = '#0b0b0d'; OUT.fillRect(0, 0, 2340, 2340);
+  OUT.fillStyle = '#efe9da'; OUT.font = '44px "Special Elite"'; OUT.textAlign = 'left'; OUT.fillText('STILL RECORDING  —  WHAT "IT" LOOKS LIKE', GAP, 56);
+  OUT.font = '32px "VT323"'; OUT.fillStyle = 'rgba(239,233,218,.7)';
+  ['DESIGN', 'CCTV (NOW: GREEN)', 'BLACK & WHITE', 'CAMCORDER (COLOUR)'].forEach((s, i) => OUT.fillText(s, GAP + i * (PW + GAP), 104));
+  ['A', 'B', 'C', 'D', 'E'].forEach((key, r) => {
+    const y = TOP + r * (PH + GAP);
+    card(OUT, GAP, y, PW, PH, key);
+    ['cctv', 'mono', 'camcorder'].forEach((look, i) => OUT.drawImage(tapePanel(key, look), GAP + (i + 1) * (PW + GAP), y, PW, PH));
+  });
+  window.render = () => {}; window.READY = true;
+})();
+</script></body></html>

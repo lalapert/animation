@@ -1,0 +1,81 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Leg length options</title><style>html,body{margin:0;background:#000}canvas{display:block}</style></head>
+<body><canvas id="c" width="2400" height="1350"></canvas>
+<script>window.TL = { DUR: 6, VO: [], SHOTS: [] }; window.CHARS = {};</script>
+<script src="toon.js"></script><script src="vmkit.js"></script><script src="legs.js"></script>
+<script>
+// Owner 11/12: "the upper body is huge and the legs are tiny; the walk is fine; go taller". Three leg lengths side by side at one scale.
+// Head = hair top to chin (Pip 115, Rae 123 rig units). Waist at local y 0, hair top Pip -246, Rae -298, shoe sole +8.
+// ?mode=walk&opt=B renders a 1080x1920 walk like legs_test.html with that option.
+const Q = new URLSearchParams(location.search), MODE = Q.get('mode') || 'sheet';
+const BASE = { pip: { ...LEGS.pip }, rae: { ...LEGS.rae } };
+const HEAD = { pip: [246, 115], rae: [298, 123] };
+const SEAT = { A: { pip: 0, rae: 0 }, B: { pip: 22, rae: 26 }, C: { pip: 30, rae: 36 } };                         // pelvis block: a longer torso, not only longer legs
+const legFor = (kind, heads, seat) => Math.round(heads * HEAD[kind][1] - HEAD[kind][0] - seat - 8);
+const OPTS = {
+  A: { label: 'A  NOW', pip: 3.2, rae: 3.6 },
+  B: { label: 'B  TALLER', pip: 4.0, rae: 4.5 },
+  C: { label: 'C  TALLEST', pip: 4.5, rae: 5.2 },
+};
+function setLegs(opt) {
+  for (const k of ['pip', 'rae']) {
+    const seat = SEAT[opt][k], len = opt === 'A' ? BASE[k].len : legFor(k, OPTS[opt][k], seat);
+    Object.assign(LEGS[k], BASE[k], { len, seat, w: BASE[k].w + (len - BASE[k].len) * .03 }, seat ? { hipX: k === 'pip' ? 20 : 21 } : {});
+    delete (seat ? {} : LEGS[k]).hipX;
+  }
+}
+// one walker: legs from the floor up, upper body on the bob; arms hang to about 45% of the leg (mid-thigh)
+function walker(g, kind, p, x, floor, dir, s, o = {}) {
+  const L = LEGS[kind], k = L.len / BASE[kind].len, A = 28 * k, pose = walkPose(p, kind, A, 30 * k, 9 * Math.sqrt(k));
+  const waist = floor - ((L.seat || 0) + L.len + 8) * s / 100;
+  g.save(); g.fillStyle = 'rgba(10,4,30,.35)'; g.beginPath(); g.ellipse(x, floor + 6, 70 * s / 100, 12 * s / 100, 0, 0, 6.2832); g.fill(); g.restore();
+  g.save(); g.translate(x, waist); g.scale(s / 100, s / 100); drawLegs(g, kind, { feet: pose.feet, dy: 0 }, dir); g.restore();
+  const arms = { l: pose.swing * 18 * dir, r: -pose.swing * 18 * dir, bend: .08 };
+  const handY = Math.max(kind === 'pip' ? 96 : 112, Math.round((L.seat || 0) + L.len * .42));
+  g.save(); g.translate(x, waist + pose.dy * s / 100);
+  if (kind === 'pip') drawPip2(g, 0, 0, s, Object.assign({ turn: .7 * dir, armsDown: arms, handY, expr: 'grin' }, o));
+  else drawRae2(g, 0, 0, s, Object.assign({ turn: .7 * dir, armsDown: arms, handY, expr: 'deadpan', look: 1.5 * dir, scanner: false }, o));
+  g.restore();
+  return { top: waist - HEAD[kind][0] * s / 100 };
+}
+const g = document.getElementById('c').getContext('2d');
+function sheet() {
+  const W = 800, FLOOR = 1250, S = 165;
+  for (const [i, opt] of ['A', 'B', 'C'].entries()) {
+    g.save(); g.translate(i * W, 0); g.beginPath(); g.rect(0, 0, W, 1350); g.clip();
+    const bgG = g.createLinearGradient(0, 0, 0, 1350); bgG.addColorStop(0, '#1d1240'); bgG.addColorStop(1, '#3a2276'); g.fillStyle = bgG; g.fillRect(0, 0, W, 1350);
+    g.fillStyle = '#2a1858'; g.fillRect(0, FLOOR, W, 1350 - FLOOR);
+    setLegs(opt);
+    // head-height ticks from the floor up (one tick per Pip head)
+    g.strokeStyle = 'rgba(255,255,255,.10)'; g.lineWidth = 2;
+    for (let y = FLOOR, n = 0; y > 60; y -= HEAD.pip[1] * S / 100, n++) { g.beginPath(); g.moveTo(24, y); g.lineTo(W - 24, y); g.stroke(); }
+    const a = walker(g, 'pip', .12, 250, FLOOR, 1, S, { blink: false });
+    const b = walker(g, 'rae', .62, 560, FLOOR, -1, S, {});
+    g.fillStyle = '#fbf7ff'; g.font = '700 46px "Fredoka", sans-serif'; g.textAlign = 'left'; g.fillText(OPTS[opt].label, 40, 70);
+    g.font = '500 30px "Fredoka", sans-serif'; g.fillStyle = '#b9a6ff';
+    g.fillText(`Pip ${OPTS[opt].pip} heads   Rae ${OPTS[opt].rae} heads`, 40, 116);
+    g.restore();
+    if (i) { g.fillStyle = '#000'; g.fillRect(i * W - 3, 0, 6, 1350); }
+  }
+}
+// the walk, as legs_test.html, with one option
+function walkPage(t) {
+  const FLOOR = 1660, S = OPTS_S[Q.get('opt') || 'B'];
+  g.setTransform(1, 0, 0, 1, 0, 0);
+  g.drawImage(STATIC.store, 0, 0);
+  const fl = g.createLinearGradient(0, CT, 0, 1920); fl.addColorStop(0, '#4a2c8a'); fl.addColorStop(1, '#2a1858'); g.fillStyle = fl; g.fillRect(0, CT, 1080, 640);
+  g.strokeStyle = 'rgba(255,255,255,.07)'; g.lineWidth = 3; for (let x = -400; x < 1500; x += 120) { g.beginPath(); g.moveTo(540 + (x - 540) * .55, CT); g.lineTo(x, 1920); g.stroke(); }
+  for (let y = CT + 40, k = 40; y < 1920; k *= 1.25, y += k) { g.beginPath(); g.moveTo(0, y); g.lineTo(1080, y); g.stroke(); }
+  const kR = LEGS.rae.len / BASE.rae.len, kP = LEGS.pip.len / BASE.pip.len;
+  walker(g, 'rae', t / (1.15 * Math.sqrt(kR)), 980 - (4 * 28 * kR / (1.15 * Math.sqrt(kR))) * t * S / 100, FLOOR, -1, S, {});
+  walker(g, 'pip', t / (.95 * Math.sqrt(kP)), 90 + (4 * 28 * kP / (.95 * Math.sqrt(kP))) * t * S / 100, FLOOR, 1, S, { blink: (t % 3.1) < .12 });
+}
+const OPTS_S = { A: 150, B: 135, C: 122 };
+(async () => {
+  await toonFonts('fonts/');
+  if (MODE === 'walk') {
+    const c = document.getElementById('c'); c.width = 1080; c.height = 1920;
+    buildStore(); setLegs(Q.get('opt') || 'B'); window.render = walkPage; walkPage(0);
+  } else { sheet(); window.render = () => sheet(); }
+  window.READY = true;
+})();
+</script></body></html>

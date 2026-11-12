@@ -519,7 +519,7 @@ function drawRae2(c, x, y, s, o = {}) {
   // coffee mug: o.mug 0 = on the counter, 1 = at the mouth. Lifted, it is held by her right hand, and that arm goes up with it.
   const mk = o.mug != null ? Math.min(1, Math.max(0, o.mug)) : 0, me = mk * mk * (3 - 2 * mk), lifted = o.mug != null && mk > .05;
   const mx = 40 + (6 - 40) * me, my = -16 + (-176 + 16) * me;
-  if (o.armsDown) { hangingArms(c, o, 58, -122, 112, 24, R.hood, R.hoodS, R.skin, R.skinS); c.restore(); return; }
+  if (o.armsDown) { hangingArms(c, o, 58, -122, o.handY || 112, 24, R.hood, R.hoodS, R.skin, R.skinS); c.restore(); return; }
   if (o.arms !== false) {
     // left arm: forearm on the counter, or reaching for o.reachL = {x, y} (local units)
     if (o.reachL) { const r = o.reachL, mx = (-84 + r.x) / 2 - 6, my = (-78 + r.y) / 2 + 10; tTube(c, [-58, -122, -84, -78, mx, my, (mx + r.x) / 2, (my + r.y) / 2, r.x - 4, r.y + 2], 24, R.hood); tHand(c, r.x, r.y, 9.5, R.skin, R.skinS); }   // 11/8: the arm reaches the hand
@@ -606,7 +606,7 @@ function drawPip2(c, x, y, s, o = {}) {
     else tCurve(c, bi, by, ex, by - 5, bo, by, 2.8);
   }
   if (expr === 'worried' || expr === 'sheepish' || o.sweat) tShape(c, '#9fe6ff', g => { g.moveTo(54, -210); g.quadraticCurveTo(62, -196, 58, -190); g.quadraticCurveTo(52, -186, 49, -194); g.quadraticCurveTo(48, -200, 54, -210); g.closePath(); }, 2.6);
-  if (o.armsDown) { hangingArms(c, o, 52, -88, 96, 21, P.shirt, P.shirtS, P.skin, P.skinS); c.restore(); return; }
+  if (o.armsDown) { hangingArms(c, o, 52, -88, o.handY || 96, 21, P.shirt, P.shirtS, P.skin, P.skinS); c.restore(); return; }
   if (o.arms !== false) {
     if (o.hold) tTube(c, [-52, -88, -60, -60, -40, -86, -30, -100, -16, -104], 20, P.shirt);
     else if (!o.reach) { tTube(c, [-52, -88, -68, -50, -66, -16, -44, -10, -22, -12], 21, P.shirt); tHand(c, -18, -13, 8.5, P.skin, P.skinS); }   // reach: the episode draws this arm toward the camera
