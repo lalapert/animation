@@ -99,8 +99,8 @@ toonFonts().then(() => {
   // ---- 4a. headwear options ----
   const OY = 2140;
   panel(60, OY, 760, 470);
-  label('HEADWEAR  —  pick one', 100, OY + 42, 30, '#ffb066', 'left');
-  [['cap', 'A  cap (plan)', 'ponytail out the back'], ['none', 'B  no cap', 'high ponytail'], ['visor', 'C  visor', 'high ponytail']]
+  label('HEADWEAR  —  A chosen (11/12)', 100, OY + 42, 30, '#ffb066', 'left');
+  [['cap', 'A  cap (chosen)', 'ponytail out the back'], ['none', 'B  no cap', 'high ponytail'], ['visor', 'C  visor', 'high ponytail']]
     .forEach(([h, n, sub], i) => { const cx = 200 + i * 240; tile(cx, OY + 220, 210, 270, () => drawMax(c, cx, OY + 220 + 232 * 1.5, 150, { expr: 'cold', hat: h, pose: 'none' }), n, sub); });
   // ---- 4b. lineup with the store cast ----
   panel(850, OY, 530, 470);
