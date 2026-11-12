@@ -119,58 +119,37 @@ function lobby(g, tq, egg, figs, door) {
   const lv = lobbyLights(tq), S = egg ? LOB_EGG : LOB;
   S.lights.forEach((q, i) => { q.emit = .5 * lv[i]; });
   const sprites = [{ x: 0, y: 0, z: 60, draw: (gg, c) => pools(gg, c, lv) }];
-  for (const f of figs || []) sprites.push({ x: f.x, y: 1, z: f.z, draw: (gg, c) => tallOne(gg, c, f) });
+  for (const f of figs || []) sprites.push({ x: f.x, y: 1, z: f.z, draw: (gg, c) => broken(gg, c, f) });
   const cam = TK.render(g, S, CAM11, { ambient: 1.6, fog: .05, sprites });
   if (door) doorGap(g, cam, tq);
   return cam;
 }
 
-// ---------------------------------------------------------------- it, standing (on the screen): 2.05 m, no face, arms too long
-// o.arm 0..1 (0: hands at mid-thigh, 1: at the ankles), o.tilt head angle, o.lean toward the camera, o.alpha (the smear)
-function tallOne(g, cam, o) {
-  const feet = project(cam, [o.x, 0, o.z]), head = project(cam, [o.x, 2.05, o.z]); if (!feet || !head) return;
-  const u = (feet[1] - head[1]) / 2.05, arm = o.arm || 0;
-  g.save(); g.globalAlpha = o.alpha ?? 1;
-  g.translate(feet[0], feet[1]); g.rotate(-Math.atan2(head[0] - feet[0], feet[1] - head[1])); g.scale(u, u);
-  if (!o.ghost) { g.fillStyle = 'rgba(0,0,0,.45)'; g.beginPath(); g.ellipse(0, 0, .36, .07, 0, 0, 6.2832); g.fill(); }
-  g.rotate(o.lean || 0);
-  g.fillStyle = 'rgb(5,5,7)'; g.strokeStyle = 'rgb(5,5,7)'; g.lineCap = 'round';
-  if (!o.ghost) { g.shadowColor = 'rgba(200,200,190,.35)'; g.shadowBlur = Math.max(3, u * .05); }
-  poly(g, [[-.15, -1.02], [-.03, -1.02], [-.04, 0], [-.12, 0]]); g.fill();                                    // legs, thin
-  poly(g, [[.03, -1.02], [.15, -1.02], [.12, 0], [.04, 0]]); g.fill();
-  poly(g, [[-.28, -1.7], [-.2, -1.76], [.2, -1.76], [.28, -1.7], [.2, -1.3], [.16, -.98], [-.16, -.98], [-.2, -1.3]]); g.fill();   // torso, bony shoulders
-  const L = .98 + arm * .64;
-  for (const s of [-1, 1]) {                                                                                  // arms hang from the shoulders, far too long
-    const hx = s * (.33 + .05 * arm), hy = -1.7 + L;
-    poly(g, [[s * .2, -1.72], [s * .3, -1.7], [hx + s * .02, hy], [hx - s * .045, hy]]); g.fill();
-    g.lineWidth = .022;
-    for (const f of [-1, 0, 1]) { g.beginPath(); g.moveTo(hx - s * .012, hy - .01); g.lineTo(hx - s * .012 + f * .03, hy + .15 + .08 * arm - Math.abs(f) * .03); g.stroke(); }
-  }
-  g.fillRect(-.032, -1.86, .064, .14);                                                                        // neck
-  g.translate(0, -1.84); g.rotate(o.tilt || 0);
-  g.beginPath(); g.ellipse(0, -.1, .078, .118, 0, 0, 6.2832); g.fill();                                      // head: no face
-  g.restore();
-}
-// the figure on the screen: perfectly still, then one frame later it is somewhere else (a smear on that one frame)
+// ---------------------------------------------------------------- it, standing (on the screen): BROKEN (owner 11/12, the series figure)
+// TK.ghost 'broken': soft black, a little bigger than a person, head hanging sideways, one arm longer, two small uneven white eye
+// points. On the screen it stands perfectly still, then one frame later it is somewhere else, closer, the pose changed: the head
+// hangs further each time, a hand starts to come up toward the camera, and on the last jerk it leans in mid-stride.
+// (a smear of faint copies on that one frame)
 const STAGE = {
-  1: [{ x: .6, z: 12.9, arm: 0, tilt: 0 }, { x: .35, z: 11.4, arm: .12, tilt: .12 }],
-  2: [{ x: 1.0, z: 7.9, arm: .38, tilt: .12 }, { x: .1, z: 6.2, arm: .5, tilt: .36 }],
-  3: [{ x: -2.3, z: 4.7, arm: .72, tilt: -.15 }, { x: -3.15, z: 3.35, arm: .92, tilt: -.52, lean: .1 }],
+  1: [{ x: .6, z: 12.9, tilt: 0 }, { x: .35, z: 11.4, tilt: .18 }],
+  2: [{ x: 1.0, z: 7.9, tilt: -.25 }, { x: .1, z: 6.2, tilt: .3, armR: .15 }],
+  3: [{ x: -2.3, z: 4.7, tilt: -.45, armR: .2 }, { x: -3.15, z: 3.35, tilt: .5, armR: .5, charge: .14 }],
 };
 function figureAt(stage, tq) {
   const [a, b] = STAGE[stage], tj = TL.JERKS[stage - 1], f = Math.round((tq - tj) * FPS_CCTV);
   if (f < 0) return [a];
   if (f > 0) return [b];
-  const out = [];                                                                                            // the jerk frame: a smear from a to b
-  for (let k = 1; k <= 4; k++) { const u = k / 5; out.push({ x: lerp(a.x, b.x, u), z: lerp(a.z, b.z, u), arm: lerp(a.arm, b.arm, u), tilt: lerp(a.tilt, b.tilt, u), alpha: .22, ghost: true }); }
+  const out = [], L = (k, u) => lerp(a[k] || 0, b[k] || 0, u);                                               // the jerk frame: a smear from a to b
+  for (let k = 1; k <= 4; k++) { const u = k / 5; out.push({ x: L('x', u), z: L('z', u), tilt: L('tilt', u), armR: L('armR', u), charge: L('charge', u), alpha: .22 }); }
   out.push(b);
   return out;
 }
+const broken = (g, cam, f) => TK.ghost(g, cam, 'broken', f.x, f.z, { tilt: f.tilt || 0, armR: f.armR || 0, charge: f.charge || 0, alpha: f.alpha ?? 1, seed: 5 });
 
 // ---------------------------------------------------------------- it, seated in row G (seen from behind): the head turns round
 // A 3D head (a skull and a long jaw, no features), turned by phi (0 faces the screen, PI faces the camera) and tilted by roll;
-// the shoulders do not move. Past where a neck could go, the neck wrings (it narrows, stretches, folds catch the light), and a
-// faint blank sheen comes round where a face should be.
+// the shoulders do not move. Past where a neck could go, the neck wrings (it narrows, stretches, folds catch the light); when the
+// front comes round to the lens, BROKEN's two small uneven white eye points are there (nothing else: no face).
 const HEADC = [SEAT_G.x, 3.53, SEAT_G.z + .05];
 const SNAP_PHI = Math.atan2(CAM12.x - HEADC[0], CAM12.z - HEADC[2]) + 2 * Math.PI;      // straight at the lens: about 196 degrees
 function seatedOne(g, cam, phi, roll, lampL) {
@@ -212,17 +191,19 @@ function seatedOne(g, cam, phi, roll, lampL) {
     }
     g.restore();
   }
-  // the blank sheen where a face should be (only when that side comes round to the camera)
-  const fc = toW([0, -.045, .13]), fn = toW([0, -.03, 1.13]), n = [fn[0] - fc[0], fn[1] - fc[1], fn[2] - fc[2]];
-  const v = [cam.x - fc[0], cam.y - fc[1], cam.z - fc[2]], vl = Math.hypot(...v), nl = Math.hypot(...n), facing = (n[0] * v[0] + n[1] * v[1] + n[2] * v[2]) / (vl * nl);
-  if (facing > 0) {
-    const c = P(fc), e = P(toW([.13, -.045, .13]));
-    if (c && e) {
-      const r = Math.hypot(e[0] - c[0], e[1] - c[1]) * 1.2;
-      g.save(); poly(g, skull); g.clip();
-      const a = .2 * Math.pow(facing, 1.4) * (.35 + .65 * lampL), gr = g.createRadialGradient(c[0], c[1], 0, c[0], c[1], r);
-      gr.addColorStop(0, `rgba(215,215,215,${a})`); gr.addColorStop(.55, `rgba(215,215,215,${a * .8})`); gr.addColorStop(1, 'rgba(0,0,0,0)');   // a broad blank plateau, no features
-      g.fillStyle = gr; g.fillRect(c[0] - r, c[1] - r, 2 * r, 2 * r); g.restore();
+  // the eye points, only once the front has come round to the lens (they glow on their own: they stay when the projector dies)
+  const fc = toW([0, -.02, .13]), fn = toW([0, -.02, 1.13]), n = [fn[0] - fc[0], fn[1] - fc[1], fn[2] - fc[2]];
+  const v = [cam.x - fc[0], cam.y - fc[1], cam.z - fc[2]], facing = (n[0] * v[0] + n[1] * v[1] + n[2] * v[2]) / (Math.hypot(...v) * Math.hypot(...n));
+  if (facing > .35) {
+    const ea = clamp((facing - .35) / .4), eL = P(toW([-.033, -.012, .118])), eR = P(toW([.031, -.002, .114])), ref = P(toW([.067, -.012, .118]));
+    if (eL && eR && ref) {
+      const r = Math.hypot(ref[0] - eL[0], ref[1] - eL[1]) * .011 / .1;                                    // 1.1 cm in pixels
+      g.save(); g.shadowColor = 'rgba(0,0,0,0)';
+      g.filter = `blur(${Math.max(.6 * SS, r * .35).toFixed(2)}px)`; g.fillStyle = `rgba(255,255,255,${.95 * ea})`;
+      g.beginPath(); g.ellipse(eL[0], eL[1], r, r * .8, roll, 0, 6.2832); g.ellipse(eR[0], eR[1], r * .8, r * .7, roll, 0, 6.2832); g.fill();   // not quite level
+      g.filter = `blur(${Math.max(2 * SS, r * 1.6).toFixed(2)}px)`; g.fillStyle = `rgba(255,255,255,${.3 * ea})`;
+      g.beginPath(); g.ellipse((eL[0] + eR[0]) / 2, (eL[1] + eR[1]) / 2, r * 6, r * 2.6, roll, 0, 6.2832); g.fill();
+      g.restore();
     }
   }
   g.restore();

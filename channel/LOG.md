@@ -147,3 +147,4 @@
 - Tape 6 v3 swapped in Metricool: now 425369428, checked byte for byte.
 - Owner 11/12 night: the figure is BROKEN (a little bigger than a person, black, soft-edged, head hanging sideways, one arm longer, two uneven white points). Tape 6 re-rendered with BROKEN behind Leon (reach, lights out, eyes only), in stall 3, and against the lens for the jump; cover moved to 37.8 s (BROKEN in the lit stall behind him).
 - Tape 6 with BROKEN swapped in Metricool (video and cover): now 425396736, checked byte for byte.
+- Owner 11/12 '3 4 5 scarier': tape 4 v2 done (dark playback with zooms, held-frame walk, head snaps, self-winding key, failing lights, lights out, the cracked tin face at the lens with a stinger; -14.3 LUFS). New cover at 28.0 s. Metricool media and cover swapped: tape 4 now 425602676, checked byte for byte.
