@@ -8,6 +8,8 @@ Silence. Then the phone rings once, very loud, with the handset back on its hook
 """
 import json, os
 
+fr = lambda t: round(round(t * 6) / 6 - .004, 3)   # on a CCTV frame (6 fps), so sound and picture change together
+
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 cfg = json.load(open(os.path.join(HERE, "voice", "lines.json")))
 lines = {l["id"]: l for l in cfg["lines"]}
@@ -26,25 +28,25 @@ for a, b in zip(VO, VO[1:]):
 # Scare type of this tape: SOUND (tape 4 jumps at the lens, tape 5 is wrong movement only).
 ROLL = [0.5, 0.72]          # tracking roll into the playback
 RINGS = [1.2, 4.2, 7.2, 10.2]
-LIFT = 12.6                 # hook switch click: the handset jerks up, holds, then rises in held steps
-LIFT_END = 14.5             # at ear height, beside the phone
+LIFT = fr(12.6)                # hook switch click: the handset jerks up, holds, then rises in held steps
+LIFT_END = fr(14.5)            # at ear height, beside the phone
 LINE_BREATH = 14.15         # someone breathes into the line before she speaks
 DRIFT1 = [17.3, 18.6]       # it leans a little toward the camera (held frames)
 # [time, where the handset hangs]: x, y, z in metres
-HOLD = [[LIFT, -.8, 1.56, 3.3], [18.8, -.28, 1.64, 2.75], [24.7, .26, 1.84, 1.45]]
-GLITCH = [[18.62, .42]]     # the first jump hides in a tape skip
+HOLD = [[LIFT, -.8, 1.56, 3.3], [fr(18.8), -.28, 1.64, 2.75], [fr(24.67), .68, 1.95, .62]]
+GLITCH = [[fr(18.67) - .08, .42]]     # the first jump hides in a tape skip
 DRIFT2 = [21.4, 24.1]
-DARK = [24.2, 24.7]         # the tube dies; when it stutters back on, the handset is right under the camera
+DARK = [fr(24.17), fr(24.67)]        # the tube dies; when it stutters back on, the handset is right under the camera
 BREATH = 25.6               # slow breathing right at the camera's microphone, until it lets go
-TURN = [28.75, 30.9]        # the earpiece slowly turns to face the lens, as if listening to us
+TURN = [fr(28.67), fr(30.83)]       # the earpiece slowly turns to face the lens, as if listening to us
 PUSH = [0.5, 31.6]          # the playback zooms in slowly (x1.0 -> x1.9), first on the phone, then on the handset
 SWELL = 29.6
 HANGUP = 31.6               # she hangs up: a click, the music and the line cut dead, the dial tone
-DROP = 32.2                 # let go: it whips back across the corridor and swings under the phone
-QUIET = 33.1                # hum and dial tone cut dead, the swing stops mid-air: near silence
-BLACK = [33.98, 34.1]       # the tape drops out for a few frames
-RING = 34.1                 # one ring, very loud: crash zoom on the phone, the handset is back on its hook
-END = 35.05
+DROP = fr(32.17)                # let go: it whips back across the corridor and swings under the phone
+QUIET = fr(33.17)               # hum and dial tone cut dead, the swing stops mid-air: near silence
+RING = fr(34.17)                # one ring, very loud: crash zoom on the phone, the handset is back on its hook
+BLACK = [34.05, RING]      # the tape drops out for a few frames
+END = 35.12
 DUR = 36.0
 STATIC = [[0.0, 0.5], [END, DUR]]
 GLITCH.append([RING + .45, END - RING - .45])
