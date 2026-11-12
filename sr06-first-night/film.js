@@ -227,18 +227,41 @@ function shotTurn(g, t) {
   handInFrame(g, 0);
   return whip ? Math.sin((t - w0) / (w1 - w0) * Math.PI) * .05 : 0;
 }
+// the jump: its blank egg face fills CAM 09, tilted, the neck seams under it, a shoulder at the edge (screen space; graded with the rest)
+function faceAtLens(g, k) {
+  const skin = [232, 226, 214], cx = 560, cy = 400, rx = 250, ry = 330, rot = -.18;
+  g.save();
+  g.fillStyle = 'rgb(40,104,116)'; g.beginPath(); g.moveTo(-40, 810); g.quadraticCurveTo(180, 640, 470, 700); g.lineTo(700, 700); g.quadraticCurveTo(980, 650, 1120, 810); g.closePath(); g.fill();   // shoulders
+  g.fillStyle = 'rgb(214,208,196)'; g.fillRect(cx - 70, cy + 250, 140, 300);                                                        // neck
+  g.fillStyle = 'rgb(60,56,52)'; for (const y of [cy + 330, cy + 420]) g.fillRect(cx - 70, y, 140, 6);                             // seams
+  g.translate(cx, cy); g.rotate(rot);
+  g.fillStyle = `rgb(${skin.join(',')})`; g.beginPath(); g.ellipse(0, 0, rx, ry, 0, 0, 6.2832); g.fill();
+  g.save(); g.beginPath(); g.ellipse(0, 0, rx, ry, 0, 0, 6.2832); g.clip();
+  g.fillStyle = 'rgb(176,170,160)'; g.beginPath(); g.ellipse(rx * .75, ry * .1, rx * .7, ry * 1.1, 0, 0, 6.2832); g.fill();          // the shaded side
+  g.fillStyle = 'rgba(0,0,0,.08)'; g.beginPath(); g.ellipse(0, ry * .15, rx * .5, ry * .18, 0, 0, 6.2832); g.fill();               // where a face would be
+  g.restore();
+  g.fillStyle = 'rgba(255,255,255,.6)'; g.beginPath(); g.ellipse(-rx * .35, -ry * .45, rx * .16, ry * .1, -.4, 0, 6.2832); g.fill();   // gloss
+  g.restore();
+}
 function shotCctv(g, tq, second) {
-  const c = TK.render(g, FIT_OPEN, CAM09, { ambient: 1.15, fog: .05 });
+  const c = TK.render(g, FIT_OPEN, CAM09, { ambient: 1.15, fog: .05 }), M = TK.motion;
   spill(g, c);
   if (!second) {                                                                 // he looks into stall 3; it stands in the corridor behind him
-    TK.ghost(g, c, 'display', .3, 5.05, { ambient: 1.1 });
-    guard(g, c, 1.0, 4.6, 1, [2.4, 4.6]);
+    const tr = M.stutter(tq, FPS_CCTV, 6);                                       // the reach advances in held, uneven steps
+    const reach = M.creep(tr, TL.REACH[0], TL.REACH[1], 0, 1.35), neck = M.creep(tr, TL.REACH[0] + .6, TL.REACH[1], 0, .14);
+    guard(g, c, 1.0, 4.6, 1, [2.4, 4.6]);                                      // it is nearer the camera than he is: drawn after him
+    TK.ghost(g, c, 'display', .3, 5.05, { ambient: 1.1, tilt: M.snap(tq, TL.SNAP1, .22, -.62), armR: reach, neck });
   } else {                                                                       // he has turned to the corridor; it stands in stall 3, behind him
+    const k = Math.pow(clamp((tq - TL.LUNGE[0]) / (TL.LUNGE[1] - TL.LUNGE[0])), 1.6);   // three or four big jumps at 6 fps
     guard(g, c, .95, 4.6, -1, [-.6, 4.4]);
-    TK.ghost(g, c, 'display', 2.15, 4.6, { ambient: 1.4, tilt: .3 });
+    if (k <= 0) TK.ghost(g, c, 'display', 2.15, 4.6, { ambient: 1.4, tilt: M.snap(tq, TL.SNAP2, .3, -1.05), neck: .14 });
+    else if (k >= .8) faceAtLens(g, k);                                         // the last frame: the blank face against the lens
+    else {                                                                       // it comes at the lens: three jumps, arms up
+      const x = lerp(2.15, -1.05, k), z = lerp(4.6, 3.28, k);                       // and its neck grows until the blank face is at the lens
+      TK.ghost(g, c, 'display', x, z, { ambient: 1.4 + k * .5, tilt: -1.05 + k * 1.0, neck: .14 + .55 * k * k, armR: 1.25 * k, armL: 1.25 * k });
+    }
   }
 }
-
 // ---------------------------------------------------------------- tape damage, overlays, the frame
 function stamp(t) {
   const [h0, m0, s0] = TL.STAMP0, s = Math.floor(h0 * 3600 + m0 * 60 + s0 + t);
@@ -311,12 +334,13 @@ window.EV = [
   { type: 'bed', fx: 'store_hum', t: SH.fit[1], t1: SH.fit[2], g: -31, fin: .05, fout: .05 },
   { type: 'bed', fx: 'store_hum', t: SH.cctv1[1], t1: SH.cctv1[2], g: -35, fin: .02, fout: .02 },
   { type: 'bed', fx: 'store_hum', t: SH.turn[1], t1: SH.turn[2], g: -31, fin: .02, fout: .02 },
-  { type: 'bed', fx: 'store_hum', t: SH.cctv2[1], t1: SH.cctv2[2], g: -35, fin: .02, fout: .02 },
+  { type: 'bed', fx: 'store_hum', t: SH.cctv2[1], t1: TL.QUIET, g: -35, fin: .02, fout: .02 },
   ...TL.STEPS.map((x, i) => ({ type: 'step', t: x, pan: i % 2 ? .15 : -.15, g: x < 15.6 ? 1 : .7 })),
   { type: 'curtain', t: TL.CURTAIN },
   { type: 'switch', t: SH.cctv1[1] - .02 }, { type: 'switch', t: SH.turn[1] - .02 }, { type: 'switch', t: SH.cctv2[1] - .02 },
   ...TL.GLITCH.map(([t0, d]) => ({ type: 'glitch', t: t0, dur: d })),
   { type: 'whoosh', t: TL.WHIP[0] },
+  { type: 'sting', t: TL.STING },
   { type: 'breath', t: TL.BREATH },
   { type: 'static', t: TL.END, dur: DUR - TL.END },
   { type: 'bed', fx: 'tape_hiss', t: 0, t1: DUR + .5, g: -38 },

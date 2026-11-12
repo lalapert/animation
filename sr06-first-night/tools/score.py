@@ -14,7 +14,7 @@ from audio import SR, HERE, buf, add, note, m, lowpass, highpass, room, rms
 TL = json.load(open(os.path.join(HERE, "out", "timeline.json")))
 DUR = TL["DUR"]
 V = {v["id"]: v for v in TL["VO"]}
-OUT = TL["END"] - .05                         # everything is gone at the static before the loop
+OUT = TL["QUIET"]                             # silence just before it comes at the camera
 stems = {k: buf(DUR + 4) for k in ["drone", "hits", "high"]}
 USED = set()
 

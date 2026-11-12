@@ -1,16 +1,67 @@
 {
-  "room_db": -62,
-  "voice_over_music_db": 9,
-  "vo_pa": false,
-  "beds": {},
-  "foley": {
-    "static": {"fx": "static", "g": -12, "fin": 0.003, "fout": 0.04},
-    "glitch": {"fx": "glitch", "g": -15, "align": true, "fin": 0.002, "fout": 0.08},
-    "breath": {"fx": "breath", "g": -18, "fin": 0.05, "fout": 0.4},
-    "switch": {"fx": "switch", "g": -17, "fin": 0.002, "fout": 0.05},
-    "step": {"fx": "step", "g": -19, "align": true, "fin": 0.002, "fout": 0.15},
-    "zoom": {"fx": "zoom", "g": -24, "fin": 0.02, "fout": 0.3},
-    "curtain": {"fx": "curtain", "g": -14, "align": true, "fin": 0.005, "fout": 0.2},
-    "whoosh": {"fx": "whoosh", "g": -15, "align": true, "fin": 0.01, "fout": 0.2}
+ "room_db": -62,
+ "voice_over_music_db": 9,
+ "vo_pa": false,
+ "beds": {},
+ "foley": {
+  "static": {
+   "fx": "static",
+   "g": -12,
+   "fin": 0.003,
+   "fout": 0.04
+  },
+  "glitch": {
+   "fx": "glitch",
+   "g": -15,
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.08
+  },
+  "breath": {
+   "fx": "breath",
+   "g": -18,
+   "fin": 0.05,
+   "fout": 0.4
+  },
+  "switch": {
+   "fx": "switch",
+   "g": -17,
+   "fin": 0.002,
+   "fout": 0.05
+  },
+  "step": {
+   "fx": "step",
+   "g": -19,
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.15
+  },
+  "zoom": {
+   "fx": "zoom",
+   "g": -24,
+   "fin": 0.02,
+   "fout": 0.3
+  },
+  "curtain": {
+   "fx": "curtain",
+   "g": -14,
+   "align": true,
+   "fin": 0.005,
+   "fout": 0.2
+  },
+  "whoosh": {
+   "fx": "whoosh",
+   "g": -15,
+   "align": true,
+   "fin": 0.01,
+   "fout": 0.2
+  },
+  "sting": {
+   "fx": "sting",
+   "g": 4,
+   "align": true,
+   "fin": 0.001,
+   "fout": 0.3
   }
+ }
 }

@@ -317,21 +317,34 @@ const TK = {};
     // B, The Display: a store mannequin in 1999 clothes, blank egg head, seams at the neck and wrists, head tilted.
     // It only moves when no camera looks: the camcorder always finds it where it was, the CCTV finds it somewhere else
     display: { h: 1.86, draw(g, o) {
-      const k = o.light, skin = [232, 226, 214], pants = [30, 30, 34], jacket = o.jacket || [40, 104, 116];
+      // poses (owner 11/12, "it has to be scary": slow, then sudden; wrong-looking movement): o.tilt head angle (snap it),
+      // o.neck extra neck length in metres (stretches), o.armR / o.armL raise angle in radians (0 hanging, ~1.4 straight out,
+      // reaching), o.lean body tilt. Hold poses for several CCTV frames and change them in one frame (TK.motion).
+      const k = o.light, skin = [232, 226, 214], pants = [30, 30, 34], jacket = o.jacket || [40, 104, 116], neck = o.neck || 0;
+      if (o.lean) g.rotate(o.lean);
+      const arm = (s, a) => {
+        g.save(); g.translate(s * .225, -1.44); g.rotate(-s * a); g.translate(-s * .225, 1.44);
+        const P = s > 0 ? x => x : gmir;
+        gpoly(g, P([[.19, -1.43], [.26, -1.46], [.30, -1.0], [.22, -.98]]), grgb(jacket, k * (s > 0 ? .78 : 1)));
+        gell(g, s * .265, -.915, .04, .072, grgb(skin, k * .95), s * .08);
+        g.fillStyle = grgb([60, 56, 52], k); g.fillRect(s * .265 - .035, -.985, .07, .008);
+        g.restore();
+      };
       for (const s of [1, -1]) {
         const P = s > 0 ? x => x : gmir;
         gpoly(g, P([[.02, -.92], [.17, -.92], [.15, -.06], [.04, -.06]]), grgb(pants, k));
         gell(g, s * .095, -.035, .065, .032, grgb(skin, k * .9));
-        gpoly(g, P([[.19, -1.43], [.26, -1.46], [.30, -1.0], [.22, -.98]]), grgb(jacket, k * (s > 0 ? .78 : 1)));
-        gell(g, s * .265, -.915, .04, .072, grgb(skin, k * .95), s * .08);
-        g.fillStyle = grgb([60, 56, 52], k); g.fillRect(s * .265 - .035, -.985, .07, .008);
+        const a = s > 0 ? (o.armR || 0) : (o.armL || 0);
+        if (a < .3) arm(s, a);                                                    // hanging arms go behind the jacket edge
       }
       gpoly(g, [[-.25, -1.47], [.25, -1.47], [.23, -1.38], [.18, -1.05], [.205, -.84], [-.205, -.84], [-.18, -1.05], [-.23, -1.38]], grgb(jacket, k));
       gpoly(g, [[.02, -1.47], [.25, -1.47], [.23, -1.38], [.18, -1.05], [.205, -.84], [.02, -.84]], grgb(jacket, k * .8));
       gpoly(g, [[-.075, -1.47], [.075, -1.47], [0, -1.24]], grgb(skin, k));
-      g.fillStyle = grgb(skin, k); g.fillRect(-.04, -1.6, .08, .14);
+      for (const s of [1, -1]) { const a = s > 0 ? (o.armR || 0) : (o.armL || 0); if (a >= .3) arm(s, a); }   // raised arms in front
+      g.fillStyle = grgb(skin, k); g.fillRect(-.04, -1.6 - neck, .08, .14 + neck);
       g.fillStyle = grgb([60, 56, 52], k); g.fillRect(-.04, -1.535, .08, .007);
-      g.save(); g.translate(.005, -1.69); g.rotate(o.tilt ?? .22);
+      if (neck > .05) g.fillRect(-.04, -1.535 - neck * .5, .08, .007);                                       // a second seam: it is not a neck
+      g.save(); g.translate(.005, -1.69 - neck); g.rotate(o.tilt ?? .22);
       gell(g, 0, 0, .095, .125, grgb(skin, k));
       g.save(); g.beginPath(); g.ellipse(0, 0, .095, .125, 0, 0, 6.2832); g.clip(); gell(g, .07, .02, .07, .14, grgb(skin, k * .78)); g.restore();
       gell(g, -.03, -.05, .022, .04, `rgba(255,255,255,${.55 * Math.min(1, k)})`, -.3);
@@ -362,6 +375,16 @@ const TK = {};
     g.translate(u * .05, 0); humanPath(g, fx, fy, u); g.strokeStyle = 'rgba(255,40,180,.2)'; g.stroke();
     g.restore();
   }
+  // ---------------------------------------------------------------- how they move (owner 11/12: "it has to be scary")
+  // The rule: still for a long time, then wrong. Slow creep, then one sudden move; stutter (held frames, then a jump);
+  // a snap (a pose changes in a single frame); a lunge (accelerating at the lens). One big scare per tape at most.
+  TK.motion = {
+    creep: (t, t0, t1, a, b) => a + (b - a) * Math.pow(clamp((t - t0) / (t1 - t0)), 2.2),          // slow, slower at the start
+    snap: (t, t0, a, b) => (t < t0 ? a : b),
+    lunge: (t, t0, dur) => Math.pow(clamp((t - t0) / dur), 3),                                     // 0..1, accelerating
+    // irregular held frames: the movement only advances on some frames (1-4 frame holds), like a broken recorder
+    stutter: (t, fps = 6, seed = 1) => { const f = Math.floor(t * fps), R = rng(seed * 977 + Math.floor(f / 4)), hold = 1 + Math.floor(R() * 3); return Math.floor(f / hold) * hold / fps; },
+  };
   TK.ghost = function (g, cam, kind, x, z, o = {}) {
     const D = GHOSTS[kind], prj = p => { const q = cam.toCam(p); return q[2] > .05 ? [cam.W / 2 + cam.f * q[0] / q[2], cam.H / 2 - cam.f * q[1] / q[2], q[2]] : null; };
     const feet = prj([x, 0, z]), head = prj([x, D.h, z]); if (!feet || !head) return null;

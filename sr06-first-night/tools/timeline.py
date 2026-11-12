@@ -29,12 +29,19 @@ BREATH = 33.9
 END = 38.6
 DUR = 39.6
 STATIC = [[0.0, 0.5], [END, DUR]]
-GLITCH = [[24.54, .22], [35.94, .2], [31.5, .18]]
+GLITCH = [[24.54, .22], [35.94, .2], [31.5, .18], [38.25, .35]]
+# the scares (owner 11/12: slow, then sudden; wrong-looking movement). CAM 09 only, so the 6 fps stutter carries them.
+SNAP1 = 27.5                 # its head snaps sideways in one frame while he looks into the stall
+REACH = [28.4, 30.9]         # its arm comes up toward his shoulder in held, jerky steps; the neck stretches
+SNAP2 = 37.2                 # behind him again: the head snaps the other way
+LUNGE = [37.55, 38.25]       # it comes at CAM 09 in three frames
+QUIET = 37.5                 # the music and the hum drop out just before
+STING = 38.15
 # footsteps: the walk (8.6-15.6) and the approach in the fitting rooms (15.6-19.6), about 1.8 a second
 STEPS = [round(8.75 + i * .55, 3) for i in range(13)] + [round(15.8 + i * .6, 3) for i in range(6)]
 assert 30 <= DUR <= 50
 TL = {"DUR": DUR, "VO": VO, "SHOTS": SHOTS, "ZOOM": ZOOM, "CURTAIN": CURTAIN, "WHIP": WHIP, "BREATH": BREATH, "STATIC": STATIC,
-      "GLITCH": GLITCH, "STEPS": STEPS, "END": END,
+      "GLITCH": GLITCH, "STEPS": STEPS, "END": END, "SNAP1": SNAP1, "REACH": REACH, "SNAP2": SNAP2, "LUNGE": LUNGE, "QUIET": QUIET, "STING": STING,
       "LABEL": "TAPE 0006", "SUB": "CAMCORDER / CAM 09  ·  FASHION 99  ·  12/01/99",
       "RULE": "RULE 6: IF THE CAMERAS DISAGREE,\nBELIEVE THE MONITOR.",
       "STAMP0": [1, 41, 58], "DATE": "12-01-1999",
