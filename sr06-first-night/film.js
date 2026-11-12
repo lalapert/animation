@@ -268,6 +268,13 @@ function faceAtLens(g, k) {
   g.fillStyle = 'rgba(255,255,255,.6)'; g.beginPath(); g.ellipse(-rx * .35, -ry * .45, rx * .16, ry * .1, -.4, 0, 6.2832); g.fill();   // gloss
   g.restore();
 }
+// the jump: BROKEN right against the lens, its sideways head and shoulders filling CAM 09, the two white points (screen space)
+function brokenAtLens(g, t) {
+  const u = 1650;
+  g.save(); g.translate(560 - .25 * u, 405 + 1.95 * u); g.scale(u, u);
+  TK.ghost._draw(g, 'broken', { u, tilt: -.25, armR: .9, armL: .5, seed: Math.floor(t * 6) });
+  g.restore();
+}
 function shotCctv(g, tq, second) {
   const M = TK.motion;
   if (!second) {                                                                 // he looks into stall 3; it stands in the corridor behind him
@@ -276,17 +283,17 @@ function shotCctv(g, tq, second) {
     const reach = M.creep(tr, TL.REACH[0], TL.REACH[1], 0, 1.35), neck = M.creep(tr, TL.REACH[0] + .6, TL.REACH[1], 0, .14);
     const c = TK.render(g, buildFit(1, { stall, ceil }), CAM09, { ambient: ceil ? .85 : .35, fog: .07, sprites: [
       { x: 1.0, z: 4.6, draw: (gg, cm) => guard(gg, cm, 1.0, 4.6, 1, [2.4, 4.6]) },
-      { x: .3, z: 5.05, draw: (gg, cm) => TK.ghost(gg, cm, 'display', .3, 5.05, { ambient: ceil ? .95 : .4, tilt: M.snap(tq, TL.SNAP1, .22, -.62), armR: reach, neck }) }] });
+      { x: .3, z: 5.05, draw: (gg, cm) => TK.ghost(gg, cm, 'broken', .3, 5.05, { tilt: M.snap(tq, TL.SNAP1, 0, .45), armR: reach * .9 }) }] });   // BROKEN (owner 11/12)
     spill(g, c);
     return;
   }
   // he has turned to the corridor; it stands in stall 3, behind him. The lights flicker, die, come back: its face at the lens
   const dark = tq >= TL.DARK[0] && tq < TL.DARK[1], stall = dark ? 0 : flick(tq, TL.FLICKER2, 1.4), ceil = dark ? 0 : stall;
   const sprites = [{ x: .95, z: 4.6, draw: (gg, cm) => guard(gg, cm, .95, 4.6, -1, [-.6, 4.4]) }];
-  if (!dark && tq < TL.JUMP) sprites.push({ x: 2.15, z: 4.6, draw: (gg, cm) => TK.ghost(gg, cm, 'display', 2.15, 4.6, { ambient: 1.2 * (.4 + .6 * stall), tilt: M.snap(tq, TL.SNAP2, .3, -1.05), neck: .14 }) });
+  if (!dark && tq < TL.JUMP) sprites.push({ x: 2.15, z: 4.6, draw: (gg, cm) => TK.ghost(gg, cm, 'broken', 2.15, 4.6, { tilt: M.snap(tq, TL.SNAP2, 0, -.9) }) });
   const c = TK.render(g, buildFit(1, { stall, ceil }), CAM09, { ambient: dark ? .12 : .85 * (.5 + .5 * stall), fog: .07, sprites });
   if (!dark) spill(g, c);
-  if (tq >= TL.JUMP) faceAtLens(g, 1);
+  if (tq >= TL.JUMP) brokenAtLens(g, tq);
 }
 // ---------------------------------------------------------------- tape damage, overlays, the frame
 function stamp(t) {
