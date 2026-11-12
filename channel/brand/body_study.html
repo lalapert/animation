@@ -1,0 +1,103 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Body proportion study</title><style>html,body{margin:0;background:#000}canvas{display:block}</style></head>
+<body><canvas id="c" width="2400" height="1500"></canvas>
+<script>window.TL = { DUR: 6, VO: [], SHOTS: [] }; window.CHARS = {};</script>
+<script src="toon.js"></script><script src="vmkit.js"></script><script src="anatomy.js"></script>
+<script>
+// Owner 11/12: proportions v3 (anatomy.js). ?mode=sheet (2400x1500 study) or ?mode=walk (1080x1920, 6 s, in the store).
+'use strict';
+const Q = new URLSearchParams(location.search), MODE = Q.get('mode') || 'sheet';
+const cv = document.getElementById('c'), g = cv.getContext('2d');
+function figure(kind, x, floorY, s, pose, dir, o = {}) {
+  const B = BODY[kind], waist = floorY - B.F * s / 100;
+  g.save(); g.fillStyle = 'rgba(10,4,30,.35)'; g.beginPath(); g.ellipse(x, floorY + 4, 66 * s / 100, 11 * s / 100, 0, 0, 6.2832); g.fill(); g.restore();
+  g.save(); g.translate(x, waist); g.scale(s / 100, s / 100); drawBodyLegs(g, kind, pose, dir, o); g.restore();
+  const front = o.view === 'front', sw = pose.swing * 20 * dir;
+  const arms = front ? { l: 0, r: 0 } : { l: sw, r: -sw, bend: .1 };
+  g.save(); g.translate(x, waist + pose.drop * s / 100);
+  const ro = Object.assign({ turn: front ? 0 : .7 * dir, armsDown: arms, handY: B.handY }, o.rig || {});
+  if (kind === 'pip') drawPip2(g, 0, 0, s, Object.assign({ expr: 'grin' }, ro));
+  else drawRae2(g, 0, 0, s, Object.assign({ expr: 'deadpan', look: front ? 0 : 1.5 * dir, scanner: false }, ro));
+  g.restore();
+  return waist;
+}
+function label(t, x, y, size = 30, col = '#fbf7ff', align = 'left', weight = 600) { g.font = `${weight} ${size}px "Fredoka", sans-serif`; g.fillStyle = col; g.textAlign = align; g.fillText(t, x, y); }
+function panelBg(x, w, h) { const bg = g.createLinearGradient(0, 0, 0, h); bg.addColorStop(0, '#1d1240'); bg.addColorStop(1, '#3a2276'); g.fillStyle = bg; g.fillRect(x, 0, w, h); }
+const LM = [['chin', DC.chin], ['shoulder', DC.shoulder], ['elbow', DC.elbow], ['hip joint', DC.hip], ['crotch', DC.crotch], ['fingertips', DC.finger], ['knee', DC.knee], ['ankle', DC.ankle]];
+function sheet() {
+  g.fillStyle = '#000'; g.fillRect(0, 0, 2400, 1500);
+  // 1. landmarks, front view, one floor
+  const FL = 1400, S = 190;
+  panelBg(0, 900, 1500);
+  g.fillStyle = '#2a1858'; g.fillRect(0, FL, 900, 100);
+  // a store counter (0.88 m) behind them for scale
+  const mPx = BODY.pip.F / .88;                                                     // not used for drawing; the counter is set from Rae's metres
+  const unitPerM = (BODY.rae.F - BODY.rae.top) / BODY.rae.metres, ctrY = FL - .88 * unitPerM * S / 100;
+  g.fillStyle = 'rgba(255,122,26,.18)'; g.fillRect(30, ctrY, 840, FL - ctrY); g.fillStyle = 'rgba(255,122,26,.7)'; g.fillRect(30, ctrY, 840, 6);
+  label('COUNTER 0.88 m', 445, ctrY - 12, 24, '#ffb066', 'center');
+  const fig = { pip: 250, rae: 640 };
+  for (const kind of ['pip', 'rae']) {
+    const B = BODY[kind], x = fig[kind];
+    figure(kind, x, FL, S, standPose3(), 1, { view: 'front' });
+    // landmark ticks across the figure
+    g.save(); g.setLineDash([10, 8]); g.lineWidth = 2;
+    for (const [n, f] of LM) {
+      const y = FL - (B.F - (B.F - f * B.Hb)) * S / 100 - 0;      // = FL - f*Hb*s
+      const yy = FL - f * B.Hb * S / 100;
+      g.strokeStyle = 'rgba(126,240,255,.55)'; g.beginPath(); g.moveTo(x - 150, yy); g.lineTo(x + 150, yy); g.stroke();
+      if (kind === 'rae') label(n.toUpperCase() + '  ' + f.toFixed(2).slice(1), x + 158, yy + 8, 20, 'rgba(126,240,255,.9)', 'left', 500);
+    }
+    g.restore();
+    label(`${kind.toUpperCase()}  ${B.metres.toFixed(2)} m  ·  ${B.heads.toFixed(1)} heads`, x, FL + 60, 30, '#fbf7ff', 'center');
+  }
+  label('LANDMARKS (Drillis & Contini)', 30, 60, 40); label('dashed lines: joint heights as a share of stature', 30, 100, 24, '#b9a6ff', 'left', 500);
+
+  // 2. the walk, 3/4
+  panelBg(900, 700, 1500); g.fillStyle = '#000'; g.fillRect(897, 0, 6, 1500);
+  g.fillStyle = '#2a1858'; g.fillRect(900, FL, 700, 100);
+  figure('pip', 1110, FL, S, walkPose3('pip', .12), 1);
+  figure('rae', 1400, FL, S, walkPose3('rae', .62), -1);
+  label('WALK', 930, 60, 40); label('knees bend forward, feet planted, hips dip', 930, 100, 24, '#b9a6ff', 'left', 500);
+
+  // 3. the counter shot as in the episodes (s 190, vest hems on the counter top), the counter see-through
+  g.fillStyle = '#000'; g.fillRect(1597, 0, 6, 1500);
+  const off = document.createElement('canvas'); off.width = 1080; off.height = 1920; const o2 = off.getContext('2d');
+  o2.drawImage(STATIC.store, 0, 0);
+  const keep = g; // draw the figures on the offscreen frame
+  drawOn(o2, () => {
+    for (const [kind, P] of [['pip', PIP], ['rae', RAE]]) {
+      const B = BODY[kind];
+      o2.save(); o2.translate(P.x, CT); o2.scale(P.s / 100, P.s / 100); drawBodyLegs(o2, kind, standPose3(), 1, { view: 'front' }); o2.restore();
+      if (kind === 'pip') drawPip2(o2, P.x, CT, P.s, { expr: 'grin' }); else drawRae2(o2, P.x, CT, P.s, { expr: 'deadpan' });
+    }
+    o2.globalAlpha = .4; o2.drawImage(STATIC.front, 0, CT); o2.globalAlpha = 1;
+    o2.save(); o2.setLineDash([14, 10]); o2.lineWidth = 3; o2.strokeStyle = 'rgba(126,240,255,.8)';
+    for (const [kind, P] of [['pip', PIP], ['rae', RAE]]) { const y = CT + BODY[kind].F * P.s / 100; o2.beginPath(); o2.moveTo(P.x - 140, y); o2.lineTo(P.x + 140, y); o2.stroke(); }
+    o2.restore();
+  });
+  const sc = 1400 / 1920; g.drawImage(off, 1603 + (797 - 1080 * sc) / 2, 100, 1080 * sc, 1400);
+  label('COUNTER SHOT, SAME BODIES', 1620, 60, 40); label('episode framing (s 190); the counter made see-through', 1620, 92, 22, '#b9a6ff', 'left', 500);
+}
+function drawOn(ctx, fn) { fn(); }
+// the walk in the store, as the earlier samples
+function walkPage(t) {
+  const FLOOR = 1700, S = 150;
+  g.setTransform(1, 0, 0, 1, 0, 0);
+  g.drawImage(STATIC.store, 0, 0);
+  const fl = g.createLinearGradient(0, CT, 0, 1920); fl.addColorStop(0, '#4a2c8a'); fl.addColorStop(1, '#2a1858'); g.fillStyle = fl; g.fillRect(0, CT, 1080, 640);
+  g.strokeStyle = 'rgba(255,255,255,.07)'; g.lineWidth = 3; for (let x = -400; x < 1500; x += 120) { g.beginPath(); g.moveTo(540 + (x - 540) * .55, CT); g.lineTo(x, 1920); g.stroke(); }
+  for (let y = CT + 40, k = 40; y < 1920; k *= 1.25, y += k) { g.beginPath(); g.moveTo(0, y); g.lineTo(1080, y); g.stroke(); }
+  // one at a time across the frame: Pip from the left, then Rae from the right (natural cadence, about two steps a second)
+  for (const [kind, x0, dir, cyc, t0] of [['pip', -150, 1, 1.05, 0], ['rae', 1230, -1, 1.15, 2.7]]) {
+    const tt = t - t0; if (tt < 0) continue;
+    const pose = walkPose3(kind, tt / cyc), x = x0 + dir * 4 * pose.A / cyc * S / 100 * tt;
+    if (x < -300 || x > 1380) continue;
+    figure(kind, x, FLOOR, S, pose, dir, kind === 'pip' ? { rig: { blink: (t % 3.1) < .12 } } : {});
+  }
+}
+(async () => {
+  await toonFonts('fonts/'); buildStore();
+  if (MODE === 'walk') { cv.width = 1080; cv.height = 1920; window.render = walkPage; walkPage(0); }
+  else { sheet(); window.render = () => sheet(); }
+  window.READY = true;
+})();
+</script></body></html>
