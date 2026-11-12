@@ -187,7 +187,7 @@
  },
  {
   "folder": "sr03-pay-phone",
-  "t": 32.81,
+  "t": 31.3,
   "series": "sr",
   "tape": "TAPE 03",
   "lines": [
@@ -195,8 +195,8 @@
    "ANSWERED IT."
   ],
   "focus": [
-   430,
-   1060
+   540,
+   920
   ],
   "zoom": 1.3
  },
