@@ -281,7 +281,8 @@
   "place": [
    540,
    1300
-  ]
+  ],
+  "drawn": true
  },
  {
   "folder": "vm06-employee-of-the-month",
@@ -303,7 +304,8 @@
   "place": [
    540,
    1160
-  ]
+  ],
+  "drawn": true
  },
  {
   "folder": "sr05-screen-2",
