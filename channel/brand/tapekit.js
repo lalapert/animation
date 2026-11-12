@@ -191,8 +191,9 @@ const TK = {};
     return NOISE;
   }
   // grade the raw window (canvas `src`) into `dst` (both TW x TH)
-  // the CCTV look for the whole tape: 'cctv' (green, tapes 1-2) or 'mono' (plain black and white). ?look=mono or window.TAPE_CCTV_LOOK
-  TK.cctvLook = (typeof location !== 'undefined' && /[?&]look=mono/.test(location.search)) ? 'mono' : ((typeof window !== 'undefined' && window.TAPE_CCTV_LOOK) || 'cctv');
+  // the CCTV look (owner 11/12): plain black and white ('mono') from tape 3 on; tapes 1-2 aired green and keep it (their index.html sets
+  // window.TAPE_CCTV_LOOK = 'cctv'). ?look=cctv / ?look=mono overrides for tests. Camcorder footage stays colour.
+  TK.cctvLook = (typeof location !== 'undefined' && (location.search.match(/[?&]look=(mono|cctv)/) || [])[1]) || ((typeof window !== 'undefined' && window.TAPE_CCTV_LOOK) || 'mono');
   TK.grade = function (dst, src, t, look, o = {}) {
     if (look === 'cctv') look = TK.cctvLook;
     const g = dst, TW = g.canvas.width, TH = g.canvas.height; g.save();
