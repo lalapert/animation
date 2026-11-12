@@ -102,16 +102,22 @@ const TK = {};
     const cam = makeCam(camSpec, g.canvas.width, g.canvas.height);
     g.save();
     g.fillStyle = css(o.bg || [10, 10, 12]); g.fillRect(0, 0, g.canvas.width, g.canvas.height);
-    const items = [];
+    const items = [], floors = [];
     for (const q of S.q) {
       const cpts = clipNear(q.p.map(p => cam.toCam(p)));
       if (cpts.length < 3) continue;
       const d = cpts.reduce((s, p) => s + Math.hypot(p[0], p[1], p[2]), 0) / cpts.length;
-      items.push({ q, cpts, d });
+      (q.floor ? floors : items).push({ q, cpts, d });
     }
-    items.sort((a, b) => b.d - a.d);
-    for (const { q, cpts, d } of items) {
+    // sprites (figures, TK.ghost) go into the painter's order by distance, so pillars, columns and partitions in front of
+    // them cover them (owner 11/12: a mannequin showed through a pillar). o.sprites = [{ x, y, z, draw(g, cam) }].
+    for (const sp of o.sprites || []) { const c = cam.toCam([sp.x, sp.y ?? .9, sp.z]); if (c[2] > .05) items.push({ sprite: sp, d: Math.hypot(...c) }); }
+    floors.sort((a, b) => b.d - a.d); items.sort((a, b) => b.d - a.d);
+    for (const it of floors.concat(items)) {
+      if (it.sprite) { g.save(); it.sprite.draw(g, cam); g.restore(); continue; }
+      const { q, cpts, d } = it;
       const sp = cpts.map(p => proj(cam, p));
+      if (q.tex === 'glass' && o.glassAlpha != null) g.globalAlpha = o.glassAlpha;          // see into a shop window
       g.beginPath(); sp.forEach((p, i) => i ? g.lineTo(p[0], p[1]) : g.moveTo(p[0], p[1])); g.closePath();
       const em = q.emit || 0;
       let col = shadeCol(q.col, d, o);
@@ -120,6 +126,7 @@ const TK = {};
       if (em > .2) { g.save(); g.shadowColor = css(q.light ? [255, 250, 225] : q.col, .9); g.shadowBlur = 40 * em; g.fill(); g.restore(); }
       if (q.tex) texture(g, q, cpts, sp, cam, d, o);
       if (q.text) quadText(g, q, cam, d, o);
+      g.globalAlpha = 1;
     }
     // floor tile grid
     if (o.grid !== false && S.meta) {
@@ -350,10 +357,94 @@ const TK = {};
       gell(g, -.03, -.05, .022, .04, `rgba(255,255,255,${.55 * Math.min(1, k)})`, -.3);
       g.restore();
     } },
+    // ---- monochrome monster looks for B (owner 11/12: "the mannequin is too geometric to be scary"), drawn in ink and
+    // charcoal: ragged outlines that boil (re-jittered every frame, o.seed), hatching, no face. Black and white only.
+    cracked: { h: 2.0, draw(g, o) { monster(g, 'cracked', o); } },
+    hollow: { h: 2.15, draw(g, o) { monster(g, 'hollow', o); } },
+    smear: { h: 1.9, draw(g, o) { monster(g, 'smear', o); } },
     // E, The Dropout: only on tape. A person-shaped hole where the picture is damaged (rows from elsewhere, dropout lines).
     // Seen only in playback of a recording, never live; it moves when the tape skips
     dropout: { h: 1.78, screen: true },
   };
+  // ---------------------------------------------------------------- the monochrome monster drawing (metres, feet at 0, up is -y)
+  function inkPoly(g, pts, fill, R, amp, o = {}) {
+    // subdivide, push each point out/in by noise (the "boil"), fill; optional ragged ink edge
+    const out = [];
+    for (let i = 0; i < pts.length; i++) {
+      const a = pts[i], b = pts[(i + 1) % pts.length], n = 4;
+      for (let k = 0; k < n; k++) { const u = k / n; out.push([a[0] + (b[0] - a[0]) * u + (R() - .5) * amp, a[1] + (b[1] - a[1]) * u + (R() - .5) * amp]); }
+    }
+    g.beginPath(); out.forEach(([x, y], i) => i ? g.lineTo(x, y) : g.moveTo(x, y)); g.closePath(); g.fillStyle = fill; g.fill();
+    if (o.edge) { g.lineWidth = o.edge; g.strokeStyle = o.edgeCol || 'rgb(8,8,8)'; g.lineJoin = 'round'; g.stroke(); }
+    return out;
+  }
+  function hatch(g, clipPts, R, n, len, col, ang = .9, w = .006) {
+    g.save(); g.beginPath(); clipPts.forEach(([x, y], i) => i ? g.lineTo(x, y) : g.moveTo(x, y)); g.closePath(); g.clip();
+    let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9; for (const [x, y] of clipPts) { x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); }
+    g.strokeStyle = col; g.lineWidth = w; g.lineCap = 'round';
+    for (let i = 0; i < n; i++) { const x = x0 + R() * (x1 - x0), y = y0 + R() * (y1 - y0), l = len * (.5 + R()); g.beginPath(); g.moveTo(x, y); g.lineTo(x + Math.cos(ang) * l, y + Math.sin(ang) * l); g.stroke(); }
+    g.restore();
+  }
+  function cracks(g, x, y, R, n, len, w) {
+    g.strokeStyle = 'rgb(10,10,10)'; g.lineCap = 'round';
+    for (let i = 0; i < n; i++) {
+      let px = x + (R() - .5) * .05, py = y + (R() - .5) * .05, a = R() * 6.28; g.lineWidth = w; g.beginPath(); g.moveTo(px, py);
+      for (let k = 0; k < 5; k++) { a += (R() - .5) * 1.4; px += Math.cos(a) * len / 5; py += Math.sin(a) * len / 5; g.lineTo(px, py); }
+      g.stroke();
+    }
+  }
+  function monster(g, v, o) {
+    const R = rng((o.seed || 1) * 131 + (v === 'cracked' ? 1 : v === 'hollow' ? 2 : 3)), boil = .012, k = Math.min(1.2, o.light ?? 1);
+    const pale = `rgb(${226 * k | 0},${222 * k | 0},${214 * k | 0})`, mid = `rgb(${120 * k | 0},${118 * k | 0},${114 * k | 0})`, ink = 'rgb(8,8,8)';
+    const arm = o.armR || 0, armL = o.armL || 0, neck = o.neck || 0, tilt = o.tilt ?? .25;
+    const limb = (x0, y0, x1, y1, w0, w1, col) => { const dx = x1 - x0, dy = y1 - y0, L = Math.hypot(dx, dy), nx = -dy / L, ny = dx / L;
+      return inkPoly(g, [[x0 + nx * w0, y0 + ny * w0], [x1 + nx * w1, y1 + ny * w1], [x1 - nx * w1, y1 - ny * w1], [x0 - nx * w0, y0 - ny * w0]], col, R, boil, { edge: .012 }); };
+    const armTo = (s, a, len) => { const sx = s * .21, sy = -1.42; return [sx, sy, sx + s * Math.sin(a) * len, sy + Math.cos(a) * len]; };   // a = 0 hangs down, raised outward
+    if (v === 'cracked') {
+      // a broken shop mannequin that stands too tall: the shell split, a black hollow where the face was, arms to the knees, long fingers
+      limb(-.09, -.95, -.11, -.05, .055, .04, mid); limb(.09, -.95, .14, -.5, .055, .045, mid); limb(.14, -.5, .1, -.05, .045, .04, mid);   // one knee bends the wrong way
+      const torso = inkPoly(g, [[-.26, -1.48], [.21, -1.44], [.19, -1.0], [.22, -.86], [-.23, -.86], [-.2, -1.05]], 'rgb(52,52,52)', R, boil, { edge: .014 });
+      hatch(g, torso, R, 40, .08, 'rgba(0,0,0,.55)', 1.1);
+      for (const [s, a] of [[1, arm], [-1, armL]]) {
+        const [x0, y0, x1, y1] = armTo(s, a, 1.0); limb(x0, y0, x1, y1, .05, .035, mid);
+        for (let f = -2; f <= 2; f++) { const fa = Math.atan2(y1 - y0, x1 - x0) + f * .12; limb(x1, y1, x1 + Math.cos(fa) * .17, y1 + Math.sin(fa) * .17, .009, .003, pale); }
+      }
+      limb(0, -1.47, 0, -1.62 - neck, .04, .035, pale);
+      g.fillStyle = ink; for (let y = -1.5; y > -1.6 - neck; y -= .05) g.fillRect(-.04, y, .08, .006);
+      g.save(); g.translate(0, -1.72 - neck); g.rotate(tilt);
+      const head = inkPoly(g, [[0, -.14], [.085, -.1], [.1, 0], [.07, .1], [0, .135], [-.07, .1], [-.1, 0], [-.085, -.1]], pale, R, .006, { edge: .01 });
+      hatch(g, head, R, 14, .05, 'rgba(0,0,0,.35)', .4, .004);
+      inkPoly(g, [[-.06, -.02], [.0, -.07], [.07, -.03], [.06, .05], [.01, .09], [-.05, .06]], ink, R, .02);             // the hollow
+      cracks(g, 0, -.03, R, 5, .14, .006);
+      g.restore();
+    } else if (v === 'hollow') {
+      // too thin, too long, pale porcelain cracked all over, hunched, the head hanging sideways on a long neck, hands near the floor
+      limb(-.07, -1.0, -.09, -.04, .04, .03, pale); limb(.07, -1.0, .1, -.04, .04, .03, pale);
+      const torso = inkPoly(g, [[-.2, -1.6], [.18, -1.62], [.13, -1.25], [.1, -.98], [-.11, -.98], [-.15, -1.25]], pale, R, boil, { edge: .012 });
+      cracks(g, 0, -1.3, R, 7, .22, .005); hatch(g, torso, R, 20, .1, 'rgba(0,0,0,.25)', 1.3, .004);
+      for (const [s, a] of [[1, arm], [-1, armL]]) {
+        const sx = s * .18, sy = -1.58, aa = .12 + a * .9, x1 = sx + s * Math.sin(aa) * .75, y1 = sy + Math.cos(aa) * .75;
+        limb(sx, sy, x1, y1, .035, .03, pale); const x2 = x1 + s * .05, y2 = y1 + .62; limb(x1, y1, x2, y2, .03, .02, pale);   // elbows that bend outward
+        for (let f = -2; f <= 2; f++) limb(x2, y2, x2 + f * .025, y2 + .16, .007, .002, pale);
+      }
+      g.save(); g.translate(.02, -1.62); g.rotate(.9 + tilt * .5);
+      limb(0, 0, 0, -.32 - neck, .03, .028, pale); g.translate(0, -.42 - neck); g.rotate(.4);
+      const head = inkPoly(g, [[0, -.13], [.08, -.09], [.095, 0], [.06, .1], [0, .12], [-.06, .1], [-.095, 0], [-.08, -.09]], pale, R, .006, { edge: .01 });
+      cracks(g, 0, 0, R, 4, .12, .005); hatch(g, head, R, 10, .05, 'rgba(0,0,0,.3)', .4, .004);
+      g.restore();
+    } else {
+      // the smear: a dark suited figure whose head is a vertical motion smear (it moved too fast for the tape), ragged photocopy edges
+      limb(-.09, -.92, -.1, -.04, .06, .05, 'rgb(20,20,20)'); limb(.09, -.92, .1, -.04, .06, .05, 'rgb(20,20,20)');
+      const torso = inkPoly(g, [[-.25, -1.46], [.25, -1.46], [.22, -.88], [-.22, -.88]], 'rgb(28,28,28)', R, boil * 2, { edge: .016 });
+      hatch(g, torso, R, 30, .1, 'rgba(255,255,255,.12)', -1.2, .005);
+      for (const [s, a] of [[1, arm], [-1, armL]]) { const [x0, y0, x1, y1] = armTo(s, a, .62); limb(x0, y0, x1, y1, .05, .04, 'rgb(24,24,24)'); limb(x1, y1, x1 + s * .01, y1 + .07, .03, .02, pale); }
+      limb(0, -1.45, 0, -1.58 - neck, .04, .035, pale);
+      g.save(); g.translate(0, -1.7 - neck); g.rotate(tilt * .3);
+      for (let i = 0; i < 26; i++) { const yy = -.3 + R() * .6, w = .09 * (1 - Math.abs(yy) * 1.4) + R() * .03, a = .25 + R() * .55;
+        g.fillStyle = `rgba(${R() < .5 ? '236,232,224' : '10,10,10'},${a})`; g.fillRect(-w + (R() - .5) * .03, yy, w * 2, .015 + R() * .03); }
+      g.restore();
+    }
+  }
   const HUMAN = [[-.05, -1.55], [.05, -1.55], [.21, -1.47], [.26, -1.38], [.28, -.88], [.22, -.86], [.2, -1.2], [.17, -.9], [.15, -.05], [.03, -.05], [0, -.82], [-.03, -.05], [-.15, -.05], [-.17, -.9], [-.2, -1.2], [-.22, -.86], [-.28, -.88], [-.26, -1.38], [-.21, -1.47]];
   function humanPath(g, fx, fy, u) {
     g.beginPath(); HUMAN.forEach(([x, y], i) => { const X = fx + x * u, Y = fy + y * u; i ? g.lineTo(X, Y) : g.moveTo(X, Y); }); g.closePath();
@@ -385,6 +476,7 @@ const TK = {};
     // irregular held frames: the movement only advances on some frames (1-4 frame holds), like a broken recorder
     stutter: (t, fps = 6, seed = 1) => { const f = Math.floor(t * fps), R = rng(seed * 977 + Math.floor(f / 4)), hold = 1 + Math.floor(R() * 3); return Math.floor(f / hold) * hold / fps; },
   };
+  TK.ghostKinds = GHOSTS;
   TK.ghost = function (g, cam, kind, x, z, o = {}) {
     const D = GHOSTS[kind], prj = p => { const q = cam.toCam(p); return q[2] > .05 ? [cam.W / 2 + cam.f * q[0] / q[2], cam.H / 2 - cam.f * q[1] / q[2], q[2]] : null; };
     const feet = prj([x, 0, z]), head = prj([x, D.h, z]); if (!feet || !head) return null;
@@ -397,6 +489,7 @@ const TK = {};
     g.restore();
     return { feet, head, u };
   };
+  TK.ghost._draw = (g, kind, o) => GHOSTS[kind].draw(g, Object.assign({ light: 1 }, o));
 
   TK.fonts = function (base = 'fonts/') {
     return Promise.all([

@@ -50,5 +50,41 @@
  "sting": [
   1.2,
   "a sudden loud analog horror jump scare stinger: a violent burst of distorted VHS static with a deep low impact and a harsh metallic screech, very loud, then cut"
+ ],
+ "creak": [
+  0.7,
+  "a stiff plastic mannequin joint creaking and clicking as it bends, close, dry, a single creepy creak in a silent room"
+ ],
+ "step_far": [
+  1.0,
+  "one single slow footstep far behind in a huge empty shopping mall at night, hard floor, long echo, not the listener's own"
+ ],
+ "breath_bed": [
+  8.0,
+  "a frightened man breathing shakily and quietly right next to a camcorder microphone, uneven breaths, trying to stay quiet, loopable"
+ ],
+ "flicker": [
+  2.0,
+  "a fluorescent tube light flickering on and off with sharp electrical clicks and a stuttering buzz"
+ ],
+ "camclick": [
+  0.6,
+  "a 1990s camcorder record button pressed: a plastic click and the tape transport motor starting up"
+ ],
+ "roll": [
+  0.6,
+  "a VHS tape tracking roll: a warbling wow and flutter distortion with a rushing hiss"
+ ],
+ "swell": [
+  2.0,
+  "a slow rising horror tension swell, reversed cymbal and dissonant strings rising to a sudden stop"
+ ],
+ "lights_off": [
+  1.0,
+  "a big electrical breaker clunk and all the fluorescent lights in a room dying with a falling hum, then silence"
+ ],
+ "handling": [
+  0.8,
+  "a camcorder microphone rubbed and knocked by a hand as the camera is spun around fast"
  ]
 }

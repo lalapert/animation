@@ -10,7 +10,7 @@ HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 cfg = json.load(open(os.path.join(HERE, "voice", "lines.json")))
 lines = {l["id"]: l for l in cfg["lines"]}
 durs = json.load(open(os.path.join(HERE, "voice", "out", "durations.json")))
-START = {"L1": 0.9, "L2": 5.6, "L3": 10.4, "L4": 21.9}
+START = {"L1": 0.9, "L2": 5.6, "L3": 9.3, "L4": 22.7}
 VO = []
 for k in ["L1", "L2", "L3", "L4"]:
     VO.append({"id": k, "who": lines[k]["who"], "t": START[k], "dur": durs[k], "sub": lines[k].get("sub", lines[k]["text"]), "col": "#f2f2f2",
@@ -20,28 +20,42 @@ for i, v in enumerate(VO):
     nxt = VO[i + 1]["t"] - 0.15 if i + 1 < len(VO) else 99
     v["s1"] = round(min(nxt, v["t"] + v["dur"] + 0.5), 3)
     assert v["t"] + v["dur"] < nxt + .15, v["id"]
-# shots: [kind, start, end]. office / walk / fit / turn are Leon's camcorder (colour); cctv1 / cctv2 are CAM 09 (black and white)
-SHOTS = [["office", 0.5, 8.6], ["walk", 8.6, 15.6], ["fit", 15.6, 24.6], ["cctv1", 24.6, 31.4], ["turn", 31.4, 36.0], ["cctv2", 36.0, 38.6]]
+# v3 (owner 11/12: "not scary; more care for direction, camera moves, transitions, sound").
+# shots: office / walk / fit / turn are Leon's camcorder (colour, handheld); cctv1 / cctv2 are CAM 09 played back (black and white, 6 fps)
+SHOTS = [["office", 0.5, 8.6], ["walk", 8.6, 16.5], ["fit", 16.5, 25.0], ["cctv1", 25.0, 31.8], ["turn", 31.8, 36.6], ["cctv2", 36.6, 40.0]]
 ZOOM = [2.6, 6.4]            # the camcorder zooms in on monitor 9
-CURTAIN = 20.0               # his hand pulls curtain 3 open
-WHIP = [31.4, 32.0]          # he spins round
-BREATH = 33.9
-END = 38.6
-DUR = 39.6
+RECCUT = [8.6, 16.5]         # he pauses and restarts the camcorder: STBY frames, a click
+WALK_STOP = 13.0             # he stops at the Fashion 99 window and pans across it
+FOCUS_HUNT = [14.0, 14.7]    # the autofocus hunts on the empty mannequin stand
+EXTRA_STEP = 15.15           # one footstep behind him that is not his
+WHIP_BACK = [15.35, 15.75]   # he spins toward it: the empty concourse
+FLUTTER = [20.55, 21.2]      # curtain 3 sways by itself; a shadow crosses the light under it
+CURTAIN = 21.7               # his hand pulls curtain 3 open
+ROLL = [25.0, 25.35]         # tracking roll into the CAM 09 playback
+PUSH = [25.0, 31.8]          # the playback slowly zooms in on him (digital zoom 1.0 -> 1.5)
+FLICKER1 = 27.6              # the stall light starts to flicker
+SNAP1 = 28.3                 # its head snaps sideways in one frame (a creak)
+REACH = [29.0, 31.6]         # its arm comes up toward his shoulder in held, jerky steps; the neck stretches
+LIGHT_OFF1 = [30.9, 31.15]   # the corridor light drops out for a moment
+WHIP = [31.8, 32.35]         # smash cut: he spins round (camcorder)
+BREATH = 34.8
+TURN_BACK = [35.6, 36.6]     # he slowly turns back toward the stall
+SNAP2 = 37.5                 # behind him again: the head snaps the other way
+FLICKER2 = 38.2
+DARK = [38.8, 39.3]          # the lights go out
+JUMP = 39.3                  # lights back: its face is at the lens
+QUIET = 38.75                # music and hum gone
+STING = 39.3
+END = 40.0
+DUR = 41.0
 STATIC = [[0.0, 0.5], [END, DUR]]
-GLITCH = [[24.54, .22], [35.94, .2], [31.5, .18], [38.25, .35]]
-# the scares (owner 11/12: slow, then sudden; wrong-looking movement). CAM 09 only, so the 6 fps stutter carries them.
-SNAP1 = 27.5                 # its head snaps sideways in one frame while he looks into the stall
-REACH = [28.4, 30.9]         # its arm comes up toward his shoulder in held, jerky steps; the neck stretches
-SNAP2 = 37.2                 # behind him again: the head snaps the other way
-LUNGE = [37.55, 38.25]       # it comes at CAM 09 in three frames
-QUIET = 37.5                 # the music and the hum drop out just before
-STING = 38.15
-# footsteps: the walk (8.6-15.6) and the approach in the fitting rooms (15.6-19.6), about 1.8 a second
-STEPS = [round(8.75 + i * .55, 3) for i in range(13)] + [round(15.8 + i * .6, 3) for i in range(6)]
+GLITCH = [[31.75, .15], [39.62, .38]]
+STEPS = [round(8.75 + i * .55, 3) for i in range(8)] + [round(16.7 + i * .62, 3) for i in range(6)]
 assert 30 <= DUR <= 50
 TL = {"DUR": DUR, "VO": VO, "SHOTS": SHOTS, "ZOOM": ZOOM, "CURTAIN": CURTAIN, "WHIP": WHIP, "BREATH": BREATH, "STATIC": STATIC,
-      "GLITCH": GLITCH, "STEPS": STEPS, "END": END, "SNAP1": SNAP1, "REACH": REACH, "SNAP2": SNAP2, "LUNGE": LUNGE, "QUIET": QUIET, "STING": STING,
+      "GLITCH": GLITCH, "STEPS": STEPS, "END": END, "SNAP1": SNAP1, "REACH": REACH, "SNAP2": SNAP2, "QUIET": QUIET, "STING": STING,
+      "RECCUT": RECCUT, "WALK_STOP": WALK_STOP, "FOCUS_HUNT": FOCUS_HUNT, "EXTRA_STEP": EXTRA_STEP, "WHIP_BACK": WHIP_BACK, "FLUTTER": FLUTTER,
+      "ROLL": ROLL, "PUSH": PUSH, "FLICKER1": FLICKER1, "LIGHT_OFF1": LIGHT_OFF1, "TURN_BACK": TURN_BACK, "FLICKER2": FLICKER2, "DARK": DARK, "JUMP": JUMP,
       "LABEL": "TAPE 0006", "SUB": "CAMCORDER / CAM 09  ·  FASHION 99  ·  12/01/99",
       "RULE": "RULE 6: IF THE CAMERAS DISAGREE,\nBELIEVE THE MONITOR.",
       "STAMP0": [1, 41, 58], "DATE": "12-01-1999",

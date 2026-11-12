@@ -62,6 +62,53 @@
    "align": true,
    "fin": 0.001,
    "fout": 0.3
+  },
+  "step_far": {
+   "fx": "step_far",
+   "g": -17,
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.4
+  },
+  "handling": {
+   "fx": "handling",
+   "g": -16,
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.15
+  },
+  "camclick": {
+   "fx": "camclick",
+   "g": -17,
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.1
+  },
+  "roll": {
+   "fx": "roll",
+   "g": -16,
+   "fin": 0.002,
+   "fout": 0.1
+  },
+  "creak": {
+   "fx": "creak",
+   "g": -14,
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.15
+  },
+  "swell": {
+   "fx": "swell",
+   "g": -15,
+   "fin": 0.05,
+   "fout": 0.02
+  },
+  "lights_off": {
+   "fx": "lights_off",
+   "g": -12,
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.1
   }
  }
 }
