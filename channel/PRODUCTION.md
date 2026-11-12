@@ -28,6 +28,7 @@ The date of every episode is in its plan table; use that date. From 11/8 the Voi
 3. The pace is about 1.3 episodes a day (Void Mart and Volt Labs every two days, horror every three); there are two runs a day, so the bank grows by about two thirds of an episode a day. A failed run eats into it. If any series is down to 2 banked episodes or fewer, say so first in the report.
 4. Never post two episodes of one series on the same day. Fridays are normal days.
 5. Use the episode list in the plan in order; rewrite the line only if it no longer fits (log why). Multi-part episodes (Volt Labs 31–32, 39–41) must each work alone: say "PART 2" in the first two seconds and show one picture from the last part.
+6. *Last Mile* (`channel/DELIVERY_SERIES.md`, the next series) is design-only for now: scheduled runs do not make its episodes. **No voices for it until the owner decides to publish** (owner, 11/12): no Voice Design, previews or TTS.
 
 ## 2. How to make a toon episode
 
