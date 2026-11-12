@@ -307,7 +307,7 @@
  },
  {
   "folder": "sr05-screen-2",
-  "t": 34.3,
+  "t": 38.35,
   "series": "sr",
   "tape": "TAPE 05",
   "lines": [
@@ -315,10 +315,10 @@
    "WAS CLOSED."
   ],
   "focus": [
-   680,
-   980
+   540,
+   920
   ],
-  "zoom": 1.6
+  "zoom": 1.3
  },
  {
   "folder": "vl06-lab-inspection",
