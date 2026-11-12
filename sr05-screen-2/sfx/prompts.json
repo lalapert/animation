@@ -34,5 +34,45 @@
  "seat": [
   1.2,
   "a folding cinema seat being pushed down as someone sits, a slow creak of old springs, in a large empty room"
+ ],
+ "bone_creak": [
+  1.0,
+  "a slow stiff neck turning one notch: a deep dry creak of bone and cartilage with small gritty clicks, very close, in a silent room, no voice"
+ ],
+ "bone_crack": [
+  0.8,
+  "one single loud deep dry crack, like a huge knuckle or a stiff joint cracking hard, short gristly creak after it, very close, no voice"
+ ],
+ "projector_down": [
+  3.0,
+  "an old video projector switching off in an empty cinema: a relay click, the lamp ticking, the cooling fan slowly winding down to silence"
+ ],
+ "vcr_clunk": [
+  0.6,
+  "a 1990s VCR jog shuttle control: one hard mechanical clunk and a quick whir of the tape heads"
+ ],
+ "lamp_tick": [
+  0.5,
+  "a projector lamp flickering for an instant: a short electrical crackle and a buzzing dropout"
+ ],
+ "dread": [
+  8.0,
+  "a very deep sub-bass rumble slowly building pressure in an empty room, an ominous low drone, dark and quiet, no melody, no voices"
+ ],
+ "lurch": [
+  0.7,
+  "a short dull muffled thump with a dry crackle, like a very tall body lurching forward one step, heard from a distance through a wall"
+ ],
+ "swell": [
+  2.0,
+  "a slow rising horror tension swell, reversed cymbal and dissonant strings rising to a sudden stop"
+ ],
+ "roll": [
+  0.6,
+  "a VHS tape tracking roll: a warbling wow and flutter distortion with a rushing hiss"
+ ],
+ "flicker": [
+  2.0,
+  "a fluorescent tube light flickering on and off with sharp electrical clicks and a stuttering buzz"
  ]
 }

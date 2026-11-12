@@ -42,5 +42,49 @@
  "fluor_hum": [
   10.0,
   "an empty tiled corridor at night: a buzzing fluorescent light that flickers now and then, ventilation hum, no people, loopable"
+ ],
+ "ring_scare": [
+  2.5,
+  "one single extremely loud ring of an old metal pay phone bell right next to the microphone, a harsh violent metallic clang, slightly distorted, then a long echo down an empty tiled corridor"
+ ],
+ "impact": [
+  1.5,
+  "a deep heavy low boom impact, a sudden sub bass hit with a short metallic ring, horror jump scare hit, dry"
+ ],
+ "cord_creak": [
+  1.0,
+  "a stiff metal-armored pay phone handset cord stretching and creaking, small metallic creaks and a faint rattle, close, in a silent room"
+ ],
+ "line_hiss": [
+  6.0,
+  "an open telephone line heard through a handset earpiece: faint tinny hiss, soft crackle and a distant electrical hum, steady, loopable"
+ ],
+ "line_breath": [
+  2.0,
+  "one slow breath heard through an old telephone line, tinny and crackly, someone breathing into the mouthpiece before speaking, no voice"
+ ],
+ "near_breath": [
+  8.0,
+  "slow, deep, calm breathing of someone standing right against a microphone, very close and intimate, long inhales and exhales, unhurried, not scared, no voice, loopable"
+ ],
+ "tube_tick": [
+  0.5,
+  "a single sharp electrical tick of a flickering fluorescent tube, one click with a tiny buzz, dry"
+ ],
+ "tube_pop": [
+  1.0,
+  "a fluorescent tube dying: a sharp electrical pop and its buzz cutting off into silence"
+ ],
+ "flicker": [
+  2.0,
+  "a fluorescent tube light flickering on and off with sharp electrical clicks and a stuttering buzz"
+ ],
+ "swell": [
+  2.0,
+  "a slow rising horror tension swell, reversed cymbal and dissonant strings rising to a sudden stop"
+ ],
+ "roll": [
+  0.6,
+  "a VHS tape tracking roll: a warbling wow and flutter distortion with a rushing hiss"
  ]
 }

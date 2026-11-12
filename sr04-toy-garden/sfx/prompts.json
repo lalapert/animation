@@ -42,5 +42,57 @@
  "shutter": [
   1.5,
   "a metal roller shutter on a shop front jolting up a foot by itself: a loud rattle and clank, then stillness"
+ ],
+ "flicker": [
+  2.0,
+  "a fluorescent tube light flickering on and off with sharp electrical clicks and a stuttering buzz"
+ ],
+ "swell": [
+  2.0,
+  "a slow rising horror tension swell, reversed cymbal and dissonant strings rising to a sudden stop"
+ ],
+ "sting": [
+  1.2,
+  "a sudden loud analog horror jump scare stinger: a violent burst of distorted VHS static with a deep low impact and a harsh metallic screech, very loud, then cut"
+ ],
+ "roll": [
+  0.6,
+  "a VHS tape tracking roll: a warbling wow and flutter distortion with a rushing hiss"
+ ],
+ "store_hum": [
+  10.0,
+  "a small closed clothing store at night: quiet ventilation hum and a faint fluorescent light buzz, no people, no music, loopable"
+ ],
+ "tin_step": [
+  0.5,
+  "one single step of a heavy tin wind-up toy robot on a hard stone floor: a hollow metallic clack with a tiny clockwork click, close, dry, no music"
+ ],
+ "drag": [
+  1.0,
+  "a small tin toy foot dragged slowly across a hard stone floor: a thin dry metal scrape, close, in a silent empty hall"
+ ],
+ "tick_rundown": [
+  5.5,
+  "the clockwork inside a tin wind-up toy running down: steady metallic ticking that gets slower and slower and slower, then one last click and silence"
+ ],
+ "tick_fast": [
+  4.0,
+  "the clockwork motor of a tin wind-up toy racing much too fast: frantic rapid metallic ticking and whirring gears, close, loopable"
+ ],
+ "wind_self": [
+  2.5,
+  "a big metal wind-up key on a tin toy turning slowly by itself: a heavy ratchet, one loud click at a time with pauses between, the spring creaking tighter"
+ ],
+ "head_snap": [
+  0.7,
+  "a tin toy robot's metal head twisting round very fast on its neck: a short harsh grinding metal screech ending in a hard click"
+ ],
+ "toys_wake": [
+  2.5,
+  "dozens of wind-up toys starting all at once behind a closed metal shop shutter: a muffled chaotic chorus of clockwork whirring, ticking and tiny squeaking gears"
+ ],
+ "sting_toy": [
+  1.5,
+  "a sudden extremely loud horror jump scare hit: a deep heavy impact, a harsh distorted metal screech and a broken toy voice box shriek, with a burst of VHS static, then cut"
  ]
 }

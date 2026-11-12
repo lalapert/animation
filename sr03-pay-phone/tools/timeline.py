@@ -1,7 +1,10 @@
 """Single source of truth for timing: writes timeline.js (for the page) and out/timeline.json (for score, mix, srt).
   .venv/bin/python tools/timeline.py
-Tape 3 "Pay Phone": CCTV 04 watches the restroom corridor. The pay phone rings. Nobody answers it, but the handset
-lifts off the hook and stays in the air at head height. A woman on the line. Every glitch it is closer to the camera.
+Tape 3 "Pay Phone": CAM 04 watches the restroom corridor in the dark, one fluorescent tube over the pay phone. The phone
+rings. Nobody is there, but the handset lifts off the hook in held, jerky steps and stays in the air at ear height. A woman
+on the line. Every time the tape skips or the light dies, the handset is closer to the camera. Breathing right at the
+camera's microphone. The earpiece slowly turns to face the lens. She hangs up; it is let go and swings back under the phone.
+Silence. Then the phone rings once, very loud, with the handset back on its hook. Script: channel/scripts/SR03_pay_phone.md
 """
 import json, os
 
@@ -19,22 +22,38 @@ for i, v in enumerate(VO):
     v["s1"] = round(min(nxt, v["t"] + v["dur"] + 0.6), 3)
 for a, b in zip(VO, VO[1:]):
     assert a["t"] + a["dur"] < b["t"] - 0.3, (a["id"], b["id"])
+# v2 (owner 11/12: "not scary; more care for direction, camera moves, transitions, sound"; reference sr06-first-night v3).
+# Scare type of this tape: SOUND (tape 4 jumps at the lens, tape 5 is wrong movement only).
+ROLL = [0.5, 0.72]          # tracking roll into the playback
 RINGS = [1.2, 4.2, 7.2, 10.2]
-LIFT = 12.6                 # the handset lifts off the hook by itself (1.4 s), stays at head height
-# [time, where the handset hangs]: x, y, z in metres; each move hides behind a glitch
-HOLD = [[LIFT, -.8, 1.6, 3.6], [18.8, -.3, 1.66, 2.85], [25.2, .38, 1.86, 1.3]]
-GLITCH = [[h[0] - .18, .42] for h in HOLD[1:]]
-TURN = 29.6                 # the earpiece slowly turns toward the camera
-HANGUP = 31.6               # the caller hangs up: a click, then the dial tone
-DROP = 32.2                 # whoever was holding it lets go
-END = 33.4
-DUR = 35.0
-STATIC = [[0.0, 0.6], [END, DUR]]
-BREATH = 25.6               # from here on, slow breathing right next to the camera's microphone
+LIFT = 12.6                 # hook switch click: the handset jerks up, holds, then rises in held steps
+LIFT_END = 14.5             # at ear height, beside the phone
+LINE_BREATH = 14.15         # someone breathes into the line before she speaks
+DRIFT1 = [17.3, 18.6]       # it leans a little toward the camera (held frames)
+# [time, where the handset hangs]: x, y, z in metres
+HOLD = [[LIFT, -.8, 1.56, 3.3], [18.8, -.28, 1.64, 2.75], [24.7, .26, 1.84, 1.45]]
+GLITCH = [[18.62, .42]]     # the first jump hides in a tape skip
+DRIFT2 = [21.4, 24.1]
+DARK = [24.2, 24.7]         # the tube dies; when it stutters back on, the handset is right under the camera
+BREATH = 25.6               # slow breathing right at the camera's microphone, until it lets go
+TURN = [28.75, 30.9]        # the earpiece slowly turns to face the lens, as if listening to us
+PUSH = [0.5, 31.6]          # the playback zooms in slowly (x1.0 -> x1.9), first on the phone, then on the handset
+SWELL = 29.6
+HANGUP = 31.6               # she hangs up: a click, the music and the line cut dead, the dial tone
+DROP = 32.2                 # let go: it whips back across the corridor and swings under the phone
+QUIET = 33.1                # hum and dial tone cut dead, the swing stops mid-air: near silence
+BLACK = [33.98, 34.1]       # the tape drops out for a few frames
+RING = 34.1                 # one ring, very loud: crash zoom on the phone, the handset is back on its hook
+END = 35.05
+DUR = 36.0
+STATIC = [[0.0, 0.5], [END, DUR]]
+GLITCH.append([RING + .45, END - RING - .45])
 assert 30 <= DUR <= 50
 assert all(not (g[0] < v["t"] + v["dur"] and g[0] + g[1] > v["t"]) for g in GLITCH for v in VO), "a glitch lands on a line"
-TL = {"DUR": DUR, "VO": VO, "RINGS": RINGS, "LIFT": LIFT, "HOLD": HOLD, "GLITCH": GLITCH, "TURN": TURN, "HANGUP": HANGUP,
-      "DROP": DROP, "BREATH": BREATH, "STATIC": STATIC, "END": END,
+assert all(not (DARK[0] < v["t"] + v["dur"] and DARK[1] > v["t"]) for v in VO), "the dark lands on a line"
+TL = {"DUR": DUR, "VO": VO, "RINGS": RINGS, "LIFT": LIFT, "LIFT_END": LIFT_END, "HOLD": HOLD, "GLITCH": GLITCH, "TURN": TURN,
+      "HANGUP": HANGUP, "DROP": DROP, "BREATH": BREATH, "STATIC": STATIC, "END": END, "ROLL": ROLL, "LINE_BREATH": LINE_BREATH,
+      "DRIFT1": DRIFT1, "DRIFT2": DRIFT2, "DARK": DARK, "PUSH": PUSH, "SWELL": SWELL, "QUIET": QUIET, "BLACK": BLACK, "RING": RING,
       "LABEL": "TAPE 0003", "SUB": "CAM 04  ·  RESTROOMS  ·  12/31/99", "RULE": "RULE 3: IF THE PAY PHONE RINGS,\nDO NOT ANSWER IT.",
       "STAMP0": [23, 51, 40], "CAM": "CAM 04", "PLACE": "RESTROOMS",
       "EGG": {"t": 9.0, "dur": 0.1, "what": "the phone's coin slot label reads 25 CENTS -> 4 CENTS for six frames"}}

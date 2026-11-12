@@ -1,7 +1,10 @@
 """Single source of truth for timing: writes timeline.js (for the page) and out/timeline.json (for score, mix, srt).
   .venv/bin/python tools/timeline.py
-Tape 4 "Toy Garden": CCTV 10 watches the shutter of the toy store. A wind-up tin robot crawls out under it and walks
-toward the camera, one tick at a time. Its key stops turning; it keeps walking. Under the camera it looks up.
+Tape 4 "Toy Garden": CAM 10 watches the shutter of the toy store. A wind-up tin robot slides out under it and walks
+toward the camera. Nobody wound it. v2 (owner 11/12: "not scary; more care for direction, camera moves, transitions,
+sound"): dark, a flickering store sign, the playback zooms in on it, it walks in held 6 fps jerks (backwards at first),
+its head turns round in one frame, it winds itself, it stops under the camera, looks up, its eyes light, the shutter
+jolts, silence, black, and then it is at the lens. Script: channel/scripts/SR04_toy_garden.md
 """
 import json, os
 
@@ -9,7 +12,7 @@ HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 cfg = json.load(open(os.path.join(HERE, "voice", "lines.json")))
 lines = {l["id"]: l for l in cfg["lines"]}
 durs = json.load(open(os.path.join(HERE, "voice", "out", "durations.json")))
-START = {"L1": 7.6, "L2": 19.0, "L3": 28.4}
+START = {"L1": 7.75, "L2": 19.2, "L3": 28.4}
 VO = []
 for k in ["L1", "L2", "L3"]:
     VO.append({"id": k, "who": lines[k]["who"], "t": START[k], "dur": durs[k], "sub": lines[k].get("sub", lines[k]["text"]), "col": "#f2f2f2", "fx": "toy"})
@@ -17,20 +20,43 @@ for i, v in enumerate(VO):
     v["s0"] = round(v["t"] - 0.05, 3)
     nxt = VO[i + 1]["t"] - 0.15 if i + 1 < len(VO) else 99
     v["s1"] = round(min(nxt, v["t"] + v["dur"] + 0.6), 3)
-EMERGE = 2.0                # it pushes out under the shutter (1 s)
-WALK = [3.0, 26.0]          # then walks to a spot under the camera
-PAUSES = [[7.0, 9.8], [18.6, 21.4]]   # it stops, turns its head to the camera, talks, walks on
-KEYSTOP = 15.5              # the wind-up key stops turning. It keeps walking.
-LOOKUP = 26.5               # under the camera it tilts its head up; the eyes light at 27.4
-EYES = 27.4
-SHUTTER = 30.6              # one CCTV frame later the shutter is up a foot: rows of little feet behind it
-GLITCH = [[SHUTTER - .2, .4]]
-END = 32.8
+ROLL = [0.6, 0.95]            # tracking roll out of the static into the CAM 10 playback
+EMERGE = 2.0                  # it has been lying in the gap under the shutter since the first frame; it slides out (held frames)
+STANDUP = 2.85                # and is standing in one frame, its back to us
+WALK1 = [3.0, 7.0]            # it walks BACKWARDS toward the camera, the key on its back turning
+SNAP_HEAD = 7.35              # stops dead (ticking stops); its head turns round to the lens in one frame, the body still backwards
+SNAP_BODY = 9.85              # the body swings round under the head in one frame
+WALK2 = [10.0, 18.6]          # it walks on, facing us; the ticking slows
+KEYSTOP = 15.5                # the key stops, the ticking stops. It keeps walking, in silence, dragging its feet
+TILT = [18.85, 22.55]         # stopped; its head cocks sideways in one frame ... "Nobody winds me anymore." ... and back
+SELFWIND = [21.45, 22.5]       # the key turns by itself, one ratchet click at a time
+WALK3 = [22.6, 26.0]          # fast now: frantic ticking, big jumps, the light failing
+SKIP = [23.62, 0.26]          # the tape skips: the timestamp jumps 7 s and it is much closer
+SKIP_S = 7
+STOP = 26.0                   # stops under the camera, head dropped, ticking dead
+LOOKUP = 26.6                 # its head snaps up to the lens
+EYES = 27.4                   # the eyes light; the playback crash-zooms onto its face
+PUSH = [1.0, 26.0]            # the slow playback zoom that follows it (x1.0 -> x1.7)
+CRASH = [27.4, 27.55]         # x1.7 -> x2.7
+SWELL = [29.7, 31.55]
+FLICKER2 = 29.3               # the store sign and the ceiling light start failing
+SHUTTER = 30.6                # the shutter jolts up a foot (the zoom jumps back to x1.0): little feet and little eyes behind it
+QUIET = 31.55                 # swell, hum, music, everything stops dead
+BLACK = [32.05, 32.45]        # the picture drops to black
+JUMP = 32.45                  # back: it is at the lens
+STING = 32.45
+END = 33.25                   # static, then the first frame again
 DUR = 34.4
 STATIC = [[0.0, 0.6], [END, DUR]]
+GLITCH = [SKIP, [32.85, 0.4]]
 assert 30 <= DUR <= 50
-TL = {"DUR": DUR, "VO": VO, "EMERGE": EMERGE, "WALK": WALK, "PAUSES": PAUSES, "KEYSTOP": KEYSTOP, "LOOKUP": LOOKUP, "EYES": EYES,
-      "SHUTTER": SHUTTER, "GLITCH": GLITCH, "STATIC": STATIC, "END": END,
+assert VO[0]["t"] > SNAP_HEAD and VO[0]["t"] + VO[0]["dur"] < SNAP_BODY, "L1 inside the first stop"
+assert VO[1]["t"] > TILT[0] and VO[1]["t"] + VO[1]["dur"] < SELFWIND[0] + .1, "L2 inside the second stop"
+assert VO[2]["t"] > EYES and VO[2]["t"] + VO[2]["dur"] < SWELL[0] + .2, "L3 before the swell"
+TL = {"DUR": DUR, "VO": VO, "ROLL": ROLL, "EMERGE": EMERGE, "STANDUP": STANDUP, "WALK1": WALK1, "SNAP_HEAD": SNAP_HEAD, "SNAP_BODY": SNAP_BODY,
+      "WALK2": WALK2, "KEYSTOP": KEYSTOP, "TILT": TILT, "SELFWIND": SELFWIND, "WALK3": WALK3, "SKIP": SKIP, "SKIP_S": SKIP_S, "STOP": STOP,
+      "LOOKUP": LOOKUP, "EYES": EYES, "PUSH": PUSH, "CRASH": CRASH, "SWELL": SWELL, "FLICKER2": FLICKER2, "SHUTTER": SHUTTER, "QUIET": QUIET,
+      "BLACK": BLACK, "JUMP": JUMP, "STING": STING, "END": END, "STATIC": STATIC, "GLITCH": GLITCH,
       "LABEL": "TAPE 0004", "SUB": "CAM 10  ·  TOY GARDEN  ·  12/31/99", "RULE": "RULE 4: DO NOT TOUCH\nTHE MERCHANDISE.",
       "STAMP0": [23, 47, 20], "CAM": "CAM 10", "PLACE": "TOY GARDEN",
       "EGG": {"t": 17.0, "dur": 0.1, "what": "the dial on the robot's chest shows 9 for six frames"}}
