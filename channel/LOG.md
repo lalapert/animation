@@ -111,3 +111,10 @@
 - Kit: channel/brand/cover.js, scenes in channel/brand/covers/, runner channel/tools/covers.cjs; specs with "drawn": true are skipped by thumbs.cjs. Rule in PRODUCTION.md §3.5.
 - VM3 (11/11) and VL4 (11/14) swapped to drawn covers. Still captured: VM4 (11/13), VM5, VL5, VM6, VL6, VM7; redrawn two per run from the 11/12 15:41 run, soonest first.
 - Metricool ids after the drawn-cover swap: VM3 422754413 (11/11), VL4 422754471 (11/14). Trigger prompt: covers drawn (step 4), and step 0 (다) redraws two banked covers per run.
+
+## 11/12 KST: horror Instagram (owner: "인스타 메트리쿨 연결 완료", "지금 바로 두 편 업로드")
+
+- Brand 7927149 now has Instagram (hallowayarchive). Tape 1 posted to Instagram only at 11:20 KST (Metricool 425179889), tape 2 at 11:35 (425179915), REEL, isAiGenerated true, the captured covers. Tape 2's caption rewritten with a question first (channel/tiktok/sr02-fitting-room.txt, postlint READY).
+- YouTube covers: i.ytimg.com serves our covers for VL1, VM2, VL2, VM3 (drawn), VL3 (VM1 had none): the custom thumbnails are set; the Shorts shelf shows a frame instead.
+- Metricool shows the 11/8 23:00 TikTok catch-up of VL1 as ERROR (TikTok internal error): to check on the profile.
+- Lemo-Opuscar rubber-hose STYLE.md and DEMO.md read (text only); the yt skills repo (Jakeschincariol/youtube-agent-skill) audited (stdlib only, no network) but installing it was blocked by the session's permission check: waiting for the owner.
