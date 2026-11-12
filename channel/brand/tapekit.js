@@ -191,7 +191,10 @@ const TK = {};
     return NOISE;
   }
   // grade the raw window (canvas `src`) into `dst` (both TW x TH)
+  // the CCTV look for the whole tape: 'cctv' (green, tapes 1-2) or 'mono' (plain black and white). ?look=mono or window.TAPE_CCTV_LOOK
+  TK.cctvLook = (typeof location !== 'undefined' && /[?&]look=mono/.test(location.search)) ? 'mono' : ((typeof window !== 'undefined' && window.TAPE_CCTV_LOOK) || 'cctv');
   TK.grade = function (dst, src, t, look, o = {}) {
+    if (look === 'cctv') look = TK.cctvLook;
     const g = dst, TW = g.canvas.width, TH = g.canvas.height; g.save();
     if (look === 'cctv') {
       g.filter = `grayscale(1) contrast(${o.contrast || 1.35}) brightness(${o.brightness || 1.25})`;
@@ -199,7 +202,7 @@ const TK = {};
       g.globalCompositeOperation = 'multiply'; g.fillStyle = 'rgb(170,215,180)'; g.fillRect(0, 0, TW, TH);
       g.globalCompositeOperation = 'source-over';
     } else if (look === 'mono') {                                   // 11/12 option: plain black and white (no green), harder blacks
-      g.filter = `grayscale(1) contrast(${o.contrast || 1.55}) brightness(${o.brightness || 1.2})`;
+      g.filter = `grayscale(1) contrast(${o.contrast || 1.45}) brightness(${(o.brightness || 1.25) * .82})`;
       g.drawImage(src, 0, 0); g.filter = 'none';
     } else {
       g.filter = `saturate(.75) contrast(1.12) brightness(${o.brightness || 1.05}) sepia(.18)`;

@@ -9,7 +9,7 @@ const { spawn } = require('child_process');
 const fs = require('fs'), path = require('path');
 const HERE = path.resolve(__dirname, '..');
 const FPS = 60;
-const URL = 'file://' + path.join(HERE, 'index.html');
+const URL = 'file://' + path.join(HERE, 'index.html') + (process.env.TAPE_QUERY ? '?' + process.env.TAPE_QUERY : '');   // e.g. TAPE_QUERY=look=mono
 
 async function openPage(browser) {
   const page = await browser.newPage({ viewport: { width: 1080, height: 1920 }, deviceScaleFactor: 1 });
@@ -72,7 +72,7 @@ async function main() {
       }));
       const list = path.join(outDir, 'segs.txt');
       fs.writeFileSync(list, segs.filter(Boolean).map(s => `file '${s}'`).join('\n'));
-      const outFile = path.join(outDir, args[1] ? `video_${t0}_${t1}.mp4` : 'video.mp4');
+      const outFile = path.join(outDir, args[1] ? `video_${t0}_${t1}.mp4` : (process.env.TAPE_OUT || 'video.mp4'));
       await new Promise((res, rej) => spawn('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'concat', '-safe', '0', '-i', list, '-c', 'copy', outFile], { stdio: 'inherit' })
         .on('close', c => c ? rej(new Error('concat ' + c)) : res()));
       segs.filter(Boolean).forEach(s => fs.unlinkSync(s));
