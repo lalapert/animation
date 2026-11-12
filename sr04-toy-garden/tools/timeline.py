@@ -16,6 +16,7 @@ START = {"L1": 7.75, "L2": 19.2, "L3": 28.4}
 VO = []
 for k in ["L1", "L2", "L3"]:
     VO.append({"id": k, "who": lines[k]["who"], "t": START[k], "dur": durs[k], "sub": lines[k].get("sub", lines[k]["text"]), "col": "#f2f2f2", "fx": "toy"})
+VO[2]["gain_db"] = 3.0                       # v2: the run-down "Wind me up." sits under the tremolo; lift it so it reads
 for i, v in enumerate(VO):
     v["s0"] = round(v["t"] - 0.05, 3)
     nxt = VO[i + 1]["t"] - 0.15 if i + 1 < len(VO) else 99

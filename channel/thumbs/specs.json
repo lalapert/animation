@@ -202,7 +202,7 @@
  },
  {
   "folder": "sr04-toy-garden",
-  "t": 27.95,
+  "t": 28.0,
   "series": "sr",
   "tape": "TAPE 04",
   "lines": [
@@ -210,10 +210,10 @@
    "WOUND IT."
   ],
   "focus": [
-   560,
-   1230
+   540,
+   960
   ],
-  "zoom": 1.9
+  "zoom": 1.25
  },
  {
   "folder": "vl04-laser-pointer",
