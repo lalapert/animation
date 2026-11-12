@@ -86,7 +86,8 @@
   "place": [
    640,
    1160
-  ]
+  ],
+  "drawn": true
  },
  {
   "folder": "vl01-day-one",
@@ -257,7 +258,8 @@
   "place": [
    540,
    1150
-  ]
+  ],
+  "drawn": true
  },
  {
   "folder": "vl05-the-monologue",
