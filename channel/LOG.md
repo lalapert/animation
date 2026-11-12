@@ -126,3 +126,4 @@
 - Until 5 horror tapes are banked, runs make horror first (tape 6 First Night, 11/19, needs the camcorder walk kit and Leon's voice).
 - YouTube skills installed (.claude/skills/yt-*), owner's permission.
 - YouTube Shorts frame fix (cover as the last frames): owner said no.
+- Owner 11/12: Volt Labs stays on every platform (Instagram included) until it ends 1/31. Asked for Void Mart-family series to follow it: four concepts in channel/NEXT_SERIES.md (A Gate Zero, recommended; B Void Diner; C Spin Cycle; D Long Haul, Dennis spin-off, decide after VM5 numbers). Shared family rules: EXIT 0, 3 AM, one corporate owner, Void orange on staff, MAGS-line AIs on the MAGS voice, the incident board, the same chime and end card. Waiting for the owner's pick.
