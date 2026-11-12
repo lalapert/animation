@@ -18,7 +18,7 @@ const SCENE = TK.concourse({ length: 40, lightsOn: () => 0 });
 const SIGN = SCENE.q.find(q => q.text === 'TOY GARDEN');
 const CAM = { x: -5.3, y: 3.2, z: 11.6, yaw: 1.3, pitch: -.27, fov: 58 };
 const SHX = 5.99, SHZ0 = 10.0, SHZ1 = 17.6;                        // the shutter plane and span
-const POOL_SIGN = { x: 4.7, z: 13.9, r: 2.7 }, POOL_PANEL = { x: .35, z: 12.0, r: 2.6 };
+const POOL_SIGN = { x: 4.7, z: 13.9, r: 2.7 }, POOL_PANEL = { x: .6, z: 12.2, r: 3.0 };
 // the path: lying behind the shutter (seen in the gap) -> out -> backwards to B -> facing us to C -> fast to D under the camera
 const P = { lie: [6.3, 14.1], out: [5.5, 14.1], B: [3.9, 13.5], C: [1.75, 12.7], D: [-.05, 12.05] };
 
@@ -35,10 +35,10 @@ function lights(tq) {
   if (tq >= TL.QUIET) return { sign: 0, panel: 0 };                                      // the power dies with the sound
   if (tq >= TL.FLICKER2) return { sign: flick(tq, 1.7, 7), panel: flick(tq, 1.3, 19) };
   if (inR(tq, TL.WALK3)) return { sign: flick(tq, 1.0, 7), panel: flick(tq, .8, 19) };
-  return { sign: tq > 4 ? flick(tq, .22, 7) : 1, panel: 1 };
+  return { sign: tq > 4 ? flick(tq, .12, 7) : 1, panel: 1 };
 }
 const fall = (x, z, p) => Math.max(0, 1 - ((x - p.x) ** 2 + (z - p.z) ** 2) / (p.r * p.r));
-const lightAt = (x, z, L) => .16 + 1.0 * L.sign * fall(x, z, POOL_SIGN) + .85 * L.panel * fall(x, z, POOL_PANEL);
+const lightAt = (x, z, L) => .26 * (L.sign + L.panel > .2 ? 1 : .3) + 1.0 * L.sign * fall(x, z, POOL_SIGN) + .85 * L.panel * fall(x, z, POOL_PANEL);
 function pool(g, cam, p, a) {
   if (a <= .01) return;
   const c = project(cam, [p.x, 0, p.z]), l = project(cam, [p.x, 0, p.z - p.r]), r = project(cam, [p.x, 0, p.z + p.r]), n = project(cam, [p.x - p.r, 0, p.z]), f = project(cam, [p.x + p.r, 0, p.z]);
@@ -55,10 +55,13 @@ function floorClip(g, cam) {                                                    
 // the sign washes the top of the shutter
 function wash(g, cam, a) {
   if (a <= .01) return;
-  const q = [[SHX - .01, 1.2, 10.4], [SHX - .01, 1.2, 17.2], [SHX - .01, 3.1, 17.2], [SHX - .01, 3.1, 10.4]].map(p => project(cam, p)); if (q.some(p => !p)) return;
+  const q = [[SHX - .01, 0, 10.2], [SHX - .01, 0, 17.4], [SHX - .01, 3.1, 17.4], [SHX - .01, 3.1, 10.2]].map(p => project(cam, p)); if (q.some(p => !p)) return;
   const top = [(q[2][0] + q[3][0]) / 2, (q[2][1] + q[3][1]) / 2], bot = [(q[0][0] + q[1][0]) / 2, (q[0][1] + q[1][1]) / 2];
-  const gr = g.createLinearGradient(top[0], top[1], bot[0], bot[1]); gr.addColorStop(0, `rgba(190,186,170,${.42 * a})`); gr.addColorStop(1, 'rgba(0,0,0,0)');
+  const gr = g.createLinearGradient(top[0], top[1], bot[0], bot[1]); gr.addColorStop(0, `rgba(190,186,170,${.5 * a})`); gr.addColorStop(.6, `rgba(150,146,134,${.2 * a})`); gr.addColorStop(1, `rgba(120,118,110,${.1 * a})`);
   g.save(); g.globalCompositeOperation = 'lighter'; g.fillStyle = gr; g.beginPath(); q.forEach((p, i) => i ? g.lineTo(p[0], p[1]) : g.moveTo(p[0], p[1])); g.closePath(); g.fill(); g.restore();
+  g.save(); g.lineWidth = 1.5 * RS;                                                               // the shutter's ribs, catching it
+  for (let k = 1; k < 26; k++) { const y = 3.1 * k / 26, A = project(cam, [SHX - .02, y, 10.2]), B = project(cam, [SHX - .02, y, 17.4]); if (!A || !B) continue; g.strokeStyle = `rgba(20,20,22,${(.25 + .35 * a * y / 3.1).toFixed(2)})`; g.beginPath(); g.moveTo(A[0], A[1]); g.lineTo(B[0], B[1]); g.stroke(); }
+  g.restore();
 }
 function setSign(s) {
   SIGN.emit = .55 * s;
@@ -135,32 +138,34 @@ function robotFig(g, st) {
   const dot = (x, y, r, c) => { g.beginPath(); g.arc(x, y, r, 0, TAU); g.fillStyle = c; g.fill(); };
   for (const s of [-1, 1]) {                                                                     // legs, block feet
     const up = (s < 0 ? liftL : liftR) ? 6 : 0;
-    g.fillStyle = G(150); g.fillRect(s * 14 - 5, -27 - up, 10, 21);
+    g.fillStyle = G(122); g.fillRect(s * 14 - 5, -27 - up, 10, 21);
     g.fillStyle = G(85); g.fillRect(s * 14 - 6, -19 - up, 12, 3);
     rr(s * 14 - 12, -8 - up, 24, 8, 2, G(72));
   }
   if (!back) keyWings(g, st.key, G, false);
-  rr(-27, -67, 54, 43, 6, G(188));                                                              // torso
-  g.fillStyle = G(124); g.fillRect(15, -65, 11, 39);
+  rr(-27, -67, 54, 43, 6, G(150));                                                              // torso
+  g.fillStyle = G(98); g.fillRect(15, -65, 11, 39);
   g.fillStyle = G(78); g.fillRect(-27, -30, 54, 5);
   if (!back) {
     g.fillStyle = G(66); g.fillRect(-20, -61, 30, 25);                                          // chest panel
     dot(-6, -49, 8.5, G(30));
-    if (st.egg) { g.fillStyle = G(240); g.font = 'bold 14px sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('9', -6, -48); }
-    else { g.strokeStyle = G(220); g.lineWidth = 2; g.beginPath(); g.moveTo(-6, -49); g.lineTo(-6 + Math.cos(st.key * .3) * 6.5, -49 + Math.sin(st.key * .3) * 6.5); g.stroke(); }
-    for (let i = 0; i < 3; i++) { g.fillStyle = G(i === 1 ? 40 : 150); g.fillRect(4, -58 + i * 7, 4, 4); }
+    const lum = 'rgb(205,205,195)';                                                             // luminous paint: it glows faintly in the dark
+    if (st.egg) { g.fillStyle = lum; g.font = 'bold 14px sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('9', -6, -48); }
+    else { g.strokeStyle = lum; g.lineWidth = 2; g.beginPath(); g.moveTo(-6, -49); g.lineTo(-6 + Math.cos(st.key * .3) * 6.5, -49 + Math.sin(st.key * .3) * 6.5); g.stroke(); g.fillStyle = lum; for (let i = 0; i < 4; i++) g.fillRect(-6 + Math.cos(i * 1.57) * 7 - .7, -49 + Math.sin(i * 1.57) * 7 - .7, 1.4, 1.4); }
+    for (let i = 0; i < 3; i++) { g.fillStyle = G(i === 1 ? 30 : 95); g.fillRect(4, -58 + i * 7, 4, 4); }
     g.fillStyle = G(55); for (let i = 0; i < 4; i++) g.fillRect(-18 + i * 7, -33, 4, 2);
   } else {
     g.fillStyle = G(110); g.fillRect(-1, -66, 2, 36);                                          // the seam, a battery door, screws
     rr(-13, -55, 26, 18, 2, G(150)); dot(-9, -51, 1.4, G(40)); dot(9, -51, 1.4, G(40));
   }
-  g.fillStyle = `rgba(30,24,20,${.55})`;                                                       // rust and a dent, the same every frame
-  for (const [x, y, r] of [[-22, -36, 4], [20, -62, 3], [-14, -64, 2.5], [10, -31, 3.5], [-25, -48, 2.2]]) { g.beginPath(); g.ellipse(x, y, r, r * .7, .4, 0, TAU); g.fill(); }
+  const RR = TK.rng(77);                                                                         // rust and dents, the same every frame
+  for (let i = 0; i < 34; i++) { const e = RR(), x = e < .35 ? -26 + RR() * 5 : e < .6 ? 21 + RR() * 5 : -26 + RR() * 52, y = e < .6 ? -66 + RR() * 40 : -34 + RR() * 9, r = .6 + RR() * 1.8; g.fillStyle = `rgba(28,22,18,${(.35 + RR() * .45).toFixed(2)})`; g.beginPath(); g.ellipse(x, y, r, r * .7, RR() * 3, 0, TAU); g.fill(); }   // at the seams and the belt
+  g.fillStyle = 'rgba(0,0,0,.35)'; g.beginPath(); g.ellipse(-12, -40, 6, 4, .4, 0, TAU); g.fill();
   for (const s of [-1, 1]) {                                                                     // arms; its left one hangs from a popped pin
     const broken = s === (back ? -1 : 1), sw = st.walking ? (ph < 2 ? .4 : -.4) * s : 0;
     g.save(); g.translate(s * 30, broken ? -55 : -62);
     g.rotate(s * (broken ? .2 : .07) + (broken ? -sw * 1.5 : sw));
-    g.fillStyle = G(152); g.fillRect(-4.5, 0, 9, broken ? 33 : 26);
+    g.fillStyle = G(125); g.fillRect(-4.5, 0, 9, broken ? 33 : 26);
     g.fillStyle = G(60); g.fillRect(-5.5, broken ? 31 : 24, 4, 7); g.fillRect(1.5, broken ? 31 : 24, 4, 7);    // a pincer
     g.restore();
   }
@@ -171,7 +176,7 @@ function robotFig(g, st) {
 // the wind-up key: from behind, the whole bow turning; from the front only its ends, sticking out past the body
 function keyWings(g, a, G, back) {
   g.save(); g.translate(0, -47); g.rotate(a);
-  g.fillStyle = G(back ? 205 : 150);
+  g.fillStyle = G(back ? 170 : 120);
   g.fillRect(-28, -3.5, 56, 7);
   for (const s of [-1, 1]) { g.beginPath(); g.ellipse(s * 24, 0, 11, 8, 0, 0, TAU); g.fill(); }
   if (back) { g.fillStyle = G(70); for (const s of [-1, 1]) { g.beginPath(); g.ellipse(s * 24, 0, 5, 3.5, 0, 0, TAU); g.fill(); } g.beginPath(); g.arc(0, 0, 5, 0, TAU); g.fillStyle = G(120); g.fill(); }
@@ -183,15 +188,16 @@ function head(g, st, G) {
   const dot = (x, y, r, c) => { g.beginPath(); g.arc(x, y, r, 0, TAU); g.fillStyle = c; g.fill(); };
   if (st.hp < 0) {                                                                               // dropped forward: the top of its head at us
     g.translate(0, 7);
-    rr(-20, -27, 40, 27, 7, G(205)); rr(-20, -5, 40, 6, 2, G(80));
+    rr(-20, -27, 40, 27, 7, G(165)); rr(-20, -5, 40, 6, 2, G(70));
     dot(-22.5, -12, 4.5, G(110)); dot(22.5, -12, 4.5, G(110));
     dot(2, -13, 4, G(120)); g.fillStyle = G(60); g.fillRect(1, -14, 2, 5);
     g.restore(); return;
   }
   const fh = st.hp > 0 ? 31 : 25, top = st.hp > 0 ? 0 : 6;
-  if (top) rr(-20, -fh - top - 2, 40, top + 5, 4, G(212));                                     // the top of the head (we are above it)
-  rr(-20, -fh, 40, fh, 6, G(st.face ? 176 : 162));
-  g.fillStyle = G(112); g.fillRect(12, -fh, 8, fh);
+  if (top) rr(-20, -fh - top - 2, 40, top + 5, 4, G(172));                                     // the top of the head (we are above it)
+  rr(-20, -fh, 40, fh, 6, G(st.face ? 145 : 135));
+  g.fillStyle = G(92); g.fillRect(12, -fh, 8, fh);
+  g.fillStyle = 'rgba(0,0,0,.3)'; g.beginPath(); g.ellipse(-8, -fh * .25, 5, 3, .3, 0, TAU); g.fill();
   dot(-22.5, -fh * .5, 4.5, G(108)); dot(22.5, -fh * .5, 4.5, G(108));                          // ear bolts
   g.fillStyle = G(88); g.fillRect(-1.5, -fh - top - 15, 3, 15); g.save(); g.translate(0, -fh - top - 15); g.rotate(.5); dot(0, -3, 3.5, G(135)); g.restore();   // bent antenna
   if (!st.face) {                                                                                // the back of its head: a seam, rivets, a vent
@@ -202,20 +208,20 @@ function head(g, st, G) {
   }
   const ey = -fh * .6;
   for (const s of [-1, 1]) {                                                                     // eyes: chrome bezels, dark glass until they light
-    dot(s * 9, ey, 7.5, G(205));
+    dot(s * 9, ey, 6.6, G(150));
     if (st.eyes) {
       const a = s < 0 ? st.crackLit : 1;
       g.save(); g.globalCompositeOperation = 'lighter';
-      const gl = g.createRadialGradient(s * 9, ey, 0, s * 9, ey, 22); gl.addColorStop(0, `rgba(255,255,245,${.9 * a})`); gl.addColorStop(.3, `rgba(255,255,240,${.35 * a})`); gl.addColorStop(1, 'rgba(255,255,240,0)');
-      g.fillStyle = gl; g.fillRect(s * 9 - 22, ey - 22, 44, 44); g.restore();
-      g.save(); g.shadowColor = 'rgba(255,255,245,1)'; g.shadowBlur = 16 * a; dot(s * 9, ey, 5.5, `rgb(${255 * a | 0},${255 * a | 0},${245 * a | 0})`); g.restore();
-      dot(s * 9 - s * 1.2, ey + .8, 1.6, 'rgb(20,20,20)');                                       // the painted pupils, on us
-    } else { dot(s * 9, ey, 5.5, G(30)); dot(s * 9 - 1.5, ey - 1.5, 1.4, G(150)); }
+      const gl = g.createRadialGradient(s * 9, ey, 0, s * 9, ey, 14); gl.addColorStop(0, `rgba(255,255,245,${.55 * a})`); gl.addColorStop(.35, `rgba(255,255,240,${.18 * a})`); gl.addColorStop(1, 'rgba(255,255,240,0)');
+      g.fillStyle = gl; g.fillRect(s * 9 - 14, ey - 14, 28, 28); g.restore();
+      g.save(); g.shadowColor = 'rgba(255,255,245,1)'; g.shadowBlur = 10 * a; dot(s * 9, ey, 5.5, `rgb(${255 * a | 0},${255 * a | 0},${245 * a | 0})`); g.restore();
+    } else { dot(s * 9, ey, 5, G(22)); dot(s * 9 - 1.4, ey - 1.6, .9, G(110)); }
     if (s < 0) { g.strokeStyle = 'rgba(10,10,10,.9)'; g.lineWidth = 1.2; g.beginPath(); g.moveTo(-13, ey - 4); g.lineTo(-9, ey); g.lineTo(-6, ey - 2); g.moveTo(-9, ey); g.lineTo(-8, ey + 5); g.stroke(); }   // the cracked lamp
   }
   rr(-10, -fh * .27, 20, 5, 1.5, G(48));                                                        // the mouth grille
   g.fillStyle = G(140); for (let i = 0; i < 4; i++) g.fillRect(-7 + i * 4.5, -fh * .27, 1.3, 5);
-  g.fillStyle = 'rgba(30,24,20,.6)'; for (const [x, y, r] of [[-15, -fh + 5, 2.5], [8, -4, 2], [16, ey + 6, 1.8]]) { g.beginPath(); g.arc(x, y, r, 0, TAU); g.fill(); }
+  g.fillStyle = 'rgba(30,24,20,.6)'; for (const [x, y, r] of [[-15, -fh + 5, 2.5], [8, -4, 2], [16, ey + 6, 1.8], [-9, ey + 8, 1.6], [9, ey + 8, 1.4]]) { g.beginPath(); g.arc(x, y, r, 0, TAU); g.fill(); }
+  g.strokeStyle = 'rgba(25,20,16,.55)'; g.lineWidth = 1.4; for (const s of [-1, 1]) { g.beginPath(); g.moveTo(s * 9, ey + 7); g.lineTo(s * 9 + .5, ey + 15); g.stroke(); }   // rust runs from the eyes
   g.restore();
 }
 function gapPoly(cam, h) { return [[SHX - .01, 0, SHZ0 + .3], [SHX - .01, 0, SHZ1 - .3], [SHX - .01, h, SHZ1 - .3], [SHX - .01, h, SHZ0 + .3]].map(p => project(cam, p)); }
@@ -224,7 +230,7 @@ function drawRobot(g, cam, st) {
   const s = cam.f / base[2] * .6 / 100;
   g.save();
   if (st.lying && st.x > SHX - .05) { const P = gapPoly(cam, .2); g.beginPath(); P.forEach((p, i) => i ? g.lineTo(p[0], p[1]) : g.moveTo(p[0], p[1])); g.closePath(); g.clip(); }   // still under the shutter: only the gap shows it
-  g.fillStyle = `rgba(0,0,0,${.45})`; g.beginPath(); g.ellipse(base[0], base[1], 34 * s, 8 * s, 0, 0, TAU); g.fill();
+  g.fillStyle = `rgba(0,0,0,${.45})`; g.beginPath(); if (st.lying) g.ellipse(base[0] - 50 * s, base[1], 58 * s, 5 * s, 0, 0, TAU); else g.ellipse(base[0], base[1], 34 * s, 8 * s, 0, 0, TAU); g.fill();
   g.translate(base[0], base[1]); g.scale(s, s);
   if (st.lying) { g.translate(0, -11); g.scale(1, .42); g.rotate(-Math.PI / 2); }
   robotFig(g, st);
@@ -238,16 +244,16 @@ function drawGap(g, cam, tq) {
   g.save(); g.fillStyle = 'rgb(6,6,8)'; g.beginPath(); P.forEach((p, i) => i ? g.lineTo(p[0], p[1]) : g.moveTo(p[0], p[1])); g.closePath(); g.fill();
   if (tq >= TL.SHUTTER) {
     g.clip(); const R = TK.rng(41), lit = tq < TL.QUIET ? 1 : .25, ER = TK.rng(Math.floor(tq * 6) * 5 + 2);
-    for (let row = 0; row < 3; row++) for (let i = 0; i < 24; i++) {
-      const z = SHZ0 + .5 + i * .28 + (row % 2) * .13, x = SHX + .1 + row * .25, kind = Math.floor(R() * 3), h = .12 + R() * .3;
+    for (let row = 0; row < 2; row++) for (let i = 0; i < 15; i++) {
+      const z = SHZ0 + .55 + i * .44 + (row % 2) * .22 + (R() - .5) * .1, x = SHX + .12 + row * .3, kind = Math.floor(R() * 3), h = .14 + R() * .28;
       const a = project(cam, [x, 0, z]); if (!a) continue;
-      const s = cam.f / a[2] * .05, sh = [150, 112, 80][row] * lit | 0;
+      const s = cam.f / a[2] * .06, sh = [130, 90][row] * lit | 0;
       g.fillStyle = `rgb(${sh},${sh},${sh - 2})`;                                                // feet (blocks, doll shoes, paws), all facing out
       if (kind === 0) { g.fillRect(a[0] - s * 1.6, a[1] - s * 1.3, s * 1.3, s * 1.3); g.fillRect(a[0] + s * .3, a[1] - s * 1.3, s * 1.3, s * 1.3); }
       else if (kind === 1) { g.beginPath(); g.ellipse(a[0] - s, a[1] - s * .4, s * .9, s * .5, 0, 0, TAU); g.ellipse(a[0] + s, a[1] - s * .4, s * .9, s * .5, 0, 0, TAU); g.fill(); }
       else { g.beginPath(); g.arc(a[0] - s, a[1] - s * .7, s * .9, 0, TAU); g.arc(a[0] + s, a[1] - s * .7, s * .9, 0, TAU); g.fill(); }
       const e = project(cam, [x, h, z]);                                                          // and their eyes, catching the light (some blink)
-      if (e && R() < .7 && ER() > .12) { const es = Math.max(1.2, s * .45), ga = .55 + .45 * R(); g.fillStyle = `rgba(235,235,225,${ga})`; g.beginPath(); g.arc(e[0] - es * 1.8, e[1], es, 0, TAU); g.arc(e[0] + es * 1.8, e[1], es, 0, TAU); g.fill(); }
+      if (e && R() < .8 && ER() > .12) { const es = Math.max(2, s * .75), ga = .55 + .45 * R(); g.fillStyle = `rgba(235,235,225,${ga})`; g.beginPath(); g.arc(e[0] - es * 1.8, e[1], es, 0, TAU); g.arc(e[0] + es * 1.8, e[1], es, 0, TAU); g.fill(); }
     }
   }
   g.restore();
@@ -270,78 +276,78 @@ function runs(g, R, x, y, len, w, n = 4) {                                      
 }
 function faceAtLens(g, tq) {
   const f = clamp(Math.round((tq - TL.JUMP) * FPS_CCTV), 0, 4), R = TK.rng(404), FR = TK.rng(Math.floor(tq * 6) * 13 + 5);
-  const sc = [1, 1.13, 1.2, 1.24, 1.26][f], rot = [-.13, -.06, .06, .08, .08][f], ox = [0, -28, 18, 10, 10][f], oy = [0, 20, -12, -8, -8][f];
-  const W = 455, H = 385, EX = 205, EY = -50, ER = 116;
-  const rr = (x, y, w, h, r) => { g.beginPath(); g.roundRect(x, y, w, h, r); };
-  g.save(); g.fillStyle = 'rgb(3,3,4)'; g.fillRect(0, 0, TK.TW, TK.TH);
-  g.translate(552 + ox, 430 + oy); g.rotate(rot); g.scale(sc, sc);
-  for (const s of [-1, 1]) { g.fillStyle = 'rgb(58,58,56)'; rr(s > 0 ? W - 30 : -W - 70, -100, 100, 190, 34); g.fill(); g.fillStyle = 'rgb(104,102,98)'; rr(s > 0 ? W + 36 : -W - 62, -64, 26, 118, 10); g.fill(); }   // ear bolts
-  g.strokeStyle = 'rgb(80,80,78)'; g.lineWidth = 30; g.lineCap = 'round'; g.beginPath(); g.moveTo(40, -H + 10); g.lineTo(70, -H - 110); g.lineTo(170, -H - 170); g.stroke();   // the bent antenna
-  g.fillStyle = 'rgb(96,94,90)'; g.beginPath(); g.arc(178, -H - 178, 48, 0, TAU); g.fill();
-  rr(-W, -H, 2 * W, 2 * H, 110); g.fillStyle = 'rgb(162,160,154)'; g.fill();                      // the tin plate
-  g.save(); rr(-W, -H, 2 * W, 2 * H, 110); g.clip();
-  g.fillStyle = 'rgb(98,96,92)'; g.fillRect(-W, -H + 92, 2 * W, 66);                             // the printed brow band
-  g.fillStyle = 'rgb(126,124,118)'; g.fillRect(-W, 150, 2 * W, H);                               // the printed lower face
-  g.fillStyle = 'rgb(36,36,36)'; for (const s of [-1, 1]) { g.beginPath(); g.arc(s * EX, EY, ER + 64, 0, TAU); g.fill(); }
-  g.fillStyle = 'rgb(56,54,52)'; g.fillRect(-5, -H, 10, 2 * H);                                  // the seam down the middle, crimped tabs
-  for (let y = -H + 50; y < H; y += 118) { g.fillStyle = 'rgb(180,178,172)'; g.fillRect(-24, y, 48, 26); g.fillStyle = 'rgb(46,44,42)'; g.fillRect(-24, y + 24, 48, 6); }
-  for (const [dx, dy, rx, ry, a] of [[-300, -225, 96, 62, -.4], [275, 215, 82, 52, .3], [80, -300, 60, 40, .1], [-175, 262, 64, 40, -.2], [345, -170, 50, 70, .2]]) {   // dents
-    const gr = g.createRadialGradient(dx + rx * .3, dy + ry * .35, 4, dx, dy, rx); gr.addColorStop(0, 'rgba(0,0,0,.6)'); gr.addColorStop(1, 'rgba(0,0,0,0)');
+  const sc = [1, 1.3, 1.42, 1.46, 1.48][f], rot = [-.14, -.05, .08, .1, .1][f], ox = [0, -40, 24, 14, 14][f], oy = [0, 70, 40, 46, 46][f];
+  const W = 430, H = 365, EX = 178, EY = -28, ER = 80;
+  g.save(); g.fillStyle = 'rgb(2,2,3)'; g.fillRect(0, 0, TK.TW, TK.TH);
+  g.translate(556 + ox, 470 + oy); g.rotate(rot); g.scale(sc, sc);
+  for (const s of [-1, 1]) { g.fillStyle = 'rgb(46,46,44)'; g.beginPath(); g.roundRect(s > 0 ? W - 24 : -W - 66, -80, 90, 160, 30); g.fill(); g.fillStyle = 'rgb(84,82,78)'; g.beginPath(); g.roundRect(s > 0 ? W + 30 : -W - 56, -52, 24, 104, 10); g.fill(); }   // ear bolts
+  const plate = () => { g.beginPath(); g.moveTo(-W, -H + 200); g.quadraticCurveTo(-W, -H, -W + 220, -H); g.lineTo(W - 220, -H); g.quadraticCurveTo(W, -H, W, -H + 200); g.lineTo(W, H - 80); g.quadraticCurveTo(W, H, W - 80, H); g.lineTo(-W + 80, H); g.quadraticCurveTo(-W, H, -W, H - 80); g.closePath(); };
+  g.strokeStyle = 'rgb(52,52,50)'; g.lineWidth = 26; g.lineCap = 'round'; g.beginPath(); g.moveTo(40, -H + 20); g.lineTo(60, -H - 80); g.lineTo(160, -H - 130); g.stroke();   // the bent antenna
+  g.fillStyle = 'rgb(70,68,64)'; g.beginPath(); g.arc(166, -H - 134, 34, 0, TAU); g.fill();
+  plate(); g.fillStyle = 'rgb(76,74,70)'; g.fill();                                                // dark old tin
+  g.save(); plate(); g.clip();
+  g.fillStyle = 'rgb(58,56,53)'; g.fillRect(-W, 120, 2 * W, H);                                   // the printed lower face, darker
+  g.fillStyle = 'rgb(54,53,51)'; g.fillRect(-2, -H, 4, 2 * H);                                    // the seam
+  for (const [dx, dy, rx, ry, a] of [[-320, -250, 110, 70, -.4], [290, 230, 90, 56, .3], [90, -330, 70, 44, .1], [-190, 300, 70, 44, -.2], [380, -150, 56, 80, .2], [40, 60, 60, 40, .6]]) {   // dents
+    const gr = g.createRadialGradient(dx + rx * .3, dy + ry * .35, 4, dx, dy, rx); gr.addColorStop(0, 'rgba(0,0,0,.65)'); gr.addColorStop(1, 'rgba(0,0,0,0)');
     g.fillStyle = gr; g.beginPath(); g.ellipse(dx, dy, rx, ry, a, 0, TAU); g.fill();
-    g.strokeStyle = 'rgba(240,240,232,.55)'; g.lineWidth = 6; g.beginPath(); g.ellipse(dx, dy, rx, ry, a, 3.4, 5.4); g.stroke();
+    g.strokeStyle = 'rgba(220,220,212,.4)'; g.lineWidth = 5; g.beginPath(); g.ellipse(dx, dy, rx, ry, a, 3.4, 5.4); g.stroke();
   }
-  for (let i = 0; i < 46; i++) {                                                                  // scratches (bright tin under the paint)
-    const x = (R() - .5) * 2 * W, y = (R() - .5) * 2 * H, a = R() * 3, l = 20 + R() * 90;
-    g.strokeStyle = `rgba(225,225,218,${(.15 + R() * .35).toFixed(2)})`; g.lineWidth = 1 + R() * 2.5; g.beginPath(); g.moveTo(x, y); g.lineTo(x + Math.cos(a) * l, y + Math.sin(a) * l); g.stroke();
+  for (let i = 0; i < 60; i++) {                                                                  // scratches
+    const x = (R() - .5) * 2 * W, y = (R() - .5) * 2 * H, a = R() * 3, l = 20 + R() * 100;
+    g.strokeStyle = `rgba(200,200,192,${(.1 + R() * .25).toFixed(2)})`; g.lineWidth = 1 + R() * 2.5; g.beginPath(); g.moveTo(x, y); g.lineTo(x + Math.cos(a) * l, y + Math.sin(a) * l); g.stroke();
   }
-  for (let i = 0; i < 22; i++) {                                                                  // paint chips
-    const x = (R() - .5) * 2 * W, y = (R() - .5) * 2 * H, r = 6 + R() * 22; g.fillStyle = `rgba(205,205,198,${(.35 + R() * .4).toFixed(2)})`;
-    g.beginPath(); for (let j = 0; j < 7; j++) { const an = j / 7 * TAU, rr2 = r * (.5 + R() * .6); j ? g.lineTo(x + Math.cos(an) * rr2, y + Math.sin(an) * rr2) : g.moveTo(x + Math.cos(an) * rr2, y + Math.sin(an) * rr2); } g.closePath(); g.fill();
+  for (let i = 0; i < 30; i++) {                                                                  // paint flaking off
+    const x = (R() - .5) * 2 * W, y = (R() - .5) * 2 * H, r = 6 + R() * 26; g.fillStyle = `rgba(150,150,144,${(.3 + R() * .4).toFixed(2)})`;
+    g.beginPath(); for (let j = 0; j < 7; j++) { const an = j / 7 * TAU, q = r * (.45 + R() * .7); j ? g.lineTo(x + Math.cos(an) * q, y + Math.sin(an) * q) : g.moveTo(x + Math.cos(an) * q, y + Math.sin(an) * q); } g.closePath(); g.fill();
   }
-  rust(g, R, -W + 60, -H + 60, 120, 90); rust(g, R, W - 50, H - 70, 150, 110); rust(g, R, -W + 40, H - 40, 110, 80); rust(g, R, W - 60, -H + 90, 90, 60);
-  for (let y = -H + 50; y < H; y += 118) rust(g, R, 0, y + 14, 34, 16, .7);
-  for (const s of [-1, 1]) { runs(g, R, s * EX, EY + ER + 50, 260, 120, 5); rust(g, R, s * EX, EY + ER + 40, 70, 40, .7); }   // rust run down from the eyes
-  const lg = g.createRadialGradient(0, EY + 20, 90, 0, EY + 40, 640); lg.addColorStop(0, 'rgba(0,0,0,0)'); lg.addColorStop(.5, 'rgba(0,0,0,.32)'); lg.addColorStop(1, 'rgba(0,0,0,.92)');
-  g.fillStyle = lg; g.fillRect(-W, -H, 2 * W, 2 * H);                                            // lit only by its own eyes; the edges fall away
+  rust(g, R, -W + 80, -H + 120, 170, 160, .8); rust(g, R, W - 60, H - 80, 190, 170, .8); rust(g, R, -W + 50, H - 50, 150, 120, .8); rust(g, R, W - 80, -H + 140, 130, 100, .8);
+  rust(g, R, 0, -H + 40, 120, 60, .7); rust(g, R, -40, 120, 90, 50, .6);
+  g.save(); g.globalCompositeOperation = 'lighter';                                               // its eyes light the tin round them
+  for (const s of [-1, 1]) { const a = s < 0 ? .26 : .38, gl = g.createRadialGradient(s * EX, EY + 30, 50, s * EX, EY + 40, 290); gl.addColorStop(0, `rgba(255,255,245,${a})`); gl.addColorStop(1, 'rgba(255,255,245,0)'); g.fillStyle = gl; g.fillRect(s * EX - 300, EY - 260, 600, 600); }
   g.restore();
-  g.strokeStyle = 'rgba(0,0,0,.8)'; g.lineWidth = 10; rr(-W, -H, 2 * W, 2 * H, 110); g.stroke();
-  g.strokeStyle = 'rgba(230,230,222,.35)'; g.lineWidth = 4; g.beginPath(); g.moveTo(-W + 120, -H + 6); g.lineTo(W - 120, -H + 6); g.stroke();
-  for (let i = 0; i < 26; i++) {                                                                  // rivets round the edge
-    const u = i / 26 * TAU, x = Math.cos(u) * (W - 34), y = Math.sin(u) * (H - 34);
-    rust(g, R, x, y, 22, 8, .7);
-    g.fillStyle = 'rgb(84,82,78)'; g.beginPath(); g.arc(x, y, 10, 0, TAU); g.fill(); g.fillStyle = 'rgba(240,240,232,.6)'; g.beginPath(); g.arc(x - 3, y - 3, 3.5, 0, TAU); g.fill();
-  }
+  for (const s of [-1, 1]) { runs(g, R, s * EX + s * 10, EY + ER + 36, 280, 90, 6); rust(g, R, s * EX, EY + ER + 40, 80, 50, .85); }   // rust run down from the eyes
+  const lg = g.createRadialGradient(0, EY + 40, 120, 0, EY + 60, 560); lg.addColorStop(0, 'rgba(0,0,0,0)'); lg.addColorStop(.45, 'rgba(0,0,0,.45)'); lg.addColorStop(1, 'rgba(0,0,0,.97)');
+  g.fillStyle = lg; g.fillRect(-W, -H, 2 * W, 2 * H);                                            // the rest falls into the dark
+  g.restore();
+  // the brow: a heavy ridge over the lamps that shades their tops (it looks down its nose at the lens)
+  g.save(); g.beginPath(); g.moveTo(-W + 20, EY - ER - 40); g.lineTo(-60, EY - ER + 6); g.lineTo(60, EY - ER + 6); g.lineTo(W - 20, EY - ER - 52); g.lineTo(W - 20, EY - ER - 120); g.lineTo(-W + 20, EY - ER - 110); g.closePath();
+  g.fillStyle = 'rgb(30,30,29)'; g.fill(); g.strokeStyle = 'rgba(190,190,182,.5)'; g.lineWidth = 5; g.beginPath(); g.moveTo(-W + 20, EY - ER - 40); g.lineTo(-60, EY - ER + 6); g.lineTo(60, EY - ER + 6); g.lineTo(W - 20, EY - ER - 52); g.stroke();
+  g.fillStyle = 'rgb(70,68,64)'; for (let i = 0; i < 8; i++) { const x = -W + 60 + i * 110, y = EY - ER - 84 + (i > 4 ? -4 : 0); g.beginPath(); g.arc(x, y, 9, 0, TAU); g.fill(); }
+  g.restore();
   for (const s of [-1, 1]) {                                                                     // the eyes
-    const ex = s * EX, ey = EY, cracked = s < 0;
-    const bz = g.createRadialGradient(ex - 30, ey - 45, 8, ex, ey, ER + 40); bz.addColorStop(0, 'rgb(245,245,240)'); bz.addColorStop(.55, 'rgb(120,120,118)'); bz.addColorStop(.78, 'rgb(225,225,220)'); bz.addColorStop(1, 'rgb(50,50,48)');
-    g.fillStyle = bz; g.beginPath(); g.arc(ex, ey, ER + 38, 0, TAU); g.fill();
-    rust(g, R, ex + s * 30, ey + ER + 10, 60, 40, .75);
-    for (let j = 0; j < 4; j++) { const a = j / 4 * TAU + .6; g.fillStyle = 'rgb(60,60,58)'; g.beginPath(); g.arc(ex + Math.cos(a) * (ER + 22), ey + Math.sin(a) * (ER + 22), 8, 0, TAU); g.fill(); }
-    const lit = cracked ? (FR() < .4 ? .55 : .9) : 1;
-    const gl = g.createRadialGradient(ex + s * 12, ey - 6, 6, ex, ey, ER); gl.addColorStop(0, 'rgb(255,255,255)'); gl.addColorStop(.62, `rgba(255,255,248,${lit})`); gl.addColorStop(1, `rgba(190,190,180,${lit * .9})`);
-    g.fillStyle = 'rgb(20,20,20)'; g.beginPath(); g.arc(ex, ey, ER, 0, TAU); g.fill();
+    const ex = s * EX, ey = EY + (s < 0 ? 14 : 0), cracked = s < 0;                              // the cracked one sits lower: its socket is dented in
+    const bz = g.createRadialGradient(ex - 30, ey - 40, 8, ex, ey, ER + 36); bz.addColorStop(0, 'rgb(200,200,196)'); bz.addColorStop(.55, 'rgb(70,70,68)'); bz.addColorStop(.8, 'rgb(150,150,146)'); bz.addColorStop(1, 'rgb(30,30,29)');
+    g.fillStyle = bz; g.beginPath(); g.arc(ex, ey, ER + 34, 0, TAU); g.fill();
+    rust(g, R, ex + s * 20, ey + ER + 6, 60, 40, .85);
+    const lit = cracked ? (FR() < .4 ? .5 : .85) : 1;
+    g.fillStyle = 'rgb(16,16,16)'; g.beginPath(); g.arc(ex, ey, ER, 0, TAU); g.fill();
+    const gl = g.createRadialGradient(ex, ey + 6, 4, ex, ey, ER); gl.addColorStop(0, 'rgb(255,255,255)'); gl.addColorStop(.55, `rgba(255,255,250,${lit})`); gl.addColorStop(.9, `rgba(170,170,160,${lit * .8})`); gl.addColorStop(1, `rgba(60,60,56,${lit})`);
     g.fillStyle = gl; g.beginPath(); g.arc(ex, ey, ER, 0, TAU); g.fill();
-    g.fillStyle = 'rgba(12,12,12,.88)'; g.beginPath(); g.arc(ex - s * 16, ey + 8, 30, 0, TAU); g.fill();    // painted pupils, both on the lens
+    const sh = g.createLinearGradient(ex, ey - ER, ex, ey - ER * .2); sh.addColorStop(0, 'rgba(0,0,0,.85)'); sh.addColorStop(1, 'rgba(0,0,0,0)');   // the brow's shadow over the lamp
+    g.fillStyle = sh; g.beginPath(); g.arc(ex, ey, ER, 0, TAU); g.fill();
+    g.strokeStyle = `rgba(120,120,112,${.35 * lit})`; g.lineWidth = 3; for (const r of [.42, .7]) { g.beginPath(); g.arc(ex, ey + 4, ER * r, 0, TAU); g.stroke(); }   // the reflector rings behind the glass
     if (cracked) {                                                                                // a hole in the lamp glass, the bulb glowing inside, cracks from it
-      const hole = [[-70, -58], [-22, -84], [6, -52], [-18, -30], [-46, -20], [-80, -30]].map(([x, y]) => [ex + x, ey + y]);
-      g.fillStyle = 'rgb(14,14,14)'; g.beginPath(); hole.forEach(([x, y], i) => i ? g.lineTo(x, y) : g.moveTo(x, y)); g.closePath(); g.fill();
-      g.save(); g.clip(); g.fillStyle = 'rgba(255,255,240,.85)'; g.beginPath(); g.ellipse(ex - 36, ey - 46, 18, 24, .3, 0, TAU); g.fill();
-      g.strokeStyle = 'rgb(255,255,255)'; g.lineWidth = 3; g.beginPath(); for (let j = 0; j < 7; j++) g.lineTo(ex - 48 + j * 4, ey - 52 + (j % 2 ? 9 : -9)); g.stroke(); g.restore();
-      g.strokeStyle = 'rgba(8,8,8,.92)'; g.lineCap = 'round';
-      for (const [x0, y0, a, l] of [[-22, -60, -.3, 150], [0, -50, .5, 130], [-40, -22, 1.6, 120], [-70, -40, 2.6, 70], [-10, -40, .95, 90], [-55, -70, -1.9, 60]]) {
-        let px = ex + x0, py = ey + y0, an = a; g.lineWidth = 5; g.beginPath(); g.moveTo(px, py);
+      const hole = [[-58, -40], [-20, -66], [4, -40], [-14, -20], [-40, -12], [-66, -22]].map(([x, y]) => [ex + x * .8, ey + y * .8]);
+      g.fillStyle = 'rgb(10,10,10)'; g.beginPath(); hole.forEach(([x, y], i) => i ? g.lineTo(x, y) : g.moveTo(x, y)); g.closePath(); g.fill();
+      g.save(); g.clip(); g.fillStyle = 'rgba(255,255,240,.8)'; g.beginPath(); g.ellipse(ex - 24, ey - 29, 12, 16, .3, 0, TAU); g.fill();
+      g.strokeStyle = 'rgb(255,255,255)'; g.lineWidth = 3; g.beginPath(); for (let j = 0; j < 7; j++) g.lineTo(ex - 32 + j * 3, ey - 32 + (j % 2 ? 6 : -6)); g.stroke(); g.restore();
+      g.save(); g.beginPath(); g.arc(ex, ey, ER + 2, 0, TAU); g.clip(); g.strokeStyle = 'rgba(6,6,6,.95)'; g.lineCap = 'round';
+      for (const [x0, y0, a, l] of [[-16, -40, -.3, 110], [0, -32, .5, 100], [-27, -13, 1.6, 90], [-48, -26, 2.6, 50], [-6, -24, .95, 80], [-37, -45, -1.9, 40]]) {
+        let px = ex + x0, py = ey + y0, an = a; g.lineWidth = 4.5; g.beginPath(); g.moveTo(px, py);
         for (let j = 0; j < 4; j++) { an += (R() - .5) * .6; px += Math.cos(an) * l / 4; py += Math.sin(an) * l / 4; g.lineTo(px, py); } g.stroke();
       }
+      g.restore();
     }
-    g.fillStyle = 'rgba(255,255,255,.7)'; g.beginPath(); g.ellipse(ex - 40, ey - 58, 26, 12, -.6, 0, TAU); g.fill();
   }
-  rr(-232, 165, 464, 150, 30); g.fillStyle = 'rgb(46,44,42)'; g.fill();                            // the mouth: a speaker grille, one corner bent in
-  for (let i = 0; i < 8; i++) { g.fillStyle = 'rgb(5,5,5)'; g.fillRect(-196 + i * 50, 186, 26, 108); }
-  g.save(); g.globalCompositeOperation = 'lighter'; const mg = g.createRadialGradient(0, 240, 10, 0, 240, 220); mg.addColorStop(0, 'rgba(255,255,240,.16)'); mg.addColorStop(1, 'rgba(0,0,0,0)'); g.fillStyle = mg; g.fillRect(-232, 165, 464, 150); g.restore();
-  g.fillStyle = 'rgb(4,4,4)'; g.beginPath(); g.moveTo(-232, 250); g.lineTo(-120, 315); g.lineTo(-232, 330); g.closePath(); g.fill();
-  rust(g, R, -170, 300, 60, 40, .8); rust(g, R, 200, 175, 40, 24, .7);
+  g.save(); g.translate(0, 205); g.rotate(.05); g.scale(.85, .85);                                                    // the mouth: a speaker grille, one corner bent open
+  g.beginPath(); g.roundRect(-205, -62, 410, 124, 24); g.fillStyle = 'rgb(34,33,32)'; g.fill();
+  for (let i = 0; i < 7; i++) { g.fillStyle = 'rgb(3,3,3)'; g.fillRect(-176 + i * 52, -46, 28, 92 + (i < 2 ? 16 : 0)); }
+  g.globalCompositeOperation = 'lighter'; const mg = g.createRadialGradient(0, 0, 10, 0, 0, 200); mg.addColorStop(0, 'rgba(255,255,240,.12)'); mg.addColorStop(1, 'rgba(0,0,0,0)'); g.fillStyle = mg; g.fillRect(-205, -62, 410, 124); g.globalCompositeOperation = 'source-over';
+  g.fillStyle = 'rgb(2,2,2)'; g.beginPath(); g.moveTo(-205, 10); g.lineTo(-90, 62); g.lineTo(-205, 92); g.closePath(); g.fill();
+  rust(g, R, -150, 50, 60, 40, .85); g.restore();
   g.save(); g.globalCompositeOperation = 'lighter';                                               // bloom: the lamps flare the tape
-  for (const s of [-1, 1]) { const a = s < 0 ? .45 : .62, bl = g.createRadialGradient(s * EX, EY, 30, s * EX, EY, 340); bl.addColorStop(0, `rgba(255,255,250,${a})`); bl.addColorStop(1, 'rgba(255,255,250,0)'); g.fillStyle = bl; g.fillRect(s * EX - 340, EY - 340, 680, 680); }
+  for (const s of [-1, 1]) { const a = s < 0 ? .28 : .45, ey = EY + (s < 0 ? 14 : 0), bl = g.createRadialGradient(s * EX, ey, 20, s * EX, ey, 190); bl.addColorStop(0, `rgba(255,255,250,${a})`); bl.addColorStop(1, 'rgba(255,255,250,0)'); g.fillStyle = bl; g.fillRect(s * EX - 190, ey - 190, 380, 380); }
   g.restore();
   g.restore();
 }
@@ -354,8 +360,8 @@ function zoomAt(t) {
   return zBase(t);
 }
 function zBase(t) {                                                                              // x1.0 for the hook, a push in as it walks, then following it
-  const [a, b] = TL.PUSH;
-  return 1 + .85 * ease((t - a) / (b - a)) + .3 * clamp((t - b) / (TL.STOP - b));
+  const [a, b] = TL.PUSH;                                                                         // in to x2.5 for the head turn, ease back as it comes, then creep in
+  return 1 + 1.5 * ease((t - a) / (b - a)) - .5 * ease((t - 10.2) / 4.5) + .35 * clamp((t - 15) / (TL.STOP - 15));
 }
 function targetAt(t) {                                                                           // where it is on screen (smoothed over the last second)
   let sx = 0, sy = 0, n = 0;

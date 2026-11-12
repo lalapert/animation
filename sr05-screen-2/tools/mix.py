@@ -2,7 +2,8 @@
 Data-driven: mix.json maps each event type (from out/events.json) to an effect.
   foley: {type: {"fx": name | [names...], "g": dB, "align": bool, "dur": s, "fin": s, "fout": s}}
   beds:  {type: {"fx": name, "fin": s, "fout": s}}  for events carrying "t1" (end time) and "g" (dB)
-Event fields used: t, t1, pan (−1..1), g (dB for beds; linear multiplier for foley), dur.
+Event fields used: t, t1, pan (−1..1), g (dB for beds; linear multiplier for foley), dur; env (beds: [[t, dB], ...] gain
+automation, e.g. the projector's waver and its dropouts); type "mute" {t, t1}: everything cut dead (the black frames).
   .venv/bin/python tools/mix.py
 """
 import json, os, sys
@@ -47,7 +48,7 @@ def place(b, name, t, gain_db, pan=0.0, dur=None, align=False, fin=.01, fout=.12
     add(b, x, t - (active(x, .2)[0] / SR if align else 0), db(gain_db))
 
 
-def bed(b, name, t0, t1, gain_db, fin=1.0, fout=1.5, xf=.6):
+def bed(b, name, t0, t1, gain_db, fin=1.0, fout=1.5, xf=.6, env=None):
     x = fx(name)
     a, z = active(x, .05)
     x = x[a:z]
@@ -57,6 +58,9 @@ def bed(b, name, t0, t1, gain_db, fin=1.0, fout=1.5, xf=.6):
     while pos < n:
         s = x.copy(); s[:k] *= np.linspace(0, 1, k)[:, None]; s[-k:] *= np.linspace(1, 0, k)[:, None]
         mm = min(len(s), n - pos); out[pos:pos + mm] += s[:mm]; pos += len(x) - k
+    if env:                                                                   # gain automation, times absolute
+        tt = t0 + np.arange(n) / SR
+        out *= db(np.interp(tt, [e[0] for e in env], [e[1] for e in env]))[:, None].astype(np.float32)
     add(b, fade(out, fin, fout), t0, db(gain_db))
 
 
@@ -86,7 +90,7 @@ k = 0
 for e in EV:
     ty = e["type"]
     if ty == "bed" and "t1" in e:                                                  # generic bed: the event names its effect
-        bed(amb, e["fx"], e["t"], min(e["t1"], DUR + 1), e.get("g", -24), e.get("fin", 1.2), e.get("fout", 1.6))
+        bed(amb, e["fx"], e["t"], min(e["t1"], DUR + 1), e.get("g", -24), e.get("fin", 1.2), e.get("fout", 1.6), env=e.get("env"))
     elif ty in CFG.get("beds", {}) and "t1" in e:
         c = CFG["beds"][ty]
         bed(amb, c["fx"], e["t"], min(e["t1"], DUR + 1), e.get("g", -24), c.get("fin", 1.0), c.get("fout", 1.5))
@@ -143,6 +147,11 @@ mr = rms(mus[sp])
 if mr > 1e-5:
     mus *= (rms(vox[sp]) / db(CFG.get("voice_over_music_db", 8))) / mr
 mix = (vox + mus + fol + amb)[:int(DUR * SR)]
+for e in EV:                                                                   # hard cuts: dead silence (5 ms ramps)
+    if e["type"] == "mute":
+        a, z, r = int(e["t"] * SR), int(e["t1"] * SR), int(.005 * SR)
+        g = np.ones(len(mix), np.float32); g[a:z] = 0; g[a - r:a] = np.linspace(1, 0, r); g[z:z + r] = np.linspace(0, 1, r)
+        mix *= g[:, None]
 mix *= .89 / np.abs(mix).max()
 sf.write(os.path.join(HERE, "out", "mix.wav"), mix, SR, subtype="PCM_24")
 for name, x in [("voice", vox), ("music", mus), ("foley", fol), ("ambience", amb)]:

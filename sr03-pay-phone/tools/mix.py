@@ -1,6 +1,7 @@
 """Mix: dialogue (per-line gain, light panning by speaker) + score + sound effects at the picture's cue events + ambience beds → out/mix.wav
 Data-driven: mix.json maps each event type (from out/events.json) to an effect.
-  foley: {type: {"fx": name | [names...], "g": dB, "align": bool, "dur": s, "fin": s, "fout": s}}
+  foley: {type: {"fx": name | [names...], "g": dB, "align": bool, "dur": s, "fin": s, "fout": s, "bus": "hall" | "phone", "drive": k}}
+         bus "hall": the empty tiled corridor (long echo); bus "phone": through a handset earpiece; drive: saturation (a CCTV mic overloading)
   beds:  {type: {"fx": name, "fin": s, "fout": s}}  for events carrying "t1" (end time) and "g" (dB)
 Event fields used: t, t1, pan (−1..1), g (dB for beds; linear multiplier for foley), dur.
   .venv/bin/python tools/mix.py
@@ -38,8 +39,12 @@ def fx(name):
     return _cache[name]
 
 
-def place(b, name, t, gain_db, pan=0.0, dur=None, align=False, fin=.01, fout=.12):
+def place(b, name, t, gain_db, pan=0.0, dur=None, align=False, fin=.01, fout=.12, drive=0):
     x = fx(name)
+    if drive:
+        pk = np.abs(x).max() + 1e-9
+        x = (np.tanh(x / pk * drive) / np.tanh(drive) * pk).astype(np.float32)
+        x *= rms(fx(name)) / rms(x)
     if dur is not None:
         x = fade(x[:int((dur + fout) * SR)], fin, fout)
     if pan:
@@ -79,6 +84,8 @@ def hall(x):
 
 # ---------------------------------------------------------------- ambience and foley
 amb, fol, pab = buf(DUR + 2), buf(DUR + 2), buf(DUR + 2)
+hallb, phoneb = buf(DUR + 2), buf(DUR + 2)
+BUS = {"hall": hallb, "phone": phoneb}
 rng = np.random.default_rng(5)
 pink = lowpass(highpass(np.cumsum(rng.standard_normal((len(amb), 2)), 0).astype(np.float32), 40), 900)
 amb += pink * (db(CFG.get("room_db", -56)) / rms(pink))                       # room tone
@@ -95,10 +102,14 @@ for e in EV:
         names = c["fx"] if isinstance(c["fx"], list) else [c["fx"]]
         g = c.get("g", -14) + 20 * np.log10(max(e.get("g", 1), .05))
         dur = e.get("dur", c.get("dur"))
-        place(pab if c.get("pa") else fol, names[k % len(names)], e["t"], g, e.get("pan", 0) * .7, dur=(dur + c.get("tail", .2)) if dur else None,
-              align=c.get("align", False), fin=c.get("fin", .02), fout=c.get("fout", .2))
+        place(pab if c.get("pa") else BUS.get(c.get("bus"), fol), names[k % len(names)], e["t"], g, e.get("pan", 0) * .7, dur=(dur + c.get("tail", .2)) if dur else None,
+              align=c.get("align", False), fin=c.get("fin", .02), fout=c.get("fout", .2), drive=c.get("drive", 0))
         k += 1
 fol = room(fol, size=.25, mix=.14, damp=.6, seed=7)
+if np.abs(hallb).max() > 0:                                                   # the tiled corridor: a long, cold echo
+    fol += hall(room(hallb, size=.95, mix=.45, predelay=.035, damp=.45, seed=23))
+if np.abs(phoneb).max() > 0:                                                  # through the earpiece, across the corridor
+    fol += np.stack([pa(bandpass(phoneb.mean(1), 420, 3000, 3))] * 2, 1) * .9
 amb = room(amb, size=.3, mix=.1, damp=.7, seed=8)
 
 # ---------------------------------------------------------------- narration (compress, limit, level)

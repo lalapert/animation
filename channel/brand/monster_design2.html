@@ -1,5 +1,5 @@
 <!doctype html><html><head><meta charset="utf-8"><title>Silhouette options</title><style>html,body{margin:0;background:#000}canvas{display:block}</style></head>
-<body><canvas id="c" width="2400" height="1060"></canvas>
+<body><canvas id="c" width="2400" height="1500"></canvas>
 <script src="tapekit.js"></script>
 <script>
 // Original soft-silhouette designs (owner 11/12 showed a game monster as a reference for the feel; these are not copies of it).
@@ -8,12 +8,12 @@ const OUT = document.getElementById('c').getContext('2d');
 const mk = (w, h) => { const c = document.createElement('canvas'); c.width = w; c.height = h; return c; };
 const RAW = mk(TK.TW, TK.TH), WIN = mk(TK.TW, TK.TH);
 const MODES = ['dark', 'run', 'close'];
-const V = [['stoop', 'STOOP', 'too tall: the neck folds under the ceiling'], ['hanger', 'HANGER', 'a coat on a hanger; the hook is the head']];
+const V = [['crane', 'CRANE', 'a little too tall; the neck cranes forward'], ['broken', 'BROKEN', 'the head hangs sideways; one arm longer'], ['reverse', 'REVERSE', 'knees and elbows bend the wrong way']];
 function haze(g, k) { g.save(); g.globalCompositeOperation = 'lighter'; const gr = g.createRadialGradient(TK.TW / 2, TK.TH * .45, 50, TK.TW / 2, TK.TH * .45, TK.TW * .8); gr.addColorStop(0, `rgba(200,200,200,${k})`); gr.addColorStop(1, `rgba(120,120,120,${k * .5})`); g.fillStyle = gr; g.fillRect(0, 0, TK.TW, TK.TH); g.restore(); }
 function card(g, x0, y0, W, H, v, lab, note) {
   g.save(); g.translate(x0, y0); g.beginPath(); g.rect(0, 0, W, H); g.clip();
   const bg = g.createRadialGradient(W / 2, H * .55, 20, W / 2, H * .55, W * .8); bg.addColorStop(0, '#f2f2f2'); bg.addColorStop(1, '#8a8a8a'); g.fillStyle = bg; g.fillRect(0, 0, W, H);
-  const u = (H - 100) / 2.8; g.save(); g.translate(W / 2, H - 14); g.scale(u, u); TK.ghost._draw(g, v, { u }); g.restore();
+  const u = (H - 100) / 2.4; g.save(); g.translate(W / 2, H - 14); g.scale(u, u); TK.ghost._draw(g, v, { u }); g.restore();
   g.fillStyle = 'rgba(0,0,0,.7)'; g.fillRect(0, 0, W, 76); g.fillStyle = '#efe9da'; g.font = '34px "Special Elite"'; g.fillText(lab, 16, 36); g.font = '25px "VT323"'; g.fillStyle = 'rgba(239,233,218,.85)'; g.fillText(note, 16, 64);
   g.restore();
 }
@@ -35,7 +35,7 @@ function tape(v, mode) {
 (async () => {
   await TK.fonts('fonts/');
   const PW = 560, PH = 420, G = 20;
-  OUT.fillStyle = '#0b0b0d'; OUT.fillRect(0, 0, 2400, 1060);
+  OUT.fillStyle = '#0b0b0d'; OUT.fillRect(0, 0, 2400, 1500);
   OUT.font = '40px "Special Elite"'; OUT.fillStyle = '#efe9da'; OUT.fillText('SOFT SILHOUETTES (OUR OWN DESIGNS)', G, 52);
   OUT.font = '28px "VT323"'; OUT.fillStyle = 'rgba(239,233,218,.7)'; ['DESIGN', 'CCTV, BACKLIT', 'RUNNING AT YOU', 'CLOSE'].forEach((s, i) => OUT.fillText(s, G + i * (PW + G), 96));
   V.forEach(([v, lab, note], r) => {

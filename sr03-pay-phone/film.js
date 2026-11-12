@@ -23,7 +23,7 @@ const qf = t => Math.floor(t * FPS_CCTV + 1e-6) / FPS_CCTV;             // the C
 // ---------------------------------------------------------------- the restroom corridor: x -1.2..1.2, z 0..10, in the dark
 const H = 2.7, LEN = 10, HW = 1.2;
 const PHONE = { x: -1.2, y: 1.15, z: 3.6 };          // the steel box: x -1.2..-1.1, y 1.1..1.7, z 3.4..3.8
-const HOOK = [-1.072, 1.44, 3.455];                  // the handset's centre on the hook (left edge of the box, earpiece up)
+const HOOK = [-1.072, 1.44, 3.43];                  // the handset's centre on the hook (left edge of the box, earpiece up)
 const CORD0 = [-1.095, 1.115, 3.47];                 // where the armoured cord leaves the box
 const TUBE_A = [0, H - .02, 3.55], TUBE_C = [0, H - .02, 7.85];
 function buildScene(L) {
@@ -50,22 +50,32 @@ function buildScene(L) {
   }
   S.box(-1.2, .78, 5.4, -.92, .92, 5.9, [170, 172, 176]);                                                        // drinking fountain
   // the pay phone: a steel box on the left wall, a hood, a TELEPHONE sign above it
-  const P = PHONE, X = -1.097;
-  S.box(-1.2, P.y - .05, P.z - .2, -1.1, P.y + .55, P.z + .2, [150, 154, 160]);
+  const P = PHONE;
+  S.box(-1.2, P.y - .05, P.z - .2, -1.1, P.y + .55, P.z + .2, [178, 181, 186]);
   S.box(-1.2, P.y + .55, P.z - .28, -.95, P.y + .62, P.z + .28, [120, 124, 130]);
   S.quad([[-1.199, 1.9, P.z - .3], [-1.199, 1.9, P.z + .3], [-1.199, 2.06, P.z + .3], [-1.199, 2.06, P.z - .3]], [215, 212, 200], { text: 'PHONE', textCol: [24, 24, 26] });
-  S.quad([[X, P.y + .36, P.z + .16], [X, P.y + .36, P.z - .02], [X, P.y + .5, P.z - .02], [X, P.y + .5, P.z + .16]], [40, 44, 48]);   // keypad
-  for (let r = 0; r < 4; r++) for (let c = 0; c < 3; c++) {
-    const y = P.y + .375 + r * .032, z = P.z + .005 + c * .05;
-    S.quad([[X - .001, y, z + .03], [X - .001, y, z], [X - .001, y + .02, z], [X - .001, y + .02, z + .03]], [150, 150, 146]);
-  }
-  S.quad([[X, P.y + .52, P.z + .16], [X, P.y + .52, P.z + .1], [X, P.y + .535, P.z + .1], [X, P.y + .535, P.z + .16]], [20, 20, 22]);     // coin slot
-  S.quad([[X, P.y + .17, P.z - .14], [X, P.y + .17, P.z + .16], [X, P.y + .27, P.z + .16], [X, P.y + .27, P.z - .14]], [225, 220, 205], { text: L.egg ? '4 CENTS' : '25 CENTS', textCol: [30, 28, 26] });
-  S.quad([[X, P.y + .02, P.z + .14], [X, P.y + .02, P.z + .04], [X, P.y + .1, P.z + .04], [X, P.y + .1, P.z + .14]], [24, 24, 26]);       // coin return
   S.box(-1.1, HOOK[1] + .1, HOOK[2] - .03, -1.07, HOOK[1] + .13, HOOK[2] + .03, [120, 124, 130]);                  // the hook
   // the fluorescent tubes: A over the phone (it flickers, it dies), C far down the corridor (dead, the odd blink)
   for (const [z, e] of [[TUBE_A[2], L.a], [TUBE_C[2], L.c]]) S.quad([[-.24, H - .02, z - .55], [.24, H - .02, z - .55], [.24, H - .02, z + .55], [-.24, H - .02, z + .55]], [120, 120, 114], { emit: Math.min(1, e), light: true });
   return S;
+}
+// the face of the phone (keypad, coin slot, the rate card, coin return): drawn as a sprite sorted just in front of the box, so the
+// painter's order never puts these decals behind the face they sit on. Colours pre-shaded for the fog at ~4.3 m.
+function quadS(g, cam, pts, fill) { const P = pts.map(p => project(cam, p)); if (P.some(p => !p)) return; g.beginPath(); P.forEach((p, i) => i ? g.lineTo(p[0], p[1]) : g.moveTo(p[0], p[1])); g.closePath(); g.fillStyle = fill; g.fill(); }
+const onFace = (y0, y1, z0, z1) => [[-1.098, y0, z0], [-1.098, y0, z1], [-1.098, y1, z1], [-1.098, y1, z0]];   // bottom-left, bottom-right, top-right, top-left (as read)
+function phoneFace(g, cam, egg) {
+  const P = PHONE, k = .7, c = v => `rgb(${v[0] * k | 0},${v[1] * k | 0},${v[2] * k | 0})`;
+  quadS(g, cam, onFace(P.y + .35, P.y + .51, P.z - .01, P.z + .17), c([40, 44, 48]));                         // keypad
+  for (let r = 0; r < 4; r++) for (let q = 0; q < 3; q++) { const y = P.y + .365 + r * .036, z = P.z + .005 + q * .055; quadS(g, cam, onFace(y, y + .024, z, z + .035), c([170, 170, 164])); }
+  quadS(g, cam, onFace(P.y + .52, P.y + .535, P.z + .09, P.z + .16), c([16, 16, 18]));                         // coin slot
+  quadS(g, cam, onFace(P.y + .02, P.y + .1, P.z + .04, P.z + .15), c([22, 22, 24]));                          // coin return
+  const card = onFace(P.y + .16, P.y + .29, P.z - .035, P.z + .19);                                             // the rate card
+  quadS(g, cam, card, c([232, 228, 214]));
+  const [A, B, , D] = card.map(p => project(cam, p)); if (!A || !B || !D) return;
+  g.save(); g.setTransform((B[0] - A[0]) / 100, (B[1] - A[1]) / 100, (A[0] - D[0]) / 100, (A[1] - D[1]) / 100, D[0], D[1]);
+  g.font = '64px "Special Elite"'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillStyle = c([20, 18, 16]);
+  const txt = egg ? '4 CENTS' : '25 CENTS', w = g.measureText(txt).width; g.translate(50, 54); g.scale(Math.min(1, 90 / w), 1); g.fillText(txt, 0, 0);
+  g.restore();
 }
 // the light: the scene renders flat, then a light map multiplies it (soft pools under the tubes, the EXIT glow, dark elsewhere)
 function pool(g, cam, c, ax, ay, a) {
@@ -103,10 +113,11 @@ function tubeA(tq) {
   if (tq >= TL.DARK[0] && tq < TL.DARK[1]) return 0;                               // dead
   if (tq >= TL.DARK[1] && tq < TL.DARK[1] + .67) return [1, .05, .75, .05][Math.round((tq - TL.DARK[1]) * FPS_CCTV)] ?? 1;   // re-strike
   let rate = tq < TL.LIFT ? .1 : tq < 18 ? .28 : tq < TL.DARK[0] ? lerp(.4, 1.0, (tq - 18) / 6.2) : tq < TL.HANGUP ? lerp(.7, 1.45, (tq - TL.DARK[1]) / (TL.HANGUP - TL.DARK[1])) : 1;
+  if (tq >= TL.TURN[0] - .2 && tq < TL.TURN[1] + .4) rate = Math.min(rate, .75);
   for (const r of TL.RINGS) if (tq >= r && tq < r + .5) rate = Math.max(rate, 1.5);  // the bell pulls on it
   if (tq < TL.ROLL[1] + .4) rate = 0;                                              // the first frames read clean (the hook)
   const R = TK.rng(f * 31 + 7)();
-  return R < .2 * rate ? .06 : R < .33 * rate ? .5 : 1;
+  return R < .15 * rate ? .06 : R < .32 * rate ? .5 : 1;
 }
 function tubeC(tq) {
   if (tq >= TL.DARK[0] && tq < TL.DARK[1] || tq >= TL.QUIET) return 0;
@@ -119,14 +130,14 @@ const levels = (tq, t) => ({ a: tubeA(tq), c: tubeC(tq), egg: t >= TL.EGG.t && t
 const mkO = (u, n) => { n = nrm3(n); return { u: ortho(u, n), n }; };
 const O_HOOK = { u: [0, -1, 0], n: [-1, 0, 0] };
 const O_EAR1 = mkO([-.4, -.88, .2], [0, 0, 1]);           // at the ear of someone facing the phone (we see its back)
-const O_EAR2 = mkO([.35, -.9, -.15], [1, 0, .12]);        // at the right ear of someone facing the camera (edge on)
+const O_EAR2 = mkO([.35, -.9, -.15], [.6, 0, .8]);         // at the ear of someone facing the camera (we see its back)
 const HP = TL.HOLD.map(h => [h[1], h[2], h[3]]);
 const O_FACE = (() => { const n = nrm3(sub3(CAMP, HP[2])); return { n, u: ortho([.12, -1, 0], n) }; })();   // earpiece at the lens
 const oLerp = (a, b, k) => { const n = nrm3(lerp3(a.n, b.n, k)); return { n, u: ortho(lerp3(a.u, b.u, k), n) }; };
 const bob = t => [0, .011 * Math.sin(t * 2 * Math.PI / 3.4), 0];                       // it rises and falls like a breath
 const CL = .9;                                                                           // the cord's slack length
 // the swing under the phone after it is let go (frozen at QUIET: it stops dead, tilted)
-const swingAt = t => { const s = Math.max(0, t - TL.DROP - 1 / FPS_CCTV); return .95 * Math.exp(-s * .8) * Math.cos(s * 3.5 + .9); };
+const swingAt = t => { const s = Math.max(0, t - TL.DROP - 1 / FPS_CCTV); return Math.exp(-s * .7) * Math.cos(s * 4.2 + .19); };
 function handsetAt(tq) {
   const R = TK.rng(Math.round(tq * FPS_CCTV) * 7 + 1);
   const rattle = (TL.RINGS.some(r => tq >= r && tq < r + .95) || tq >= TL.RING) ? [0, (R() - .5) * .012, (R() - .5) * .008] : [0, 0, 0];
@@ -149,7 +160,7 @@ function handsetAt(tq) {
   }
   // let go: one frame in the air, whipping back across the corridor, then it hangs and swings on its cord under the phone
   const s = Math.min(tq, TL.QUIET), sw = swingAt(s), spin = (s - TL.DROP) * 1.7;
-  const mouth = add3(CORD0, [.04, -Math.cos(sw) * CL * .58, Math.sin(sw) * CL * .58]), up = nrm3(sub3(CORD0, mouth));
+  const r = CL * .46, mouth = add3(CORD0, [.04 + Math.abs(Math.sin(sw)) * r, -Math.cos(sw) * r, Math.sin(sw) * r * .3]), up = nrm3(sub3(CORD0, mouth));
   const hang = { p: add3(mouth, mul3(up, -.095)), u: up, n: ortho([Math.cos(spin), 0, Math.sin(spin)], up), state: 'hang' };
   if (tq < TL.DROP + 1 / FPS_CCTV) { const p = lerp3(HP[2], hang.p, .55); p[1] += .2; return Object.assign({}, hang, { p, n: ortho([.3, .9, -.3], hang.u), state: 'fly' }); }
   return hang;
@@ -157,8 +168,8 @@ function handsetAt(tq) {
 
 // ---------------------------------------------------------------- drawing the handset, its cord, the shadow under it
 const grey = (v, a = 1) => `rgba(${v | 0},${v | 0},${v | 0},${a})`;
-function drawCord(g, cam, A, B, lit) {
-  const d = len3(sub3(B, A)), sag = d < CL ? Math.sqrt(CL * CL - d * d) * .55 : 0, N = 48, pts = [];
+function drawCord(g, cam, A, B, lit, taut = false) {
+  const d = len3(sub3(B, A)), sag = d < CL && !taut ? Math.sqrt(CL * CL - d * d) * .55 : 0, N = 48, pts = [];
   for (let i = 0; i <= N; i++) { const k = i / N, q = lerp3(A, B, k); q[1] -= sag * 4 * k * (1 - k); const p = project(cam, q); if (p) pts.push(p); }
   if (pts.length < 2) return;
   const w = Math.max(1.6, .012 * cam.f / pts[pts.length >> 1][2]);
@@ -193,13 +204,17 @@ function drawHandset(g, cam, h, lit, alpha = 1) {
   const b0 = project(cam, sub3(eC, mul3(h.n, .02))), b1 = project(cam, sub3(mC, mul3(h.n, .02))); if (!b0 || !b1) return;
   const w = .044 * cam.f / ((b0[2] + b1[2]) / 2);
   g.save(); g.globalAlpha = alpha; g.lineCap = 'round';
-  const vd = nrm3(sub3(CAMP, h.p)), earFirst = dot3(sub3(eC, mC), vd) < 0;          // draw the far cup first
+  const vd = nrm3(sub3(CAMP, h.p)), earFirst = dot3(sub3(eC, mC), vd) < 0, facing = dot3(h.n, vd) > 0;   // the far cup first
   const cups = [[mC, .033, false], [eC, .037, true]]; if (earFirst) cups.reverse();
+  const grip = () => {
+    g.beginPath(); g.moveTo(b0[0], b0[1]); g.lineTo(b1[0], b1[1]); g.strokeStyle = grey(18 + 34 * lit); g.lineWidth = w; g.stroke();
+    const nx = -(b1[1] - b0[1]), ny = b1[0] - b0[0], nl = Math.hypot(nx, ny) || 1, sx = nx / nl * w * .3, sy = ny / nl * w * .3, up = sy > 0 ? -1 : 1;
+    g.beginPath(); g.moveTo(lerp(b0[0], b1[0], .18) + up * sx, lerp(b0[1], b1[1], .18) + up * sy); g.lineTo(lerp(b0[0], b1[0], .82) + up * sx, lerp(b0[1], b1[1], .82) + up * sy);
+    g.strokeStyle = grey(50 + 140 * lit, .75); g.lineWidth = Math.max(1, w * .14); g.stroke();                  // the light along the top of the grip
+  };
+  if (facing) grip();                                     // the cups stand out on the n side: facing us they cover the grip
   cup(g, cam, cups[0][0], h.n, cups[0][1], cups[0][2], lit);
-  g.beginPath(); g.moveTo(b0[0], b0[1]); g.lineTo(b1[0], b1[1]); g.strokeStyle = grey(18 + 34 * lit); g.lineWidth = w; g.stroke();
-  const nx = -(b1[1] - b0[1]), ny = b1[0] - b0[0], nl = Math.hypot(nx, ny) || 1, sx = nx / nl * w * .3, sy = ny / nl * w * .3, up = sy > 0 ? -1 : 1;
-  g.beginPath(); g.moveTo(lerp(b0[0], b1[0], .18) + up * sx, lerp(b0[1], b1[1], .18) + up * sy); g.lineTo(lerp(b0[0], b1[0], .82) + up * sx, lerp(b0[1], b1[1], .82) + up * sy);
-  g.strokeStyle = grey(50 + 140 * lit, .75); g.lineWidth = Math.max(1, w * .14); g.stroke();                    // the light along the top of the grip
+  if (!facing) grip();
   cup(g, cam, cups[1][0], h.n, cups[1][1], cups[1][2], lit);
   g.restore();
 }
@@ -214,13 +229,13 @@ function holderShadow(g, cam, h, L) {
   g.fillStyle = gr; g.fillRect(-1, -1, 2, 2); g.restore();
 }
 function phoneShot(g, tq, t) {
-  const L = levels(tq, t), cam = TK.render(g, buildScene(L), CAM, { ambient: 1.0, fog: .085 });
+  const L = levels(tq, t), cam = TK.render(g, buildScene(L), CAM, { ambient: 1.0, fog: .085, sprites: [{ x: -1.0, y: 1.4, z: 3.45, draw: (gg, cm) => phoneFace(gg, cm, L.egg) }] });
   lightMap(cam, L);
   g.save(); g.globalCompositeOperation = 'multiply'; g.drawImage(LMAP, 0, 0); g.restore();
   const h = handsetAt(tq);
   holderShadow(g, cam, h, L);
   const mouth = add3(h.p, mul3(h.u, .105)), lit = litAt(h.p, L);
-  drawCord(g, cam, CORD0, mouth, litAt(lerp3(CORD0, mouth, .5), L));
+  drawCord(g, cam, CORD0, mouth, litAt(lerp3(CORD0, mouth, .5), L), h.state === 'hang');
   if (h.state === 'fly') { for (let i = 3; i >= 1; i--) drawHandset(g, cam, Object.assign({}, h, { p: lerp3(h.p, HP[2], i * .14) }), lit, .22); }
   drawHandset(g, cam, h, lit);
   return { cam, h, L };
@@ -235,12 +250,12 @@ const PH_C = [-1.12, 1.42, 3.6];
 let CAM0 = null, ZK = null;
 function zoomKeys() {
   const P = q => { const p = project(CAM0, q); return [p[0], p[1]]; };
-  const F = { ph: P(PH_C), e2: P(add3(HP[1], [0, 0, 0])), e3: P(add3(HP[2], [0, -.02, 0])), ear: P(add3(HP[2], [0, .07, 0])), low: P([-1.1, 1.0, 3.6]) };
+  const F = { ph: P(PH_C), e2: P(add3(HP[1], [0, 0, 0])), e3: P(add3(HP[2], [0, -.02, 0])), ear: P(add3(HP[2], [0, .07, 0])), low: P([-1.0, .95, 3.55]) };
   F.mid = [(F.ph[0] + F.e2[0]) / 2, (F.ph[1] + F.e2[1]) / 2];
   const T = TL;
   return [[T.PUSH[0], 1.0, 'ph', 0], [11.0, 1.55, 'ph', .35], [T.HOLD[1][0], 1.62, 'ph', .35], [T.HOLD[1][0] + 1.4, 1.3, 'mid', .3],
     [T.HOLD[2][0], 1.36, 'e2', .3], [T.HOLD[2][0] + .55, 1.36, 'e2', .3], [T.HOLD[2][0] + 2.2, 1.32, 'e3', .4], [T.TURN[0], 1.4, 'e3', .45],
-    [T.TURN[1] + .3, 2.05, 'ear', .55], [T.DROP, 2.1, 'ear', .55], [T.DROP + .7, 1.3, 'low', .4], [T.QUIET, 1.31, 'low', .4]]
+    [T.TURN[1] + .3, 2.05, 'ear', .55], [T.DROP, 2.1, 'ear', .55], [T.DROP + .7, 1.6, 'low', .45], [T.QUIET, 1.62, 'low', .45]]
     .map(([t, z, f, k]) => [t, z, F[f], k]);
 }
 function zoomAt(t) {
@@ -332,9 +347,10 @@ function buildEvents() {
   for (let f = Math.ceil(TL.LIFT * FPS_CCTV); f < TL.DROP * FPS_CCTV; f++) {
     const tq = f * F, h = handsetAt(tq), key = h.p.map(v => v.toFixed(3)).join() + h.n.map(v => v.toFixed(2)).join();
     const moving = tq < TL.LIFT_END || (tq >= TL.DRIFT1[0] && tq < TL.DRIFT1[1]) || (tq >= TL.DRIFT2[0] && tq < TL.DRIFT2[1]) || (tq >= TL.TURN[0] && tq < TL.TURN[1]);
-    if (last !== null && key !== last && moving) { const dt = EV.filter(e => e.type === 'creak').slice(-1)[0]; if (!dt || tq - dt.t > .3) EV.push({ type: 'creak', t: +tq.toFixed(3), g: tq < TL.LIFT_END ? .8 : tq >= TL.TURN[0] ? 1 : .6, pan: tq > TL.HOLD[2][0] ? .1 : -.3 }); }
+    if (last !== null && key !== last && moving) { const dt = EV.filter(e => e.type === 'creak').slice(-1)[0]; if (!dt || tq - dt.t > .3) EV.push({ type: 'creak', t: +tq.toFixed(3), g: (tq < TL.LIFT_END ? .8 : tq >= TL.TURN[0] ? 1 : .6) * (TL.VO.some(v => tq > v.t - .1 && tq < v.t + v.dur) ? .45 : 1), pan: tq > TL.HOLD[2][0] ? .1 : -.3 }); }
     last = key;
   }
+  for (let f = Math.ceil((TL.DROP + 2 * F) * FPS_CCTV); f * F < TL.QUIET; f++) { const a = swingAt((f - 1) * F), b = swingAt(f * F); if (a * b < 0) EV.push({ type: 'knock', t: +(f * F).toFixed(3), g: Math.min(1, Math.abs(a - b) * 1.5), pan: -.35 }); }
   const VOend = TL.VO.map(v => v.t + v.dur);
   EV.push(
     { type: 'static', t: 0.0, dur: TL.STATIC[0][1] },

@@ -33,7 +33,7 @@ LIFT_END = fr(14.5)            # at ear height, beside the phone
 LINE_BREATH = 14.15         # someone breathes into the line before she speaks
 DRIFT1 = [17.3, 18.6]       # it leans a little toward the camera (held frames)
 # [time, where the handset hangs]: x, y, z in metres
-HOLD = [[LIFT, -.8, 1.56, 3.3], [fr(18.8), -.28, 1.64, 2.75], [fr(24.67), .68, 1.95, .62]]
+HOLD = [[LIFT, -.8, 1.56, 3.3], [fr(18.8), -.02, 1.5, 1.85], [fr(24.67), .68, 1.95, .62]]
 GLITCH = [[fr(18.67) - .08, .42]]     # the first jump hides in a tape skip
 DRIFT2 = [21.4, 24.1]
 DARK = [fr(24.17), fr(24.67)]        # the tube dies; when it stutters back on, the handset is right under the camera

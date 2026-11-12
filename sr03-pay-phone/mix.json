@@ -1,55 +1,123 @@
 {
-  "room_db": -62,
-  "voice_over_music_db": 9,
-  "vo_pa": false,
-  "beds": {},
-  "foley": {
-    "static": {
-      "fx": "static",
-      "g": -10,
-      "fin": 0.003,
-      "fout": 0.04
-    },
-    "glitch": {
-      "fx": "glitch",
-      "g": -15,
-      "align": true,
-      "fin": 0.002,
-      "fout": 0.08
-    },
-    "ring": {
-      "fx": "ring",
-      "g": -12,
-      "align": true,
-      "fin": 0.002,
-      "fout": 0.3
-    },
-    "pickup": {
-      "fx": "pickup",
-      "g": -14,
-      "align": true,
-      "fin": 0.002,
-      "fout": 0.1
-    },
-    "breath": {
-      "fx": "breath",
-      "g": -19,
-      "fin": 0.05,
-      "fout": 0.4
-    },
-    "hangup": {
-      "fx": "hangup",
-      "g": -16,
-      "align": true,
-      "fin": 0.002,
-      "fout": 0.05
-    },
-    "clatter": {
-      "fx": "clatter",
-      "g": -13,
-      "align": true,
-      "fin": 0.002,
-      "fout": 0.3
-    }
+ "room_db": -64,
+ "voice_over_music_db": 9,
+ "vo_pa": false,
+ "beds": {},
+ "foley": {
+  "static": {
+   "fx": "static",
+   "g": -11,
+   "fin": 0.003,
+   "fout": 0.04
+  },
+  "roll": {
+   "fx": "roll",
+   "g": -17,
+   "fin": 0.002,
+   "fout": 0.1
+  },
+  "ring": {
+   "fx": "ring",
+   "g": -19,
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.3,
+   "bus": "hall"
+  },
+  "pickup": {
+   "fx": "pickup",
+   "g": -15,
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.1
+  },
+  "line_breath": {
+   "fx": "line_breath",
+   "g": -21,
+   "fin": 0.05,
+   "fout": 0.3,
+   "bus": "phone"
+  },
+  "glitch": {
+   "fx": "glitch",
+   "g": -15,
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.08
+  },
+  "creak": {
+   "fx": "cord_creak",
+   "g": -21,
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.1
+  },
+  "tick": {
+   "fx": "tube_tick",
+   "g": -25,
+   "align": true,
+   "fin": 0.001,
+   "fout": 0.06
+  },
+  "pop": {
+   "fx": "tube_pop",
+   "g": -15,
+   "align": true,
+   "dur": 0.4,
+   "fin": 0.001,
+   "fout": 0.06
+  },
+  "restrike": {
+   "fx": "flicker",
+   "g": -21,
+   "fin": 0.005,
+   "fout": 0.05
+  },
+  "swell": {
+   "fx": "swell",
+   "g": -15,
+   "fin": 0.05,
+   "fout": 0.015
+  },
+  "hangup": {
+   "fx": "hangup",
+   "g": -17,
+   "align": true,
+   "fin": 0.001,
+   "fout": 0.05
+  },
+  "clatter": {
+   "fx": "clatter",
+   "g": -12,
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.3,
+   "bus": "hall"
+  },
+  "knock": {
+   "fx": "clatter",
+   "g": -18,
+   "align": true,
+   "dur": 0.25,
+   "fin": 0.002,
+   "fout": 0.08,
+   "bus": "hall"
+  },
+  "impact": {
+   "fx": "impact",
+   "g": -8,
+   "align": true,
+   "fin": 0.001,
+   "fout": 0.3
+  },
+  "scare": {
+   "fx": "ring_scare",
+   "g": -2,
+   "align": true,
+   "fin": 0.001,
+   "fout": 0.4,
+   "bus": "hall",
+   "drive": 2.5
   }
+ }
 }

@@ -38,7 +38,7 @@ const PORT = [.3, 5.6, -.95];                                                   
 const CAM12 = { x: -1.4, y: 4.3, z: -.7, yaw: .065, pitch: -.1, fov: 46 };
 function buildAud() {
   const S = new TK.Scene();
-  const wall = [40, 37, 39], dark = [14, 13, 14], seat = [74, 40, 44], floorC = [30, 28, 28];
+  const wall = [40, 37, 39], dark = [14, 13, 14], seat = [52, 30, 34], floorC = [30, 28, 28];
   S.quad([[-6, 0, 15], [6, 0, 15], [6, 7.6, 15], [-6, 7.6, 15]], [16, 15, 16]);                          // front wall
   for (let z = 0; z < 15; z += 1.5) {                                                                       // side walls in acoustic panels
     const k = (z / 1.5) % 2 ? .82 : 1;
@@ -65,7 +65,7 @@ const AUD = buildAud();
 const DOOR2 = { z0: 9.6, z1: 11.0, h: 2.5 };
 const LIGHTS = [[.4, 12.0], [1.0, 7.6], [-2.6, 4.2], [4.0, 2.0]];
 function buildLobby(sign2) {
-  const S = new TK.Scene(), floorC = [62, 54, 58], wall = [88, 82, 78], ceil = [40, 38, 36];
+  const S = new TK.Scene(), floorC = [84, 78, 80], wall = [88, 82, 78], ceil = [40, 38, 36];
   for (let z = 0; z < 16; z += 2) {
     S.quad([[-7, 0, z], [7, 0, z], [7, 0, z + 2], [-7, 0, z + 2]], floorC, { floor: true });
     S.quad([[-7, 4.2, z + 2], [7, 4.2, z + 2], [7, 4.2, z], [-7, 4.2, z]], ceil);
@@ -90,10 +90,10 @@ function buildLobby(sign2) {
 }
 const LOB = buildLobby('2'), LOB_EGG = buildLobby('6');
 const CAM11 = { x: -5.6, y: 3.7, z: .5, yaw: .42, pitch: -.36, fov: 66 };
-// which lobby lights are on at time t (the same lobby on the screen and on CAM 11): one flickers all along, one dies at
-// 16.0 (where it stood in the middle), one flickers over it near the camera and dies at 26.0
+// which lobby lights are on at time t (the same lobby on the screen and on CAM 11): one flickers all along; the one it
+// stood under near the camera flickers while it is there; both lights on its way are out once the Screen 2 door is open
 function lobbyLights(tq) {
-  return [1, tq < 16 ? 1 : 0, tq >= 26 ? 0 : tq >= 19.5 ? flick(tq, 41, .9) : 1, flick(tq, 43, .7)];
+  return [1, tq < 26 ? 1 : 0, tq >= 26 ? 0 : tq >= 19.5 ? flick(tq, 41, .9) : 1, flick(tq, 43, .7)];
 }
 // pools of light on the floor under the lights that are on (drawn as a far sprite so everything else covers them)
 function pools(g, cam, lv) {
@@ -135,6 +135,7 @@ function tallOne(g, cam, o) {
   if (!o.ghost) { g.fillStyle = 'rgba(0,0,0,.45)'; g.beginPath(); g.ellipse(0, 0, .36, .07, 0, 0, 6.2832); g.fill(); }
   g.rotate(o.lean || 0);
   g.fillStyle = 'rgb(5,5,7)'; g.strokeStyle = 'rgb(5,5,7)'; g.lineCap = 'round';
+  if (!o.ghost) { g.shadowColor = 'rgba(200,200,190,.35)'; g.shadowBlur = Math.max(3, u * .05); }
   poly(g, [[-.15, -1.02], [-.03, -1.02], [-.04, 0], [-.12, 0]]); g.fill();                                    // legs, thin
   poly(g, [[.03, -1.02], [.15, -1.02], [.12, 0], [.04, 0]]); g.fill();
   poly(g, [[-.28, -1.7], [-.2, -1.76], [.2, -1.76], [.28, -1.7], [.2, -1.3], [.16, -.98], [-.16, -.98], [-.2, -1.3]]); g.fill();   // torso, bony shoulders
@@ -170,21 +171,23 @@ function figureAt(stage, tq) {
 // A 3D head (a skull and a long jaw, no features), turned by phi (0 faces the screen, PI faces the camera) and tilted by roll;
 // the shoulders do not move. Past where a neck could go, the neck wrings (it narrows, stretches, folds catch the light), and a
 // faint blank sheen comes round where a face should be.
-const HEADC = [SEAT_G.x, 3.6, SEAT_G.z];
+const HEADC = [SEAT_G.x, 3.53, SEAT_G.z + .05];
+const SNAP_PHI = Math.atan2(CAM12.x - HEADC[0], CAM12.z - HEADC[2]) + 2 * Math.PI;      // straight at the lens: about 196 degrees
 function seatedOne(g, cam, phi, roll, lampL) {
-  const twist = clamp((phi - 1.35) / 1.79), stretch = .035 * twist, cr = Math.cos(roll), sr = Math.sin(roll), cp = Math.cos(phi), sp = Math.sin(phi);
+  const twist = clamp((phi - 1.35) / 1.95), stretch = .035 * twist, cr = Math.cos(roll), sr = Math.sin(roll), cp = Math.cos(phi), sp = Math.sin(phi);
   const HC = [HEADC[0], HEADC[1] + stretch, HEADC[2]];
   const toW = ([x, y, z]) => { const x1 = x * cr - y * sr, y1 = x * sr + y * cr; return [HC[0] + x1 * cp + z * sp, HC[1] + y1, HC[2] - x1 * sp + z * cp]; };
   const P = p => project(cam, p);
   const ell = (c, r) => { const out = []; for (let j = 0; j <= 8; j++) for (let i = 0; i < 16; i++) { const th = j / 8 * Math.PI, ph = i / 16 * 6.2832; const q = P(toW([c[0] + r[0] * Math.sin(th) * Math.cos(ph), c[1] + r[1] * Math.cos(th), c[2] + r[2] * Math.sin(th) * Math.sin(ph)])); if (q) out.push(q); } return hull(out); };
   const ellP = (c, r) => { const out = []; for (let j = 0; j <= 8; j++) for (let i = 0; i < 16; i++) { const th = j / 8 * Math.PI, ph = i / 16 * 6.2832; const q = P(toW([c[0] + r[0] * Math.sin(th) * Math.cos(ph), c[1] + r[1] * Math.cos(th), c[2] + r[2] * Math.sin(th) * Math.sin(ph)])); if (q) out.push(q); } return out; };
-  const skull = hull(ellP([0, .03, -.02], [.08, .107, .097]).concat(ellP([0, -.065, .045], [.054, .098, .072])));   // one smooth head, a long jaw
+  const skull = hull(ellP([0, .035, -.03], [.078, .108, .1]).concat(ellP([0, -.07, .06], [.05, .1, .088])));   // one smooth head, longer than it is wide: a long jaw, no features
   const ring = (c, r, rot) => { const out = []; for (let i = 0; i < 16; i++) { const a = i / 16 * 6.2832, p = [Math.cos(a) * r, 0, Math.sin(a) * r]; const w = rot ? toW([c[0] + p[0], c[1], c[2] + p[2]]) : [c[0] + p[0], c[1], c[2] + p[2]]; const q = P(w); if (q) out.push(q); } return out; };
-  const neckBot = HEADC[1] - .36, neck = hull(ring([0, -.09, -.01], .043 * (1 - .32 * twist), true).concat(ring([HEADC[0], neckBot, HEADC[2]], .052 * (1 - .22 * twist), false)));
+  const neckBot = SEAT_G.h + 1.47, neck = hull(ring([0, -.08, -.02], .056 * (1 - .36 * twist), true).concat(ring([HEADC[0], neckBot, HEADC[2]], .072 * (1 - .26 * twist), false)));
   // shoulders: from the top of the seat back in front of it (occluding line) up to bony, hunched shoulder points
   const sx = HEADC[0], sz = HEADC[2], sb = SEAT_G.h + 1.0;
-  const top = [[-.31, sb + .26], [-.29, sb + .38], [-.22, sb + .43], [-.1, sb + .45], [-.05, neckBot + .02], [.05, neckBot + .02], [.1, sb + .45], [.22, sb + .43], [.29, sb + .38], [.31, sb + .26]].map(([x, y]) => P([sx + x, y, sz]));
-  const bot = [[.33, sb], [-.33, sb]].map(([x, y]) => P([sx + x, y, SEAT_G.back]));
+  const half = [[-.3, sb + .02], [-.315, sb + .18], [-.31, sb + .3], [-.29, sb + .37], [-.24, sb + .405], [-.17, sb + .425], [-.11, sb + .46], [-.08, sb + .5], [-.066, sb + .55]];
+  const top = half.concat(half.slice().reverse().map(([x, y]) => [-x, y])).map(([x, y]) => P([sx + x, y, sz]));
+  const bot = [[.32, sb], [-.32, sb]].map(([x, y]) => P([sx + x, y, SEAT_G.back]));
   if ([...top, ...bot].some(p => !p) || skull.length < 3) return;
   const shoulders = top.concat(bot);
   g.save(); g.lineJoin = 'round';
@@ -199,23 +202,26 @@ function seatedOne(g, cam, phi, roll, lampL) {
   // folds round the wrung neck: a helix on the half that faces the camera
   if (twist > .02) {
     const az = Math.atan2(cam.x - HEADC[0], cam.z - HEADC[2]);
-    g.lineWidth = 1.1 * SS; g.strokeStyle = `rgba(120,120,120,${.45 * twist * (.4 + .6 * lampL)})`;
-    for (let k = 0; k < 3; k++) {
-      const y0 = neckBot + .08 + k * .075 + stretch * k / 3, rr = .05 * (1 - .27 * twist);
+    g.save(); poly(g, neck); g.clip();
+    g.lineWidth = 1.1 * SS; g.strokeStyle = `rgba(125,125,125,${.4 * twist * (.4 + .6 * lampL)})`;
+    for (let k = 0; k < 2; k++) {
+      const y0 = neckBot + .05 + k * .055 + stretch * k / 2, rr = .064 * (1 - .31 * twist);
       g.beginPath();
       for (let i = 0; i <= 12; i++) { const a = az - 1.35 + 2.7 * i / 12, q = P([HEADC[0] + Math.sin(a) * rr, y0 + (i / 12 - .5) * .09 * twist, HEADC[2] + Math.cos(a) * rr]); if (q) i ? g.lineTo(q[0], q[1]) : g.moveTo(q[0], q[1]); }
       g.stroke();
     }
+    g.restore();
   }
   // the blank sheen where a face should be (only when that side comes round to the camera)
-  const fc = toW([0, -.035, .105]), fn = toW([0, -.02, 1.105]), n = [fn[0] - fc[0], fn[1] - fc[1], fn[2] - fc[2]];
+  const fc = toW([0, -.045, .13]), fn = toW([0, -.03, 1.13]), n = [fn[0] - fc[0], fn[1] - fc[1], fn[2] - fc[2]];
   const v = [cam.x - fc[0], cam.y - fc[1], cam.z - fc[2]], vl = Math.hypot(...v), nl = Math.hypot(...n), facing = (n[0] * v[0] + n[1] * v[1] + n[2] * v[2]) / (vl * nl);
   if (facing > 0) {
-    const c = P(fc), e = P(toW([.065, -.035, .105]));
+    const c = P(fc), e = P(toW([.13, -.045, .13]));
     if (c && e) {
-      const r = Math.hypot(e[0] - c[0], e[1] - c[1]) * 1.35;
+      const r = Math.hypot(e[0] - c[0], e[1] - c[1]) * 1.2;
       g.save(); poly(g, skull); g.clip();
-      const gr = g.createRadialGradient(c[0], c[1] - r * .2, 0, c[0], c[1], r); gr.addColorStop(0, `rgba(205,205,205,${.26 * Math.pow(facing, 1.4) * (.35 + .65 * lampL)})`); gr.addColorStop(1, 'rgba(0,0,0,0)');
+      const a = .2 * Math.pow(facing, 1.4) * (.35 + .65 * lampL), gr = g.createRadialGradient(c[0], c[1], 0, c[0], c[1], r);
+      gr.addColorStop(0, `rgba(215,215,215,${a})`); gr.addColorStop(.55, `rgba(215,215,215,${a * .8})`); gr.addColorStop(1, 'rgba(0,0,0,0)');   // a broad blank plateau, no features
       g.fillStyle = gr; g.fillRect(c[0] - r, c[1] - r, 2 * r, 2 * r); g.restore();
     }
   }
@@ -223,7 +229,7 @@ function seatedOne(g, cam, phi, roll, lampL) {
 }
 // the head's angle at CCTV time tq: held steps, a hold, then the rest of the way in one frame
 function headPose(tq) {
-  if (tq >= TL.SNAP - 1e-3) return [Math.PI, -.34];
+  if (tq >= TL.SNAP - 1e-3) return [SNAP_PHI, -.34];
   let a = 0; for (const [t, d] of TL.HEAD) if (tq >= t - 1e-3) a = d;
   return [a * Math.PI / 180, 0];
 }
@@ -248,10 +254,10 @@ function screenLight(g, cam, L, stage) {
     const m = project(cam, [0, 4.1, SCR.z - .01]), r = Math.hypot(c[1][0] - c[0][0], c[1][1] - c[0][1]) * .55;
     g.save(); poly(g, c); g.clip(); g.globalCompositeOperation = 'lighter'; const gr = g.createRadialGradient(m[0], m[1], 0, m[0], m[1], r); gr.addColorStop(0, `rgba(255,255,255,${.25 * L})`); gr.addColorStop(1, 'rgba(0,0,0,0)'); g.fillStyle = gr; g.fillRect(0, 0, g.canvas.width, g.canvas.height); g.restore();
   } else {
-    poly(g, c); g.fillStyle = `rgb(${30 + 44 * L | 0},${30 + 44 * L | 0},${32 + 44 * L | 0})`; g.fill();   // the projector's black level outside the picture
+    poly(g, c); g.fillStyle = `rgb(${20 + 18 * L | 0},${20 + 18 * L | 0},${22 + 18 * L | 0})`; g.fill();   // the projector's black level outside the picture
     const tl = project(cam, [FEEDQ.x0, SCR.y1, SCR.z - .02]), tr = project(cam, [FEEDQ.x1, SCR.y1, SCR.z - .02]), bl = project(cam, [FEEDQ.x0, SCR.y0, SCR.z - .02]);
     g.setTransform((tr[0] - tl[0]) / TK.TW, (tr[1] - tl[1]) / TK.TW, (bl[0] - tl[0]) / TK.TH, (bl[1] - tl[1]) / TK.TH, tl[0], tl[1]);
-    g.filter = `brightness(${(1.55 * L).toFixed(3)}) contrast(.92)`; g.drawImage(FEED, 0, 0); g.filter = 'none';
+    g.filter = `brightness(${(1.85 * L).toFixed(3)}) contrast(.88)`; g.drawImage(FEED, 0, 0); g.filter = 'none';
   }
   g.restore();
 }
@@ -291,13 +297,13 @@ function makeFeed(tq, stage) {
   if (stage <= 3) {
     lobby(FRG, tq, false, figureAt(stage, tq), false);
     TK.grade(FG, FRAW, tq, 'cctv');
-    TK.osd(FG, 'cctv', tq, { cam: 'CAM 11', place: 'CINEMA LOBBY', stamp: stamp(tq) });
+    TK.osd(FG, 'cctv', tq, { cam: 'CAM 11  CINEMA LOBBY', place: ' ', stamp: stamp(tq) });   // all on the left: no clash with this camera's OSD when zoomed
   } else {                                                                                                     // Screen 2 itself, someone in row G
     const cam = TK.render(FRG, AUD, CAM12, { ambient: 1.5, fog: .05, sprites: [{ x: 0, y: 4.1, z: 14.9, draw: (gg, c) => screenLight(gg, c, 1, 5) }] });
     spill(FRG, cam, 1, 1);
     seatedOne(FRG, cam, 0, 0, 1);
     TK.grade(FG, FRAW, tq, 'cctv');
-    TK.osd(FG, 'cctv', tq, { cam: 'CAM 12', place: 'SCREEN 2', stamp: stamp(tq) });
+    TK.osd(FG, 'cctv', tq, { cam: 'CAM 12  SCREEN 2', place: ' ', stamp: stamp(tq) });
   }
 }
 
@@ -329,18 +335,18 @@ function focusPoints() {
   const g = mk(TK.TW, TK.TH).getContext('2d');
   const c12 = TK.render(g, new TK.Scene(), CAM12), c11 = TK.render(g, new TK.Scene(), CAM11);
   const p = (c, w) => project(c, w).slice(0, 2);
-  return { screen: p(c12, [0, 4.0, SCR.z]), rowG: p(c12, [SEAT_G.x, 3.7, SEAT_G.z + 2]), head: p(c12, [HEADC[0], HEADC[1] - .12, HEADC[2]]),
+  return { screen: p(c12, [0, 4.0, SCR.z]), screenLow: p(c12, [0, 2.9, SCR.z]), rowG: p(c12, [SEAT_G.x, 3.7, SEAT_G.z + 2]), head: p(c12, [HEADC[0], HEADC[1] - .14, HEADC[2]]),
     l1: p(c11, [.6, 1.2, 12.9]), l2: p(c11, [1.0, 1.0, 7.9]), open: p(c11, [6.5, 1.6, 10.3]) };
 }
 function zoomFor(seg, si, t) {
   const F = FOCUS || (FOCUS = focusPoints()), [z0, z1] = TL.ZOOM[si], k = Math.pow(clamp((t - seg[1]) / (seg[2] - seg[1])), 1.15);
   const fixed = (f, s) => [f[0] + (W2 - f[0]) / s, f[1] + (H2 - f[1]) / s];                                     // zoom about a point that stays put
   if (seg[3] === 5) {                                                                                          // wide, then the crash zoom onto the head, then creep
-    const [c0, c1] = TL.CRASH, kc = ease((t - c0) / (c1 - c0)), s = t < c0 ? 1 : t < c1 ? lerp(1, 2.5, kc) : 2.5 + .35 * clamp((t - c1) / (TL.END - c1));
+    const [c0, c1] = TL.CRASH, kc = ease((t - c0) / (c1 - c0)), s = t < c0 ? 1 : t < c1 ? lerp(1, 2.8, kc) : 2.8 + .35 * clamp((t - c1) / (TL.END - c1));
     const c = [lerp(W2, F.head[0], kc), lerp(H2, F.head[1], kc)];
     return { s, c, blur: t >= c0 && t < c1 + .05 ? 3.5 : 0 };
   }
-  const f = seg[0] === 'L' ? F[seg[3]] : seg[3] === 4 ? F.rowG : F.screen, s = lerp(z0, z1, k);
+  const f = seg[0] === 'L' ? F[seg[3]] : seg[3] === 4 ? F.rowG : seg[3] === 1 ? F.screen : F.screenLow, s = lerp(z0, z1, k);
   return { s, c: fixed(f, s), blur: 0 };
 }
 
@@ -418,6 +424,7 @@ window.EV = [
   { type: 'projector_down', t: TL.PROJ_DIE },
   { type: 'breath', t: TL.BREATH },
   { type: 'static', t: TL.END, dur: DUR - TL.END },
+  { type: 'mute', t: TL.BLACK[0], t1: TL.BLACK[1] },                                     // the black frames: dead silence
   { type: 'bed', fx: 'tape_hiss', t: 0, t1: TL.BLACK[0], g: -38, fin: .3, fout: .01 },
   { type: 'bed', fx: 'tape_hiss', t: TL.BLACK[1], t1: DUR + .5, g: -40, fin: .05, fout: .3 },
 ];

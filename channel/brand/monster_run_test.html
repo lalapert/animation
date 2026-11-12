@@ -14,9 +14,9 @@ const FIT = (() => { const S = new TK.Scene(); const H = 2.8, wall = [150, 146, 
   return S; })();
 const CAM = { x: .9, y: 2.45, z: .4, yaw: -.08, pitch: -.16, fov: 64 };
 window.render = t => {
-  const kind = t < 4 ? 'stoop' : 'hanger', tt = t % 4, tq = Math.floor(tt * 6) / 6;
+  const kind = ['crane', 'broken', 'reverse'][Math.min(2, Math.floor(t / 4))], tt = t % 4, tq = Math.floor(tt * 6) / 6;
   const run = Math.pow(TK.clamp((tq - 1.8) / 1.6), 1.7), z = 10.5 - run * 9.0, x = -.15 + run * .5;
-  const tilt = TK.motion.snap(tq, 1.2, 0, kind === 'stoop' ? -.6 : .5);
+  const tilt = TK.motion.snap(tq, 1.2, 0, kind === 'broken' ? .35 : -.5);
   TK.render(RAW.getContext('2d'), FIT, CAM, { ambient: .75, fog: .07, sprites: [{ x, z, draw: (g, c) => TK.ghost(g, c, kind, x, z, { tilt, charge: run > 0 ? Math.min(1, run * 3) : 0, armR: run > .8 ? .4 : 0 }) }] });
   TK.grade(OUT, RAW, tq, 'cctv'); TK.vhs(OUT, tq, run > .9 ? 2.5 : 1, 3);
   TK.osd(OUT, 'cctv', tt, { cam: 'CAM 09', place: 'SERVICE HALL', stamp: '12-01-1999  01:43:' + String(12 + Math.floor(tt)).padStart(2, '0') });

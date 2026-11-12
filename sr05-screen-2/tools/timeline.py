@@ -24,6 +24,7 @@ for i, v in enumerate(VO):
     v["s0"] = round(v["t"] - 0.05, 3)
     nxt = VO[i + 1]["t"] - 0.15 if i + 1 < len(VO) else 99
     v["s1"] = round(min(nxt, v["t"] + v["dur"] + 0.6), 3)
+    if v["id"] == "L1": v["s1"] = min(v["s1"], 5.98)   # the caption ends at the switch to the lobby
 fr = lambda k: round(k / 6, 4)                 # CCTV frame k (6 fps): every move happens on a frame boundary
 # the multiplexer: [camera, start, end, stage]. A = CAM 12 Screen 2, L = CAM 11 lobby.
 # stage on A: what the screen shows (1-3 the lobby with the figure far, middle, under the camera; 4 Screen 2 itself with

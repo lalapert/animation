@@ -368,6 +368,11 @@ const TK = {};
     stoop: { h: 2.7, draw(g, o) { silhouette(g, 'stoop', o); } },
     hanger: { h: 2.6, draw(g, o) { silhouette(g, 'hanger', o); } },
     peek: { h: 2.6, draw(g, o) { silhouette(g, 'peek', o); } },
+    // ---- v3 (owner 11/12: "too skinny", then "too robot-like": a little bigger than a person, black, grotesque): human anatomy
+    // 2.15 m tall, soft black, and wrong in small ways
+    crane: { h: 2.15, draw(g, o) { figure(g, 'crane', o); } },
+    broken: { h: 2.1, draw(g, o) { figure(g, 'broken', o); } },
+    reverse: { h: 2.15, draw(g, o) { figure(g, 'reverse', o); } },
     // E, The Dropout: only on tape. A person-shaped hole where the picture is damaged (rows from elsewhere, dropout lines).
     // Seen only in playback of a recording, never live; it moves when the tape skips
     dropout: { h: 1.78, screen: true },
@@ -458,7 +463,12 @@ const TK = {};
     const u = o.u || 300, a = o.alpha ?? 1, parts = Array.isArray(path) ? path : [path], W = g.canvas.width, H = g.canvas.height;
     const key = W + 'x' + H, oc = SOFT[key] || (SOFT[key] = document.createElement('canvas')); oc.width = W; oc.height = H;
     const m = oc.getContext('2d'); m.setTransform(g.getTransform()); m.fillStyle = 'rgb(5,5,6)';
-    for (const p of parts) { m.beginPath(); p(m); m.fill(); }
+    // every sub-shape is filled on its own (no winding holes where parts overlap, no stray lines into an ellipse)
+    const px = new Proxy(m, { get(t, k) {
+      if (k === 'moveTo') return (x, y) => { t.fill(); t.beginPath(); t.moveTo(x, y); };
+      if (k === 'ellipse' || k === 'arc') return (...a) => { t.fill(); t.beginPath(); t[k](...a); };
+      const v = t[k]; return typeof v === 'function' ? v.bind(t) : v; }, set(t, k, v) { t[k] = v; return true; } });
+    for (const p of parts) { m.beginPath(); p(px); m.fill(); }
     g.save(); g.setTransform(1, 0, 0, 1, 0, 0);
     g.filter = `blur(${Math.max(3, u * .09).toFixed(1)}px)`; g.globalAlpha = .55 * haze * a * (g.globalAlpha ?? 1); g.drawImage(oc, 0, 0);
     g.filter = `blur(${Math.max(1, u * .012).toFixed(1)}px)`; g.globalAlpha = a; g.drawImage(oc, 0, 0);
@@ -544,6 +554,61 @@ const TK = {};
       softFill(g, o, body, .8);
       g.save(); g.translate(0, -1.2); g.rotate(-lean); eyes(g, o, .26, -1.6, .025, .01); g.restore();
     }
+  }
+  // ---------------------------------------------------------------- a human-shaped figure, a little too big and wrong (metres)
+  // limb3: a curved limb p0 -> p1 -> p2 with three widths (start, middle, end): muscle, not a tube
+  function limb3(g, p0, p1, p2, w0, wm, w2) {
+    const n = 16, L = [], R = [];
+    for (let i = 0; i <= n; i++) {
+      const u = i / n, x = (1 - u) * (1 - u) * p0[0] + 2 * (1 - u) * u * p1[0] + u * u * p2[0], y = (1 - u) * (1 - u) * p0[1] + 2 * (1 - u) * u * p1[1] + u * u * p2[1];
+      const dx = 2 * (1 - u) * (p1[0] - p0[0]) + 2 * u * (p2[0] - p1[0]), dy = 2 * (1 - u) * (p1[1] - p0[1]) + 2 * u * (p2[1] - p1[1]), d = Math.hypot(dx, dy) || 1;
+      const w = u < .5 ? w0 + (wm - w0) * Math.sin(u * Math.PI) : wm + (w2 - wm) * (1 - Math.sin(u * Math.PI));
+      L.push([x - dy / d * w, y + dx / d * w]); R.push([x + dy / d * w, y - dx / d * w]);
+    }
+    g.moveTo(L[0][0], L[0][1]); for (const p of L) g.lineTo(p[0], p[1]); for (const p of R.reverse()) g.lineTo(p[0], p[1]); g.closePath();
+  }
+  // a two-segment limb from a to joint to b; bend > 0 pushes the joint sideways (to make it bend the wrong way, flip the sign)
+  function jointed(g, a, j, b, w, curve = .025) {
+    const mid = (p, q, k) => { const dx = q[0] - p[0], dy = q[1] - p[1], d = Math.hypot(dx, dy) || 1; return [(p[0] + q[0]) / 2 - dy / d * k, (p[1] + q[1]) / 2 + dx / d * k]; };
+    limb3(g, a, mid(a, j, curve), j, w[0], w[1], w[2]);                     // a slight muscle curve on each segment
+    limb3(g, j, mid(j, b, -curve), b, w[2], w[3], w[4]); g.ellipse(j[0], j[1], w[2] * 1.05, w[2] * 1.05, 0, 0, 6.2832);
+  }
+  function figure(g, v, o) {
+    const ch = o.charge || 0, reach = o.armR || 0, P = [];
+    const lean = (v === 'crane' ? .1 : v === 'reverse' ? .06 : .04) + ch * .3, tiltX = o.tilt ?? 0;
+    const shL = v === 'crane' ? -1.80 : v === 'broken' ? -1.74 : -1.80, shR = v === 'crane' ? -1.74 : -1.82;   // uneven shoulders
+    // legs (knees forward, or backward for 'reverse'); a stride when it runs
+    for (const s of [-1, 1]) {
+      const st = ch * s * .32, kneeX = s * .13 + st * .5 + (v === 'reverse' ? -.12 : .05) * (1 + ch), hip = [s * .1, -1.02], foot = [s * .12 + st, -.03];
+      P.push(gg => jointed(gg, hip, [kneeX, -.55], foot, [.085, .09, .055, .06, .035]));
+      P.push(gg => { gg.ellipse(foot[0] + .05, -.025, .1, .03, 0, 0, 6.2832); });
+    }
+    // torso: chest, waist, hips; leaning, a little twisted
+    P.push(gg => { gg.save(); gg.translate(0, -1.02); gg.rotate(lean);
+      gg.moveTo(-.16, .02); gg.bezierCurveTo(-.17, -.1, -.11, -.22, -.12, -.34); gg.bezierCurveTo(-.17, -.5, -.23, -.64, -.22, shL + 1.02 + .06);
+      gg.bezierCurveTo(-.2, shL + 1.02 - .02, -.09, shL + 1.02 - .04, -.05, shL + 1.02 - .1); gg.lineTo(.05, shR + 1.02 - .1);
+      gg.bezierCurveTo(.09, shR + 1.02 - .04, .2, shR + 1.02 - .02, .22, shR + 1.02 + .06); gg.bezierCurveTo(.23, -.64, .17, -.5, .12, -.34);
+      gg.bezierCurveTo(.11, -.22, .17, -.1, .16, .02); gg.closePath(); gg.restore(); });
+    // neck and head
+    const neckLen = v === 'crane' ? .26 : v === 'broken' ? .22 : .14, headAng = v === 'broken' ? 1.35 + tiltX : v === 'crane' ? .45 + tiltX : .15 + tiltX;
+    const nb = [0, -1.02 - Math.cos(lean) * .8 + .02];
+    const headAt = (gg, draw) => { gg.save(); gg.translate(0, -1.02); gg.rotate(lean); gg.translate(0, -.8);
+      const nx = Math.sin(headAng) * neckLen * .9, ny = -Math.cos(headAng * .55) * neckLen; draw(gg, nx, ny); gg.restore(); };
+    P.push(gg => headAt(gg, (q, nx, ny) => { limb3(q, [0, 0], [nx * .3, ny * .6], [nx, ny], .05, .045, .042); q.moveTo(0, 0);
+      q.save(); q.translate(nx, ny); q.rotate(headAng); q.ellipse(0, -.1, .085, .13, 0, 0, 6.2832); q.restore(); }));
+    // arms: long, thin wrists, long fingers; one longer for 'broken'; elbows backward for 'reverse'
+    for (const s of [-1, 1]) {
+      const ra = s > 0 ? reach : 0, sw = ch * -s * .35, longer = v === 'broken' && s < 0 ? .14 : 0;
+      P.push(gg => { gg.save(); gg.translate(0, -1.02); gg.rotate(lean);
+        const sy = (s < 0 ? shL : shR) + 1.02 + .05, a = [s * .25, sy];
+        const elbow = [s * (.3 + ra * .35) + (v === 'reverse' ? -s * .0 + .08 : -.02) + sw * .3, sy + .42 - ra * .2];
+        const hand = [s * (.29 + ra * .9) + sw, sy + .86 + longer - ra * .75 - ch * .1];
+        jointed(gg, a, elbow, hand, [.065, .06, .045, .042, .028]);
+        for (let f = -2; f <= 2; f++) { gg.moveTo(0, 0); limb3(gg, hand, [hand[0] + f * .02, hand[1] + .1], [hand[0] + f * .03, hand[1] + .2], .014, .011, .004); }
+        gg.restore(); });
+    }
+    softFill(g, o, P, .9);
+    headAt(g, (q, nx, ny) => { q.translate(nx, ny); q.rotate(headAng); eyes(q, o, 0, -.12, .03, .011); });
   }
   const HUMAN = [[-.05, -1.55], [.05, -1.55], [.21, -1.47], [.26, -1.38], [.28, -.88], [.22, -.86], [.2, -1.2], [.17, -.9], [.15, -.05], [.03, -.05], [0, -.82], [-.03, -.05], [-.15, -.05], [-.17, -.9], [-.2, -1.2], [-.22, -.86], [-.28, -.88], [-.26, -1.38], [-.21, -1.47]];
   function humanPath(g, fx, fy, u) {

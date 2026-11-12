@@ -1,60 +1,130 @@
 {
-  "room_db": -62,
-  "voice_over_music_db": 9,
-  "vo_pa": false,
-  "beds": {},
-  "foley": {
-    "static": {
-      "fx": "static",
-      "g": -12,
-      "fin": 0.003,
-      "fout": 0.04
-    },
-    "glitch": {
-      "fx": "glitch",
-      "g": -15,
-      "align": true,
-      "fin": 0.002,
-      "fout": 0.08
-    },
-    "scrape": {
-      "fx": "scrape",
-      "g": -18,
-      "fin": 0.01,
-      "fout": 0.2
-    },
-    "whir": {
-      "fx": "whir",
-      "g": -16,
-      "fin": 0.01,
-      "fout": 0.2
-    },
-    "clank": {
-      "fx": "clank",
-      "g": -18,
-      "align": true,
-      "fin": 0.002,
-      "fout": 0.1
-    },
-    "eyes": {
-      "fx": "eyes",
-      "g": -19,
-      "align": true,
-      "fin": 0.002,
-      "fout": 0.2
-    },
-    "shutter": {
-      "fx": "shutter",
-      "g": -15,
-      "align": true,
-      "fin": 0.002,
-      "fout": 0.3
-    },
-    "breath": {
-      "fx": "breath",
-      "g": -20,
-      "fin": 0.05,
-      "fout": 0.4
-    }
+ "room_db": -62,
+ "voice_over_music_db": 9,
+ "vo_pa": false,
+ "beds": {},
+ "foley": {
+  "static": {
+   "fx": "static",
+   "g": -12,
+   "fin": 0.003,
+   "fout": 0.04
+  },
+  "glitch": {
+   "fx": "glitch",
+   "g": -15,
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.08
+  },
+  "roll": {
+   "fx": "roll",
+   "g": -17,
+   "fin": 0.002,
+   "fout": 0.1
+  },
+  "scrape": {
+   "fx": "scrape",
+   "g": -19,
+   "fin": 0.01,
+   "fout": 0.15,
+   "dur": 0.85
+  },
+  "clank": {
+   "fx": "clank",
+   "g": -18,
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.1
+  },
+  "step": {
+   "fx": "tin_step",
+   "g": -21,
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.06,
+   "dur": 0.22
+  },
+  "drag": {
+   "fx": "drag",
+   "g": -21,
+   "align": true,
+   "fin": 0.01,
+   "fout": 0.08,
+   "dur": 0.4
+  },
+  "snap": {
+   "fx": "head_snap",
+   "g": -14,
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.08
+  },
+  "whir": {
+   "fx": "whir",
+   "g": -17,
+   "fin": 0.01,
+   "fout": 0.2
+  },
+  "ratchet": {
+   "fx": "wind_self",
+   "g": -15,
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.03,
+   "dur": 0.12,
+   "tail": 0
+  },
+  "wind": {
+   "fx": "wind_self",
+   "g": -27,
+   "fin": 0.05,
+   "fout": 0.05,
+   "tail": 0
+  },
+  "eyes": {
+   "fx": "eyes",
+   "g": -15,
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.2
+  },
+  "swell": {
+   "fx": "swell",
+   "g": -13,
+   "fin": 0.05,
+   "fout": 0.008,
+   "tail": 0
+  },
+  "shutter": {
+   "fx": "shutter",
+   "g": -14,
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.3
+  },
+  "toys": {
+   "fx": "toys_wake",
+   "g": -20,
+   "fin": 0.08,
+   "fout": 0.008,
+   "tail": 0
+  },
+  "sting": {
+   "fx": "sting_toy",
+   "g": 2,
+   "align": true,
+   "fin": 0.001,
+   "fout": 0.25,
+   "sat": 2.0
+  },
+  "sting2": {
+   "fx": "sting",
+   "g": -1,
+   "align": true,
+   "fin": 0.001,
+   "fout": 0.25,
+   "sat": 2.0
   }
+ }
 }

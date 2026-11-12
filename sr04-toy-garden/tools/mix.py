@@ -2,7 +2,9 @@
 Data-driven: mix.json maps each event type (from out/events.json) to an effect.
   foley: {type: {"fx": name | [names...], "g": dB, "align": bool, "dur": s, "fin": s, "fout": s}}
   beds:  {type: {"fx": name, "fin": s, "fout": s}}  for events carrying "t1" (end time) and "g" (dB)
-Event fields used: t, t1, pan (−1..1), g (dB for beds; linear multiplier for foley), dur.
+Event fields used: t, t1, pan (−1..1), g (dB for beds and ticks; linear multiplier for foley), dur.
+  ticks: {"type": "ticks", t, t1, r0, r1, g}: single clockwork ticks re-timed to the picture (rate r0 -> r1 per second).
+  foley "sat": tanh drive for a dense, loud hit (the stingers).
   .venv/bin/python tools/mix.py
 """
 import json, os, sys
@@ -38,10 +40,13 @@ def fx(name):
     return _cache[name]
 
 
-def place(b, name, t, gain_db, pan=0.0, dur=None, align=False, fin=.01, fout=.12):
+def place(b, name, t, gain_db, pan=0.0, dur=None, align=False, fin=.01, fout=.12, sat=0.0):
     x = fx(name)
     if dur is not None:
         x = fade(x[:int((dur + fout) * SR)], fin, fout)
+    if sat:                                                                        # saturate: a dense, loud hit with few peaks (it survives the limiter)
+        pk = np.abs(x).max() + 1e-9
+        x = (np.tanh(x / pk * sat) / np.tanh(sat) * pk).astype(np.float32)
     if pan:
         x = x * np.array([np.cos((pan + 1) * np.pi / 4) * 1.414, np.sin((pan + 1) * np.pi / 4) * 1.414], np.float32)
     add(b, x, t - (active(x, .2)[0] / SR if align else 0), db(gain_db))
@@ -77,6 +82,34 @@ def hall(x):
     return y.astype(np.float32)
 
 
+def grains(name, n=24, length=.045):
+    """single ticks cut from a ticking effect (tape 4: the clockwork, re-timed to the picture)"""
+    x = fx(name)
+    m = np.abs(x).max(1)
+    w = int(.004 * SR)
+    env = np.array([m[i:i + w].max() for i in range(0, len(m) - w, w)])
+    thr, on = env.max() * .35, []
+    for i in range(1, len(env)):
+        if env[i] > thr and env[i - 1] <= thr and (not on or (i * w - on[-1]) > .03 * SR): on.append(i * w)
+    out = []
+    for o in on[:n]:
+        g = x[max(0, o - int(.002 * SR)):o + int(length * SR)].copy()
+        out.append(fade(g, .001, .02).astype(np.float32))
+    return out
+
+
+def ticks(b, t0, t1, r0, r1, gain_db, src="tick_fast"):
+    """a tick train from t0 to t1 whose rate glides from r0 to r1 ticks a second (steady, running down, racing)"""
+    G = grains(src)
+    rr = np.random.default_rng(int(t0 * 100))
+    t, i = t0, 0
+    while t < t1:
+        k = (t - t0) / max(t1 - t0, 1e-6)
+        r = r0 * (r1 / r0) ** k
+        add(b, G[i % len(G)], t, db(gain_db + (rr.random() - .5) * 2))
+        t += 1 / r * (1 + (rr.random() - .5) * .08); i += 1
+
+
 # ---------------------------------------------------------------- ambience and foley
 amb, fol, pab = buf(DUR + 2), buf(DUR + 2), buf(DUR + 2)
 rng = np.random.default_rng(5)
@@ -85,7 +118,9 @@ amb += pink * (db(CFG.get("room_db", -56)) / rms(pink))                       # 
 k = 0
 for e in EV:
     ty = e["type"]
-    if ty == "bed" and "t1" in e:                                                  # generic bed: the event names its effect
+    if ty == "ticks":
+        ticks(fol, e["t"], e["t1"], e["r0"], e["r1"], e.get("g", -22))
+    elif ty == "bed" and "t1" in e:                                                # generic bed: the event names its effect
         bed(amb, e["fx"], e["t"], min(e["t1"], DUR + 1), e.get("g", -24), e.get("fin", 1.2), e.get("fout", 1.6))
     elif ty in CFG.get("beds", {}) and "t1" in e:
         c = CFG["beds"][ty]
@@ -96,7 +131,7 @@ for e in EV:
         g = c.get("g", -14) + 20 * np.log10(max(e.get("g", 1), .05))
         dur = e.get("dur", c.get("dur"))
         place(pab if c.get("pa") else fol, names[k % len(names)], e["t"], g, e.get("pan", 0) * .7, dur=(dur + c.get("tail", .2)) if dur else None,
-              align=c.get("align", False), fin=c.get("fin", .02), fout=c.get("fout", .2))
+              align=c.get("align", False), fin=c.get("fin", .02), fout=c.get("fout", .2), sat=c.get("sat", 0.0))
         k += 1
 fol = room(fol, size=.25, mix=.14, damp=.6, seed=7)
 amb = room(amb, size=.3, mix=.1, damp=.7, seed=8)
