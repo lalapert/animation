@@ -260,11 +260,11 @@ function drawGap(g, cam, tq) {
 }
 
 // ---------------------------------------------------------------- the jump: its face at the lens, lit by its own eyes (screen space; graded with the rest)
-function rust(g, R, x, y, r, n, a = .6) {
-  for (let i = 0; i < n; i++) {
-    const an = R() * TAU, d = Math.pow(R(), .7) * r, s = 2 + R() * r * .13;
-    g.fillStyle = `rgba(${36 + R() * 30 | 0},${26 + R() * 18 | 0},22,${(a * (.25 + R() * .75)).toFixed(2)})`;
-    g.beginPath(); g.ellipse(x + Math.cos(an) * d, y + Math.sin(an) * d, s, s * (.45 + R() * .6), R() * 3, 0, TAU); g.fill();
+function rust(g, R, x, y, r, n, a = .6) {                                                       // irregular flakes, densest at the centre
+  for (let i = 0; i < n * 2; i++) {
+    const an = R() * TAU, d = Math.pow(R(), .6) * r, sz = 1.5 + R() * r * .08, cx = x + Math.cos(an) * d, cy = y + Math.sin(an) * d, k = 5 + (R() * 4 | 0);
+    g.fillStyle = `rgba(${30 + R() * 30 | 0},${22 + R() * 16 | 0},18,${(a * (.15 + R() * .65)).toFixed(2)})`;
+    g.beginPath(); for (let j = 0; j < k; j++) { const q = sz * (.35 + R() * .95), aa = j / k * TAU; j ? g.lineTo(cx + Math.cos(aa) * q, cy + Math.sin(aa) * q * .8) : g.moveTo(cx + Math.cos(aa) * q, cy + Math.sin(aa) * q * .8); } g.closePath(); g.fill();
   }
 }
 function runs(g, R, x, y, len, w, n = 4) {                                                       // rust running down from a joint
@@ -298,13 +298,15 @@ function faceAtLens(g, tq) {
     g.strokeStyle = `rgba(200,200,192,${(.1 + R() * .25).toFixed(2)})`; g.lineWidth = 1 + R() * 2.5; g.beginPath(); g.moveTo(x, y); g.lineTo(x + Math.cos(a) * l, y + Math.sin(a) * l); g.stroke();
   }
   for (let i = 0; i < 30; i++) {                                                                  // paint flaking off
-    const x = (R() - .5) * 2 * W, y = (R() - .5) * 2 * H, r = 6 + R() * 26; g.fillStyle = `rgba(150,150,144,${(.3 + R() * .4).toFixed(2)})`;
+    const x = (R() - .5) * 2 * W, y = (R() - .5) * 2 * H, r = 5 + R() * 16; g.fillStyle = `rgba(150,150,144,${(.12 + R() * .2).toFixed(2)})`;
     g.beginPath(); for (let j = 0; j < 7; j++) { const an = j / 7 * TAU, q = r * (.45 + R() * .7); j ? g.lineTo(x + Math.cos(an) * q, y + Math.sin(an) * q) : g.moveTo(x + Math.cos(an) * q, y + Math.sin(an) * q); } g.closePath(); g.fill();
   }
   rust(g, R, -W + 80, -H + 120, 170, 160, .8); rust(g, R, W - 60, H - 80, 190, 170, .8); rust(g, R, -W + 50, H - 50, 150, 120, .8); rust(g, R, W - 80, -H + 140, 130, 100, .8);
   rust(g, R, 0, -H + 40, 120, 60, .7); rust(g, R, -40, 120, 90, 50, .6);
+  for (let i = 0; i < 9; i++) { const r = 40 + R() * 70; g.fillStyle = `rgba(20,16,14,${(.08 + R() * .12).toFixed(2)})`; g.beginPath(); g.ellipse((R() - .5) * 2 * W, (R() - .5) * 2 * H, r, r * (.5 + R() * .5), R() * 3, 0, TAU); g.fill(); }   // stains
+  for (let i = 0; i < 500; i++) { g.fillStyle = `rgba(${R() < .3 ? '200,200,192' : '15,12,10'},${(.08 + R() * .22).toFixed(2)})`; g.fillRect((R() - .5) * 2 * W, (R() - .5) * 2 * H, 1 + R() * 4, 1 + R() * 3); }   // grime
   g.save(); g.globalCompositeOperation = 'lighter';                                               // its eyes light the tin round them
-  for (const s of [-1, 1]) { const a = s < 0 ? .26 : .38, gl = g.createRadialGradient(s * EX, EY + 30, 50, s * EX, EY + 40, 290); gl.addColorStop(0, `rgba(255,255,245,${a})`); gl.addColorStop(1, 'rgba(255,255,245,0)'); g.fillStyle = gl; g.fillRect(s * EX - 300, EY - 260, 600, 600); }
+  for (const s of [-1, 1]) { const a = s < 0 ? .2 : .3, gl = g.createRadialGradient(s * EX, EY + 30, 50, s * EX, EY + 40, 290); gl.addColorStop(0, `rgba(255,255,245,${a})`); gl.addColorStop(1, 'rgba(255,255,245,0)'); g.fillStyle = gl; g.fillRect(s * EX - 300, EY - 260, 600, 600); }
   g.restore();
   for (const s of [-1, 1]) { runs(g, R, s * EX + s * 10, EY + ER + 36, 280, 90, 6); rust(g, R, s * EX, EY + ER + 40, 80, 50, .85); }   // rust run down from the eyes
   const lg = g.createRadialGradient(0, EY + 40, 120, 0, EY + 60, 560); lg.addColorStop(0, 'rgba(0,0,0,0)'); lg.addColorStop(.45, 'rgba(0,0,0,.45)'); lg.addColorStop(1, 'rgba(0,0,0,.97)');
@@ -326,6 +328,11 @@ function faceAtLens(g, tq) {
     g.fillStyle = gl; g.beginPath(); g.arc(ex, ey, ER, 0, TAU); g.fill();
     const sh = g.createLinearGradient(ex, ey - ER, ex, ey - ER * .2); sh.addColorStop(0, 'rgba(0,0,0,.85)'); sh.addColorStop(1, 'rgba(0,0,0,0)');   // the brow's shadow over the lamp
     g.fillStyle = sh; g.beginPath(); g.arc(ex, ey, ER, 0, TAU); g.fill();
+    if (!cracked) {                                                                               // the filament: a dark slit standing in the glow
+      g.strokeStyle = 'rgba(14,14,14,.85)'; g.lineWidth = 3.5; g.lineJoin = 'round'; g.beginPath();
+      for (let j = 0; j <= 22; j++) g.lineTo(ex + (j % 2 ? 4.5 : -4.5), ey - 52 + j * 4.6); g.stroke();
+      g.lineWidth = 4; g.beginPath(); g.moveTo(ex - 10, ey + 50); g.lineTo(ex, ey + 46); g.lineTo(ex + 10, ey + 50); g.stroke();
+    }
     g.strokeStyle = `rgba(120,120,112,${.35 * lit})`; g.lineWidth = 3; for (const r of [.42, .7]) { g.beginPath(); g.arc(ex, ey + 4, ER * r, 0, TAU); g.stroke(); }   // the reflector rings behind the glass
     if (cracked) {                                                                                // a hole in the lamp glass, the bulb glowing inside, cracks from it
       const hole = [[-58, -40], [-20, -66], [4, -40], [-14, -20], [-40, -12], [-66, -22]].map(([x, y]) => [ex + x * .8, ey + y * .8]);
@@ -457,8 +464,8 @@ const winds = holdStarts(TL.SELFWIND[0], TL.SELFWIND[1], 41, 1, 3);
 window.EV = [
   { type: 'static', t: 0.0, dur: .6 },
   { type: 'roll', t: TL.ROLL[0] },
-  { type: 'bed', fx: 'mall_hum', t: TL.ROLL[0], t1: TL.QUIET, g: -31, fin: .25, fout: .01 },
-  { type: 'bed', fx: 'store_hum', t: TL.ROLL[0], t1: TL.QUIET, g: -36, fin: .25, fout: .01 },
+  { type: 'bed', fx: 'mall_hum', t: TL.ROLL[0], t1: TL.QUIET, g: -27, fin: .25, fout: .01 },
+  { type: 'bed', fx: 'store_hum', t: TL.ROLL[0], t1: TL.QUIET, g: -32, fin: .25, fout: .01 },
   { type: 'scrape', t: TL.EMERGE },
   { type: 'clank', t: TL.STANDUP, g: .8 },
   { type: 'ticks', t: W1[0], t1: W1[1], r0: 7, r1: 7, g: -21 },
@@ -482,10 +489,10 @@ window.EV = [
   { type: 'swell', t: TL.SWELL[0], dur: TL.SWELL[1] - TL.SWELL[0] },
   { type: 'shutter', t: TL.SHUTTER },
   { type: 'toys', t: TL.SHUTTER + .05, dur: TL.QUIET - TL.SHUTTER - .05 },
-  { type: 'ticks', t: TL.BLACK[0] + .17, t1: TL.BLACK[0] + .2, r0: 10, r1: 10, g: -30 },   // one tick in the dark, close
+  { type: 'ticks', t: TL.BLACK[0] + .17, t1: TL.BLACK[0] + .2, r0: 10, r1: 10, g: -27, nogate: true },   // one tick in the dark, close
   { type: 'sting', t: TL.STING }, { type: 'sting2', t: TL.STING },
   { type: 'static', t: TL.END, dur: DUR - TL.END },
-  { type: 'bed', fx: 'tape_hiss', t: 0, t1: DUR + .5, g: -38 },
+  { type: 'bed', fx: 'tape_hiss', t: 0, t1: DUR + .5, g: -38, nogate: true },
 ];
 
 (async () => {

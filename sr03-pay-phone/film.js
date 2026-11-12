@@ -366,7 +366,7 @@ function buildEvents() {
     { type: 'creak', t: TL.HOLD[1][0], g: 1.1, pan: 0 },
     { type: 'pop', t: TL.DARK[0] },
     { type: 'restrike', t: TL.DARK[1], dur: .6 },
-    { type: 'creak', t: TL.HOLD[2][0] + .02, g: 1.2, pan: .15 },
+    { type: 'creak', t: TL.HOLD[2][0] + .02, g: .8, pan: .15 },
     // breathing right at the camera's microphone, from the moment it is under the camera until it lets go (lower under her line)
     { type: 'bed', fx: 'near_breath', t: TL.BREATH, t1: TL.VO[2].t - .1, g: -25, fin: .9, fout: .35 },
     { type: 'bed', fx: 'near_breath', t: TL.VO[2].t - .35, t1: VOend[2] + .35, g: -33, fin: .3, fout: .3 },
@@ -380,6 +380,7 @@ function buildEvents() {
     // ...silence...
     { type: 'impact', t: TL.RING },
     { type: 'scare', t: TL.RING },
+    { type: 'scare2', t: TL.RING },                                                // the same bell, held: a full second of it
     { type: 'glitch', t: TL.GLITCH[1][0], dur: TL.GLITCH[1][1] },
     { type: 'static', t: TL.END, dur: DUR - TL.END },
     { type: 'bed', fx: 'tape_hiss', t: TL.RING, t1: DUR + .5, g: -38, fin: .01 },

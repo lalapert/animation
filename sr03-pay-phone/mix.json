@@ -6,7 +6,7 @@
  "foley": {
   "static": {
    "fx": "static",
-   "g": -11,
+   "g": -19,
    "fin": 0.003,
    "fout": 0.04
   },
@@ -26,7 +26,7 @@
   },
   "pickup": {
    "fx": "pickup",
-   "g": -15,
+   "g": -18,
    "align": true,
    "fin": 0.002,
    "fout": 0.1
@@ -40,7 +40,7 @@
   },
   "glitch": {
    "fx": "glitch",
-   "g": -15,
+   "g": -17,
    "align": true,
    "fin": 0.002,
    "fout": 0.08
@@ -69,26 +69,26 @@
   },
   "restrike": {
    "fx": "flicker",
-   "g": -21,
+   "g": -24,
    "fin": 0.005,
    "fout": 0.05
   },
   "swell": {
    "fx": "swell",
-   "g": -15,
+   "g": -21,
    "fin": 0.05,
    "fout": 0.015
   },
   "hangup": {
    "fx": "hangup",
-   "g": -17,
+   "g": -22,
    "align": true,
    "fin": 0.001,
    "fout": 0.05
   },
   "clatter": {
    "fx": "clatter",
-   "g": -12,
+   "g": -20,
    "align": true,
    "fin": 0.002,
    "fout": 0.3,
@@ -96,28 +96,40 @@
   },
   "knock": {
    "fx": "clatter",
-   "g": -18,
+   "g": -22,
    "align": true,
    "dur": 0.25,
    "fin": 0.002,
-   "fout": 0.08,
-   "bus": "hall"
+   "fout": 0.08
   },
   "impact": {
    "fx": "impact",
-   "g": -8,
+   "g": -16,
    "align": true,
    "fin": 0.001,
-   "fout": 0.3
+   "fout": 0.3,
+   "bus": "hot"
   },
   "scare": {
    "fx": "ring_scare",
-   "g": -2,
+   "g": -8,
    "align": true,
    "fin": 0.001,
    "fout": 0.4,
-   "bus": "hall",
-   "drive": 2.5
+   "bus": "hot",
+   "drive": 7
+  },
+  "scare2": {
+   "fx": "ring",
+   "g": -10,
+   "align": true,
+   "dur": 0.95,
+   "fin": 0.001,
+   "fout": 0.35,
+   "bus": "hot",
+   "drive": 5
   }
- }
+ },
+ "crest_db": 10.8,
+ "hot_db": 0
 }

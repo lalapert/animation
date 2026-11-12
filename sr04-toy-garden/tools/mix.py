@@ -112,7 +112,7 @@ def ticks(b, t0, t1, r0, r1, gain_db, src="tick_fast"):
 
 
 # ---------------------------------------------------------------- ambience and foley
-amb, fol, pab = buf(DUR + 2), buf(DUR + 2), buf(DUR + 2)
+amb, fol, pab, dry = buf(DUR + 2), buf(DUR + 2), buf(DUR + 2), buf(DUR + 2)   # dry: not silenced before the jump (tape hiss, one tick)
 rng = np.random.default_rng(5)
 pink = lowpass(highpass(np.cumsum(rng.standard_normal((len(amb), 2)), 0).astype(np.float32), 40), 900)
 amb += pink * (db(CFG.get("room_db", -56)) / rms(pink))                       # room tone
@@ -120,9 +120,9 @@ k = 0
 for e in EV:
     ty = e["type"]
     if ty == "ticks":
-        ticks(fol, e["t"], e["t1"], e["r0"], e["r1"], e.get("g", -22))
+        ticks(dry if e.get("nogate") else fol, e["t"], e["t1"], e["r0"], e["r1"], e.get("g", -22))
     elif ty == "bed" and "t1" in e:                                                # generic bed: the event names its effect
-        bed(amb, e["fx"], e["t"], min(e["t1"], DUR + 1), e.get("g", -24), e.get("fin", 1.2), e.get("fout", 1.6))
+        bed(dry if e.get("nogate") else amb, e["fx"], e["t"], min(e["t1"], DUR + 1), e.get("g", -24), e.get("fin", 1.2), e.get("fout", 1.6))
     elif ty in CFG.get("beds", {}) and "t1" in e:
         c = CFG["beds"][ty]
         bed(amb, c["fx"], e["t"], min(e["t1"], DUR + 1), e.get("g", -24), c.get("fin", 1.0), c.get("fout", 1.5))
@@ -136,6 +136,11 @@ for e in EV:
         k += 1
 fol = room(fol, size=.25, mix=.14, damp=.6, seed=7)
 amb = room(amb, size=.3, mix=.1, damp=.7, seed=8)
+if "QUIET" in TL and "STING" in TL:                                               # tape 4 v2: dead silence (but the tape hiss) before the jump
+    a, z, f = int(TL["QUIET"] * SR), int((TL["STING"] - .003) * SR), int(.012 * SR)
+    gate = np.ones(len(fol), np.float32); gate[a:z] = 0; gate[a - f:a] = np.linspace(1, 0, f)
+    fol *= gate[:, None]; amb *= gate[:, None]
+dry = room(dry, size=.15, mix=.08, damp=.7, seed=10)
 
 # ---------------------------------------------------------------- narration (compress, limit, level)
 vox = buf(DUR + 2)
@@ -178,9 +183,40 @@ sp = speech > .5
 mr = rms(mus[sp])
 if mr > 1e-5:
     mus *= (rms(vox[sp]) / db(CFG.get("voice_over_music_db", 8))) / mr
-mix = (vox + mus + fol + amb)[:int(DUR * SR)]
+mix = (vox * db(CFG.get("voice_db", 0)) + mus + fol + amb + dry)[:int(DUR * SR)]
 mix *= .89 / np.abs(mix).max()
+
+
+# ---------------------------------------------------------------- master (tape 4 v2): level to -14 LUFS behind a lookahead peak limiter, so the
+# final loudnorm in mux.sh only scales (linear mode) and the stinger keeps its 6-8 dB over the body instead of being squashed
+def lufs(x):
+    import subprocess, tempfile, re
+    with tempfile.NamedTemporaryFile(suffix=".wav") as f:
+        sf.write(f.name, x, SR, subtype="FLOAT")
+        r = subprocess.run(["ffmpeg", "-hide_banner", "-nostats", "-i", f.name, "-af", "ebur128", "-f", "null", "-"], capture_output=True, text=True).stderr
+    return float(re.findall(r"I:\s*(-?[\d.]+) LUFS", r)[-1])
+
+
+def limit(x, ceil_db=-2.4):
+    """lookahead limiter on the true peak (4x oversampled), so the AAC and loudnorm see no overs"""
+    from scipy.ndimage import minimum_filter1d, uniform_filter1d
+    c = db(ceil_db)
+    tp = np.abs(signal.resample_poly(x, 4, 1, axis=0)).max(1)[:len(x) * 4].reshape(-1, 4).max(1)
+    raw = np.minimum(1.0, c / np.maximum(tp, 1e-9))
+    g = uniform_filter1d(minimum_filter1d(raw, size=int(.04 * SR)), size=int(.02 * SR))
+    return (x * g[:, None]).astype(np.float32)
+
+
+if CFG.get("master_lufs"):
+    mix = lowpass(highpass(mix, 35), 16000).astype(np.float32)                    # no sub-bass or top end for the AAC encoder to overshoot on
+    for _ in range(3):
+        mix = limit(mix * db(CFG["master_lufs"] - lufs(mix)))
+    tp = np.abs(signal.resample_poly(mix, 4, 1, axis=0)).max()
+    print("master", round(lufs(mix), 2), "LUFS, sample peak", round(20 * np.log10(np.abs(mix).max()), 2), "dBFS, true peak", round(20 * np.log10(tp), 2), "dBTP")
 sf.write(os.path.join(HERE, "out", "mix.wav"), mix, SR, subtype="PCM_24")
+if os.environ.get("STEMS"):                                                       # for level checks: the buses as they enter the master
+    for name, x in [("voice", vox * db(CFG.get("voice_db", 0))), ("music", mus), ("foley", fol), ("ambience", amb), ("dry", dry)]:
+        sf.write(os.path.join(HERE, "out", f"stem_{name}.wav"), x[:int(DUR * SR)] * (np.abs(mix).max() / .89), SR, subtype="FLOAT")
 for name, x in [("voice", vox), ("music", mus), ("foley", fol), ("ambience", amb)]:
     print(f"{name:9s} rms {20 * np.log10(rms(x) + 1e-9):6.1f} dB (pre-normalise)")
 print("mix.wav", round(len(mix) / SR, 2), "s")

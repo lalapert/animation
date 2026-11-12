@@ -1,12 +1,12 @@
 {
  "room_db": -62,
- "voice_over_music_db": 9,
+ "voice_over_music_db": 14,
  "vo_pa": false,
  "beds": {},
  "foley": {
   "static": {
    "fx": "static",
-   "g": -12,
+   "g": -14,
    "fin": 0.003,
    "fout": 0.04
   },
@@ -91,40 +91,42 @@
   },
   "swell": {
    "fx": "swell",
-   "g": -13,
+   "g": -19,
    "fin": 0.05,
    "fout": 0.008,
    "tail": 0
   },
   "shutter": {
    "fx": "shutter",
-   "g": -14,
+   "g": -16,
    "align": true,
    "fin": 0.002,
    "fout": 0.3
   },
   "toys": {
    "fx": "toys_wake",
-   "g": -20,
+   "g": -22,
    "fin": 0.08,
    "fout": 0.008,
    "tail": 0
   },
   "sting": {
    "fx": "sting_toy",
-   "g": 2,
+   "g": -6,
    "align": true,
    "fin": 0.001,
    "fout": 0.25,
-   "sat": 2.0
+   "sat": 4.0
   },
   "sting2": {
    "fx": "sting",
-   "g": -1,
+   "g": -9,
    "align": true,
    "fin": 0.001,
    "fout": 0.25,
-   "sat": 2.0
+   "sat": 4.0
   }
- }
+ },
+ "master_lufs": -14.0,
+ "voice_db": -5
 }

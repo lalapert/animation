@@ -17,7 +17,7 @@ durs = json.load(open(os.path.join(HERE, "voice", "out", "durations.json")))
 START = {"L1": 15.0, "L2": 20.6, "L3": 26.8}
 VO = []
 for k in ["L1", "L2", "L3"]:
-    VO.append({"id": k, "who": "CALLER", "t": START[k], "dur": durs[k], "sub": lines[k].get("sub", lines[k]["text"]), "col": "#f2f2f2", "fx": "phone"})
+    VO.append({"id": k, "who": "CALLER", "t": START[k], "dur": durs[k], "sub": lines[k].get("sub", lines[k]["text"]), "col": "#f2f2f2", "fx": "phone", "gain_db": -3.5})
 for i, v in enumerate(VO):
     v["s0"] = round(v["t"] - 0.05, 3)
     nxt = VO[i + 1]["t"] - 0.15 if i + 1 < len(VO) else 99
