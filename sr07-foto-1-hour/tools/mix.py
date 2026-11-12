@@ -158,16 +158,23 @@ mix = (vox + mus + fol + amb)[:int(DUR * SR)]
 PLR = CFG.get("plr_db")
 if PLR is not None:
     from scipy.ndimage import maximum_filter1d
-    I0 = lufs(mix)
-    ceil, look = db(I0 + PLR), int(.002 * SR)
-    pk = maximum_filter1d(np.abs(mix).max(1), size=2 * look + 1)
-    gain = np.minimum(1.0, ceil / np.maximum(pk, 1e-9))
-    rel, cur, g2 = np.exp(-1 / (.08 * SR)), 1.0, np.empty_like(gain)
-    for i in range(len(gain)):
-        cur = gain[i] if gain[i] < cur else gain[i] + (cur - gain[i]) * rel
-        g2[i] = cur
-    mix = mix * g2[:, None]
-    print(f"loudness {I0:.1f} LUFS; peaks held to +{PLR} dB over it; max gain reduction {20 * np.log10(g2.min()):.1f} dB at {np.argmin(g2) / SR:.2f} s")
+    from scipy import signal as _sig
+    look = int(.002 * SR)
+    up = _sig.resample_poly(mix, 4, 1, axis=0)                                   # true peak: 4x oversampled
+    tp = np.abs(up).max(1)[:len(mix) * 4].reshape(-1, 4).max(1)
+    pk = maximum_filter1d(np.maximum(tp, np.abs(mix).max(1)), size=2 * look + 1)
+    src, I0 = mix, lufs(mix)
+    for it in range(4):                                                         # the ceiling follows the loudness AFTER limiting
+        gain = np.minimum(1.0, db(I0 + PLR) / np.maximum(pk, 1e-9))
+        rel, cur, g2 = np.exp(-1 / (.08 * SR)), 1.0, np.empty_like(gain)
+        for i in range(len(gain)):                                              # instant attack, 80 ms release
+            cur = gain[i] if gain[i] < cur else gain[i] + (cur - gain[i]) * rel
+            g2[i] = cur
+        mix = src * g2[:, None]
+        I1 = lufs(mix)
+        if abs(I1 - I0) < .05: break
+        I0 = I1
+    print(f"loudness {I1:.1f} LUFS; true peaks held to +{PLR} dB over it; max gain reduction {20 * np.log10(g2.min()):.1f} dB at {np.argmin(g2) / SR:.2f} s")
 mix *= .89 / np.abs(mix).max()
 sf.write(os.path.join(HERE, "out", "mix.wav"), mix, SR, subtype="PCM_24")
 for name, x in [("voice", vox), ("music", mus), ("foley", fol), ("ambience", amb)]:

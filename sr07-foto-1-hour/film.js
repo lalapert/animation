@@ -232,7 +232,7 @@ function emitters(g, cam, L, t, o = {}) {
   if (o.gapGlow) {
     const a = project(cam, [2.4, 1.15, -.02]), b = project(cam, [-2.4, 1.15, -.02]), c = project(cam, [2.4, 0, -.02]);
     onQuad(g, a, b, c, 100, 100, q => {                                                    // brightest low in the middle, darker at the sides
-      const gr = q.createRadialGradient(50, 100, 4, 50, 100, 70); gr.addColorStop(0, `rgba(190,205,225,${.42 * o.gapGlow})`); gr.addColorStop(.6, `rgba(170,185,210,${.18 * o.gapGlow})`); gr.addColorStop(1, 'rgba(150,165,190,0)');
+      const gr = q.createRadialGradient(50, 100, 4, 50, 100, 70); gr.addColorStop(0, `rgba(190,205,225,${.6 * o.gapGlow})`); gr.addColorStop(.6, `rgba(170,185,210,${.26 * o.gapGlow})`); gr.addColorStop(1, 'rgba(150,165,190,0)');
       q.globalCompositeOperation = 'lighter'; q.fillStyle = gr; q.fillRect(0, 0, 100, 100); });
   }
   if (o.cctvLed) {
@@ -621,20 +621,25 @@ function buildFlash() {
   sg.lineTo(716, 520); sg.bezierCurveTo(770, 530, 812, 536, 830, 548); sg.bezierCurveTo(880, 580, 900, 700, 900, 900); sg.closePath(); sg.fill();
   sg.fillRect(728, 330, 96, 70);                                                                                                // the camcorder at his eye
   sg.beginPath(); sg.moveTo(790, 386); sg.lineTo(824, 392); sg.lineTo(914, 462); sg.lineTo(906, 498); sg.bezierCurveTo(870, 524, 846, 540, 830, 552); sg.lineTo(790, 530); sg.closePath(); sg.fill();   // his raised arm
-  // its shadow (drawn, not the kit figure: as a shadow the kit's figure reads too thin): a body heavier and taller than his,
-  // uneven shoulders, the head lying over on its side toward his, one arm hanging past its knees, the other across his shoulder
-  const fillE = (x, y, rx, ry, r) => { sg.beginPath(); sg.ellipse(x, y, rx, ry, r, 0, 6.2832); sg.fill(); };
-  sg.beginPath(); sg.moveTo(330, 316); sg.bezierCurveTo(334, 276, 344, 244, 368, 214); sg.lineTo(398, 226); sg.bezierCurveTo(380, 252, 372, 284, 374, 312); sg.closePath(); sg.fill();   // neck, bending right
-  fillE(376, 214, 46, 36, .3); fillE(444, 228, 66, 54, .38);                                                                  // jaw and skull: the head on its side
-  sg.beginPath(); sg.moveTo(180, 356); sg.bezierCurveTo(226, 322, 300, 314, 340, 308); sg.bezierCurveTo(392, 300, 434, 298, 458, 318);     // uneven shoulders
-  sg.bezierCurveTo(478, 364, 452, 470, 436, 560); sg.bezierCurveTo(424, 660, 404, 760, 408, 900); sg.lineTo(150, 900); sg.bezierCurveTo(166, 700, 158, 470, 180, 356); sg.closePath(); sg.fill();
-  sg.beginPath(); sg.moveTo(188, 356); sg.bezierCurveTo(142, 470, 124, 600, 118, 770); sg.lineTo(146, 772); sg.bezierCurveTo(160, 620, 186, 480, 232, 384); sg.closePath(); sg.fill();   // the long arm, hanging
-  for (let f = 0; f < 4; f++) { sg.beginPath(); sg.moveTo(118 + f * 7, 760); sg.quadraticCurveTo(110 + f * 9, 800, 114 + f * 12, 842); sg.lineTo(123 + f * 12, 842); sg.quadraticCurveTo(119 + f * 9, 800, 127 + f * 7, 760); sg.fill(); }
-  sg.beginPath(); sg.moveTo(436, 322); sg.bezierCurveTo(506, 338, 552, 388, 568, 450); sg.lineTo(592, 472); sg.lineTo(576, 486);           // the other arm, across to his shoulder
-  sg.bezierCurveTo(540, 426, 500, 380, 444, 366); sg.closePath(); sg.fill();
-  fillE(590, 482, 32, 22, .6);                                                                                                // its hand on his shoulder
-  for (let f = 0; f < 4; f++) { sg.beginPath(); sg.moveTo(580 + f * 9, 490); sg.quadraticCurveTo(596 + f * 11, 514, 604 + f * 12, 556); sg.lineTo(614 + f * 12, 554); sg.quadraticCurveTo(606 + f * 11, 512, 592 + f * 9, 486); sg.fill(); }
-  g.save(); g.filter = 'blur(3px)'; g.drawImage(sc, 0, 0); g.restore();
+  g.save(); g.filter = 'blur(2px)'; g.drawImage(sc, 0, 0); g.restore();                                                     // his: crisp
+  // its shadow, on its own layer so its edges can be soft like the figure (BROKEN's blurred edges): heavier and taller than
+  // his, the shoulders uneven, the waist too narrow, the skull lying over on its side toward his head, one arm hanging past
+  // where its knee would be, the other bending up the wrong way at the elbow and coming down onto his shoulder
+  const ic = mk(W, H), ig = ic.getContext('2d'); ig.fillStyle = '#000';
+  const fillE = (x, y, rx, ry, r) => { ig.beginPath(); ig.ellipse(x, y, rx, ry, r, 0, 6.2832); ig.fill(); };
+  ig.beginPath(); ig.moveTo(170, 380); ig.bezierCurveTo(205, 334, 290, 322, 330, 316); ig.lineTo(380, 308); ig.bezierCurveTo(420, 300, 452, 302, 464, 324);
+  ig.bezierCurveTo(478, 382, 440, 470, 410, 560); ig.bezierCurveTo(394, 640, 410, 760, 420, 900); ig.lineTo(185, 900);
+  ig.bezierCurveTo(205, 760, 216, 640, 206, 560); ig.bezierCurveTo(196, 480, 158, 432, 170, 380); ig.closePath(); ig.fill();
+  ig.beginPath(); ig.moveTo(334, 318); ig.bezierCurveTo(336, 280, 352, 248, 380, 226); ig.lineTo(410, 240); ig.bezierCurveTo(388, 262, 378, 290, 380, 314); ig.closePath(); ig.fill();   // neck
+  fillE(398, 236, 50, 40, .2); fillE(462, 232, 78, 58, .45);                                                                  // jaw and skull, on its side
+  ig.beginPath(); ig.moveTo(178, 372); ig.bezierCurveTo(132, 480, 116, 620, 108, 780); ig.lineTo(140, 784); ig.bezierCurveTo(150, 640, 176, 500, 226, 400); ig.closePath(); ig.fill();   // the long arm
+  for (let f = 0; f < 4; f++) { ig.beginPath(); ig.moveTo(108 + f * 8, 772); ig.quadraticCurveTo(100 + f * 10, 812, 104 + f * 13, 856); ig.lineTo(115 + f * 13, 856); ig.quadraticCurveTo(110 + f * 10, 812, 119 + f * 8, 772); ig.fill(); }
+  ig.beginPath(); ig.moveTo(440, 318); ig.lineTo(512, 300); ig.lineTo(530, 330); ig.lineTo(462, 356); ig.closePath(); ig.fill();                      // upper arm, up
+  ig.beginPath(); ig.moveTo(506, 304); ig.lineTo(536, 326); ig.bezierCurveTo(566, 380, 590, 430, 598, 470); ig.lineTo(570, 478); ig.bezierCurveTo(560, 430, 530, 372, 506, 304); ig.closePath(); ig.fill();   // forearm, down
+  fillE(590, 484, 34, 24, .6);
+  for (let f = 0; f < 4; f++) { ig.beginPath(); ig.moveTo(578 + f * 10, 492); ig.quadraticCurveTo(596 + f * 12, 518, 604 + f * 13, 566); ig.lineTo(616 + f * 13, 564); ig.quadraticCurveTo(608 + f * 12, 516, 592 + f * 10, 488); ig.fill(); }
+  g.save(); g.filter = 'blur(16px)'; g.globalAlpha = .55; g.drawImage(ic, 0, 0); g.filter = 'blur(5px)'; g.globalAlpha = 1; g.drawImage(ic, 0, 0); g.restore();
+
   FLASHIMG = c;
 }
 function shotDark(g, fg, t) {
