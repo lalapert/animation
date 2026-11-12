@@ -1,0 +1,143 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Last Mile: Max Hale design v1</title>
+<style>html, body { margin: 0; background: #120a2a; } canvas { display: block; }</style>
+</head>
+<body>
+<canvas id="c" width="1440" height="3020"></canvas>
+<script src="toon.js"></script>
+<script src="lastmile.js"></script>
+<script>
+'use strict';
+// Owner 11/12: Last Mile approved (title, Max, 1 LAST LANE, Nan ending). Max's sheet first.
+const W = 1440, H = 3020, c = document.getElementById('c').getContext('2d');
+const M = LASTMILE.max;
+function panel(x, y, w, h, fill) {
+  c.save(); c.beginPath(); c.roundRect(x, y, w, h, 28); c.fillStyle = fill || '#1f1145'; c.fill();
+  c.lineWidth = 4; c.strokeStyle = '#3a2470'; c.stroke(); c.restore();
+}
+function label(s, x, y, size, color, align, weight) { tText(c, s, x, y, size, color || TOON.white, '"Fredoka"', align, weight); }
+function tile(cx, cy, w, h, fn, name, sub) {
+  c.save(); c.beginPath(); c.roundRect(cx - w / 2, cy - h / 2, w, h, 22); c.fillStyle = '#2b1858'; c.fill(); c.clip();
+  fn(); c.restore();
+  label(name, cx, cy + h / 2 + 30, 28, '#d9ccff');
+  if (sub) label(sub, cx, cy + h / 2 + 62, 21, '#a593e0');
+}
+function etaChip(x, y, value, late) {
+  tShape(c, '#eef0f7', g => g.roundRect(x, y, 250, 70, 14), 4);
+  tShape(c, '#20183a', g => g.roundRect(x + 10, y + 10, 64, 50, 9), 3);
+  c.fillStyle = '#ff2a3a'; c.beginPath(); c.arc(x + 42, y + 35, 9, 0, 6.2832); c.fill();
+  label('TIME LEFT', x + 162, y + 22, 17, '#5c577f');
+  tText(c, value, x + 162, y + 48, 30, late ? '#e0213a' : '#20183a', '"Bungee"');
+}
+
+toonFonts().then(() => {
+  const bg = c.createLinearGradient(0, 0, 0, H); bg.addColorStop(0, '#1b0f3d'); bg.addColorStop(1, '#0e0822');
+  c.fillStyle = bg; c.fillRect(0, 0, W, H); drawStars(c, W, H, 300, 21);
+  drawLogo(c, W / 2, 105, 84, { text: 'LAST MILE' });
+  label('MAX HALE  ·  CHARACTER DESIGN  ·  v1', W / 2, 200, 34, '#b9a6ff');
+
+  // ---- 1. hero: a doorstep on a strange planet ----
+  const HY = 240, HH = 900;
+  panel(60, HY, 1320, HH);
+  c.save(); c.beginPath(); c.roundRect(60, HY, 1320, HH, 28); c.clip();
+  const sky = c.createLinearGradient(0, HY, 0, HY + HH); sky.addColorStop(0, '#2a1a6e'); sky.addColorStop(.55, '#7b3fa0'); sky.addColorStop(1, '#ff8a5c');
+  c.fillStyle = sky; c.fillRect(60, HY, 1320, HH); drawStars(c, 1320, 420, 110, 5, 60, HY);
+  // ringed planet + small moon
+  c.save(); c.translate(1150, HY + 230);
+  c.save(); c.rotate(-.35); c.beginPath(); c.ellipse(0, 0, 230, 46, 0, Math.PI, 2 * Math.PI); c.lineWidth = 16; c.strokeStyle = 'rgba(255,214,150,.55)'; c.stroke(); c.restore();
+  const pg = c.createRadialGradient(-40, -40, 10, 0, 0, 140); pg.addColorStop(0, '#ffd2a0'); pg.addColorStop(1, '#e0628a');
+  c.fillStyle = pg; c.beginPath(); c.arc(0, 0, 130, 0, 6.2832); c.fill();
+  c.save(); c.rotate(-.35); c.beginPath(); c.ellipse(0, 0, 230, 46, 0, 0, Math.PI); c.lineWidth = 16; c.strokeStyle = 'rgba(255,214,150,.7)'; c.stroke(); c.restore();
+  c.restore();
+  c.fillStyle = '#c9b8ff'; c.beginPath(); c.arc(250, HY + 140, 34, 0, 6.2832); c.fill();
+  // the house front, right side: wall, round door, porch light, number
+  tShape(c, '#4a2f86', g => g.rect(820, HY + 380, 620, HH), 5);
+  for (let yy = HY + 420; yy < HY + HH; yy += 46) { c.fillStyle = 'rgba(0,0,0,.12)'; c.fillRect(820, yy, 620, 6); }
+  const lg = c.createRadialGradient(1260, HY + 470, 4, 1260, HY + 470, 230); lg.addColorStop(0, 'rgba(255,214,120,.75)'); lg.addColorStop(1, 'rgba(255,214,120,0)');
+  c.fillStyle = lg; c.fillRect(1000, HY + 240, 440, 500);
+  tShape(c, '#ffe6a3', g => g.roundRect(1244, HY + 452, 32, 40, 8), 4);
+  tShape(c, '#2a1a52', g => g.roundRect(950, HY + 470, 250, 460, [125, 125, 0, 0]), 6);
+  tShape(c, '#29d3c3', g => g.roundRect(966, HY + 486, 218, 444, [109, 109, 0, 0]), 5);
+  tShape(c, '#bff6ee', g => g.arc(1075, HY + 590, 46, 0, 6.2832), 5);
+  c.save(); c.beginPath(); c.arc(1075, HY + 590, 46, 0, 6.2832); c.clip(); c.fillStyle = '#7fd9cf'; c.fillRect(1029, HY + 600, 92, 40); c.restore();
+  tShape(c, '#ffd23f', g => g.arc(1160, HY + 720, 10, 0, 6.2832), 4);
+  tShape(c, '#fbf7ff', g => g.roundRect(1240, HY + 540, 80, 50, 8), 4); tText(c, '7B', 1280, HY + 566, 30, TOON.ink, '"Bungee"');
+  // floor line of the porch
+  c.fillStyle = '#2a1858'; c.fillRect(60, HY + 860, 1320, 40);
+  // Max at the door with a parcel
+  drawMax(c, 470, HY + HH, 205, { expr: 'cold', pose: 'box', timer: '0:47' });
+  etaChip(100, HY + 40, '0:47');
+  c.restore();
+  label('MAX HALE', 1000, HY + 64, 62, TOON.white, 'center');
+  label('courier · #1 on the route · 26', 1000, HY + 114, 30, '#ffe2ae', 'center');
+  label('"Four minutes a door."', 1000, HY + 160, 28, '#d9ccff', 'center');
+
+  // ---- 2. expressions ----
+  const EY = 1170;
+  panel(60, EY, 1320, 440);
+  label('MAX  —  looks cold, then stops and listens. Voice: new (low, short)', 100, EY + 42, 30, '#ffb066', 'left');
+  [['cold', 'cold', 'default'], ['glance', 'checks the timer', null], ['listen', 'listening', 'head tilts'], ['smile', 'small smile', 'rare'], ['late', 'late!', 'timer in the red'], ['annoyed', 'annoyed', 'Chase again']]
+    .forEach(([e, n, sub], i) => { const cx = 170 + i * 220; tile(cx, EY + 210, 200, 250, () => drawMax(c, cx, EY + 210 + 232 * 1.45, 145, { expr: e, arms: false, pose: 'none' }), n, sub); });
+
+  // ---- 3. turns and movement ----
+  const TY = 1640;
+  panel(60, TY, 1320, 470);
+  label('TURNS AND MOVEMENT  —  the ponytail swings on every move', 100, TY + 42, 30, '#ffb066', 'left');
+  const turns = [
+    ['front', o => drawMax(c, 210, TY + 430, 112, { expr: 'cold', pose: 'none', pony: .5 })],
+    ['3/4 left', o => drawMax(c, 520, TY + 430, 112, { expr: 'cold', pose: 'none', turn: -.7 })],
+    ['3/4 right', o => drawMax(c, 830, TY + 430, 112, { expr: 'cold', pose: 'none', turn: .7 })],
+    ['running', o => drawMax(c, 1170, TY + 430, 112, { expr: 'cold', turn: .7, lean: .1, pony: -1.45, wave: 1, pose: 'run' })],
+  ];
+  turns.forEach(([n, fn], i) => { c.save(); c.beginPath(); c.rect(70, TY + 70, 1300, 360); c.clip(); fn(); c.restore(); label(n, [210, 520, 830, 1170][i], TY + 446, 26, '#d9ccff'); });
+  // speed lines behind the runner
+  c.save(); c.globalAlpha = .55; for (let k = 0; k < 5; k++) tCurve(c, 1020 - k * 6, TY + 170 + k * 44, 990 - k * 6, TY + 172 + k * 44, 960 - k * 10, TY + 170 + k * 44, 3, '#b9a6ff'); c.restore();
+
+  // ---- 4a. headwear options ----
+  const OY = 2140;
+  panel(60, OY, 760, 470);
+  label('HEADWEAR  —  pick one', 100, OY + 42, 30, '#ffb066', 'left');
+  [['cap', 'A  cap (plan)', 'ponytail out the back'], ['none', 'B  no cap', 'high ponytail'], ['visor', 'C  visor', 'high ponytail']]
+    .forEach(([h, n, sub], i) => { const cx = 200 + i * 240; tile(cx, OY + 220, 210, 270, () => drawMax(c, cx, OY + 220 + 232 * 1.5, 150, { expr: 'cold', hat: h, pose: 'none' }), n, sub); });
+  // ---- 4b. lineup with the store cast ----
+  panel(850, OY, 530, 470);
+  label('NEXT TO THE STORE CAST', 880, OY + 42, 30, '#ffb066', 'left');
+  c.save(); c.beginPath(); c.roundRect(850, OY, 530, 470, 28); c.clip();
+  const LY = OY + 390;
+  drawPip2(c, 960, LY, 92, { arms: false });
+  drawRae2(c, 1110, LY, 92, { arms: false });
+  drawMax(c, 1270, LY, 92, { pose: 'none' });
+  tShape(c, TOON.orange, g => g.rect(850, LY, 530, 16), 4);
+  c.fillStyle = '#3a2470'; c.fillRect(850, LY + 18, 530, 80);
+  c.restore();
+  label('PIP', 960, OY + 440, 24, '#d9ccff'); label('RAE', 1110, OY + 440, 24, '#d9ccff'); label('MAX', 1270, OY + 440, 24, '#d9ccff');
+
+  // ---- 5. props, palette, notes ----
+  const PY = 2640;
+  panel(60, PY, 1320, 350);
+  label('KIT', 100, PY + 42, 30, '#ffb066', 'left');
+  const kit = [
+    [140, () => lmWrist(c, 140, PY + 120, 0, '0:47', false, 3.2), 'wrist timer'],
+    [290, () => lmWrist(c, 290, PY + 120, 0, '-1:12', true, 3.2), 'late'],
+    [430, () => { c.save(); c.translate(430, PY + 112); c.scale(3, 3); lmHand(c, 0, 0, 10, M, 1); c.restore(); }, 'gloves'],
+    [560, () => { c.save(); c.translate(560, PY + 112); c.scale(3.2, 3.2); tShape(c, '#2a2238', g => g.roundRect(-6, -10, 12, 19, 5), 2); c.fillStyle = TOON.orange; c.beginPath(); c.arc(0, -4, 2, 0, 6.2832); c.fill(); tCurve(c, -1, 8, -2, 18, -13, 22, 2, '#2a2238'); c.restore(); }, 'earpiece'],
+    [700, () => lmScanner(c, 700, PY + 110, 2.6), 'scanner'],
+    [860, () => lmParcel(c, 860, PY + 118, 120, 90, { fragile: true }), 'parcel'],
+  ];
+  kit.forEach(([x, fn, n]) => { fn(); label(n, x, PY + 186, 22, '#d9ccff'); });
+  // palette
+  label('PALETTE', 980, PY + 42, 30, '#ffb066', 'left');
+  [M.hair, M.skin, M.iris, M.jacket, M.yoke, M.strip].forEach((col, j) => tShape(c, col, g => g.arc(1004 + (j % 3) * 62, PY + 100 + Math.floor(j / 3) * 64, 22, 0, 6.2832), 3.5));
+  [
+    'Orange jacket = Void Mart staff (the store-vest rule). Dark yoke, reflective strip, zip: a courier, not a clerk.',
+    'Narrow, upturned eyes and straight low brows read cold. When she listens, the lids lift and the head tilts.',
+    'Kept apart from famous blonde-ponytail heroines: cap, courier jacket, no armour, no bodysuit, no blue.',
+  ].forEach((t, i) => label(t, 100, PY + 240 + i * 36, 22, '#d9ccff', 'left'));
+  window.READY = true;
+});
+</script>
+</body>
+</html>
