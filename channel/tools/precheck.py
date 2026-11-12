@@ -17,7 +17,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 SCR = os.environ.get("PRECHECK_OUT") or tempfile.gettempdir()
 PLAN = {"vm": ("channel/SEASON1.md", "Void Mart"), "vl": ("channel/LAB_SERIES.md", "Volt Labs"), "sr": ("channel/HORROR_SERIES.md", "STILL RECORDING")}
 BRAND = {"vm": "7923229", "vl": "7923229", "sr": "7927149"}
-NETS = {"vm": {"instagram", "youtube", "tiktok"}, "vl": {"instagram", "youtube", "tiktok"}, "sr": {"youtube", "tiktok"}}
+NETS = {"vm": {"instagram", "youtube", "tiktok"}, "vl": {"instagram", "youtube", "tiktok"}, "sr": {"instagram", "youtube", "tiktok"}}
 HANGUL = re.compile("[ᄀ-ᇿ㄰-㆏ꥠ-꥿가-힯ힰ-퟿]")
 out, bad = [], 0
 

@@ -118,3 +118,11 @@
 - YouTube covers: i.ytimg.com serves our covers for VL1, VM2, VL2, VM3 (drawn), VL3 (VM1 had none): the custom thumbnails are set; the Shorts shelf shows a frame instead.
 - Metricool shows the 11/8 23:00 TikTok catch-up of VL1 as ERROR (TikTok internal error): to check on the profile.
 - Lemo-Opuscar rubber-hose STYLE.md and DEMO.md read (text only); the yt skills repo (Jakeschincariol/youtube-agent-skill) audited (stdlib only, no network) but installing it was blocked by the session's permission check: waiting for the owner.
+
+## 11/12 KST: schedule change (owner: "이틀에 한 번 업로드 하고, 시간은 너가 추천하는 대로")
+
+- Horror every two days at 12:00 KST from 11/13, on YouTube + Instagram + TikTok; 65 tapes (8 new December tapes, 15–21 and 25), Midnight is tape 27 on 12/31, season ends 3/17. Tapes 3–5 moved and Instagram added: 425187308 (11/13), 425187371 (11/15), 425187422 (11/17); tapes 3–4 captions rewritten with a question first.
+- Toons at 10:00 KST (Metricool best hour): VM4 425187495 (11/13), VL4 425187558 (11/14), VM5 425187607 (11/15), VL5 425187668 (11/16), VM6 425187718 (11/17), VL6 425187784 (11/18), VM7 425187859 (11/19).
+- Until 5 horror tapes are banked, runs make horror first (tape 6 First Night, 11/19, needs the camcorder walk kit and Leon's voice).
+- YouTube skills installed (.claude/skills/yt-*), owner's permission.
+- YouTube Shorts frame fix (cover as the last frames): owner said no.
