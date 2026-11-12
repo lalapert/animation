@@ -7,12 +7,13 @@
 const OUT = document.getElementById('c').getContext('2d');
 const mk = (w, h) => { const c = document.createElement('canvas'); c.width = w; c.height = h; return c; };
 const RAW = mk(TK.TW, TK.TH), WIN = mk(TK.TW, TK.TH);
+const MODES = ['dark', 'run', 'close'];
 const V = [['stoop', 'STOOP', 'too tall: the neck folds under the ceiling'], ['hanger', 'HANGER', 'a coat on a hanger; the hook is the head']];
 function haze(g, k) { g.save(); g.globalCompositeOperation = 'lighter'; const gr = g.createRadialGradient(TK.TW / 2, TK.TH * .45, 50, TK.TW / 2, TK.TH * .45, TK.TW * .8); gr.addColorStop(0, `rgba(200,200,200,${k})`); gr.addColorStop(1, `rgba(120,120,120,${k * .5})`); g.fillStyle = gr; g.fillRect(0, 0, TK.TW, TK.TH); g.restore(); }
 function card(g, x0, y0, W, H, v, lab, note) {
   g.save(); g.translate(x0, y0); g.beginPath(); g.rect(0, 0, W, H); g.clip();
   const bg = g.createRadialGradient(W / 2, H * .55, 20, W / 2, H * .55, W * .8); bg.addColorStop(0, '#f2f2f2'); bg.addColorStop(1, '#8a8a8a'); g.fillStyle = bg; g.fillRect(0, 0, W, H);
-  const u = (H - 100) / 2.8; g.save(); g.translate(W / 2 - (v === 'peek' ? -60 : 0), H - 14); g.scale(u, u); TK.ghost._draw(g, v, { u }); g.restore();
+  const u = (H - 100) / 2.8; g.save(); g.translate(W / 2, H - 14); g.scale(u, u); TK.ghost._draw(g, v, { u }); g.restore();
   g.fillStyle = 'rgba(0,0,0,.7)'; g.fillRect(0, 0, W, 76); g.fillStyle = '#efe9da'; g.font = '34px "Special Elite"'; g.fillText(lab, 16, 36); g.font = '25px "VT323"'; g.fillStyle = 'rgba(239,233,218,.85)'; g.fillText(note, 16, 64);
   g.restore();
 }
@@ -23,10 +24,10 @@ const FIT = (() => { const S = new TK.Scene(); const H = 2.8, wall = [150, 146, 
   for (let z = 2; z < 12; z += 3) S.quad([[-.4, H - .02, z], [.4, H - .02, z], [.4, H - .02, z + .5], [-.4, H - .02, z + .5]], [150, 150, 140], { emit: .5, light: true });
   return S; })();
 function tape(v, mode) {
-  const rg = RAW.getContext('2d'), bright = mode === 'bright', close = mode === 'close';
+  const rg = RAW.getContext('2d'), bright = false, close = mode === 'close', run = mode === 'run';
   const cam = close ? { x: .1, y: 1.6, z: 3.0, yaw: 0, pitch: .2, fov: 64 } : { x: 1.1, y: 2.5, z: 2.5, yaw: -.1, pitch: -.12, fov: 64 };
-  const pos = close ? [0, 4.6] : [-.2, 9.0];
-  TK.render(rg, FIT, cam, { ambient: bright ? 2.0 : .8, fog: bright ? .02 : .07, sprites: [{ x: pos[0], z: pos[1], draw: (g, c) => TK.ghost(g, c, v, pos[0], pos[1], { armR: close ? .5 : 0 }) }] });
+  const pos = close ? [0, 4.4] : run ? [0, 5.6] : [-.2, 9.0];
+  TK.render(rg, FIT, cam, { ambient: bright ? 2.0 : .8, fog: bright ? .02 : .07, sprites: [{ x: pos[0], z: pos[1], draw: (g, c) => TK.ghost(g, c, v, pos[0], pos[1], { armR: close ? .5 : 0, charge: run ? 1 : 0 }) }] });
   if (bright) haze(rg, .22);
   const wg = WIN.getContext('2d'); TK.grade(wg, RAW, 1, 'cctv'); TK.vhs(wg, 1, 1, 3); TK.osd(wg, 'cctv', 1, { cam: 'CAM 09', place: 'SERVICE HALL', stamp: '12-01-1999  01:43:12' });
   return WIN;
@@ -36,11 +37,11 @@ function tape(v, mode) {
   const PW = 560, PH = 420, G = 20;
   OUT.fillStyle = '#0b0b0d'; OUT.fillRect(0, 0, 2400, 1060);
   OUT.font = '40px "Special Elite"'; OUT.fillStyle = '#efe9da'; OUT.fillText('SOFT SILHOUETTES (OUR OWN DESIGNS)', G, 52);
-  OUT.font = '28px "VT323"'; OUT.fillStyle = 'rgba(239,233,218,.7)'; ['DESIGN', 'CCTV, DARK MALL', 'CCTV, BRIGHT FOG', 'CLOSE'].forEach((s, i) => OUT.fillText(s, G + i * (PW + G), 96));
+  OUT.font = '28px "VT323"'; OUT.fillStyle = 'rgba(239,233,218,.7)'; ['DESIGN', 'CCTV, BACKLIT', 'RUNNING AT YOU', 'CLOSE'].forEach((s, i) => OUT.fillText(s, G + i * (PW + G), 96));
   V.forEach(([v, lab, note], r) => {
     const y = 112 + r * (PH + G);
     card(OUT, G, y, PW, PH, v, lab, note);
-    ['dark', 'bright', 'close'].forEach((m, i) => OUT.drawImage(tape(v, m), G + (i + 1) * (PW + G), y, PW, PH));
+    MODES.forEach((m, i) => OUT.drawImage(tape(v, m), G + (i + 1) * (PW + G), y, PW, PH));
   });
   window.READY = true;
 })();

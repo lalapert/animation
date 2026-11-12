@@ -365,8 +365,8 @@ const TK = {};
     // ---- soft silhouettes (owner 11/12, after showing a reference from a horror game: "shapes are not scary at all").
     // Our own designs, not a copy of any game's monster: a soft-edged pure black body that melts into the dark, one
     // impossible proportion, two tiny white points for eyes, nothing else. o.u = px per metre (set by TK.ghost).
-    stoop: { h: 2.75, draw(g, o) { silhouette(g, 'stoop', o); } },
-    hanger: { h: 2.45, draw(g, o) { silhouette(g, 'hanger', o); } },
+    stoop: { h: 2.7, draw(g, o) { silhouette(g, 'stoop', o); } },
+    hanger: { h: 2.6, draw(g, o) { silhouette(g, 'hanger', o); } },
     peek: { h: 2.6, draw(g, o) { silhouette(g, 'peek', o); } },
     // E, The Dropout: only on tape. A person-shaped hole where the picture is damaged (rows from elsewhere, dropout lines).
     // Seen only in playback of a recording, never live; it moves when the tape skips
@@ -452,10 +452,17 @@ const TK = {};
     }
   }
   // ---------------------------------------------------------------- soft silhouette drawing (metres, feet at 0, up is -y)
+  // all parts are filled sharp into one offscreen mask (one union, no seams), then the mask is drawn blurred: a haze, then the body
+  const SOFT = {};
   function softFill(g, o, path, haze = 1) {
-    const u = o.u || 300, a = o.alpha ?? 1;
-    g.save(); g.filter = `blur(${Math.max(3, u * .09).toFixed(1)}px)`; g.fillStyle = `rgba(0,0,0,${.55 * haze * a})`; g.beginPath(); path(g); g.fill(); g.restore();   // the dark haze around it
-    g.save(); g.filter = `blur(${Math.max(1, u * .014).toFixed(1)}px)`; g.fillStyle = `rgba(5,5,6,${a})`; g.beginPath(); path(g); g.fill(); g.restore();          // the body, edges soft
+    const u = o.u || 300, a = o.alpha ?? 1, parts = Array.isArray(path) ? path : [path], W = g.canvas.width, H = g.canvas.height;
+    const key = W + 'x' + H, oc = SOFT[key] || (SOFT[key] = document.createElement('canvas')); oc.width = W; oc.height = H;
+    const m = oc.getContext('2d'); m.setTransform(g.getTransform()); m.fillStyle = 'rgb(5,5,6)';
+    for (const p of parts) { m.beginPath(); p(m); m.fill(); }
+    g.save(); g.setTransform(1, 0, 0, 1, 0, 0);
+    g.filter = `blur(${Math.max(3, u * .09).toFixed(1)}px)`; g.globalAlpha = .55 * haze * a * (g.globalAlpha ?? 1); g.drawImage(oc, 0, 0);
+    g.filter = `blur(${Math.max(1, u * .012).toFixed(1)}px)`; g.globalAlpha = a; g.drawImage(oc, 0, 0);
+    g.restore();
   }
   function eyes(g, o, x, y, gap, r) {
     const u = o.u || 300, a = o.alpha ?? 1;
@@ -476,32 +483,53 @@ const TK = {};
   }
   function silhouette(g, kind, o) {
     const reach = o.armR || 0, tilt = o.tilt ?? 0;
+    const ch = o.charge || 0;                                                     // 0 standing, 1 running at the camera
     if (kind === 'stoop') {
-      // too tall for the corridor: broad, heavy shoulders, the neck folds under the ceiling and the small head hangs sideways;
-      // arms longer than the legs, hands at the floor, thread-thin fingers
-      const body = gg => {
-        limbPath(gg, [-.11, -1.3], [-.15, -.65], [-.12, 0], .075, .04); gg.moveTo(0, 0); limbPath(gg, [.11, -1.3], [.16, -.65], [.13, 0], .075, .04);
-        gg.moveTo(0, 0); gg.moveTo(-.16, -1.25); gg.bezierCurveTo(-.2, -1.6, -.36, -1.95, -.34, -2.2); gg.bezierCurveTo(-.2, -2.36, .2, -2.36, .34, -2.2);
-        gg.bezierCurveTo(.36, -1.95, .2, -1.6, .16, -1.25); gg.closePath();                                                              // a heavy chest, sloping shoulders
-        gg.moveTo(0, 0); limbPath(gg, [0, -2.28], [.06, -2.62], [.26 + tilt * .1, -2.64], .06, .045);                                       // the neck, folded under the ceiling
-        gg.moveTo(0, 0); gg.ellipse(.36 + tilt * .1, -2.6, .12, .09, .35, 0, 6.2832);                                                       // the head, sideways
-        for (const s of [-1, 1]) { const ra = s > 0 ? reach : 0, hx = s * (.36 + ra * 1.1), hy = -.08 - ra * .95; gg.moveTo(0, 0);
-          limbPath(gg, [s * .3, -2.15], [s * (.44 + ra * .5), -1.2 - ra * .4], [hx, hy], .065, .03);
-          for (let f = -2; f <= 2; f++) { gg.moveTo(0, 0); limbPath(gg, [hx, hy], [hx + s * .02 + f * .02, hy + .1], [hx + f * .035, hy + .24], .01, .003); } }
-      };
-      softFill(g, o, body); eyes(g, o, .38 + tilt * .1, -2.6, .032, .012);
+      // big and heavy (owner 11/12: "too skinny, no strength"): a back like a wall, shoulders as wide as the corridor, the small
+      // head sunk low between them and pushed forward, arms thicker than legs with hands that hang at the knees; knees bent, ready
+      const lean = .12 + ch * .45, P = [];
+      // legs: thick, bent; in a stride when charging
+      for (const s of [-1, 1]) { const st = ch * s * .35;
+        P.push(gg => limbPath(gg, [s * .16, -1.15], [s * .24 + st * .5, -.62], [s * .17 + st, 0], .12, .075)); }
+      P.push(gg => { gg.save(); gg.translate(0, -1.15); gg.rotate(lean);
+        gg.moveTo(-.22, 0); gg.bezierCurveTo(-.3, -.35, -.62, -.62, -.6, -.95); gg.bezierCurveTo(-.58, -1.18, -.3, -1.3, 0, -1.28);   // back and left shoulder
+        gg.bezierCurveTo(.3, -1.3, .58, -1.18, .6, -.95); gg.bezierCurveTo(.62, -.62, .3, -.35, .22, 0); gg.closePath(); gg.restore(); });
+      P.push(gg => { gg.save(); gg.translate(0, -1.15); gg.rotate(lean); gg.ellipse(.04, -1.32, .13, .12, 0, 0, 6.2832); gg.restore(); });   // small head, sunk in
+      for (const s of [-1, 1]) {
+        const ra = s > 0 ? reach : 0, sw = ch * -s * .25;
+        P.push(gg => { gg.save(); gg.translate(0, -1.15); gg.rotate(lean);
+          const sx = s * .52, sy = -1.0, ex = s * (.66 + ra * .4) + sw * .3, ey = -.4 - ra * .45, hx = s * (.6 + ra * 1.0) + sw, hy = .25 - ra * 1.0 - ch * .2;
+          limbPath(gg, [sx, sy], [ex, ey], [hx, hy], .14, .09);
+          gg.moveTo(hx + .12, hy + .06); gg.ellipse(hx, hy + .06, .12, .14, 0, 0, 6.2832);                                                // big hands
+          for (let f = -2; f <= 2; f++) { gg.moveTo(hx, hy); limbPath(gg, [hx + f * .04, hy + .12], [hx + f * .05, hy + .26], [hx + f * .06, hy + .38], .02, .006); }
+          gg.restore(); });
+      }
+      softFill(g, o, P);
+      g.save(); g.translate(0, -1.15); g.rotate(lean); eyes(g, o, .07, -1.33, .04, .014); g.restore();
     } else if (kind === 'hanger') {
-      // a long dark coat hanging from a wire hanger: the hook is where a head should be; sleeves to the knees; ankles too thin
-      const body = gg => {
-        limbPath(gg, [-.06, -.35], [-.07, -.15], [-.06, 0], .018, .014); gg.moveTo(0, 0); limbPath(gg, [.06, -.35], [.07, -.15], [.06, 0], .018, .014);
-        gg.moveTo(0, 0); gg.moveTo(0, -2.05); gg.lineTo(.36, -1.86); gg.bezierCurveTo(.33, -1.4, .3, -.8, .34, -.32); gg.lineTo(.18, -.36); gg.lineTo(.05, -.28); gg.lineTo(-.1, -.34); gg.lineTo(-.34, -.3); gg.bezierCurveTo(-.3, -.8, -.33, -1.4, -.36, -1.86); gg.closePath();
-        for (const s of [-1, 1]) { const ra = s > 0 ? reach : 0; gg.moveTo(0, 0); limbPath(gg, [s * .33, -1.85], [s * (.42 + ra * .4), -1.3 - ra * .3], [s * (.38 + ra * 1.0), -.62 - ra * .8], .07, .045); }
-      };
-      softFill(g, o, body);
-      // the wire hook: a thin hard line, the only sharp thing on it
-      const u = o.u || 300; g.save(); g.filter = `blur(${Math.max(.5, u * .004).toFixed(1)}px)`; g.strokeStyle = `rgba(8,8,9,${o.alpha ?? 1})`; g.lineWidth = .022; g.lineCap = 'round';
-      g.beginPath(); g.moveTo(0, -2.05); g.lineTo(0, -2.22); g.bezierCurveTo(0, -2.38, .14, -2.4, .15, -2.3); g.bezierCurveTo(.16, -2.22, .08, -2.2, .07, -2.25); g.stroke(); g.restore();
-      eyes(g, o, 0, -1.93, .03, .01);                                                                                                    // inside the collar
+      // a huge, heavy overcoat on a wide wooden-and-wire hanger: square shoulders wider than a doorway, the coat flaring to the
+      // floor, thick sleeves with big hands; the hook where the head should be. Leans in; the coat swings when it runs
+      const lean = .08 + ch * .4, P = [];
+      P.push(gg => { gg.save(); gg.rotate(lean * .5); gg.translate(0, 0);
+        gg.moveTo(-.62, -1.95); gg.lineTo(.62, -1.95); gg.bezierCurveTo(.66, -1.5, .7, -.9, .78 + ch * .2, -.22);
+        gg.lineTo(.5, -.3); gg.lineTo(.3, -.16); gg.lineTo(.06, -.28); gg.lineTo(-.2, -.14); gg.lineTo(-.46, -.27); gg.lineTo(-.78 - ch * .1, -.2);
+        gg.bezierCurveTo(-.7, -.9, -.66, -1.5, -.62, -1.95); gg.closePath(); gg.restore(); });
+      P.push(gg => { gg.save(); gg.rotate(lean * .5); gg.moveTo(-.25, -1.95); gg.lineTo(0, -2.12); gg.lineTo(.25, -1.95); gg.closePath(); gg.restore(); });   // the high collar
+      for (const s of [-1, 1]) {
+        const ra = s > 0 ? reach : 0, sw = ch * -s * .3;
+        P.push(gg => { gg.save(); gg.rotate(lean * .5);
+          const sx = s * .6, sy = -1.9, ex = s * (.8 + ra * .4) + sw * .3, ey = -1.25 - ra * .3, hx = s * (.78 + ra * 1.0) + sw, hy = -.55 - ra * .8;
+          limbPath(gg, [sx, sy], [ex, ey], [hx, hy], .16, .12);
+          gg.moveTo(hx + .1, hy + .1); gg.ellipse(hx, hy + .1, .1, .13, 0, 0, 6.2832);
+          for (let f = -2; f <= 2; f++) { gg.moveTo(hx, hy); limbPath(gg, [hx + f * .035, hy + .18], [hx + f * .045, hy + .3], [hx + f * .05, hy + .42], .018, .005); }
+          gg.restore(); });
+      }
+      for (const s of [-1, 1]) P.push(gg => { gg.save(); gg.rotate(lean * .5); limbPath(gg, [s * .18, -.3], [s * .2 + ch * s * .2, -.15], [s * .19 + ch * s * .3, 0], .06, .05); gg.restore(); });
+      softFill(g, o, P);
+      const u = o.u || 300; g.save(); g.rotate(lean * .5); g.filter = `blur(${Math.max(.6, u * .004).toFixed(1)}px)`; g.strokeStyle = `rgba(8,8,9,${o.alpha ?? 1})`; g.lineWidth = .04; g.lineCap = 'round';
+      g.beginPath(); g.moveTo(0, -2.08); g.lineTo(0, -2.3); g.bezierCurveTo(0, -2.52, .2, -2.55, .21, -2.42); g.bezierCurveTo(.22, -2.32, .11, -2.29, .1, -2.35); g.stroke();
+      g.restore();
+      g.save(); g.rotate(lean * .5); eyes(g, o, 0, -1.98, .045, .014); g.restore();
     } else {
       // peek: leans out sideways from behind something at an angle a body cannot hold; only the upper body, the neck too long
       const lean = .95 + tilt * .2;
