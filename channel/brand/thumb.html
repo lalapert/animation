@@ -54,6 +54,13 @@ async function tape(spec, frame) {
   g.save(); g.textAlign = 'center'; g.textBaseline = 'middle'; g.font = '74px "SpecialElite"'; g.lineWidth = 10; g.strokeStyle = '#000'; g.lineJoin = 'round';
   spec.lines.forEach((ln, i) => { g.strokeText(ln, 540, 452 + i * 82); g.fillStyle = '#f2f2ea'; g.fillText(ln, 540, 452 + i * 82); });
   g.restore();
+  if (spec.mark) {                                            // evidence style (sample 11/12): a red circle round the anomaly and its timestamp
+    const [mx, my, r] = spec.mark, cx = dx + mx * k, cy = dy + (my - sy) * k;
+    g.save(); g.strokeStyle = '#ff2a2a'; g.lineCap = 'round';
+    for (const [w, a, o] of [[10, 1, 0], [5, .7, 6]]) { g.globalAlpha = a; g.lineWidth = w; g.beginPath(); g.ellipse(cx + o, cy - o / 2, r * 1.08, r * .9, -.18, .15, 6.1); g.stroke(); }
+    g.restore();
+    if (spec.stamp) { const sx = Math.min(1040 - 230, cx + r * .7), sy2 = cy - r * 1.25; g.save(); g.fillStyle = 'rgba(0,0,0,.78)'; g.fillRect(sx - 12, sy2 - 34, 252, 62); g.restore(); insText(g, spec.stamp, sx, sy2, 52, '#ff3b3b', '"VT323"'); }
+  }
   insText(g, 'STILL RECORDING', 540, 1680, 30, 'rgba(242,242,234,.6)', '"VT323"', 'center');
 }
 window.compose = async (spec, frame) => { await (spec.series === 'sr' ? tape(spec, frame) : toon(spec, frame)); window.OUT = document.getElementById('c').toDataURL('image/jpeg', .9); return true; };

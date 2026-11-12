@@ -1,0 +1,26 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Walk test</title><style>html,body{margin:0;background:#000}canvas{display:block}</style></head>
+<body><canvas id="c" width="1080" height="1920"></canvas>
+<script>window.TL = { DUR: 6, VO: [], SHOTS: [] }; window.CHARS = {};</script>
+<script src="toon.js"></script><script src="vmkit.js"></script><script src="legs.js"></script>
+<script>
+const g = document.getElementById('c').getContext('2d'), FLOOR = 1660;
+function bg() {
+  g.drawImage(STATIC.store, 0, 0);
+  const fl = g.createLinearGradient(0, CT, 0, 1920); fl.addColorStop(0, '#4a2c8a'); fl.addColorStop(1, '#2a1858'); g.fillStyle = fl; g.fillRect(0, CT, 1080, 640);
+  g.strokeStyle = 'rgba(255,255,255,.07)'; g.lineWidth = 3; for (let x = -400; x < 1500; x += 120) { g.beginPath(); g.moveTo(540 + (x - 540) * .55, CT); g.lineTo(x, 1920); g.stroke(); }
+  for (let y = CT + 40, k = 40; y < 1920; k *= 1.25, y += k) { g.beginPath(); g.moveTo(0, y); g.lineTo(1080, y); g.stroke(); }
+}
+function walker(kind, t, x0, dir, s, cycle, o) {
+  const L = LEGS[kind], A = 28, p = t / cycle, pose = walkPose(p, kind, A);
+  const x = x0 + dir * (4 * A / cycle) * t * s / 100, waist = FLOOR - (L.len + 8) * s / 100;
+  g.save(); g.fillStyle = 'rgba(10,4,30,.35)'; g.beginPath(); g.ellipse(x, FLOOR + 6, 70 * s / 100, 12 * s / 100, 0, 0, 6.2832); g.fill(); g.restore();
+  g.save(); g.translate(x, waist); g.scale(s / 100, s / 100); drawLegs(g, kind, { feet: pose.feet, dy: 0 }, dir); g.restore();
+  const arms = { l: pose.swing * 18 * dir, r: -pose.swing * 18 * dir, bend: .08 };
+  g.save(); g.translate(x, waist + pose.dy * s / 100);
+  if (kind === 'pip') drawPip2(g, 0, 0, s, Object.assign({ turn: .7 * dir, armsDown: arms, expr: 'grin' }, o));
+  else drawRae2(g, 0, 0, s, Object.assign({ turn: .7 * dir, armsDown: arms, expr: 'deadpan', look: 1.5 * dir, scanner: false }, o));
+  g.restore();
+}
+window.render = t => { g.setTransform(1, 0, 0, 1, 0, 0); bg(); walker('rae', t, 980, -1, 150, 1.15, {}); walker('pip', t, 90, 1, 150, .95, { blink: (t % 3.1) < .12 }); };
+(async () => { await toonFonts('fonts/'); buildStore(); window.render(0); window.READY = true; })();
+</script></body></html>
