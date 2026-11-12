@@ -298,6 +298,83 @@ const TK = {};
     out.restore();
   };
 
+  // ---------------------------------------------------------------- the three of them (owner 11/12: A, B and E of the design sheet)
+  // channel/HORROR_SERIES.md "세 존재". None of them ever shows a face. Drawn in metres, feet at (x, 0, z) in the scene, after TK.render.
+  //   TK.ghost(g, cam, 'tall' | 'display' | 'dropout', x, z, { light, seed, tilt, alpha })
+  //   cam = the object TK.render returns. light 0..1 (default from distance and fog like the walls), alpha for fades.
+  const gpoly = (g, pts, fill) => { g.beginPath(); pts.forEach(([x, y], i) => i ? g.lineTo(x, y) : g.moveTo(x, y)); g.closePath(); g.fillStyle = fill; g.fill(); };
+  const gell = (g, x, y, rx, ry, fill, rot = 0) => { g.beginPath(); g.ellipse(x, y, rx, ry, rot, 0, 6.2832); g.fillStyle = fill; g.fill(); };
+  const gmir = pts => pts.map(([x, y]) => [-x, y]);
+  const grgb = (c, k = 1) => `rgb(${Math.min(255, c[0] * k) | 0},${Math.min(255, c[1] * k) | 0},${Math.min(255, c[2] * k) | 0})`;
+  const GHOSTS = {
+    // A, The Tall One: 2.05 m, all black, no face, arms hang too low. CCTV only, far away, closer at every cut
+    tall: { h: 2.05, draw(g) {
+      const H = 2.05, W = H * .26, Y = y => -H + y, c = 'rgb(6,6,8)';
+      gell(g, 0, Y(H * .07), W * .3, H * .075, c);
+      gpoly(g, [[-W * .14, H * .13], [W * .14, H * .13], [W * .5, H * .2], [W * .46, H * .55], [W * .52, H * .62], [W * .36, H * .62], [W * .3, H * .58], [W * .24, H], [W * .04, H],
+        [0, H * .6], [-W * .04, H], [-W * .24, H], [-W * .3, H * .58], [-W * .36, H * .62], [-W * .52, H * .62], [-W * .46, H * .55], [-W * .5, H * .2]].map(([x, y]) => [x, Y(y)]), c);
+    } },
+    // B, The Display: a store mannequin in 1999 clothes, blank egg head, seams at the neck and wrists, head tilted.
+    // It only moves when no camera looks: the camcorder always finds it where it was, the CCTV finds it somewhere else
+    display: { h: 1.86, draw(g, o) {
+      const k = o.light, skin = [232, 226, 214], pants = [30, 30, 34], jacket = o.jacket || [40, 104, 116];
+      for (const s of [1, -1]) {
+        const P = s > 0 ? x => x : gmir;
+        gpoly(g, P([[.02, -.92], [.17, -.92], [.15, -.06], [.04, -.06]]), grgb(pants, k));
+        gell(g, s * .095, -.035, .065, .032, grgb(skin, k * .9));
+        gpoly(g, P([[.19, -1.43], [.26, -1.46], [.30, -1.0], [.22, -.98]]), grgb(jacket, k * (s > 0 ? .78 : 1)));
+        gell(g, s * .265, -.915, .04, .072, grgb(skin, k * .95), s * .08);
+        g.fillStyle = grgb([60, 56, 52], k); g.fillRect(s * .265 - .035, -.985, .07, .008);
+      }
+      gpoly(g, [[-.25, -1.47], [.25, -1.47], [.23, -1.38], [.18, -1.05], [.205, -.84], [-.205, -.84], [-.18, -1.05], [-.23, -1.38]], grgb(jacket, k));
+      gpoly(g, [[.02, -1.47], [.25, -1.47], [.23, -1.38], [.18, -1.05], [.205, -.84], [.02, -.84]], grgb(jacket, k * .8));
+      gpoly(g, [[-.075, -1.47], [.075, -1.47], [0, -1.24]], grgb(skin, k));
+      g.fillStyle = grgb(skin, k); g.fillRect(-.04, -1.6, .08, .14);
+      g.fillStyle = grgb([60, 56, 52], k); g.fillRect(-.04, -1.535, .08, .007);
+      g.save(); g.translate(.005, -1.69); g.rotate(o.tilt ?? .22);
+      gell(g, 0, 0, .095, .125, grgb(skin, k));
+      g.save(); g.beginPath(); g.ellipse(0, 0, .095, .125, 0, 0, 6.2832); g.clip(); gell(g, .07, .02, .07, .14, grgb(skin, k * .78)); g.restore();
+      gell(g, -.03, -.05, .022, .04, `rgba(255,255,255,${.55 * Math.min(1, k)})`, -.3);
+      g.restore();
+    } },
+    // E, The Dropout: only on tape. A person-shaped hole where the picture is damaged (rows from elsewhere, dropout lines).
+    // Seen only in playback of a recording, never live; it moves when the tape skips
+    dropout: { h: 1.78, screen: true },
+  };
+  const HUMAN = [[-.05, -1.55], [.05, -1.55], [.21, -1.47], [.26, -1.38], [.28, -.88], [.22, -.86], [.2, -1.2], [.17, -.9], [.15, -.05], [.03, -.05], [0, -.82], [-.03, -.05], [-.15, -.05], [-.17, -.9], [-.2, -1.2], [-.22, -.86], [-.28, -.88], [-.26, -1.38], [-.21, -1.47]];
+  function humanPath(g, fx, fy, u) {
+    g.beginPath(); HUMAN.forEach(([x, y], i) => { const X = fx + x * u, Y = fy + y * u; i ? g.lineTo(X, Y) : g.moveTo(X, Y); }); g.closePath();
+    g.moveTo(fx + .095 * u, fy - 1.66 * u); g.ellipse(fx, fy - 1.66 * u, .095 * u, .12 * u, 0, 0, 6.2832);
+  }
+  function dropout(g, fx, fy, u, seed) {
+    const R = rng(seed), snap = document.createElement('canvas'); snap.width = g.canvas.width; snap.height = g.canvas.height; snap.getContext('2d').drawImage(g.canvas, 0, 0);
+    const top = fy - 1.8 * u, bot = fy, bh = Math.max(2, Math.round(u * .035));
+    g.save(); humanPath(g, fx, fy, u); g.clip();
+    for (let y = top; y < bot; y += bh) {
+      const dx = (R() - .5) * u * 1.2, dy = (R() - .5) * u * .9;
+      g.drawImage(snap, 0, y + dy, snap.width, bh, dx, y, snap.width, bh);
+      const v = R(); if (v < .45) { g.fillStyle = `rgba(${v < .2 ? '235,235,235' : '10,10,12'},${.25 + R() * .4})`; g.fillRect(fx - .4 * u, y, .8 * u, bh); }
+    }
+    for (let i = 0; i < 18; i++) { const y = top + R() * (bot - top); g.fillStyle = `rgba(255,255,255,${.5 + R() * .45})`; g.fillRect(fx - .4 * u, y, .8 * u, Math.max(1, u * .006 + R() * u * .01)); }
+    g.restore();
+    g.save(); g.globalCompositeOperation = 'screen'; g.lineWidth = Math.max(1, u * .006);
+    g.translate(-u * .025, 0); humanPath(g, fx, fy, u); g.strokeStyle = 'rgba(40,220,255,.22)'; g.stroke();
+    g.translate(u * .05, 0); humanPath(g, fx, fy, u); g.strokeStyle = 'rgba(255,40,180,.2)'; g.stroke();
+    g.restore();
+  }
+  TK.ghost = function (g, cam, kind, x, z, o = {}) {
+    const D = GHOSTS[kind], prj = p => { const q = cam.toCam(p); return q[2] > .05 ? [cam.W / 2 + cam.f * q[0] / q[2], cam.H / 2 - cam.f * q[1] / q[2], q[2]] : null; };
+    const feet = prj([x, 0, z]), head = prj([x, D.h, z]); if (!feet || !head) return null;
+    const u = (feet[1] - head[1]) / D.h, d = feet[2];
+    const light = o.light ?? Math.min(1, (o.ambient ?? 1.1) * Math.exp(-d * (o.fog ?? .045)) * .9);
+    g.save(); g.globalAlpha = o.alpha ?? 1;
+    g.fillStyle = 'rgba(0,0,0,.35)'; g.beginPath(); g.ellipse(feet[0], feet[1], .32 * u, .06 * u, 0, 0, 6.2832); g.fill();
+    if (D.screen) dropout(g, feet[0], feet[1], u, o.seed ?? 7);
+    else { g.translate(feet[0], feet[1]); g.rotate(-Math.atan2(head[0] - feet[0], feet[1] - head[1])); g.scale(u, u); D.draw(g, Object.assign({ light }, o)); }
+    g.restore();
+    return { feet, head, u };
+  };
+
   TK.fonts = function (base = 'fonts/') {
     return Promise.all([
       new FontFace('VT323', `url(${base}vt323-400.woff2)`).load(),
