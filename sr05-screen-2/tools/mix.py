@@ -9,6 +9,7 @@ automation, e.g. the projector's waver and its dropouts); type "mute" {t, t1}: e
 import json, os, sys
 import numpy as np
 import soundfile as sf
+from scipy import signal
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from audio import SR, HERE, buf, add, fade, load, lowpass, highpass, bandpass, room, rms
@@ -140,7 +141,7 @@ if np.abs(pab).max() > 0:
 mus = load(os.path.join(HERE, "out", "music.wav"))
 mus = np.concatenate([mus, np.zeros((len(vox) - len(mus), 2), np.float32)]) if len(mus) < len(vox) else mus[:len(vox)]
 kk = int(.3 * SR)
-duck = np.convolve(speech, np.ones(kk) / kk, "same")
+duck = signal.fftconvolve(speech, np.ones(kk) / kk, "same")                  # same as np.convolve(..., "same"), seconds instead of minutes
 mus = mus * (1 - (1 - db(-4)) * duck)[:, None]
 sp = speech > .5
 mr = rms(mus[sp])
