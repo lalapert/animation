@@ -575,7 +575,8 @@ const TK = {};
   }
   function figure(g, v, o) {
     const ch = o.charge || 0, reach = o.armR || 0, P = [];
-    const lean = (v === 'crane' ? .1 : v === 'reverse' ? .06 : .04) + ch * .3, tiltX = o.tilt ?? 0;
+    // o.bend (tape 7, additive): an extra lean of the upper body about the hips, radians (+ = toward +x); 0 by default
+    const lean = (v === 'crane' ? .1 : v === 'reverse' ? .06 : .04) + ch * .3 + (o.bend || 0), tiltX = o.tilt ?? 0;
     const shL = v === 'crane' ? -1.80 : v === 'broken' ? -1.74 : -1.80, shR = v === 'crane' ? -1.74 : -1.82;   // uneven shoulders
     // legs (knees forward, or backward for 'reverse'); a stride when it runs
     for (const s of [-1, 1]) {

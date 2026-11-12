@@ -1,0 +1,114 @@
+{
+ "static": [
+  2.0,
+  "harsh analog VHS tape static, loud white noise hiss with crackle and a low hum, a tape ending on a blank channel"
+ ],
+ "glitch": [
+  0.6,
+  "a very short VHS tape tracking glitch: a warbling distorted electrical crackle and a brief buzz"
+ ],
+ "tape_hiss": [
+  8.0,
+  "constant soft analog videotape hiss and faint mechanical motor whir, steady, loopable"
+ ],
+ "breath_bed": [
+  8.0,
+  "a frightened man breathing shakily and quietly right next to a camcorder microphone, uneven breaths, trying to stay quiet, loopable"
+ ],
+ "switch": [
+  0.5,
+  "an old security camera multiplexer switching channels: a dry relay click with a tiny burst of static"
+ ],
+ "step": [
+  0.5,
+  "one single footstep of a work boot on a hard polished stone floor in a large empty hall, close, with a short echo"
+ ],
+ "whoosh": [
+  0.7,
+  "a man spinning round fast holding a camcorder: a jacket rustle and a muffled whoosh of air past the microphone"
+ ],
+ "sting": [
+  1.2,
+  "a sudden loud analog horror jump scare stinger: a violent burst of distorted VHS static with a deep low impact and a harsh metallic screech, very loud, then cut"
+ ],
+ "camclick": [
+  0.6,
+  "a 1990s camcorder record button pressed: a plastic click and the tape transport motor starting up"
+ ],
+ "roll": [
+  0.6,
+  "a VHS tape tracking roll: a warbling wow and flutter distortion with a rushing hiss"
+ ],
+ "swell": [
+  2.0,
+  "a slow rising horror tension swell, reversed cymbal and dissonant strings rising to a sudden stop"
+ ],
+ "lights_off": [
+  1.0,
+  "a big electrical breaker clunk and all the fluorescent lights in a room dying with a falling hum, then silence"
+ ],
+ "handling": [
+  0.8,
+  "a camcorder microphone rubbed and knocked by a hand as the camera is spun around fast"
+ ],
+ "mall_hum": [
+  10.0,
+  "an empty shopping mall at night, low steady air conditioning drone and faint fluorescent light buzz, distant, loopable"
+ ],
+ "flicker": [
+  2.0,
+  "a fluorescent tube light flickering on and off with sharp electrical clicks and a stuttering buzz"
+ ],
+ "fluor_hum": [
+  10.0,
+  "an empty tiled corridor at night: a buzzing fluorescent light that flickers now and then, ventilation hum, no people, loopable"
+ ],
+ "tube_tick": [
+  0.5,
+  "a single sharp electrical tick of a flickering fluorescent tube, one click with a tiny buzz, dry"
+ ],
+ "tube_pop": [
+  1.0,
+  "a fluorescent tube dying: a sharp electrical pop and its buzz cutting off into silence"
+ ],
+ "impact": [
+  1.5,
+  "a deep heavy low boom impact, a sudden sub bass hit with a short metallic ring, horror jump scare hit, dry"
+ ],
+ "near_breath": [
+  8.0,
+  "slow, deep, calm breathing of someone standing right against a microphone, very close and intimate, long inhales and exhales, unhurried, not scared, no voice, loopable"
+ ],
+ "minilab": [
+  6.0,
+  "a 1990s one-hour photo minilab machine running in a closed shop at night: a steady electric motor hum, paper rollers turning and soft rhythmic mechanical clicks, no voices, no music, loopable"
+ ],
+ "print_drop": [
+  1.0,
+  "a photo printing machine pushing out one glossy photo print: a short motorized roller whir, then the print sliding out and dropping into a plastic tray with a light papery slap, close"
+ ],
+ "print_flip": [
+  0.5,
+  "a thumb sliding one glossy photo print off a small stack: a quick dry paper slide and a soft slap, very close, quiet room"
+ ],
+ "flash_charge": [
+  3.0,
+  "an old camera flash charging up: a thin high-pitched electronic whine rising steadily in pitch for three seconds, close behind the listener, in a silent dark room, no other sound"
+ ],
+ "flash_pop": [
+  1.0,
+  "a camera shutter clack and the sharp loud pop of a big camera flash firing right behind the listener, a hard electric crack, then silence"
+ ],
+ "shutter_far": [
+  1.0,
+  "a single quiet mechanical camera shutter click and a short film advance ratchet from a few metres away in a silent dark room, no flash"
+ ],
+ "breath": [
+  2.0,
+  "one slow quiet human exhale very close to a microphone, muffled, no voice"
+ ],
+ "zoom": [
+  1.5,
+  "the small electric zoom motor of a 1990s handheld camcorder whirring, heard through its own microphone"
+ ]
+}

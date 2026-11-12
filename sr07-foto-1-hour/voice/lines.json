@@ -1,0 +1,46 @@
+{
+ "model_id": "eleven_v4",
+ "cast": {
+  "LEON": {
+   "voice_id": "Uy5Zv42tAoMnz16B9JZo",
+   "name": "HA Leon Marsh",
+   "settings": {
+    "stability": 0.55,
+    "similarity_boost": 0.8,
+    "style": 0.25,
+    "speed": 0.92
+   }
+  }
+ },
+ "lines": [
+  {
+   "id": "L1",
+   "who": "LEON",
+   "text": "[tired, quiet] Night log. December second. Three twelve A.M.",
+   "sub": "NIGHT LOG. DECEMBER SECOND. 3:12 A.M.",
+   "asr": "Night log December second three twelve AM"
+  },
+  {
+   "id": "L2",
+   "who": "LEON",
+   "text": "[low, uneasy] The store is locked. The machine is still printing.",
+   "sub": "THE STORE IS LOCKED.\nTHE MACHINE IS STILL PRINTING.",
+   "asr": "The store is locked the machine is still printing"
+  },
+  {
+   "id": "L3",
+   "who": "LEON",
+   "text": "[whispering, uneasy] That's our camera. From underneath.",
+   "sub": "THAT'S OUR CAMERA. FROM UNDERNEATH.",
+   "asr": "That's our camera from underneath"
+  },
+  {
+   "id": "L4",
+   "who": "LEON",
+   "text": "[whispering, frightened] That's me... That was just now.",
+   "sub": "THAT'S ME. THAT WAS JUST NOW.",
+   "asr": "That's me that was just now"
+  }
+ ],
+ "context": false
+}
