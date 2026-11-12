@@ -22,5 +22,9 @@
  "PA": {
   "desc": "A 1990s shopping mall public address announcer: a calm, polite, slightly bored middle-aged American woman reading closing announcements into a microphone, even and unhurried, a little too calm. Clear recording.",
   "text": "Attention shoppers. The Halloway Galleria is now closed. Thank you for shopping with us. We are still waiting for one remaining shopper. Please make your way to the main entrance."
+ },
+ "Leon": {
+  "desc": "A tired American night security guard in his mid-forties, 1999: a low, quiet, slightly hoarse male voice, speaking softly and close into a handheld camcorder microphone, calm on the surface but uneasy, General American accent, no drama. Clear recording.",
+  "text": "Night log. December first. One forty A.M. First shift. Monitor nine. Fitting room three. Someone's in there. Hello? The mall is closed. Nobody. There's nobody here."
  }
 }

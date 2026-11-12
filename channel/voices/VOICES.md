@@ -13,8 +13,9 @@
 | Cleo | Volt Labs | LAB Cleo `biUhGlVm4NoNe58piPit` | 디자인 후보 2 |
 | Sterling Bright | Volt Labs | LAB Sterling Bright `g5QiE8eJceeEcuPGC2IM` | 디자인 후보 1 |
 | Mall PA (관내 방송) | STILL RECORDING | HA Mall PA `ZPgDKQUoTzQKZTHhQYAM` | 디자인 후보 3(가장 느리고 차분함). 믹서에서 구형 스피커·넓은 홀 울림 처리 |
+| Leon Marsh (야간 경비원, 6화부터) | STILL RECORDING | HA Leon Marsh `Uy5Zv42tAoMnz16B9JZo` | 디자인 후보 2(11/12 정기 실행이 고름: 가장 낮고(중앙값 92 Hz) 속도가 자연스러움. 후보 1은 216 Hz로 높고, 후보 3은 너무 느림). 작가님이 다른 후보를 원하면 `previews/Leon_1-3.mp3`. 캠코더 마이크 가까이에서 말하는 소리 |
 
-- 보이스 슬롯 8/10 사용. 남은 2개는 새 반복 인물용.
+- 보이스 슬롯 9/10 사용(11/12 Leon 추가). 남은 1개.
 - 한 번만 나오는 손님은 ElevenLabs 기본 보이스를 쓰고, 같은 보이스를 연달아 쓰지 않는다.
 - 디자인 설명과 시험 문장: `design.json`. 후보 기록: `previews/<이름>.json`, `previews/<이름>_choose_1-2-3.mp3`. 주고받기 샘플: `previews/duo_A.mp3`, `previews/duo_B.mp3`(채택).
 

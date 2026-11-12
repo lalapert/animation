@@ -364,5 +364,20 @@
    540,
    1170
   ]
+ },
+ {
+  "folder": "sr06-first-night",
+  "t": 27.0,
+  "series": "sr",
+  "tape": "TAPE 06",
+  "lines": [
+   "IT WAS",
+   "BEHIND HIM."
+  ],
+  "focus": [
+   440,
+   960
+  ],
+  "zoom": 1.55
  }
 ]

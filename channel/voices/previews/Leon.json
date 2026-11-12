@@ -1,0 +1,22 @@
+{
+ "name": "Leon",
+ "desc": "A tired American night security guard in his mid-forties, 1999: a low, quiet, slightly hoarse male voice, speaking softly and close into a handheld camcorder microphone, calm on the surface but uneasy, General American accent, no drama. Clear recording.",
+ "text": "Night log. December first. One forty A.M. First shift. Monitor nine. Fitting room three. Someone's in there. Hello? The mall is closed. Nobody. There's nobody here.",
+ "previews": [
+  {
+   "n": 1,
+   "generated_voice_id": "lfihAxUPpqb68i3biAdX",
+   "duration": 16.8516875
+  },
+  {
+   "n": 2,
+   "generated_voice_id": "Uy5Zv42tAoMnz16B9JZo",
+   "duration": 18.2884375
+  },
+  {
+   "n": 3,
+   "generated_voice_id": "MVdHpK3wXlck6VWSJuD8",
+   "duration": 22.755375
+  }
+ ]
+}
