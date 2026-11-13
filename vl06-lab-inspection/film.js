@@ -212,14 +212,14 @@ function drawMover(g, t, who, pos, o, opts = {}) {
 function veraState(t) {
   const mouth = mouthFor('VERA', t), blink = blinkAt(0, t);
   let expr = 'scheme', reachR = null, tube = false;
-  if (t >= TL.SLAM - .05) expr = 'laugh';
+  if (t >= TL.SLAM + .9) expr = 'laugh';                          // 11/13: eyes open, grinning on frame 1; the laugh after
   if (t >= V.L4.t - .1) expr = 'fluster';
   if (t >= V.L6.t - .05 && t < endOf('L6') + .3) expr = 'cool';
   if (t >= TL.VDASH1) expr = 'fluster';
   if (t >= V.L7.t && t < V.L9.t) expr = 'laugh';
   if (t >= V.L9.t) expr = 'fluster';
   // the big red button: hand on it, up, slam
-  if (t < TL.SLAM + .4) {
+  if (t < TL.SLAM + .75) {                                       // 11/13: her palm stays on it while the wall turns (frame 1)
     const up = smooth(TL.SLAM - .35, TL.SLAM - .12, t) * (1 - smooth(TL.SLAM - .1, TL.SLAM, t));
     reachR = { x: (BIG.x - VX0) / S * 100, y: -8 - 110 * up };
   }
@@ -297,13 +297,13 @@ function hiccup(g, t) {
   const b = clamp((t - TL.HIC) / .5);
   if (b < 1) for (let i = 0; i < 7; i++) {
     const a = i / 7 * 6.2832, r = 22 + 46 * b;
-    g.save(); g.globalAlpha = .8 * (1 - b); g.fillStyle = '#3a3640';
-    g.beginPath(); g.arc(mx + 30 + Math.cos(a) * r * .5 + 90 * b, my + 6 + Math.sin(a) * r * .3 - 20 * b, 8 + 10 * b, 0, 6.2832); g.fill(); g.restore();
+    g.save(); g.globalAlpha = .85 * (1 - b); g.fillStyle = '#a7a2b4'; g.strokeStyle = 'rgba(40,30,60,.5)'; g.lineWidth = 2;   // 11/13: light grey smoke (dark grey read as a smudge on her cheek)
+    g.beginPath(); g.arc(mx + 46 + Math.cos(a) * r * .5 + 90 * b, my + 6 + Math.sin(a) * r * .3 - 20 * b, 8 + 10 * b, 0, 6.2832); g.fill(); g.stroke(); g.restore();
   }
   const kk = clamp((t - TL.HIC - .2) / 2.0); if (kk > 0) {
     const rx = 26 + 36 * kk, ry = 10 + 9 * kk, cx = mx + 130 + 40 * kk, cy = my - 10 - 300 * kk;   // beside her head, never across her face
     g.save(); g.globalAlpha = .75 * (1 - kk);
-    for (let i = 0; i < 14; i++) { const a = i / 14 * 6.2832; g.fillStyle = i % 2 ? '#3a3640' : '#4a4652'; g.beginPath(); g.arc(cx + Math.cos(a) * rx, cy + Math.sin(a) * ry, 9 + 4 * Math.sin(i * 1.7) + 4 * kk, 0, 6.2832); g.fill(); }
+    for (let i = 0; i < 14; i++) { const a = i / 14 * 6.2832; g.fillStyle = i % 2 ? '#a7a2b4' : '#bdb8c9'; g.beginPath(); g.arc(cx + Math.cos(a) * rx, cy + Math.sin(a) * ry, 9 + 4 * Math.sin(i * 1.7) + 4 * kk, 0, 6.2832); g.fill(); }
     g.restore();
   }
 }
@@ -335,28 +335,30 @@ function drawScene(t) {
 function render(t) { t = clamp(t, 0, DUR - 1e-3); drawScene(t); composeFrame(OUT, SC, t); endCard(OUT, t, 'vl'); }
 window.render = render;
 
-// ---------------------------------------------------------------- sound cues
-const steps = (t0, x0, x1, step, sps) => footfalls(t0, x0, x1, step, sps).map(x => ({ type: 'step', t: +x.toFixed(3) }));
-const runs = (t0, x0, x1) => footfalls(t0, x0, x1, 190, 2.8).map(x => ({ type: 'run', t: +x.toFixed(3) }));
+// ---------------------------------------------------------------- sound cues (11/13 natural-sound pass, tools/mix.py)
+// every visible action on its frame; the inspector's steps are leather soles, the dashes sneakers (single grains, varied);
+// the slam is before frame 1 now, so the film opens on the panels already turning
+const steps = (t0, x0, x1, step, sps, who) => footfalls(t0, x0, x1, step, sps).map((x, i) => ({ type: 'step', t: +x.toFixed(3), i: i + (who || 0), pan: (x0 + (x1 - x0) * (i + 1) / Math.max(1, footfalls(t0, x0, x1, step, sps).length) - 540) / 540 }));
+const runs = (t0, x0, x1) => footfalls(t0, x0, x1, 190, 2.8).map((x, i, a) => ({ type: 'run', t: +x.toFixed(3), i, pan: (x0 + (x1 - x0) * (i + 1) / a.length - 540) / 540 }));
 window.EV = [
-  { type: 'bed', fx: 'lab_hum', t: 0, t1: DUR + .5, g: -31 },
-  { type: 'knock', t: .05 },
-  { type: 'slam', t: TL.SLAM },
-  ...FLIPS.map(([, t0]) => ({ type: 'panel', t: t0 })),
-  { type: 'pop', t: TL.SLAM + .5 },
-  ...steps(TL.WALKIN, IX_OFF, IX, 150, 1.9),
-  ...runs(TL.CDASH, CX0, BTN.R + 45),
+  { type: 'knock', t: .02 },                                      // the inspector at the stairs door (off screen right)
+  ...FLIPS.map(([, t0]) => ({ type: 'panel', t: t0 })),           // the wall panels turning (the first two already turning on frame 1)
+  { type: 'pop', t: TL.SLAM + .5 },                               // the bread baskets spring up (the gag)
+  { type: 'door_open', t: TL.WALKIN - .05 },                      // she lets herself in
+  ...steps(TL.WALKIN, IX_OFF, IX, 150, 1.9, 0),
+  ...runs(TL.CDASH, CX0, BTN.R + 45),                             // Cleo's dash to the right button
   { type: 'click', t: TL.SLAMR },
-  ...[0, 1, 2, 3, 4].map(i => ({ type: 'beep', t: TL.BEEPS + i * .34 })),
-  ...runs(TL.VDASH1, VX0, CROI - 60),
+  ...[0, 1, 2, 3, 4].map(i => ({ type: 'beep', t: TL.BEEPS + i * .34 })),   // the croissant beeps in her hand
+  ...runs(TL.VDASH1, VX0, CROI - 60),                             // Vera's dash to snatch it
   { type: 'gulp', t: TL.GULP - .1 },
+  { type: 'scribble', t: TL.SNATCH + .15, dur: TL.FLIPL - .45 - TL.SNATCH },   // she writes on the clipboard
   ...runs(TL.VDASH2, CROI - 60, BTN.L - 55),
   { type: 'click', t: TL.SLAML },
-  ...steps(TL.VRET, BTN.L - 55, VX0, 150, 1.9),
+  ...steps(TL.VRET, BTN.L - 55, VX0, 150, 1.9, 3),
   { type: 'stamp', t: TL.STAMP },
-  ...steps(TL.WALKOUT, IX, IX_OFF, 150, 1.9),
-  ...steps(TL.CRET, BTN.R + 45, 700, 150, 1.9),
-  { type: 'beep', t: TL.BEEP2 }, { type: 'beep', t: TL.BEEP2 + .45 }, { type: 'beep', t: TL.BEEP2 + .7 },
+  ...steps(TL.WALKOUT, IX, IX_OFF, 150, 1.9, 5),
+  ...steps(TL.CRET, BTN.R + 45, 700, 150, 1.9, 2),
+  { type: 'tummy', t: TL.BEEP2 }, { type: 'tummy', t: TL.BEEP2 + .45 }, { type: 'tummy', t: TL.BEEP2 + .7 },   // the detonator, inside her
   { type: 'hic', t: TL.HIC - .05 },
   { type: 'puff', t: TL.HIC },
 ];

@@ -28,9 +28,9 @@ b = Band(DUR, bpm=TL["BPM"], seed=5)
 B = b.B
 
 b.cue(0.0, V["L2"]["t"] - .35, "theme", end="cadence", bars=["A1", "A2", "B2"], until=V["L2"]["t"] - .1)
-b.cue(TL["PACE0"] + .1, TL["MONT0"], "tiptoe", end="cut", level=.8)
+b.cue(TL["PACE0"] + .1, TL["MONT0"], "tiptoe", end="cut", level=.65)
 b.cue(TL["MONT0"], TL["MONT1"], "theme", end="cut", speed=1.5, level=.95, bars=["A1", "A2", "B1", "B2", "A1"])
-b.cue(V["L8"]["t"] - .05, V["L9"]["t"] - .08, "tiptoe", end="cut", level=.75)
+b.cue(V["L8"]["t"] - .05, V["L9"]["t"] - .08, "tiptoe", end="cut", level=.7)
 hit = TL["BOARDT"] + 1.3                                       # the sixth circle closes (film.js drawRentCircles)
 b.cue(TL["BOARDT"] + .05, hit - .5 * B, "tag", end="cadence", level=.9)
 b.hit(hit, "button")

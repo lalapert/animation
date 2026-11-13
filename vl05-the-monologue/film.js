@@ -141,7 +141,7 @@ const CAM = Object.assign({}, LABCAM, {
   OPEN: [500, 1080, 1.05, 1.1],                                   // (unused: the opening push-in is openCam below)
   CLEO_MICRO: [700, CLEOFACE + 150, 1.8, 1.9],
   MICRO_CU: [MICRO.x + 30, MICRO.y - 70, 3.8, 4.2],
-  PLANTS_CU: [975, LCT - 70, 3.0, 3.2],
+  PLANTS_CU: [960, LCT - 70, 3.0, 3.2],                            // 11/13: the set runs on past x 1080 here (mirrorEdge), no empty band
   BOARD_END: [LBOARD.x - 40, LBOARD.y - 5, 2.75, 2.85],
 });
 // 11/13: frame 1 already has the receipt pouring off the bench; the camera pushes in from the first frame straight into VERA_MED
@@ -161,6 +161,7 @@ function drawScene(t) {
   const cam = n === 'PACE' || n === 'PACE_NIGHT' ? paceCam(t, n === 'PACE_NIGHT') : CAM[n];
   if (n === 'OPEN') openCam(c, t); else applyCam(c, cam, n === 'PACE' || n === 'PACE_NIGHT' ? 0 : sk, 0);
   c.drawImage(LAB_STATIC.lab, 0, 0);
+  if (n === 'PLANTS_CU') mirrorEdge(c, LAB_STATIC.lab, 0, LCT);
   drawWindow(c, t, 0); nightWindow(c, smooth(M0 + .4, M0 + 3.4, t));
   drawRentCircles(c, n === 'BOARD_END' && t > TL.BOARDT + 1.3 ? 6 : 5, n === 'BOARD_END' && t > TL.BOARDT + .4 && t <= TL.BOARDT + 1.3 ? (t - TL.BOARDT - .4) / .9 : 0);
   if (n === 'BOARD_END') drawChalkArm(c, t, 5);
@@ -195,15 +196,19 @@ function drawScene(t) {
   const C2 = { expr: 'deadpan', remote: !popcorn, mouth: mouthFor('CLEO', t), blink: blinkAt(1, t), look: P.moving ? (P.x - CLEO.x) / 260 : -1 };
   if (press) C2.reachL = { x: -66, y: -40 };
   drawMicrowave(c, t);
-  if (cast) drawCleo2(c, CLEO.x, LCT, CLEO.s, C2);
-  if (popcorn && cast) popcornBag(c, CLEO.x, LCT - 64, t);
+  const cleoOn = cast && n !== 'PLANTS_CU';                       // 11/13: the plants close-up cut her face in half at the left edge
+  if (cleoOn) drawCleo2(c, CLEO.x, LCT, CLEO.s, C2);
+  if (popcorn && cleoOn) popcornBag(c, CLEO.x, LCT - 64, t);
   c.drawImage(LAB_STATIC.front, 0, LCT);
+  if (n === 'PLANTS_CU') mirrorEdge(c, LAB_STATIC.front, LCT, H - LCT);
   PLANTS.forEach((x, i) => drawPlant(c, x, plantWilt(i, t), t, i));
   g2Sign(c);
   receiptCascade(c, smooth(-.7, 1.5, t));                          // 11/13: already pouring off the bench on frame 1
   // the torn-off piece
   if (t > TL.RIP && t < TL.RIP + 1.2 && hand) { const k = (t - TL.RIP) / 1.2; c.save(); c.translate(hand[0] + 30 + k * 60, hand[1] - 40 + k * k * 300); c.rotate(k * 6); tShape(c, '#fbfaf2', gg => gg.rect(-8, -6, 16, 12), 2); c.restore(); }
 }
+// the set is 1080 wide; a close-up near its right edge continues it with a mirrored strip (brick wall, pipe, bench front)
+function mirrorEdge(g, img, y, h) { g.save(); g.translate(2160, 0); g.scale(-1, 1); g.drawImage(img, 960, 0, 120, img.height, 960, y, 120, img.height); g.restore(); }
 function g2Sign(g) { g.save(); g.translate(975, LCT + 46); g.rotate(.03); tShape(g, '#fbfaf2', gg => gg.rect(-70, -18, 140, 36), 2.4); tText(g, 'AUDIENCE', 0, 1, 18, TOON.ink, '"Bungee"', 'center', 400); g.restore(); }
 
 // the hook card (experiment, owner's 4-episode trial): first 2.5 s, top of the frame

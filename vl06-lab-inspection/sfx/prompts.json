@@ -54,5 +54,24 @@
  "puff": [
   1.2,
   "a small cartoon smoke puff, a soft poof with a little sputter"
+ ],
+ "scribble": [
+  1.0,
+  "a pen scribbling quickly on paper on a clipboard",
+  "copied from vl03-help-wanted"
+ ],
+ "steps_lab": [
+  4.5,
+  "slow footsteps of one person in soft leather shoes on a bare concrete basement floor, eight separate steps with short gaps, dry, no music, no voices",
+  "generated 11/13 in vl04-laser-pointer's run, used here"
+ ],
+ "run_lab": [
+  3.0,
+  "one person running fast in sneakers across a bare concrete floor, ten separate quick footsteps, dry, no music, no voices",
+  "generated 11/13 in vl04-laser-pointer's run, used here"
+ ],
+ "door_open": [
+  1.2,
+  "a heavy basement door unlatched and swung open: a metal latch click and a short low creak, indoors, no voices"
  ]
 }

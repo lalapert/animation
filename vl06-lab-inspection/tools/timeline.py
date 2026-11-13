@@ -31,7 +31,7 @@ for k in order:
     if k == "L9":                                       # the inspector walks out
         T["WALKOUT"] = round(t + .25, 3); GAP["L9"] = round(.25 + (IX_OFF - IX) / WALK_V - .4, 3)
     start = t + GAP[k]
-    if k == "L1": T["SLAM"] = round(start + .55, 3)                                           # Vera slams the big red button
+    if k == "L1": T["SLAM"] = round(start - .72, 3)     # Vera slams the big red button (11/13: before frame 1, so the wall is already turning on frame 1)
     if k == "L3": T["WALKIN"] = round(start - .1 - (IX_OFF - IX) / WALK_V, 3)                 # walks in, arrives as he speaks
     if k == "L5": T["FLIPR"] = round(t + .3, 3); T["CDASH"] = round(t + .55, 3); T["SLAMR"] = round(T["CDASH"] + (BTN["R"] + 45 - CX0) / RUN_V, 3)
     d = durs[k]
