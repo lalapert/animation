@@ -178,12 +178,13 @@ function drawScene(t) {
   if (!cast) { /* nobody in the board close-up */ }
   else if (P.moving) {
     const bob = walkBob(P.dist, STEP, 10), sx = P.x;
-    c.save(); c.translate(sx, LCT + 6 + bob.dy); c.rotate(bob.rot);
+    const dy = -5 * Math.tanh(-bob.dy / 5);                         // 11/13 (owner: no torso ending at the waist in the air): the bob's rise is capped
+    c.save(); c.translate(sx, LCT + 6 + dy); c.rotate(bob.rot);    // so her waist never shows above the bench
     const reach = { x: 64 + bob.swing * 4, y: -152 + Math.abs(bob.swing) * 4 };          // she reads from the receipt as she walks
     drawVera2(c, 0, 0, VERA.s, { expr: t < M0 ? 'scheme' : 'laugh', turn: .7 * P.dir, mouth, blink, reachR: reach, tube: false });
     c.restore();
     const cs = Math.cos(bob.rot), sn = Math.sin(bob.rot), lx = reach.x * VERA.s / 100, ly = reach.y * VERA.s / 100;
-    hand = [sx + lx * cs - ly * sn, LCT + 6 + bob.dy + lx * sn + ly * cs];
+    hand = [sx + lx * cs - ly * sn, LCT + 6 + dy + lx * sn + ly * cs];
   } else {
     const reach = { x: 62, y: -150 };
     drawVera2(c, VERA.x, LCT, VERA.s, { expr, mouth, blink, reachR: reach, tube: false });
