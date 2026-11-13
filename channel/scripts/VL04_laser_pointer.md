@@ -88,4 +88,6 @@ Volt Labs, episode 4.
 - **새 효과음(ElevenLabs).** cloth, keys_drop, pave_run(+ VL5·VL6용 steps_lab, run_lab) 5개, 608자, 14초. 재사용: street(vl02-obedience-ray).
 - **첫 2초(장점 강화).** 첫 프레임이 이 화에서 가장 강한 그림: 이미 날아가는 천, Vera의 미친 웃음과 막 천을 던진 손, 쿠션 위에서 렌즈가 깜빡이는 Annihilator, 첫 프레임부터 완전히 보이는 훅 카드(전에는 0.12초 동안 페이드 인). 0.2초 뒤 Vera로 당겨 빠지며 CANNON 구도로 이어진다. 테마도 첫 프레임에 시작.
 - **그림 수정.** 첫 프레임 Vera 눈 감김(깜빡임) 제거. 천을 걷는 팔에 손이 없던 것(lab.js `reachR`이 손을 그리지 않는 버그: 키트는 그대로 두고 film.js에서 손을 그림). 창문 와이드 샷 아래 Cleo 머리 반쪽(카메라를 당겨 해결). 칠판 클로즈업 아래 Vera 머리 꼭대기와 떠 있는 손(그 샷에서는 인물을 그리지 않음).
-- **결과.** 40.07초(그대로), -13.9 LUFS, true peak -2.1 dBTP, loudnorm 2차 linear, 대사 마진 최소 +19.6 dB(K-가중, 최악 400 ms 창 +9.0 dB), ElevenLabs STT 11/11줄, blackdetect 없음, check_english 통과. 다시 만들기: `sh build.sh`.
+- **엔드 카드 2.5초(작가님 11/13 "NEW EPISODE / TOMORROW 카드가 너무 짧다").** `TL.ENDCARD = 2.5`, 버튼(다섯 번째 동그라미) 뒤에 1.25초를 그대로 늘려 붙임: 버튼은 전과 같은 프레임, 카드는 마지막 2.5초(칠판 클로즈업 위), 밴드의 마지막 화음이 자연스럽게 잦아들고 룸톤은 계속.
+- **하반신 점검(작가님 11/13 "허리에서 끝나는 몸 금지").** 모든 샷을 확인: Vera·Cleo는 늘 벤치 뒤(움찔 점프는 창문 샷이라 안 보임), 집주인은 몸통이 창틀 아래로 이어지고 도망칠 때는 창 위쪽 프레임이 몸통을 가린 채 다리만 보인다. 고칠 곳 없음.
+- **결과.** 41.32초(전 40.07초 + 엔드 카드 1.25초), -14.0 LUFS, true peak -2.2 dBTP, loudnorm 2차 linear, 대사 마진 최소 +19.5 dB(K-가중), ElevenLabs STT 11/11줄, blackdetect 없음, check_english 통과. 다시 만들기: `sh build.sh`(초안은 out/에, 검사를 다 통과하면 추적 파일로 복사).
