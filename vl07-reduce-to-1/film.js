@@ -229,25 +229,29 @@ function drapeShape(peakX, peakY) {
 }
 function drawGiantCopy(g, t) {
   if (t < TL.BLAST) return;
-  const kE = smooth(TL.BLAST, TL.BLAST + .32, t), kD = smooth(TL.BLAST + .26, TL.BLAST + .62, t);
-  const sink = smooth(TL.BLAST + .15, TL.BLAST + .6, t);
-  if (kD < 1) {                                                     // flying out: the sheet grows and swings up and over her
-    g.save(); g.globalAlpha = 1 - kD;
-    g.translate(TRAY.x, LCT - 50); g.rotate(lerp(.2, -.9, kE));
-    drawNotice(g, -lerp(40, 330, kE), -lerp(20, 260, kE), lerp(.4, 2.9, kE), Math.PI / 2 * .15);
-    g.restore();
+  const SW = TL.BLAST + .3;                                         // the sheet lands on her: a hard switch to the draped sheet
+  if (t < SW) {                                                     // flying: out of the tray, up over her head, down onto her (opaque)
+    const k = ease(clamp((t - TL.BLAST) / (SW - TL.BLAST)));
+    const p0 = [TRAY.x - 30, LCT - 80], p1 = [VX7 + 120, VFACE7 - 330], p2 = [VX7 - 10, VFACE7 + 60];
+    const x = (1 - k) * (1 - k) * p0[0] + 2 * (1 - k) * k * p1[0] + k * k * p2[0], y = (1 - k) * (1 - k) * p0[1] + 2 * (1 - k) * k * p1[1] + k * k * p2[1];
+    const rot = k < .55 ? lerp(.4, -.5, k / .55) : lerp(-.5, -.12, (k - .55) / .45);
+    drawNotice(g, x, y, lerp(.5, 2.7, k), rot);
+    return;
   }
-  if (kD > 0) {                                                     // draped over her: a tent of paper with the giant numbers on it
-    const [peakX, peakY] = drapePeak(t), sh = drapeShape(peakX, peakY);
-    g.save(); g.globalAlpha = kD;
-    tShape(g, '#fbfaf2', sh, 4);
-    g.save(); sh(g); g.clip();
-    g.translate(peakX - 10, peakY + 170); g.rotate(-.1);
-    tText(g, 'RENT DUE', 0, -60, 96, TOON.ink, '"Bungee"', 'center', 400);
-    tText(g, '$1,200', 6, 60, 140, '#c2233a', '"Bungee"', 'center', 400);
-    g.restore();
-    for (const [a, b, cc] of [[[peakX + 6, peakY + 10], [peakX + 60, LCT - 60], [peakX + 40, peakY + 120]], [[peakX - 10, peakY + 14], [200, LCT - 30], [peakX - 70, peakY + 140]]])
-      tCurve(g, a[0], a[1], cc[0], cc[1], b[0], b[1], 2.4, 'rgba(60,50,80,.45)');       // folds
+  const [peakX, peakY] = drapePeak(t), sh = drapeShape(peakX, peakY);   // draped over her: a tent of paper with the giant numbers on it
+  tShape(g, '#fbfaf2', sh, 4);
+  g.save(); sh(g); g.clip();
+  g.translate(peakX - 10, peakY + 170); g.rotate(-.1);
+  tText(g, 'RENT DUE', 0, -60, 96, TOON.ink, '"Bungee"', 'center', 400);
+  tText(g, '$1,200', 6, 60, 140, '#c2233a', '"Bungee"', 'center', 400);
+  g.restore();
+  for (const [a, b, cc] of [[[peakX + 6, peakY + 10], [peakX + 60, LCT - 60], [peakX + 40, peakY + 120]], [[peakX - 10, peakY + 14], [200, LCT - 30], [peakX - 70, peakY + 140]]])
+    tCurve(g, a[0], a[1], cc[0], cc[1], b[0], b[1], 2.4, 'rgba(60,50,80,.45)');         // folds
+  const kp = (t - SW) / .5;                                         // the landing puff: scraps of paper flutter out and shrink away
+  if (kp < 1) for (let i = 0; i < 8; i++) {
+    const a = -2.9 + i * .52, d = 60 + 190 * ease(kp), r = 15 * (1 - kp);
+    g.save(); g.translate(peakX + Math.cos(a) * d, peakY + 60 + Math.sin(a) * d * .7 + 120 * kp * kp); g.rotate(i * 1.7 + kp * 9);
+    tShape(g, '#fbfaf2', gg => gg.rect(-r, -r * .7, 2 * r, 1.4 * r), 2.4);
     g.restore();
   }
 }
