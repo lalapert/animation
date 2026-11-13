@@ -445,7 +445,8 @@ function drawVera2(c, x, y, s, o = {}) {
     for (let i = 0; i < 5; i++) tLine(c, [-22, -24 + i * 12, 18 - (i % 2) * 10, -24 + i * 12], 1.6); tShape(c, '#7a8098', g => g.roundRect(-12, -50, 24, 10, 3), 2.4); c.restore();
     tHand(c, 26, -84, 9.5, V.skin, V.skinS);
   } else if (o.reachR) {
-    const r = o.reachR, mx = (90 + r.x) / 2 + 6, my = (-80 + r.y) / 2; tTube(c, [64, -120, 90, -80, mx, my, (mx + r.x) / 2, (my + r.y) / 2, r.x + 4, r.y - 4], 23, LAB.coat, LAB.coatS);   // 11/8: the arm now reaches the hand (it stopped at the elbow) tHand(c, r.x, r.y, 9.5, V.skin, V.skinS);
+    const r = o.reachR, mx = (90 + r.x) / 2 + 6, my = (-80 + r.y) / 2; tTube(c, [64, -120, 90, -80, mx, my, (mx + r.x) / 2, (my + r.y) / 2, r.x + 4, r.y - 4], 23, LAB.coat, LAB.coatS);   // 11/8: the arm now reaches the hand (it stopped at the elbow)
+    tHand(c, r.x, r.y, 9.5, V.skin, V.skinS);   // 11/13: the hand was inside the comment above and never drawn
   } else if (o.point) {
     const k = o.point, ex2 = 64 + 46 * k, ey2 = -120 - 70 * k, hx = 70 + 92 * k, hy = -96 - 150 * k;
     tTube(c, [64, -120, 64 + 30 * k + 10 * (1 - k), -112 - 30 * k, ex2, ey2, (ex2 + hx) / 2, (ey2 + hy) / 2, hx, hy], 23, LAB.coat, LAB.coatS);
