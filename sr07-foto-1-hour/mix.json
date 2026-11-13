@@ -1,160 +1,187 @@
 {
- "room_db": -64,
- "voice_over_music_db": 8,
- "vo_pa": false,
- "beds": {},
+ "room_db": -58,
+ "voice_db": 0,
+ "duck_db": 12,
+ "music_db": -16,
+ "deck_hiss_db": -44,
+ "plr_db": 11.7,
+ "devices": {
+  "machine": "cam",
+  "prints": "cam",
+  "cctv": "cctv",
+  "dark": "cam"
+ },
+ "cam": {
+  "lo": 110,
+  "hi": 8500,
+  "noise_db": -50,
+  "noise_lp": 7000,
+  "target": -21,
+  "boost": 4,
+  "cut": 26,
+  "att": 0.22,
+  "rel": 1.1,
+  "pre": 0,
+  "ceil": -7
+ },
+ "cctv": {
+  "lo": 300,
+  "hi": 3500,
+  "order": 4,
+  "noise_db": -44,
+  "noise_lp": 4500,
+  "target": -22.5,
+  "boost": 4,
+  "cut": 14,
+  "att": 0.03,
+  "rel": 0.5,
+  "pre": 0,
+  "ceil": -9
+ },
+ "derived": {
+  "minilab_idle": {
+   "from": "minilab",
+   "lp": 420
+  }
+ },
  "foley": {
-  "static": {
-   "fx": "static",
-   "g": -13,
-   "fin": 0.003,
-   "fout": 0.04
-  },
-  "glitch": {
-   "fx": "glitch",
-   "g": -17,
-   "align": true,
-   "fin": 0.002,
-   "fout": 0.08
-  },
-  "tick": {
-   "fx": "tube_tick",
-   "g": -22,
-   "align": true,
-   "fin": 0.001,
-   "fout": 0.05
-  },
   "drop": {
    "fx": "print_drop",
    "g": -15,
+   "space": "shop",
    "align": true,
    "fin": 0.01,
    "fout": 0.15
   },
+  "flip": {
+   "fx": "print_flip",
+   "g": -16,
+   "space": "close",
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.08
+  },
   "step": {
    "fx": "step",
    "g": -21,
+   "space": "shop",
    "align": true,
    "fin": 0.002,
-   "fout": 0.15
+   "fout": 0.08,
+   "trim": 0.16
+  },
+  "scuff": {
+   "fx": "step",
+   "g": -17,
+   "space": "close",
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.06,
+   "trim": 0.12
   },
   "camclick": {
    "fx": "camclick",
-   "g": -18,
-   "align": true,
-   "fin": 0.002,
-   "fout": 0.1
-  },
-  "flip": {
-   "fx": "print_flip",
-   "g": -15,
+   "g": -24,
+   "space": "close",
    "align": true,
    "fin": 0.002,
    "fout": 0.08
   },
   "shutter": {
    "fx": "shutter_far",
-   "g": -17,
+   "g": -19,
+   "space": "shop",
    "align": true,
    "fin": 0.002,
    "fout": 0.2
   },
-  "breath_in": {
-   "fx": "breath",
-   "g": -19,
-   "fin": 0.02,
-   "fout": 0.3
-  },
-  "roll": {
-   "fx": "roll",
-   "g": -17,
-   "fin": 0.002,
-   "fout": 0.1
-  },
-  "lights_off": {
-   "fx": "lights_off",
-   "g": -13,
-   "align": true,
-   "fin": 0.002,
-   "fout": 0.1
-  },
-  "impact": {
-   "fx": "impact",
-   "g": -14,
-   "align": true,
-   "fin": 0.002,
-   "fout": 0.4
-  },
-  "switch": {
-   "fx": "switch",
-   "g": -18,
-   "align": true,
-   "fin": 0.002,
-   "fout": 0.05
-  },
-  "charge": {
-   "fx": "flash_charge",
-   "g": -24,
-   "fin": 0.08,
-   "fout": 0.008,
-   "ramp": 12
-  },
-  "swell": {
-   "fx": "swell",
-   "g": -19,
-   "fin": 0.05,
-   "fout": 0.008
-  },
-  "torch_off": {
-   "fx": "tube_tick",
-   "g": -19,
-   "align": true,
-   "fin": 0.001,
-   "fout": 0.05
-  },
-  "pop": {
-   "fx": "flash_pop",
-   "g": -8,
-   "align": true,
-   "fin": 0.001,
-   "fout": 0.25,
-   "drive": 3.0
-  },
-  "sting": {
-   "fx": "sting",
-   "g": -4,
-   "align": true,
-   "fin": 0.001,
-   "fout": 0.3,
-   "drive": 4.0
-  },
   "handling": {
    "fx": "handling",
-   "g": -17,
+   "g": -18,
+   "space": "close",
    "align": true,
    "fin": 0.002,
    "fout": 0.15
   },
-  "whoosh": {
-   "fx": "whoosh",
-   "g": -16,
-   "align": true,
-   "fin": 0.01,
+  "rustle": {
+   "fx": "handling",
+   "g": -22,
+   "space": "close",
+   "fin": 0.02,
    "fout": 0.2
   },
-  "zoom": {
-   "fx": "zoom",
-   "g": -26,
+  "breath": {
+   "fx": "breath",
+   "g": -20,
+   "space": "close",
    "fin": 0.02,
    "fout": 0.3
   },
-  "torch_on": {
+  "tick": {
    "fx": "tube_tick",
-   "g": -21,
+   "g": -25,
+   "space": "shop",
    "align": true,
    "fin": 0.001,
    "fout": 0.05
+  },
+  "tube_pop": {
+   "fx": "tube_pop",
+   "g": -15,
+   "space": "shop",
+   "align": true,
+   "fin": 0.001,
+   "fout": 0.2
+  },
+  "charge": {
+   "fx": "flash_charge",
+   "g": -23,
+   "space": "shop",
+   "fin": 0.08,
+   "fout": 0.006,
+   "ramp": 12
+  },
+  "pop": {
+   "fx": "flash_pop",
+   "g": 3,
+   "space": "close",
+   "align": true,
+   "fin": 0.001,
+   "fout": 0.2
+  },
+  "knock": {
+   "fx": "handling",
+   "g": 6,
+   "space": "close",
+   "align": true,
+   "fin": 0.001,
+   "fout": 0.2
+  },
+  "vcr": {
+   "fx": "vcr_clunk",
+   "g": -24,
+   "space": "archive",
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.08
+  },
+  "glitch": {
+   "fx": "glitch",
+   "g": -21,
+   "space": "tape",
+   "align": true,
+   "fin": 0.004,
+   "fout": 0.06
+  },
+  "static": {
+   "fx": "static",
+   "g": -14,
+   "space": "tape",
+   "fin": 0.004,
+   "fout": 0.03
   }
  },
- "plr_db": 11.7
+ "beds_db": 32,
+ "close_db": 6,
+ "voice_peak_db": -17
 }

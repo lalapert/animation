@@ -13,17 +13,18 @@ cfg = json.load(open(os.path.join(HERE, "voice", "lines.json")))
 lines = {l["id"]: l for l in cfg["lines"]}
 durs = json.load(open(os.path.join(HERE, "voice", "out", "durations.json")))
 START = {"L1": 0.8, "L2": 5.55, "L3": 10.2, "L4": 14.5}
-POS = {"L1": "bottom", "L2": "bottom", "L3": "top", "L4": "top"}        # S2 has the prints and his hand at the bottom
+POS = {"L1": "top", "L2": "bottom", "L3": "top", "L4": "top"}        # S2 has the prints and his hand at the bottom
 VO = []
 for k in ["L1", "L2", "L3", "L4"]:
     VO.append({"id": k, "who": lines[k]["who"], "t": START[k], "dur": durs[k], "sub": lines[k].get("sub", lines[k]["text"]), "col": "#f2f2f2",
-               "fx": "cam", "pos": POS[k], "gain_db": -10.0})
+               "fx": "cam", "pos": POS[k], "gain_db": 0.0})
 
 # ---------------------------------------------------------------- shots: machine / prints / dark are Leon's camcorder (colour,
 # hand-held); cctv is CAM 05 played back by the archive (black and white, 6 frames a second)
-SHOTS = [["machine", 0.5, 9.4], ["prints", 9.4, 19.0], ["cctv", 19.0, 26.4], ["dark", 26.4, 40.2]]
+SHOTS = [["machine", 0.0, 9.4], ["prints", 9.4, 19.0], ["cctv", 19.0, 26.4], ["dark", 26.4, 40.2]]
 RECCUT = [9.4]               # he pauses and restarts the camcorder: STBY frames, a click
 STEP_IN = [2.2, 2.75]        # S1: two steps toward the machine
+FEED = [0.0, 1.2]            # S1 from frame 1: a print is already half out of the rollers and feeds out under the red lamp
 DROPS = [1.45, 6.6]          # S1: a print slides out and lands in the tray (the time it lands)
 TILT_TRAY = [6.0, 7.4]       # S1: he looks down at the tray
 EGG = {"t": 3.6, "dur": 0.1, "what": "the lightbox over the machine reads FOTO 8 HOUR for six frames"}
@@ -44,10 +45,11 @@ WHINE = [28.6, 30.6]         # a flash charging behind him; the swell under it; 
 TORCH_OFF = 30.5             # his flashlight (on the machine) flickers out: black
 QUIET = 30.6                 # near silence
 POP = 31.15                  # shutter + flash: for six frames the room is lit from behind him: his shadow and a second one
-FLASH = [31.15, 31.25]
-AFTER = [31.25, 31.7]        # the camcorder recovers: a burnt-in afterimage of the two shadows
-WHIP = [31.7, 32.2]          # he spins round toward the entrance
-CAM_UP = [33.0, 33.8]        # he tilts up at the corner: CAM 05 and its red light, from below, like the prints
+FLASH = [31.15, 31.57]       # two white frames, then the burnt frame with the two shadows holds (~0.4 s)
+AFTER = [31.57, 31.95]        # the camcorder recovers: a burnt-in afterimage of the two shadows
+WHIP = [31.95, 32.45]        # he spins round toward the entrance
+SPUTTER = [31.95, 35.7]       # his flashlight, on the machine behind him, sputters: weak flickers light the floor and the shutter
+CAM_UP = [33.1, 33.9]        # he tilts up at the corner: CAM 05 and its red light, from below, like the prints
 MOTOR = 34.6                 # behind him the machine starts again
 DROP_LAST = 35.2             # one more print lands in the tray
 TURN_BACK = [35.0, 35.9]
@@ -57,7 +59,7 @@ PRINT_FOCUS = [36.7, 37.25]  # the autofocus hunts, then lands on it: him mid-tu
 WHINE2 = 38.6                # the flash starts charging again
 END = 40.2
 DUR = 41.2
-STATIC = [[0.0, 0.5], [END, DUR]]
+STATIC = [[END, DUR]]          # no static before frame 1: the tape opens on the machine (the loop comes back to it)
 GLITCH = [[SKIP[0], SKIP[1]], [26.32, .12], [END - .3, .3]]
 STING = POP
 assert 30 <= DUR <= 50
@@ -68,7 +70,7 @@ for i, v in enumerate(VO):
     v["s1"] = round(min(nxt, v["t"] + v["dur"] + 0.5, cut), 3)
     assert v["t"] + v["dur"] < nxt + .15, v["id"]
     assert v["t"] + v["dur"] - .05 < cut + .06, v["id"]
-TL = {"DUR": DUR, "VO": VO, "SHOTS": SHOTS, "RECCUT": RECCUT, "STEP_IN": STEP_IN, "DROPS": DROPS, "TILT_TRAY": TILT_TRAY, "FLIPS": FLIPS,
+TL = {"DUR": DUR, "VO": VO, "SHOTS": SHOTS, "RECCUT": RECCUT, "FEED": FEED, "SPUTTER": SPUTTER, "STEP_IN": STEP_IN, "DROPS": DROPS, "TILT_TRAY": TILT_TRAY, "FLIPS": FLIPS,
       "DROPS2": DROPS2, "FOCUS_P5": FOCUS_P5, "SHUTTER": SHUTTER, "ROLL": ROLL, "PUSH": PUSH, "FLICKER": FLICKER, "SKIP": SKIP, "SIGN_DIE": SIGN_DIE,
       "EYES": EYES, "CRASH": CRASH, "LOOK_UP": LOOK_UP, "LOOK_DOWN": LOOK_DOWN, "WHINE": WHINE, "TORCH_OFF": TORCH_OFF, "QUIET": QUIET, "POP": POP,
       "FLASH": FLASH, "AFTER": AFTER, "WHIP": WHIP, "CAM_UP": CAM_UP, "MOTOR": MOTOR, "DROP_LAST": DROP_LAST, "TURN_BACK": TURN_BACK,

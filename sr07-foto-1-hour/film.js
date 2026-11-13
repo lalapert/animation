@@ -34,7 +34,7 @@ const HW = 3, DEP = 7, HT = 3.0;
 const LEON = { x: -.85, z: 5.0 };                                 // where he stands at the machine
 const TRAY = { x0: -1.08, x1: -.72, zb: 5.9, yb: .995, zf: 5.58, yf: .925 };  // the slanted output tray under the slot
 const SIGN = { x0: -1.85, x1: .65, y0: 1.86, y1: 2.44, z: 6.84 };
-const LAMP = [-.5, 1.6, 5.94];
+const LAMP = [-.9, 1.115, 5.86];                    // the machine's red printing lamp, just above the output slot
 const LED = { x0: -1.98, x1: -1.36, y0: 1.18, y1: 1.36, z: 5.884 };
 const CCTV_C = [-2.72, 2.66, .46], CCTV_DIR = nrm3([1.95, -1.7, 4.7]);
 const CAM05 = { x: CCTV_C[0] + CCTV_DIR[0] * .17, y: CCTV_C[1] + CCTV_DIR[1] * .17, z: CCTV_C[2] + CCTV_DIR[2] * .17,
@@ -101,7 +101,7 @@ function buildShop() {
   S.quad([[T.x0, T.yf, T.zf], [T.x1, T.yf, T.zf], [T.x1, T.yb, T.zb], [T.x0, T.yb, T.zb]], [48, 50, 56]);
   S.quad([[T.x0, T.yf, T.zf], [T.x1, T.yf, T.zf], [T.x1, T.yf + .05, T.zf], [T.x0, T.yf + .05, T.zf]], [60, 62, 70]);
   for (const x of [T.x0, T.x1]) S.quad([[x, T.yf, T.zf], [x, T.yb, T.zb], [x, T.yb + .05, T.zb], [x, T.yf + .05, T.zf]], [56, 58, 64]);
-  S.box(-.57, 1.55, 5.95, -.43, 1.6, 6.06, [80, 34, 30]);                                     // the red lamp's housing
+  S.box(-.94, 1.092, 5.868, -.86, 1.138, 5.9, [84, 30, 28]);                                  // the red lamp's housing, over the slot
   S.box(.22, .955, 6.0, .42, 1.015, 6.1, [26, 26, 28]);                                       // his flashlight, on the work surface
   S.box(.7, .955, 6.3, 1.3, 1.1, 6.8, [120, 70, 50]);                                         // an envelope rack
   for (let i = 0; i < 5; i++) S.quad([[.72 + i * .11, 1.1, 6.32], [.8 + i * .11, 1.1, 6.32], [.8 + i * .11, 1.2, 6.32], [.72 + i * .11, 1.2, 6.32]], [[220, 200, 120], [200, 210, 220], [220, 190, 110], [210, 200, 190], [230, 205, 130]][i]);
@@ -166,7 +166,7 @@ function lightMap(g, cam, L) {
     pool(g, cam, [-.05, .957, 6.08], [.45, 0, 0], [0, 0, .22], .55 * tc, wc);
   }
   const lp = L.lamp || 0;
-  if (lp > 0) { pool(g, cam, [LAMP[0], LAMP[1] - .05, 5.89], [.32, 0, 0], [0, .28, 0], .45 * lp, '255,70,60'); pool(g, cam, [LAMP[0], 1.553, 6.1], [.4, 0, 0], [0, 0, .25], .4 * lp, '255,70,60'); }
+  if (lp > 0) { pool(g, cam, [LAMP[0], 1.06, 5.888], [.34, 0, 0], [0, .16, 0], .55 * lp, '255,64,52'); pool(g, cam, [-.9, .95, 5.7], [.3, 0, 0], [0, .04, .26], .6 * lp, '255,64,52'); pool(g, cam, [-.9, 0, 5.3], [.6, 0, 0], [0, 0, .5], .18 * lp, '255,64,52'); }
   const gp = L.gap || 0;
   if (gp > 0) {
     const gc = '170,184,205';
@@ -177,6 +177,17 @@ function lightMap(g, cam, L) {
     pool(g, cam, [-2.72, 2.62, .5], [.32, 0, 0], [0, .3, 0], .55 * gp, gc);
     pool(g, cam, [-2.4, HT, .9], [1.0, 0, 0], [0, 0, .9], .35 * gp, gc);
     pool(g, cam, [-2.99, 2.2, .7], [0, 0, .8], [0, .8, 0], .3 * gp, gc);
+  }
+  const bk = L.back || 0;
+  if (bk > 0) {
+    const wc = '255,226,186';
+    pool(g, cam, [-2.0, 0, 3.0], [1.1, 0, 0], [0, 0, 1.8], .55 * bk, wc); pool(g, cam, [.5, 0, 3.0], [1.1, 0, 0], [0, 0, 1.8], .55 * bk, wc);
+    pool(g, cam, [-1.9, 1.5, .03], [.9, 0, 0], [0, .9, 0], .45 * bk, wc); pool(g, cam, [.4, 1.5, .03], [.9, 0, 0], [0, .9, 0], .45 * bk, wc);
+    pool(g, cam, [-2.99, 1.2, 2.6], [0, 0, 1.6], [0, .9, 0], .3 * bk, wc); pool(g, cam, [1.5, .7, 3.0], [1.2, 0, 0], [0, .4, 0], .25 * bk, wc);
+    pool(g, cam, [-2.6, HT, .7], [.8, 0, 0], [0, 0, .7], .3 * bk, wc);
+    pool(g, cam, [-.6, HT, 3.6], [1.6, 0, 0], [0, 0, 1.4], .3 * bk, '255,90,70');
+    pool(g, cam, [2.99, 1.3, 4.8], [0, 0, 2.2], [0, 1.3, 0], .95 * bk, wc); pool(g, cam, [2.0, 1.004, 3.3], [1.0, 0, 0], [0, 0, .5], .9 * bk, wc);   // the right wall, the counter
+    pool(g, cam, [1.6, .5, 3.0], [1.0, 0, 0], [0, .5, 0], .6 * bk, wc); pool(g, cam, [.8, HT, 5.0], [2.0, 0, 0], [0, 0, 1.6], .7 * bk, wc); pool(g, cam, [-.4, HT, 2.6], [2.2, 0, 0], [0, 0, 1.6], .5 * bk, wc);
   }
   if (L.hand) {
     const { x, y, r, a } = L.hand, gr = g.createRadialGradient(x, y, 4, x, y, r);
@@ -222,7 +233,7 @@ function emitters(g, cam, L, t, o = {}) {
   const lp = L.lamp || 0;
   if (lp > 0) {
     const p = project(cam, LAMP);
-    if (p) { const r = Math.max(4, 70 / p[2] * (o.lampScale || 1)); g.save(); g.globalCompositeOperation = 'lighter'; const gr = g.createRadialGradient(p[0], p[1], 1, p[0], p[1], r); gr.addColorStop(0, `rgba(255,120,100,${.95 * lp})`); gr.addColorStop(.25, `rgba(255,40,30,${.6 * lp})`); gr.addColorStop(1, 'rgba(255,0,0,0)'); g.fillStyle = gr; g.fillRect(p[0] - r, p[1] - r, 2 * r, 2 * r); g.restore(); }
+    if (p) { const r = Math.max(4, 42 / p[2] * (o.lampScale || 1)); g.save(); g.globalCompositeOperation = 'lighter'; const gr = g.createRadialGradient(p[0], p[1], 1, p[0], p[1], r); gr.addColorStop(0, `rgba(255,120,100,${.95 * lp})`); gr.addColorStop(.25, `rgba(255,40,30,${.6 * lp})`); gr.addColorStop(1, 'rgba(255,0,0,0)'); g.fillStyle = gr; g.fillRect(p[0] - r, p[1] - r, 2 * r, 2 * r); g.restore(); }
   }
   if (L.led) {
     const a = project(cam, [LED.x0, LED.y1, LED.z - .002]), b = project(cam, [LED.x1, LED.y1, LED.z - .002]), c = project(cam, [LED.x0, LED.y0, LED.z - .002]);
@@ -470,17 +481,17 @@ const camTime = t => { const s = stampSec(t); return `AM ${Math.floor(s / 3600)}
 
 // ---------------------------------------------------------------- S1: the machine printing in the dark (camcorder)
 function poseMachine(t) {
-  const s = TL.SHOTS[0], k1 = ease((t - 1.6) / 2.4), k2 = ease((t - 4.1) / 1.9), k3 = ease((t - TL.TILT_TRAY[0]) / (TL.TILT_TRAY[1] - TL.TILT_TRAY[0]));
-  const walking = (t > 1.7 && t < 3.6) || (t > TL.TILT_TRAY[0] + .2 && t < TL.TILT_TRAY[1]), h = handheld(t, s[1], 1.7, walking, .25);
-  let z = lerp(5.0, 4.0, k1), pitch = lerp(-.68, .1, k1), yaw = lerp(-.03, -.14, k1), fov = lerp(36, 62, k1), x = lerp(-.9, -.7, k1);
+  const s = TL.SHOTS[0], k1 = ease((t - 1.55) / 1.95), k2 = ease((t - 4.1) / 1.9), k3 = ease((t - TL.TILT_TRAY[0]) / (TL.TILT_TRAY[1] - TL.TILT_TRAY[0]));
+  const walking = (t > 1.7 && t < 3.4) || (t > TL.TILT_TRAY[0] + .2 && t < TL.TILT_TRAY[1]), h = handheld(t, s[1], 1.7, walking, .2);
+  let z = lerp(5.4, 4.0, k1), pitch = lerp(-.38, .1, k1), yaw = lerp(0, -.14, k1), fov = lerp(36, 62, k1), x = lerp(-.9, -.7, k1), y0 = lerp(1.2, 1.6, k1);
   yaw += .42 * k2; pitch -= .06 * k2;
   z = lerp(z, 4.75, k3); yaw = lerp(yaw, -.04, k3); pitch = lerp(pitch, -.62, k3); fov = lerp(fov, 42, k3); x = lerp(x, -.9, k3);
-  return { cam: { x, y: 1.6 - h.y, z, yaw: yaw + h.yaw, pitch: pitch + h.pitch, fov }, h, walking };
+  return { cam: { x, y: y0 - h.y, z, yaw: yaw + h.yaw, pitch: pitch + h.pitch, fov }, h, walking };
 }
 // the prints in the tray: the stack (the top one is the last print of the tape), then the ones that slide out and land
-function trayPrint(g, cam, img, k, slide = 1, jitter = 0) {
+function trayPrint(g, cam, img, k, slide = 1, jitter = 0, at = null) {
   const T = TRAY, along = (a, x) => { const zz = lerp(T.zb, T.zf + .01, a), yy = lerp(T.yb, T.yf, a) + .004 + k * .0025; return [x, yy, zz]; };
-  const a0 = lerp(-.42, .2, slide), a1 = a0 + .42, x0 = -1.005 + jitter, x1 = x0 + .21;
+  const a0 = at ?? lerp(-.42, .2, slide), a1 = a0 + .42, x0 = -1.005 + jitter, x1 = x0 + .21;
   const TLp = project(cam, along(a0, x0)), TRp = project(cam, along(a0, x1)), BLp = project(cam, along(a1, x0));
   if (a0 < 0) {                                                                                                  // still half in the slot
     const top = project(cam, along(0, x0)), top2 = project(cam, along(0, x1)), bl = project(cam, along(a1, x0)), br = project(cam, along(a1, x1));
@@ -497,12 +508,14 @@ function shotMachine(g, t) {
   lightUp(g, cam, { base: .1, sign, lamp: 1, hand: { x: fx, y: fy, r: 360, a: .95 } });
   emitters(g, cam, { sign, lamp: 1, led: 1 }, t);
   // the stack in the tray: the top print is the last print of the tape; two more land on it
-  trayPrint(g, cam, P[3], 0, 1, .01); trayPrint(g, cam, P[6], 1, 1, -.005);
-  const d0 = TL.DROPS[0], d1 = TL.DROPS[1];
-  if (t > d0 - .65) trayPrint(g, cam, P[1], 2, ease((t - (d0 - .65)) / .65), .015);
+  trayPrint(g, cam, P[1], 0, 1, .01); trayPrint(g, cam, P[6], 1, 1, -.005);
+  const d0 = TL.DROPS[0], d1 = TL.DROPS[1], [f0, f1] = TL.FEED;
+  // the first print feeds out of the rollers at an even speed, then drops down the tray and lands on the stack
+  const a = t < f1 ? lerp(-.16, 0, (t - f0) / (f1 - f0)) : lerp(0, .2, ease((t - f1) / (d0 - f1)));
+  trayPrint(g, cam, P[4], 2, 1, .012, a);
   if (t > d1 - .65) trayPrint(g, cam, P[2], 3, ease((t - (d1 - .65)) / .65), -.01);
   handTorch(g, h.y * 400, 0, t);
-  const blur = 7 * Math.exp(-(t - .5) / .25) + (t > 1.7 && t < 2.6 ? 3.5 * Math.sin((t - 1.7) / .9 * Math.PI) : 0) + (t > TL.TILT_TRAY[1] - .3 && t < TL.TILT_TRAY[1] + .4 ? 2.5 * Math.sin((t - TL.TILT_TRAY[1] + .3) / .7 * Math.PI) : 0);
+  const blur = 2.5 * Math.exp(-t / .18) + (t > 1.7 && t < 2.6 ? 3.5 * Math.sin((t - 1.7) / .9 * Math.PI) : 0) + (t > TL.TILT_TRAY[1] - .3 && t < TL.TILT_TRAY[1] + .4 ? 2.5 * Math.sin((t - TL.TILT_TRAY[1] + .3) / .7 * Math.PI) : 0);
   return { roll: h.roll, bgBlur: blur };
 }
 
@@ -579,7 +592,7 @@ function shotCctv(t) {
 
 // ---------------------------------------------------------------- S4: in the dark (camcorder): the flash, the turn, the last print
 function torchA(t) {
-  if (t >= TL.TORCH_OFF && t < TL.TORCH_ON) return t < TL.TORCH_OFF + .1 ? [0, 1, 0, .4, 0, 0][Math.floor((t - TL.TORCH_OFF) * 60)] ?? 0 : 0;
+  if (t >= TL.TORCH_OFF && t < TL.TORCH_ON) return t < TL.TORCH_OFF + .1 ? [0, 1, 0, .4, 0, 0][Math.floor((t - TL.TORCH_OFF) * 60)] ?? 0 : .6 * backA(t);   // dead, then sputtering
   if (t >= TL.TORCH_ON && t < TL.TORCH_ON + .25) return [1, 0, 0, .6, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1][Math.floor((t - TL.TORCH_ON) * 60)] ?? 1;
   return 1;
 }
@@ -596,7 +609,13 @@ function poseDark(t) {
   if (t >= TL.TURN_BACK[0]) { const k = ease((t - TL.TURN_BACK[0]) / (TL.TURN_BACK[1] - TL.TURN_BACK[0])); yaw = lerp(3.57, -.04, k); pitch = lerp(.27, -.5, k); fov = lerp(24, 50, k); }
   return { cam: { x: -.86, y: 1.56 - h.y, z: 4.72, yaw: yaw + h.yaw, pitch: pitch + h.pitch, fov }, h };
 }
-function darkLight(t) { return { base: .045, sign: 0, torch: torchA(t), lamp: 1, gap: 1.7 }; }
+// the flashlight on the machine, behind him while he faces the door: it sputters, weak, never steady
+function backA(t) {
+  if (t < TL.SPUTTER[0] || t >= TL.SPUTTER[1]) return 0;
+  const f = Math.floor(t * 30), R = TK.rng(f * 17 + 3), r = R(), burst = Math.sin(t * 2.3) * .5 + .5;
+  return r < .3 - .2 * burst ? .08 : r < .65 ? .35 + .3 * R() : .7 + .3 * R();
+}
+function darkLight(t) { return { base: .045, sign: 0, torch: torchA(t), lamp: 1, gap: 1.7, back: backA(t) }; }
 function darkScene(g, cs, t, o = {}) {
   const cam = TK.render(g, SHOP, cs, { ambient: 1.0, fog: .02, sprites: o.sprites });
   const L = darkLight(t);
@@ -649,7 +668,9 @@ function shotDark(g, fg, t) {
   if (inR(t, TL.FLASH)) {
     if (!FLASHIMG) buildFlash();
     if (t < TL.FLASH[0] + 2 / 60) { g.fillStyle = 'rgb(250,252,255)'; g.fillRect(0, 0, W, H); return { roll: 0, bgBlur: 0, fgBlur: 0, bright: 1.5, noise: 0 }; }
-    g.drawImage(FLASHIMG, 0, 0); return { roll: h.roll, bgBlur: .6, fgBlur: 0, bright: 1.35, noise: 0 };
+    const k = clamp((t - TL.FLASH[0] - 2 / 60) / (TL.FLASH[1] - TL.FLASH[0] - 2 / 60)), jy = Math.floor(t * 30) % 7 === 3 ? 2 : 0;
+    g.fillStyle = '#000'; g.fillRect(0, 0, W, H); g.drawImage(FLASHIMG, 0, jy);                 // the camcorder holds the burnt frame
+    return { roll: 0, bgBlur: .6 + 1.4 * k, fgBlur: 0, bright: 1.38 - .3 * k * k, noise: .02 + .05 * k };
   }
   if (t >= TL.WHIP[0] && t < TL.WHIP[1]) {                                                   // the spin: smeared
     g.fillStyle = '#000'; g.fillRect(0, 0, W, H);
@@ -742,56 +763,66 @@ function render(t) {
 window.render = render;
 window.debugPrints = () => { OUT.fillStyle = '#333'; OUT.fillRect(0, 0, 1080, 1920); [1, 2, 3, 4, 5, 6].forEach((k, i) => OUT.drawImage(P[k], (i % 2) * 540, Math.floor(i / 2) * 380 + 40, 530, 353)); };
 
-// ---------------------------------------------------------------- sound cues
+// ---------------------------------------------------------------- sound cues (owner 11/13: natural sound only)
+// Everything is something in the scene, picked up by his camcorder mic (or CAM 05's ceiling mic during the playback):
+// the machine, the lightbox buzz and its ticks, the mall's ventilation beyond the shutter, his steps, breath and hands,
+// the shutter behind him, the flash charging and firing. space: close (at his mic), shop (the small store), hall (the
+// concourse, through the shutter), tape / archive (the archive's deck and the blank tape, after the recording chain).
 function buildEvents() {
   const SH = Object.fromEntries(TL.SHOTS.map(s => [s[0], s])), EV = [];
-  // the lightbox: a tick whenever it drops out or strikes back (on its own 12 Hz grid), while it still works
-  let prev = 1;
-  for (let f = Math.ceil(.5 * 12); f / 12 < TL.SIGN_DIE; f++) { const a = signA(f / 12); if (Math.abs(a - prev) > .4) EV.push({ type: 'tick', t: +(f / 12).toFixed(3), g: a < prev ? .7 : .45, pan: -.1 }); prev = a; }
-  const VOend = TL.VO.map(v => v.t + v.dur);
+  // the lightbox: its buzz follows its light frame by frame (12 Hz), a tick on every drop-out and re-strike
+  const env = []; let prev = 1;
+  for (let f = 0; f / 12 < TL.SIGN_DIE + .2; f++) {
+    const t = f / 12, a = signA(t); env.push([+t.toFixed(3), +(.15 + .85 * a).toFixed(3)]);
+    if (Math.abs(a - prev) > .4 && t < TL.SIGN_DIE) EV.push({ type: 'tick', t: +t.toFixed(3), g: a < prev ? .8 : .5, pan: -.1 });
+    prev = a;
+  }
+  // his footsteps land on the bob of the camera (handheld(): the low point of each step)
+  const steps = [];
+  for (let k = 0; k < 20; k++) { const t = (k + .5) / 1.7; if ((t > 1.7 && t < 3.4) || (t > TL.TILT_TRAY[0] + .2 && t < TL.TILT_TRAY[1])) steps.push(+t.toFixed(3)); }
+  const OFF = SH.machine[2] - .06;
   EV.push(
-    { type: 'static', t: 0, dur: TL.STATIC[0][1] },
-    { type: 'bed', fx: 'tape_hiss', t: 0, t1: DUR + .5, g: -39 },
-    // S1: the machine running, the lightbox's buzz, the mall beyond the shutter
-    { type: 'bed', fx: 'minilab', t: .5, t1: SH.machine[2] - .06, g: -23, fin: .05, fout: .02 },
-    { type: 'bed', fx: 'fluor_hum', t: .5, t1: SH.machine[2] - .06, g: -31, fin: .05, fout: .02 },
-    { type: 'bed', fx: 'mall_hum', t: .5, t1: SH.prints[2], g: -37, fin: .05, fout: .02 },
-    ...TL.DROPS.map(d => ({ type: 'drop', t: d, g: 1 })),
-    { type: 'step', t: 1.95, g: .45, pan: -.1 }, { type: 'step', t: 2.6, g: .4, pan: .1 }, { type: 'step', t: 6.4, g: .4, pan: -.1 }, { type: 'step', t: 7.0, g: .35, pan: .1 },
-    ...TL.RECCUT.map(c => ({ type: 'camclick', t: c - .06 })),
-    // S2: the prints; the machine idles; a shutter behind him
-    { type: 'bed', fx: 'minilab', t: SH.prints[1] + .16, t1: SH.prints[2], g: -28, fin: .05, fout: .02 },
-    { type: 'bed', fx: 'fluor_hum', t: SH.prints[1] + .16, t1: SH.prints[2], g: -33, fin: .05, fout: .02 },
+    // the room, under every shot: the mall's ventilation beyond the half-open shutter
+    { type: 'bed', fx: 'mall_hum', space: 'hall', t: 0, t1: TL.WHINE[0] + 1.0, g: -39, fin: .01, fout: .9 },          // the mall's ventilation spins down as the flash charges
+    { type: 'bed', fx: 'mall_hum', space: 'hall', t: TL.WHIP[1], t1: TL.END, g: -39, fin: 1.6, fout: .01 },
+    // S1: the machine printing, the lightbox buzzing over it
+    { type: 'bed', fx: 'minilab', space: 'shop', t: 0, t1: OFF, g: -34, fin: .01, fout: .02 },
+    { type: 'bed', fx: 'fluor_hum', space: 'shop', t: 0, t1: OFF, g: -37, fin: .01, fout: .02, env },
+    ...TL.DROPS.map(d => ({ type: 'drop', t: d, g: 1, pan: -.05 })),
+    ...steps.map((x, i) => ({ type: 'step', t: x, g: .8, pan: i % 2 ? .1 : -.1 })),
+    ...TL.RECCUT.map(c => ({ type: 'camclick', t: c + .16 })),
+    // S2: the machine idles, the prints in his hand, his breath, a shutter behind him
+    { type: 'bed', fx: 'minilab_idle', space: 'shop', t: SH.prints[1] + .16, t1: SH.prints[2], g: -33, fin: .02, fout: .01 },
+    { type: 'bed', fx: 'fluor_hum', space: 'shop', t: SH.prints[1] + .16, t1: SH.prints[2], g: -38, fin: .02, fout: .01, env },
     ...TL.FLIPS.map((f, i) => ({ type: 'flip', t: f + .05, g: i === 3 ? .8 : 1, pan: -.15 })),
     ...TL.DROPS2.map(d => ({ type: 'drop', t: d, g: .55, pan: -.2 })),
-    { type: 'bed', fx: 'breath_bed', t: TL.FLIPS[3] + .6, t1: TL.SHUTTER - .05, g: -29, fin: 1.0, fout: .05 },
+    { type: 'bed', fx: 'breath_bed', space: 'close', t: TL.FLIPS[3] + .6, t1: TL.SHUTTER - .02, g: -27, fin: 1.0, fout: .04 },
     { type: 'shutter', t: TL.SHUTTER, pan: .35 },
-    { type: 'breath_in', t: TL.SHUTTER + .12 },
-    // S3: CAM 05 (the playback has its own faint sound: the room)
-    { type: 'roll', t: TL.ROLL[0] },
-    { type: 'bed', fx: 'minilab', t: SH.cctv[1], t1: TL.SIGN_DIE, g: -33, fin: .02, fout: .02 },
-    { type: 'bed', fx: 'fluor_hum', t: SH.cctv[1], t1: TL.SIGN_DIE, g: -30, fin: .02, fout: .02 },
-    { type: 'bed', fx: 'flicker', t: TL.FLICKER + .4, t1: TL.SIGN_DIE, g: -31, fin: .3, fout: .02 },
-    { type: 'lights_off', t: TL.SIGN_DIE },
-    { type: 'impact', t: TL.CRASH[0], g: .5 },
-    { type: 'switch', t: SH.dark[1] - .04 },
-    // S4: dark. His breathing; the charge; the swell; silence; the flash
-    { type: 'bed', fx: 'breath_bed', t: SH.dark[1], t1: TL.WHINE[0] + .15, g: -25, fin: .1, fout: .25 },
-    { type: 'bed', fx: 'mall_hum', t: SH.dark[1], t1: TL.WHINE[0] + .6, g: -42, fin: .05, fout: .5 },
+    { type: 'handling', t: TL.SHUTTER + .06, g: .6 },
+    { type: 'breath', t: TL.SHUTTER + .2, g: .9 },
+    // S3: CAM 05's own sound (its ceiling mic): the machine idling, the lightbox, then the tube dying
+    { type: 'vcr', t: TL.ROLL[0] },
+    { type: 'bed', fx: 'minilab_idle', space: 'shop', t: SH.cctv[1], t1: SH.cctv[2], g: -21.5, fin: .01, fout: .01 },
+    { type: 'bed', fx: 'fluor_hum', space: 'shop', t: SH.cctv[1], t1: TL.SIGN_DIE + .01, g: -25.5, fin: .01, fout: .01, env },
+    { type: 'tube_pop', t: TL.SIGN_DIE },
+    { type: 'vcr', t: SH.dark[1] - .02 },
+    // S4: dark. The machine idles; his breath. The flash charges behind him: the machine stops, he holds his breath
+    { type: 'bed', fx: 'minilab_idle', space: 'shop', t: SH.dark[1], t1: TL.WHINE[0] + .05, g: -27, fin: .01, fout: .05 },
+    { type: 'bed', fx: 'breath_bed', space: 'close', t: SH.dark[1], t1: TL.WHINE[0] + .12, g: -24, fin: .05, fout: .12 },
     { type: 'charge', t: TL.WHINE[0], dur: TL.WHINE[1] - TL.WHINE[0] },
-    { type: 'swell', t: TL.WHINE[1] - 1.9, dur: 1.9 },
-    { type: 'torch_off', t: TL.TORCH_OFF, g: .7 },
-    { type: 'pop', t: TL.POP }, { type: 'sting', t: TL.POP },
-    { type: 'handling', t: TL.WHIP[0] }, { type: 'whoosh', t: TL.WHIP[0] }, { type: 'step', t: TL.WHIP[0] + .2, g: .6, pan: .2 },
-    { type: 'bed', fx: 'near_breath', t: TL.WHIP[1], t1: TL.MOTOR + 1.5, g: -24, fin: .3, fout: .6 },
-    { type: 'bed', fx: 'mall_hum', t: TL.WHIP[1], t1: TL.TURN_BACK[0], g: -41, fin: .4, fout: .4 },
-    { type: 'zoom', t: TL.CAM_UP[0] },
-    { type: 'bed', fx: 'minilab', t: TL.MOTOR, t1: TL.DROP_LAST + .4, g: -28, fin: .15, fout: .3 },
+    // the flash right behind him; the camcorder jolts in his hand; he stumbles half a step
+    { type: 'pop', t: TL.POP }, { type: 'knock', t: TL.POP + .04 }, { type: 'scuff', t: TL.POP + .14, g: .9 },
+    { type: 'handling', t: TL.WHIP[0], g: 1.0 }, { type: 'rustle', t: TL.WHIP[0] + .08 }, { type: 'scuff', t: TL.WHIP[0] + .3, g: .8, pan: .2 },
+    { type: 'bed', fx: 'near_breath', space: 'close', t: TL.WHIP[1], t1: TL.MOTOR + 1.4, g: -22, fin: .3, fout: .5 },
+    { type: 'bed', fx: 'minilab', space: 'shop', t: TL.MOTOR, t1: TL.DROP_LAST + .4, g: -26, fin: .12, fout: .25 },
     { type: 'drop', t: TL.DROP_LAST, g: .9, pan: 0 },
-    { type: 'torch_on', t: TL.TORCH_ON, g: .6 },
-    { type: 'handling', t: TL.PICKUP[0] + .1, g: .6 },
-    { type: 'bed', fx: 'breath_bed', t: TL.PICKUP[1], t1: TL.WHINE2 + .1, g: -30, fin: .3, fout: .1 },
-    { type: 'charge', t: TL.WHINE2, dur: TL.END - TL.WHINE2, g: .55 },
+    { type: 'bed', fx: 'minilab_idle', space: 'shop', t: TL.DROP_LAST + .3, t1: TL.WHINE2 + .05, g: -28, fin: .2, fout: .05 },
+    { type: 'step', t: TL.TURN_BACK[0] + .45, g: .6 },
+    { type: 'handling', t: TL.PICKUP[0] + .1, g: .55 },
+    { type: 'flip', t: TL.PICKUP[0] + .3, g: .7 },
+    { type: 'bed', fx: 'breath_bed', space: 'close', t: TL.PICKUP[1], t1: TL.WHINE2 + .1, g: -28, fin: .3, fout: .1 },
+    { type: 'charge', t: TL.WHINE2, dur: TL.END - TL.WHINE2, g: .6 },
+    // the tape itself: a tracking glitch where it skips, the blank tape at the end
     ...TL.GLITCH.map(([t0, d]) => ({ type: 'glitch', t: t0, dur: d })),
     { type: 'static', t: TL.END, dur: DUR - TL.END },
   );
