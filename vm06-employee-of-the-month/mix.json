@@ -1,84 +1,22 @@
 {
-  "room_db": -60,
-  "voice_over_music_db": 12,
-  "beds": {},
-  "foley": {
-    "chime": {
-      "fx": "chime",
-      "g": -14,
-      "align": false,
-      "fin": 0.01,
-      "fout": 0.15
-    },
-    "whoosh": {
-      "fx": "whoosh",
-      "g": -18,
-      "align": false,
-      "fin": 0.01,
-      "fout": 0.15
-    },
-    "hop": {
-      "fx": "hop",
-      "g": -20,
-      "align": false,
-      "fin": 0.01,
-      "fout": 0.15
-    },
-    "step": {
-      "fx": "step",
-      "g": -23,
-      "align": false,
-      "fin": 0.01,
-      "fout": 0.15
-    },
-    "can": {
-      "fx": "can",
-      "g": -17,
-      "align": false,
-      "fin": 0.01,
-      "fout": 0.15
-    },
-    "blip": {
-      "fx": "blip",
-      "g": -19,
-      "align": false,
-      "fin": 0.01,
-      "fout": 0.15
-    },
-    "holo": {
-      "fx": "holo",
-      "g": -18,
-      "align": false,
-      "fin": 0.01,
-      "fout": 0.15
-    },
-    "ballot": {
-      "fx": "ballot",
-      "g": -15,
-      "align": false,
-      "fin": 0.01,
-      "fout": 0.15
-    },
-    "shutter": {
-      "fx": "shutter",
-      "g": -11,
-      "align": false,
-      "fin": 0.01,
-      "fout": 0.15
-    },
-    "frame": {
-      "fx": "frame",
-      "g": -15,
-      "align": false,
-      "fin": 0.01,
-      "fout": 0.15
-    },
-    "sparkle": {
-      "fx": "sparkle",
-      "g": -19,
-      "align": false,
-      "fin": 0.01,
-      "fout": 0.15
-    }
-  }
+ "room": {"src": "store_tone", "db": -55, "buzz_db": -70, "seed": 2},
+ "store_room": {"rt": 0.55, "mix": 0.22, "bright": 8000},
+ "music_db": -11,
+ "duck_db": -10,
+ "duck_pre": 0.15,
+ "duck_post": 0.3,
+ "foley_duck_db": -2,
+ "plr_db": 12.0,
+ "foley": {
+  "hop":     {"takes": ["hops", [[0.5, 0.9], [2.25, 2.65]]], "g": -30, "cents": 60, "gvar": 1.5},
+  "step":    {"takes": ["steps", [[0.33, 0.7], [0.97, 1.35], [1.57, 1.95], [2.17, 2.55], [2.81, 3.2], [3.33, 3.75]]], "g": -29, "cents": 30, "gvar": 1},
+  "can":     {"fx": "can", "g": -28, "cents": 50, "gvar": 1.5},
+  "servo":   {"fx": "mags_servo", "g": -30, "fout": 0.15},
+  "holo":    {"fx": "holo", "g": -32},
+  "tick":    {"fx": "blip", "g": -34},
+  "ballot":  {"fx": "ballot", "g": -25},
+  "shutter": {"fx": "shutter", "g": -22},
+  "frame":   {"fx": "frame", "g": -25},
+  "chime":   {"fx": "chime", "g": -30, "fout": 0.3}
+ }
 }

@@ -59,7 +59,10 @@ function drawWallFrames(g, t) {
 // MAGS on a pole from the ceiling
 function drawMagsHere(g, t, glow = 0) {
   tLine(g, [MG.x, -200, MG.x, MG.y + 2], 10); g.strokeStyle = '#c1c6d8'; g.lineWidth = 5; g.beginPath(); g.moveTo(MG.x, -200); g.lineTo(MG.x, MG.y); g.stroke();
+  const mk = clamp((t - TL.MAGSTURN) / .4) - 1, sw = .12 * (1 - (1 + 2.2 * mk * mk * mk + 1.2 * mk * mk));   // 11/13: he turns to Pip on his first close-up
+  g.save(); g.translate(MG.x, MG.y); g.rotate(sw); g.translate(-MG.x, -MG.y);
   drawMags(g, MG.x, MG.y, MG.s, { talk: Math.max(talkLevel('MAGS', t), glow), glow: 26 + glow * 120 });
+  g.restore();
 }
 // hologram boards under MAGS: "+1 MAGS" (L5) and the vote count (L8 to the flash)
 function holo(g, x, y, w, h, k, draw) {
@@ -238,22 +241,21 @@ const hopLandings = () => {
   return out;
 };
 window.EV = [
-  { type: 'bed', fx: 'store_hum', t: 0, t1: DUR + .5, g: -30 },
-  { type: 'whoosh', t: .08 },
-  ...hopLandings().map(x => ({ type: 'hop', t: x })),
-  ...footfalls(TL.RAEIN0, 2250, RX1, 160, 1.9).map(x => ({ type: 'step', t: x })),
-  ...footfalls(TL.RAEB0, 2250, RX2, 160, 1.9).map(x => ({ type: 'step', t: x })),
-  ...CANS.map(cn => ({ type: 'can', t: cn.t })),
-  ...vmShotsFrom('MAGS_CU').map(x => ({ type: 'blip', t: x + .02 })),
-  { type: 'holo', t: V.L5.t + 1.35 },
-  { type: 'holo', t: V.L8.t + .15 },
-  { type: 'blip', t: TL.SCORE },
-  { type: 'ballot', t: TL.SLIP - .1 },
-  { type: 'blip', t: TL.SLIP + .02 },
-  { type: 'shutter', t: TL.FLASH - .05 },
-  { type: 'frame', t: TL.DROP + .3 },
-  { type: 'sparkle', t: TL.DROP + .5 },
-  { type: 'chime', t: DUR - 1.2 },
+  // 11/13 natural-sound pass: foley for what we see, in the store's room (tools/mix.py adds the room tone under everything)
+  ...HOPS.map(h => ({ type: 'hop', t: h.t0 + h.d * .84, pan: .1 })),                       // Pip landing behind the shelf
+  ...CANS.map((cn, i) => ({ type: 'hop', t: cn.t - .02, pan: -.5 + i * .12 })),           // the restock run: a hop a can
+  ...CANS.map((cn, i) => ({ type: 'can', t: cn.t, pan: -.5 + i * .12 })),                 // each can set on the shelf top
+  ...footfalls(TL.RAEIN0, 2250, RX1, 160, 1.9).map(x => ({ type: 'step', t: x, pan: .4 })),
+  { type: 'servo', t: TL.MAGSTURN - .02 },                                                 // MAGS turns to Pip
+  { type: 'holo', t: V.L5.t + 1.35 },                                                      // +1 MAGS
+  { type: 'holo', t: V.L8.t + .15 },                                                       // the vote board
+  { type: 'tick', t: TL.SCORE },                                                           // MAGS 1
+  ...footfalls(TL.RAEB0, 2250, RX2, 160, 1.9).map(x => ({ type: 'step', t: x, pan: .35 })),
+  { type: 'ballot', t: TL.SLIP - .1, pan: .2 },                                            // Rae's slip into the box
+  { type: 'tick', t: TL.SLIP + .02 },                                                      // PIP 1
+  { type: 'shutter', t: TL.FLASH - .05 },                                                  // MAGS takes the photo
+  { type: 'frame', t: TL.DROP + .3 },                                                      // the new frame lands on its nail
+  { type: 'chime', t: DUR - 1.2 },                                                         // the front door, far off: back to the first frame
 ];
 
 (async () => {

@@ -221,7 +221,7 @@ class Band:
         env = (np.linspace(.25, 1, n) ** 1.6 if cresc else np.ones(n)) * bounce
         env[:int(.05 * SR)] *= np.linspace(0, 1, int(.05 * SR))
         env[-int(.03 * SR):] *= np.linspace(1, 0, int(.03 * SR))
-        add(self.st["brush"], (x * env * .05 * vel).astype(np.float32), t0, 1.0, .05)
+        add(self.st["brush"], (x * env * .25 * vel).astype(np.float32), t0, 1.0, .05)
 
     # ------------------------------------------------------------------ vibraphone
     def voicing(self, sym, lo=53, hi=76):

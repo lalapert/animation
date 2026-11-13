@@ -46,6 +46,7 @@ T["RUN0"], T["RUN1"] = round(T["MONT0"] + 0.25, 3), round(V["L5"]["t"] - 0.35, 3
 T["ARRIVE"] = round(T["RAEB0"] + RAEB, 3); T["SLIP"] = round(T["ARRIVE"] + 0.55, 3)                                 # the ballot goes in
 w8 = W("L8"); T["SCORE"] = round(V["L8"]["t"] + [x for x in w8 if x["w"].lower().startswith("mags")][0]["t0"] - 0.1, 3)  # the scoreboard numbers
 T["FLASH"] = round(end("L12") + 0.15, 3); T["DROP"] = round(T["FLASH"] + 0.45, 3); T["PHOTO1"] = round(T["FLASH"] + 1.9, 3)
+T["MAGSTURN"] = round(V["L4"]["t"] + 0.02, 3)                                                                       # 11/13: MAGS turns to Pip on his first close-up (the servo)
 T["JUMP"] = round(T["FLASH"] - 0.35, 3)                                                                             # Pip jumps into the picture
 SHOTS = [
     ["OPEN", 0.0, V["L3"]["t"]],
