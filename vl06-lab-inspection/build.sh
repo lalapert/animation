@@ -12,6 +12,7 @@ $PY tools/score.py                     # the Volt Labs band (tools/band.py), cue
 node tools/render.cjs events
 $PY tools/mix.py                       # room tone, foley in its space, voices, ducked music; asserts every line >= 8 dB clear
 node tools/render.cjs video 3
-sh tools/mux.sh out/video.mp4 out/mix.wav vl06-lab-inspection.mp4   # stops unless the loudnorm second pass is linear
+sh tools/mux.sh out/video.mp4 out/mix.wav out/vl06-lab-inspection.mp4   # stops unless the loudnorm second pass is linear (drafts stay in out/)
 $PY tools/srt.py
-python3 tools/final_check.py vl06-lab-inspection.mp4                # duration, LUFS, true peak, blackdetect, STT of every line, contact sheets
+python3 tools/final_check.py out/vl06-lab-inspection.mp4    # duration, LUFS, true peak, blackdetect, STT of every line, contact sheets
+cp out/vl06-lab-inspection.mp4 vl06-lab-inspection.mp4                 # the tracked file only once every check passes

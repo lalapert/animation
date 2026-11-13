@@ -1,137 +1,105 @@
-"""Original score for Void Mart 7 "Tip Jar" (F major, 120 BPM): the show's jazzy bed.
-A glockenspiel shimmer for the comet; the bed under the trucker; a tuba for the tooth; MAGS's glockenspiel jingle on every
-MAGS line; a "claw machine" toy-piano run for the claw; a slow tense vibes cluster under the tip screen and a cash-register
-xylophone on the press; quiet bass on Rae's walk; the xylophone button at the end. CC0 samples (VSCO 2 CE, VCSL, FreePats).
-  .venv/bin/python tools/score.py            → out/music.wav
+"""Score for Void Mart 7 "Tip Jar" (natural-sound pass, 11/13): the house trio (tools/band.py), F major.
+  - the comet lands in the jar (its own sounds, dry); then a short happy walk under "Our first tip!"; out before
+    "It's a comet."
+  - the trucker glides in: a laid-back two-feel with brushes, his swagger; it stops dead on the tooth (the pop lands dry);
+    "Keep the change." and "That's his tooth." dry
+  - "It's still warm!": a soft vibes chord with the motor on (aww); MAGS's glockenspiel jingle right before him
+  - "Tip policy update!": a smooth corporate vamp under the policy; out before "You don't even have hands!"
+  - the claw: no music, only the machine; "I have a claw." dry
+  - "would YOU like to leave a tip?": a sweet lounge vamp as MAGS comes down; then the tip screen: the bass alone on a
+    soft pedal note, a vibes chord pulsing with the motor, getting closer... and everything stops dead on the press
+  - "Pip." and "It was looking at me." dry
+  - Rae walks over, the coin: the usual walk comes back softly; out when the claw comes down again; "No." dry
+  - the button (the only hit): the xylophone as the claw goes back up, limp
+Every punchline sits in a TACET window (the band damped, room tone only). CC0 samples (VSCO 2 CE, VCSL, FreePats).
+  .venv/bin/python tools/score.py            -> out/music.wav, out/score.json
 """
 import json, os, sys
 import numpy as np
 import soundfile as sf
-from fractions import Fraction
-from scipy import signal
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import audio
-from audio import SR, HERE, buf, add, note, m, lowpass, highpass, room, rms
+from audio import SR, HERE
+from band import Band
 
 TL = json.load(open(os.path.join(HERE, "out", "timeline.json")))
-B, BAR, DUR = TL["BEAT"], TL["BAR"], TL["DUR"]
+DUR = TL["DUR"]
 V = {v["id"]: v for v in TL["VO"]}
 end = lambda k: V[k]["t"] + V[k]["dur"]
-stems = {k: buf(DUR + 4) for k in ["bass", "keys", "drums", "brass", "strings", "fx", "winds"]}
-USED = set()
+b = Band(DUR, seed=7, bpm=120)
 
+# 1. "Our first tip!": a short happy walk after the comet lands; out before "It's a comet."
+s1, e1 = TL["LAND"] + .2, V["L2"]["t"] - .12
+b.chord_hit(s1, "F6", 1.2, .3, roll=.02)
+b.walk(s1, e1, ["F6", "D7"], vel=.5, last="Gm7")
+b.brushes(s1, e1, vel=.4, fade_in=.2, fade_out=.06)
+b.comp(s1 + 2.0, e1, ["D7"], vel=.3, density=.6)
 
-def N(t, inst, name, beats, vel=.5, pan=0.0, release=None, attack=0.0, stem="keys"):
-    USED.add(inst)
-    add(stems[stem], note(inst, m(name), beats * B, vel, release=release, attack=attack), t, 1.0, pan)
+# 2. the trucker glides in: his swagger, stopped dead by the tooth
+s2, e2 = TL["POD0"] + .15, TL["YANK"] - .04
+b.last_voicing = None; b.prev_bass = 36
+b.two(s2, e2, ["Bb7", "F6"], vel=.48, skip=.4)
+b.brushes(s2, e2, vel=.38, fade_in=.4, fade_out=.04)
+b.comp(s2 + .5, e2, ["Bb7", "F6"], vel=.28, density=.6)
 
+# 3. "It's still warm!": aww; then MAGS's jingle right before him
+s3 = V["L5"]["t"] - .2
+b.last_voicing = None
+b.chord_hit(s3, "Bbmaj7", 2.4, .3, roll=.035, release=.5)
+b.set_motor(s3, s3 + 1.6, .24)
+mg = V["L6"]["t"]
+b.jingle(mg - .45)
 
-_rr = {}
-def perc(t, inst, var, vel=.5, pan=0.0, stem="drums"):
-    """unpitched hit: pick a zone whose variant contains `var`, round-robin, no transposition"""
-    USED.add(inst)
-    Z = [z for z in audio.index()[inst]["zones"] if var in (z.get("var") or "")]
-    k = _rr.get((inst, var), 0); _rr[(inst, var)] = k + 1
-    z = Z[k % len(Z)]
-    x, s = audio._sample(z["f"])
-    x = x[z.get("on", 0):]
-    if s != SR:
-        fr = Fraction(SR, s).limit_denominator(1000)
-        x = signal.resample_poly(x, fr.numerator, fr.denominator).astype(np.float32)
-    x = x * (.12 / max(z.get("rms", .05), 1e-4)) * vel
-    add(stems[stem], x[:int(2.5 * SR)], t, 1.0, pan)
+# 4. "Tip policy update! Management keeps sixty percent.": the corporate vamp
+s4, e4 = mg + .05, end("L6") + .05
+b.last_voicing = None; b.prev_bass = 41
+b.two(s4, e4, ["Fmaj7", "Gm7 C7"], vel=.42, skip=.3)
+b.brushes(s4, e4, vel=.32, fade_in=.4, fade_out=.06)
+b.comp(s4, e4, ["Fmaj7", "Gm7 C7"], vel=.28, density=.8)
 
+# 5. "would YOU like to leave a tip?": the sweet vamp as MAGS comes down; then the screen, closer and closer; dead on the press
+s5, e5 = V["L9"]["t"] - .1, TL["SCREEN"]
+b.last_voicing = None; b.prev_bass = 41
+b.pad(s5, e5, ["Fmaj7", "Ebmaj7", "Fmaj7"], vel=.28, motor=.2)
+b.two(s5, e5, ["Fmaj7", "Ebmaj7", "Fmaj7"], vel=.38, skip=.15, stop=False)
+b.brushes(s5, e5, vel=.26, slap=False, fade_in=.5, fade_out=.1)
+s6, e6 = TL["SCREEN"], TL["PRESS"] - .02
+k = 0
+while s6 + k * b.B < e6 - .05:
+    b.bass_note(s6 + k * b.B, "C2", .7, .34 + .02 * k, release=.08); k += 1
+b.last_voicing = None
+b.chord_hit(s6 + .02, "C7sus", (e6 - s6) / b.B, .26, roll=.04, release=.06)
+b.set_motor(s6, e6, .35)
 
-def walk(t0, t1, notes, vel=.5):
-    """walking bass, one note per beat"""
-    t, i = t0, 0
-    while t < t1 - .05:
-        N(t, "contrabass_pizz", notes[i % len(notes)], .9, vel * (1 if i % 4 == 0 else .85), -.1, .25, stem="bass"); t += B; i += 1
+# 6. Rae walks over, the coin: the usual, softly; out when the claw comes down again
+s7, e7 = TL["END0"] + .1, TL["CLAW2"] - .05
+b.last_voicing = None; b.prev_bass = 41
+b.walk(s7, e7, ["F6", "D7"], vel=.44, last="Gm7")
+b.brushes(s7, e7, vel=.32, fade_in=.3, fade_out=.06)
+b.comp(s7, e7, ["F6", "D7"], vel=.26, density=.6)
 
+# 7. the button as the claw goes back up, limp (the only hit)
+en = TL["CLAWBACK"] + .12
+b.button(en)
 
-def brushes(t0, t1, vel=.3):
-    t, i = t0, 0
-    while t < t1 - .05:
-        perc(t, "drum_kit", "hi_hat_closed", vel * (1 if i % 2 else .7), .25)
-        if i % 4 in (1, 3): perc(t, "drum_kit", "snare_rest", vel * .8, .1)
-        t += B; i += 1
-
-
-def vchord(t, names, beats, vel=.36, inst="vibraphone"):
-    for k, n in enumerate(names):
-        N(t + k * .012, inst, n, beats, vel, -.25 + .17 * k, 1.2)
-
-
-FM7, BB7, C7, DM7, GM7 = ["F3", "A3", "C4", "E4"], ["Bb3", "D4", "F4", "A4"], ["C3", "E3", "G3", "Bb3"], ["D3", "F3", "A3", "C4"], ["G3", "Bb3", "D4", "F4"]
-T = TL
-def roll(t0, t1, v0=.15, v1=.45):
-    """a snare roll that swells: 20 hits a second"""
-    t = t0
-    while t < t1 - .02:
-        k = (t - t0) / max(.01, t1 - t0); perc(t, "snare", "on", v0 + (v1 - v0) * k, .1 * ((int(t * 20) % 2) * 2 - 1)); t += .05
-def jingle(t):
-    """MAGS's glockenspiel jingle"""
-    for i, n in enumerate(["C5", "F5", "A5", "C6"]): N(t - .05 + i * .11, "glockenspiel", n, 1, .32, .1, .9)
-# the comet: a glockenspiel shimmer as it lands in the jar; the bed starts under "Our first tip!"
-for i, n in enumerate(["A5", "C6", "F6", "A6"]): N(T["LAND"] + i * .05, "glockenspiel", n, 1, .26, -.2 + i * .13, .9)
-bed0, bed_end = V["L1"]["t"] - .2, T["YANK"] - .05
-walk(bed0, bed_end, ["F2", "A2", "C3", "A2", "Bb2", "D3", "C3", "A2"], .34)
-brushes(bed0, bed_end, .2)
-for i, ch in enumerate([FM7, BB7, C7, FM7]):
-    if bed0 + BAR * i < bed_end - .3: vchord(bed0 + BAR * i, ch, 3, .19)
-# the tooth: one low tuba note on the pop, a little vibes chord on "Keep the change."
-N(T["YANK"] + .02, "tuba", "F1", 1.2, .4, 0, .5, stem="bass")
-vchord(V["L3"]["t"] + .1, BB7, 2, .2)
-# "It's still warm!": a warm chord
-vchord(V["L5"]["t"] + .3, FM7, 3, .22)
-# MAGS: the jingle on every line
-for k in ["L6", "L8", "L9"]: jingle(V[k]["t"])
-# "Management keeps sixty percent.": a smug trombone after the line
-N(end("L6") + .05, "trombone", "C3", .6, .34, 0, .2, stem="winds"); N(end("L6") + .05 + .6 * B, "trombone", "F2", 1.4, .36, 0, .6, stem="winds")
-# the claw: a toy-like xylophone run down as it lowers, a snap, a run up as it lifts
-for i, n in enumerate(["C6", "A5", "F5", "D5", "C5", "A4"]): N(T["CLAW0"] + i * .16, "xylophone", n, .4, .26, .2 - .07 * i, .2)
-perc(T["CLAWGRAB"], "drum_kit", "snare_rest", .3, .1)
-for i, n in enumerate(["A4", "C5", "F5", "A5", "C6"]): N(T["CLAWUP"] + i * .1, "xylophone", n, .4, .3, -.2 + .1 * i, .2)
-# the tip screen: a low held bass, a tense vibes cluster pulsing, then the press: a bright cash-register xylophone
-N(T["SCREEN"], "contrabass_pizz", "C2", 2, .4, -.1, .8, stem="bass")
-t = T["SCREEN"] + .1
-while t < T["PRESS"] - .1:
-    vchord(t, ["B3", "C4", "F4"], .5, .16); t += B * .75
-for i, n in enumerate(["C6", "E6"]): N(T["PRESS"] + .02 + i * .08, "glockenspiel", n, 1, .34, .15, .8)
-# "Pip." / "It was looking at me.": a sad little trombone after Pip's line
-N(end("L11") + .05, "trombone", "A2", .6, .3, 0, .2, stem="winds"); N(end("L11") + .05 + .6 * B, "trombone", "F2", 1.2, .3, 0, .6, stem="winds")
-# Rae walks over: the walking bass, quiet, on her steps; the coin: two xylophone notes
-walk(T["RAEW0"] + .05, T["COIN"] + .2, ["F2", "G2", "A2", "C3"], .26)
-for i, n in enumerate(["C5", "F5"]): N(T["COIN"] + .14 + i * .08, "xylophone", n, .5, .36, .1, .3)
-# the claw again, the palm: silence under "No."; then the bed, and the button
-for i, n in enumerate(["C6", "A5", "F5", "D5"]): N(T["CLAW2"] + i * .16, "xylophone", n, .4, .22, .2 - .07 * i, .2)
-e0 = T["CLAWBACK"] - .1; en = DUR - 1.4
-walk(e0, en - .1, ["F2", "C3", "F3", "C3"], .34)
-brushes(e0, en - .1, .22)
-vchord(e0, FM7, 2, .2)
-for i, n in enumerate(["C5", "F5", "A5", "C6"]): N(en + i * .07, "xylophone", n, .6 if i < 3 else 2, .44, -.2 + i * .13, .3 if i < 3 else 1.2)
-vchord(en + .28, ["F3", "A3", "C4", "F4"], 4, .32)
-N(en + .28, "contrabass_pizz", "F2", 2, .55, -.1, .6, stem="bass")
-perc(en + .28, "triangle", "open", .3, .3, stem="fx")
-
-def active_rms(x):
-    w = int(.1 * SR); n = len(x) // w
-    e = np.sqrt((x[:n * w].reshape(n, w, 2) ** 2).mean((1, 2))); e = e[e > 1e-4]
-    return float(np.sqrt((e ** 2).mean())) if len(e) else 0.0
-
-
-GP = os.path.join(HERE, "tools", "score_gain.json")
-GAIN = json.load(open(GP)) if os.path.exists(GP) else {}
-mus = np.zeros_like(stems["bass"])
-for k, v in stems.items():
-    print(f"stem {k:8s} active rms {20 * np.log10(active_rms(v) + 1e-9):6.1f} dB  gain {GAIN.get(k, 1.0)}")
-    mus += v * GAIN.get(k, 1.0)
-mus = highpass(mus, 38)
-mus = room(mus, size=.35, mix=.18, damp=.55)
-endi = int((DUR - .05) * SR); mus[endi:] *= 0
-mus = mus[:int(DUR * SR)]
-mus *= .5 / (np.abs(mus).max() + 1e-9)
-sf.write(os.path.join(HERE, "out", "music.wav"), mus, SR, subtype="FLOAT")
-json.dump(sorted(USED), open(os.path.join(HERE, "out", "instruments_used.json"), "w"))
-print("per 2 s dB:", " ".join(f"{b * 2}:{20 * np.log10(np.sqrt(np.mean(mus[int(b * 2 * SR):int((b + 1) * 2 * SR)] ** 2)) + 1e-12):.0f}" for b in range(int(DUR / 2) + 1)))
+TACET = [[e1, TL["POD0"]], [e2, s3 - .02], [e4, s5 - .02], [e6, s7 - .02], [e7, en - .02]]
+music, stems = b.render(json.load(open(os.path.join(HERE, "tools", "score_gain.json"))))
+env = np.ones(len(music), np.float32)
+for a, z in TACET:
+    i, j = int(a * SR), int(z * SR)
+    kk = int(.09 * SR) if (a, z) != (e6, s7 - .02) else int(.02 * SR)        # the press: everything stops at once
+    env[i:j] = 0
+    env[max(0, i - kk):i] = np.minimum(env[max(0, i - kk):i], np.linspace(1, 0, i - max(0, i - kk)))
+    env[j:j + int(.03 * SR)] = np.minimum(env[j:j + int(.03 * SR)], np.linspace(0, 1, len(env[j:j + int(.03 * SR)])))
+music *= env[:, None]
+music[int((DUR - .05) * SR):] = 0
+music = music[:int(DUR * SR)]
+act = np.abs(music).max(1) > 1e-4
+music *= 10 ** (-24 / 20) / np.sqrt(np.mean(music[act] ** 2))
+sf.write(os.path.join(HERE, "out", "music.wav"), music.astype(np.float32), SR, subtype="FLOAT")
+json.dump({"tacet": TACET, "hits": [["button", en]], "instruments": sorted(b.used), "fills": b.log},
+          open(os.path.join(HERE, "out", "score.json"), "w"), indent=1)
+json.dump(sorted(b.used), open(os.path.join(HERE, "out", "instruments_used.json"), "w"))
+print("instruments:", ", ".join(sorted(b.used)))
+print("tacet:", ", ".join(f"{a:.2f}-{z:.2f}" for a, z in TACET))
+print("per 1 s dB:", " ".join(f"{i}:{20 * np.log10(np.sqrt(np.mean(music[i * SR:(i + 1) * SR] ** 2)) + 1e-12):.0f}" for i in range(int(DUR) + 1)))
