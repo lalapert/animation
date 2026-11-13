@@ -155,3 +155,16 @@ def m(name):
         n += 1 if name[i] == "#" else -1
         i += 1
     return n + 12 * (int(name[i:]) + 1)
+
+
+def lufs(x, sr=SR):
+    """BS.1770-4 integrated loudness of a 48 kHz stereo buffer (K-weighting, 400 ms blocks, -70 and -10 LU gates)"""
+    assert sr == 48000
+    y = signal.lfilter([1.53512485958697, -2.69169618940638, 1.19839281085285], [1.0, -1.69065929318241, .73248077421585], x, axis=0)
+    y = signal.lfilter([1.0, -2.0, 1.0], [1.0, -1.99004745483398, .99007225036621], y, axis=0)
+    blk, hop = int(.4 * sr), int(.1 * sr)
+    ms = np.array([(y[i:i + blk] ** 2).mean(0).sum() for i in range(0, len(y) - blk + 1, hop)])
+    L = -.691 + 10 * np.log10(ms + 1e-12)
+    g1 = L > -70
+    rel = -.691 + 10 * np.log10(ms[g1].mean()) - 10
+    return float(-.691 + 10 * np.log10(ms[g1 & (L > rel)].mean()))

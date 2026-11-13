@@ -450,50 +450,61 @@ function render(t) {
 }
 window.render = render;
 
-// ---------------------------------------------------------------- sound cues
-// a tin step on every held-frame jump (louder as it comes closer; dragged after the key stops), ticking that runs with the key
-// (steady, slowing to nothing, racing), a grind on each snap, flicker clicks with the failing sign, the swell, silence, the sting
+// ---------------------------------------------------------------- sound cues (owner 11/13: natural sound only)
+// Everything is in the scene and heard through CAM 10's ceiling mic: the mall's ventilation and the store's hum (the sign's buzz
+// following its light frame by frame, a tick at each drop-out), the robot (its scrape, tin steps on every held-frame jump, the
+// clockwork running with the key, its head grinding round, the key winding itself, its music box, its voice box), the shutter
+// and the toys behind it, the power dying, then the robot against the camera. Changes land on CAM 10's own frames (6 a second).
+// space: shop (the store front and its hum), hall (the concourse), close (at the camera), tape, archive (the archive's deck).
 const dist = (x, z) => Math.hypot(x - CAM.x, z - CAM.z);
-const stepEv = [];
-for (const [a, b, seed, h0, h1] of [[W1[0], W1[1], 11, 1, 2], [W2[0], KS, 23, 1, 3], [KS, W2[1], 29, 2, 4], [W3[0], W3[1], 37, 1, 2]])
-  for (const t of holdStarts(a, b, seed, h0, h1)) {
-    const [x, z] = posAt(t, false), gl = clamp(9.5 / dist(x, z), .5, 1.6);
-    stepEv.push({ type: t >= KS && t < W2[1] ? 'drag' : 'step', t: Math.round(t * 1000) / 1000, g: gl, pan: -.1 });
+function buildEvents() {
+  const EV = [], F = 1 / FPS_CCTV, cq = x => +(Math.ceil(x * FPS_CCTV - 1e-6) / FPS_CCTV).toFixed(3), OFF = cq(TL.QUIET);
+  const env = []; let prev = null;
+  for (let f = Math.round(TL.ROLL[0] / F); f * F < OFF + .2; f++) {
+    const tq = f * F, L = lights(tq), lvl = .2 + .5 * L.sign + .3 * L.panel;
+    env.push([+tq.toFixed(3), +lvl.toFixed(3)], [+(tq + F - .01).toFixed(3), +lvl.toFixed(3)]);
+    if (prev !== null && Math.abs(lvl - prev) > .2 && tq < OFF) EV.push({ type: 'tick', t: +tq.toFixed(3), g: lvl < prev ? .8 : .55, pan: .3 });
+    prev = lvl;
   }
-const winds = holdStarts(TL.SELFWIND[0], TL.SELFWIND[1], 41, 1, 3);
-window.EV = [
-  { type: 'static', t: 0.0, dur: .6 },
-  { type: 'roll', t: TL.ROLL[0] },
-  { type: 'bed', fx: 'mall_hum', t: TL.ROLL[0], t1: TL.QUIET, g: -27, fin: .25, fout: .01 },
-  { type: 'bed', fx: 'store_hum', t: TL.ROLL[0], t1: TL.QUIET, g: -32, fin: .25, fout: .01 },
-  { type: 'scrape', t: TL.EMERGE },
-  { type: 'clank', t: TL.STANDUP, g: .8 },
-  { type: 'ticks', t: W1[0], t1: W1[1], r0: 7, r1: 7, g: -21 },
-  { type: 'clank', t: W1[1], g: .6 },
-  { type: 'snap', t: TL.SNAP_HEAD, g: 1.25 },
-  { type: 'snap', t: TL.SNAP_BODY, g: .9 }, { type: 'clank', t: TL.SNAP_BODY + .02, g: .7 },
-  { type: 'ticks', t: W2[0], t1: KS, r0: 7, r1: 1.6, g: -21 },
-  { type: 'whir', t: KS - .35 },
-  ...stepEv,
-  { type: 'snap', t: TL.TILT[0], g: .8 },
-  ...winds.map((t, i) => ({ type: 'ratchet', t, g: i % 3 ? .8 : 1 })),
-  { type: 'wind', t: TL.SELFWIND[0] - .05, dur: TL.SELFWIND[1] - TL.SELFWIND[0] + .05 },
-  { type: 'snap', t: TL.TILT[1], g: .6 },
-  { type: 'bed', fx: 'tick_fast', t: W3[0], t1: W3[1], g: -27, fin: .02, fout: .005 },
-  { type: 'bed', fx: 'flicker', t: W3[0], t1: W3[1], g: -33, fin: .05, fout: .02 },
-  ...TL.GLITCH.map(([t0, d]) => ({ type: 'glitch', t: t0, dur: d })),
-  { type: 'clank', t: TL.STOP, g: 1.1 },
-  { type: 'snap', t: TL.LOOKUP, g: 1.3 },
-  { type: 'eyes', t: TL.EYES },
-  { type: 'bed', fx: 'flicker', t: TL.FLICKER2, t1: TL.QUIET, g: -27, fin: .05, fout: .005 },
-  { type: 'swell', t: TL.SWELL[0], dur: TL.SWELL[1] - TL.SWELL[0] },
-  { type: 'shutter', t: TL.SHUTTER },
-  { type: 'toys', t: TL.SHUTTER + .05, dur: TL.QUIET - TL.SHUTTER - .05 },
-  { type: 'ticks', t: TL.BLACK[0] + .17, t1: TL.BLACK[0] + .2, r0: 10, r1: 10, g: -27, nogate: true },   // one tick in the dark, close
-  { type: 'sting', t: TL.STING }, { type: 'sting2', t: TL.STING },
-  { type: 'static', t: TL.END, dur: DUR - TL.END },
-  { type: 'bed', fx: 'tape_hiss', t: 0, t1: DUR + .5, g: -38, nogate: true },
-];
+  for (const [a, b, seed, h0, h1] of [[W1[0], W1[1], 11, 1, 2], [W2[0], KS, 23, 1, 3], [KS, W2[1], 29, 2, 4], [W3[0], W3[1], 37, 1, 2]])
+    for (const t of holdStarts(a, b, seed, h0, h1)) {
+      const [x, z] = posAt(t, false), gl = clamp(9.5 / dist(x, z), .5, 1.6);
+      EV.push({ type: t >= KS && t < W2[1] ? 'drag' : 'step', t: Math.round(t * 1000) / 1000, g: gl, pan: -.1 });
+    }
+  const winds = holdStarts(TL.SELFWIND[0], TL.SELFWIND[1], 41, 1, 3);
+  EV.push(
+    { type: 'static', t: 0.0, dur: TL.STATIC[0][1] },
+    { type: 'vcr', t: TL.ROLL[0] },
+    { type: 'bed', fx: 'mall_hum', space: 'hall', t: TL.ROLL[0], t1: OFF, g: -36, fin: .02, fout: .18 },                 // the power dies:
+    { type: 'bed', fx: 'store_hum_clean', space: 'shop', t: TL.ROLL[0], t1: OFF + .01, g: -30, fin: .02, fout: .01, env },  // fans spin down
+    { type: 'scrape', t: TL.EMERGE },
+    { type: 'clank', t: cq(TL.STANDUP), g: .8 },
+    { type: 'ticks', t: W1[0], t1: W1[1], r0: 7, r1: 7, g: -21 },
+    { type: 'clank', t: W1[1], g: .6 },
+    { type: 'snap', t: cq(TL.SNAP_HEAD), g: 1.25 },
+    { type: 'snap', t: cq(TL.SNAP_BODY), g: .9 }, { type: 'clank', t: cq(TL.SNAP_BODY) + .02, g: .7 },
+    { type: 'ticks', t: W2[0], t1: KS, r0: 7, r1: 1.6, g: -21 },
+    { type: 'whir', t: KS - .35 },
+    { type: 'snap', t: cq(TL.TILT[0]), g: .8 },
+    ...winds.map((t, i) => ({ type: 'ratchet', t, g: i % 3 ? .8 : 1 })),
+    { type: 'wind', t: TL.SELFWIND[0] - .05, dur: TL.SELFWIND[1] - TL.SELFWIND[0] + .05 },
+    { type: 'snap', t: cq(TL.TILT[1]), g: .6 },
+    { type: 'bed', fx: 'tick_fast', space: 'shop', t: cq(W3[0]), t1: W3[1], g: -27, fin: .02, fout: .005 },
+    ...TL.GLITCH.map(([t0, d]) => ({ type: 'glitch', t: t0, dur: d })),
+    { type: 'clank', t: TL.STOP, g: 1.1 },
+    { type: 'snap', t: cq(TL.LOOKUP), g: 1.3 },
+    { type: 'eyes', t: cq(TL.EYES) },
+    { type: 'shutter', t: cq(TL.SHUTTER) },
+    { type: 'toys', t: cq(TL.SHUTTER) + .05, dur: OFF - cq(TL.SHUTTER) - .05 },
+    { type: 'mute', t: TL.BLACK[0], t1: cq(TL.JUMP) },                                     // the tape drops out: the recording is dead
+    // it is against the camera: its tin body hits the housing, its clockwork races right at the mic, the mic overloads
+    { type: 'hit', t: cq(TL.JUMP) }, { type: 'clank', t: cq(TL.JUMP) + .02, g: 6, space: 'close' },
+    { type: 'ticks', t: cq(TL.JUMP) + .03, t1: cq(TL.JUMP) + .55, r0: 22, r1: 14, g: 6.5, space: 'close' },
+    { type: 'static', t: TL.END, dur: DUR - TL.END },
+  );
+  return EV.sort((a, b) => a.t - b.t);
+}
+window.EV = buildEvents();
 
 (async () => {
   try {

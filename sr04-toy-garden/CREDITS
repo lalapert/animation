@@ -4,4 +4,5 @@ Pictures: drawn in code (canvas 2D) with the tape kit (channel/brand/tapekit.js)
 Fonts: VT323 (The VT323 Project Authors), SIL Open Font License 1.1. Special Elite (Astigmatic), Apache License 2.0.
 Voice: ElevenLabs text-to-speech, model eleven_v4. The toy's voice box: ElevenLabs stock voice "Jessica", pitched.
 Sound effects: generated with ElevenLabs Sound Effects (prompts in sfx/prompts.json).
-Music: original score (tools/score.py) played with CC0 samples from VSCO 2 Community Edition.
+Music: none. The robot's music box (CC0 glockenspiel samples from VSCO 2 Community Edition, through a tin box) and a low drone made from the store's own hum (tools/score.py).
+Sound: every sound is in the scene and is heard through CAM 10 (tools/mix.py: the rooms, the camera's automatic level control and overload, the tape).
