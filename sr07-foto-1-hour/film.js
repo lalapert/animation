@@ -771,10 +771,13 @@ window.debugPrints = () => { OUT.fillStyle = '#333'; OUT.fillRect(0, 0, 1080, 19
 function buildEvents() {
   const SH = Object.fromEntries(TL.SHOTS.map(s => [s[0], s])), EV = [];
   // the lightbox: its buzz follows its light frame by frame (12 Hz), a tick on every drop-out and re-strike
+  // (on the camcorder it changes 12 times a second; CAM 05 shows it only on its own frames, 6 a second)
   const env = []; let prev = 1;
-  for (let f = 0; f / 12 < TL.SIGN_DIE + .2; f++) {
-    const t = f / 12, a = signA(t); env.push([+t.toFixed(3), +(.15 + .85 * a).toFixed(3)]);
-    if (Math.abs(a - prev) > .4 && t < TL.SIGN_DIE) EV.push({ type: 'tick', t: +t.toFixed(3), g: a < prev ? .8 : .5, pan: -.1 });
+  const cq = x => +(Math.ceil(x * FPS_CCTV - 1e-6) / FPS_CCTV).toFixed(3), inCctv = t => t >= SH.cctv[1] && t < SH.cctv[2];
+  for (let f = 0; f / 12 < TL.SIGN_DIE + .4; f++) {
+    const t = f / 12; if (inCctv(t) && f % 2) continue;
+    const a = signA(inCctv(t) ? qf(t) : t); env.push([+t.toFixed(3), +(.15 + .85 * a).toFixed(3)]);
+    if (Math.abs(a - prev) > .4 && t < cq(TL.SIGN_DIE)) EV.push({ type: 'tick', t: +t.toFixed(3), g: a < prev ? .8 : .5, pan: -.1 });
     prev = a;
   }
   // his footsteps land on the bob of the camera (handheld(): the low point of each step)
@@ -803,8 +806,8 @@ function buildEvents() {
     // S3: CAM 05's own sound (its ceiling mic): the machine idling, the lightbox, then the tube dying
     { type: 'vcr', t: TL.ROLL[0] },
     { type: 'bed', fx: 'minilab_idle', space: 'shop', t: SH.cctv[1], t1: SH.cctv[2], g: -21.5, fin: .01, fout: .01 },
-    { type: 'bed', fx: 'fluor_hum', space: 'shop', t: SH.cctv[1], t1: TL.SIGN_DIE + .01, g: -25.5, fin: .01, fout: .01, env },
-    { type: 'tube_pop', t: TL.SIGN_DIE },
+    { type: 'bed', fx: 'fluor_hum', space: 'shop', t: SH.cctv[1], t1: cq(TL.SIGN_DIE) + .01, g: -25.5, fin: .01, fout: .01, env },
+    { type: 'tube_pop', t: cq(TL.SIGN_DIE) },
     { type: 'vcr', t: SH.dark[1] - .02 },
     // S4: dark. The machine idles; his breath. The flash charges behind him: the machine stops, he holds his breath
     { type: 'bed', fx: 'minilab_idle', space: 'shop', t: SH.dark[1], t1: TL.WHINE[0] + .05, g: -27, fin: .01, fout: .05 },

@@ -385,40 +385,74 @@ function render(t) {
 }
 window.render = render;
 
-// sound cues: one creak per held-frame jump of its arm, the flicker clicks, the footstep that is not his, breathing when he is scared
-const SH = Object.fromEntries(TL.SHOTS.map(s => [s[0], s]));
-const creaks = []; { let last = -1; for (let t = TL.REACH[0]; t < TL.REACH[1]; t += 1 / FPS_CCTV) { const tr = TK.motion.stutter(t, FPS_CCTV, 6); if (tr !== last && t > TL.REACH[0] + .05) { creaks.push(Math.round(t * 1000) / 1000); last = tr; } } }
-window.EV = [
-  { type: 'static', t: 0.0, dur: .5 },
-  { type: 'bed', fx: 'crt_hum', t: SH.office[1], t1: SH.office[2] - .06, g: -29, fin: .05, fout: .02 },
-  { type: 'zoom', t: TL.ZOOM[0] },
-  ...TL.RECCUT.map(c => ({ type: 'camclick', t: c - .06 })),
-  { type: 'bed', fx: 'mall_hum', t: SH.walk[1] + .16, t1: SH.walk[2] - .06, g: -31, fin: .05, fout: .02 },
-  ...TL.STEPS.map((x, i) => ({ type: 'step', t: x, pan: i % 2 ? .15 : -.15, g: x < 15 ? 1 : .7 })),
-  { type: 'step_far', t: TL.EXTRA_STEP, pan: .5 },
-  { type: 'handling', t: TL.WHIP_BACK[0] },
-  { type: 'bed', fx: 'store_hum', t: SH.fit[1] + .16, t1: SH.fit[2], g: -32, fin: .05, fout: .02 },
-  { type: 'bed', fx: 'breath_bed', t: 18.4, t1: 22.6, g: -27, fin: 1.2, fout: .3 },
-  { type: 'curtain', t: TL.CURTAIN },
-  { type: 'roll', t: TL.ROLL[0] },
-  { type: 'bed', fx: 'store_hum', t: SH.cctv1[1], t1: SH.cctv1[2], g: -35, fin: .02, fout: .02 },
-  { type: 'bed', fx: 'flicker', t: TL.FLICKER1, t1: SH.cctv1[2], g: -30, fin: .02, fout: .02 },
-  { type: 'creak', t: TL.SNAP1, g: 1.2 },
-  ...creaks.map(x => ({ type: 'creak', t: x, g: .55 })),
-  { type: 'swell', t: TL.REACH[1] - 1.9 },
-  { type: 'handling', t: TL.WHIP[0] }, { type: 'whoosh', t: TL.WHIP[0] },
-  { type: 'bed', fx: 'breath_bed', t: SH.turn[1], t1: SH.turn[2], g: -24, fin: .1, fout: .05 },
-  { type: 'bed', fx: 'store_hum', t: SH.turn[1], t1: SH.turn[2], g: -33, fin: .02, fout: .02 },
-  { type: 'switch', t: SH.cctv2[1] - .02 },
-  { type: 'bed', fx: 'store_hum', t: SH.cctv2[1], t1: TL.DARK[0], g: -35, fin: .02, fout: .02 },
-  { type: 'creak', t: TL.SNAP2, g: 1.3 },
-  { type: 'bed', fx: 'flicker', t: TL.FLICKER2, t1: TL.DARK[0], g: -27, fin: .02, fout: .02 },
-  { type: 'lights_off', t: TL.DARK[0] },
-  ...TL.GLITCH.map(([t0, d]) => ({ type: 'glitch', t: t0, dur: d })),
-  { type: 'sting', t: TL.STING },
-  { type: 'static', t: TL.END, dur: DUR - TL.END },
-  { type: 'bed', fx: 'tape_hiss', t: 0, t1: DUR + .5, g: -38 },
-];
+// ---------------------------------------------------------------- sound cues (owner 11/13: natural sound only)
+// Everything is something in the scene, picked up by Leon's camcorder mic or CAM 09's ceiling mic during the playback:
+// the monitors' whine, the mall's ventilation, his steps (on the bob of the camera), the step that is not his, the curtain
+// rings, the stall light's ticks and buzz (frame by frame, as drawn), its joints, the lights dying, then something hitting
+// the camera. space: close (at his mic), shop (a small room: the office, the fitting rooms), hall (the concourse), tape,
+// archive (the archive's deck).
+function buildEvents() {
+  const SH = Object.fromEntries(TL.SHOTS.map(s => [s[0], s])), EV = [], F = 1 / FPS_CCTV;
+  const cq = x => +(Math.ceil(x * FPS_CCTV - 1e-6) / FPS_CCTV).toFixed(3);         // CAM 09 shows a change on its next frame
+  // his footsteps land on the low point of each step bob (handheld(): walk 1.8 steps/s from the cut, fitting rooms 1.6)
+  const bob = (t0, rate, until) => { const r = []; for (let k = 0; k < 30; k++) { const t = t0 + (k + .5) / rate; if (t < until) r.push(+t.toFixed(3)); } return r; };
+  const walkSteps = bob(SH.walk[1], 1.8, TL.WALK_STOP), fitSteps = bob(SH.fit[1], 1.6, 20.0);
+  // CAM 09: the stall light and the ceiling light as drawn on each CCTV frame; their buzz follows them, a tick at each change
+  const lightAt = tq => {
+    if (tq < SH.turn[1]) { const st = flick(tq, TL.FLICKER1, .8), ce = tq >= TL.LIGHT_OFF1[0] && tq < TL.LIGHT_OFF1[1] ? 0 : 1; return [st, ce]; }
+    const dark = tq >= TL.DARK[0] && tq < TL.DARK[1], st = dark ? 0 : flick(tq, TL.FLICKER2, 1.4); return [st, dark ? 0 : st];
+  };
+  const env1 = [], env2 = [];
+  for (const [a, b, env] of [[SH.cctv1[1], SH.cctv1[2], env1], [SH.cctv2[1], TL.JUMP + .4, env2]]) {
+    let prev = null;
+    for (let f = Math.round(a / F); f * F < b; f++) {
+      const tq = f * F, [st, ce] = lightAt(tq), lvl = .25 + .45 * st + .3 * ce;
+      env.push([+tq.toFixed(3), +lvl.toFixed(3)], [+(tq + F - .01).toFixed(3), +lvl.toFixed(3)]);
+      if (prev !== null && Math.abs(lvl - prev) > .25 && !(tq >= TL.DARK[0] && tq <= TL.JUMP)) EV.push({ type: 'tick', t: +tq.toFixed(3), g: lvl < prev ? .8 : .55, pan: .2 });
+      prev = lvl;
+    }
+  }
+  // its arm comes up in held frames: a joint creak each time the pose jumps (CAM 09 hears it)
+  const creaks = []; { let last = -1; for (let t = TL.REACH[0]; t < TL.REACH[1]; t += F) { const tr = TK.motion.stutter(t, FPS_CCTV, 6); if (tr !== last && t > TL.REACH[0] + .05) { creaks.push(Math.round(t * 1000) / 1000); last = tr; } } }
+  EV.push(
+    { type: 'static', t: 0, dur: TL.STATIC[0][1] },
+    // the guard office: the monitors' whine and hum
+    { type: 'bed', fx: 'crt_hum', space: 'shop', t: SH.office[1], t1: SH.office[2] - .06, g: -33, fin: .01, fout: .02 },
+    ...TL.RECCUT.map(c => ({ type: 'camclick', t: c + .16 })),
+    // the concourse: the mall's ventilation, his steps in the big hall, one step that is not his; he spins round
+    { type: 'bed', fx: 'mall_hum', space: 'hall', t: SH.walk[1] + .16, t1: SH.walk[2] - .06, g: -35, fin: .01, fout: .02 },
+    ...walkSteps.map((x, i) => ({ type: 'step_hall', t: x, g: .9, pan: i % 2 ? .12 : -.12 })),
+    { type: 'step_far', t: TL.EXTRA_STEP, pan: .5 },
+    { type: 'handling', t: TL.WHIP_BACK[0], g: .9 }, { type: 'rustle', t: TL.WHIP_BACK[0] + .05 }, { type: 'scuff', t: TL.WHIP_BACK[0] + .25, g: .7 },
+    // the fitting rooms: the store's hum, his steps (small room), his breath, the curtain shivering, something shifting, his pull
+    { type: 'bed', fx: 'store_hum_clean', space: 'shop', t: SH.fit[1] + .16, t1: SH.fit[2], g: -27.5, fin: .01, fout: .01 },
+    ...fitSteps.map((x, i) => ({ type: 'step', t: x, g: .75, pan: i % 2 ? .1 : -.1 })),
+    { type: 'bed', fx: 'breath_bed', space: 'close', t: 18.4, t1: 22.6, g: -27, fin: 1.2, fout: .3 },
+    { type: 'rings', t: TL.FLUTTER[0] + .05, g: .7 },
+    { type: 'shuffle', t: TL.FLUTTER[0] + .3, g: .8 },
+    { type: 'curtain', t: TL.CURTAIN },
+    // CAM 09 played back: its mic hears the store, the light's buzz and ticks, its joints
+    { type: 'vcr', t: TL.ROLL[0] },
+    { type: 'bed', fx: 'store_hum_clean', space: 'shop', t: SH.cctv1[1], t1: SH.cctv1[2], g: -24, fin: .01, fout: .01, env: env1 },
+    { type: 'creak', t: cq(TL.SNAP1), g: 1.0 },
+    ...creaks.map(x => ({ type: 'creak', t: x, g: .45 })),
+    // back on the camcorder: he spins round; his breath; the store
+    { type: 'handling', t: TL.WHIP[0], g: 1.0 }, { type: 'rustle', t: TL.WHIP[0] + .06 }, { type: 'scuff', t: TL.WHIP[0] + .28, g: .8 },
+    { type: 'bed', fx: 'near_breath', space: 'close', t: SH.turn[1], t1: SH.turn[2], g: -25, fin: .1, fout: .05 },
+    { type: 'bed', fx: 'store_hum_clean', space: 'shop', t: SH.turn[1], t1: SH.turn[2], g: -27.5, fin: .01, fout: .01 },
+    { type: 'scuff', t: TL.TURN_BACK[0] + .3, g: .6 },
+    // CAM 09 again: the light flickers, the head snaps, the lights die; silence; then something hits the camera
+    { type: 'vcr', t: SH.cctv2[1] - .02 },
+    { type: 'bed', fx: 'store_hum_clean', space: 'shop', t: SH.cctv2[1], t1: cq(TL.DARK[0]) + .01, g: -24, fin: .01, fout: .01, env: env2 },
+    { type: 'creak', t: cq(TL.SNAP2), g: 1.1 },
+    { type: 'tube_pop', t: cq(TL.DARK[0]) },
+    { type: 'hit', t: cq(TL.JUMP) }, { type: 'knock', t: cq(TL.JUMP) + .03 }, { type: 'tick', t: cq(TL.JUMP) + .02, g: .7, pan: .2 },
+    ...TL.GLITCH.map(([t0, d]) => ({ type: 'glitch', t: t0, dur: d })),
+    { type: 'static', t: TL.END, dur: DUR - TL.END },
+  );
+  return EV.sort((a, b) => a.t - b.t);
+}
+window.EV = buildEvents();
 
 (async () => {
   try {

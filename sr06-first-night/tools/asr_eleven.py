@@ -6,12 +6,21 @@ import json, os, re, subprocess, sys
 
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 KEY = os.environ.get("ELEVENLABS_API_KEY", "proxy-injected")
-NUM = {"23": "twenty three", "9": "nine", "1": "one", "13": "thirteen"}
+ONES = "zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen".split()
+TENS = {2: "twenty", 3: "thirty", 4: "forty", 5: "fifty"}
+
+
+def words(n):
+    n = int(n)
+    if n < 20: return ONES[n]
+    if n < 60: return TENS[n // 10] + ("" if n % 10 == 0 else " " + ONES[n % 10])
+    return str(n)
 
 
 def norm(s):
     s = s.lower().replace("-", " ")
-    s = re.sub(r"\d+", lambda m: NUM.get(m.group(0), m.group(0)), s)
+    s = re.sub(r"\ba\.\s?m\.?", "am", s)                                   # 3:12 a.m. / A.M.
+    s = re.sub(r"\d+", lambda m: words(m.group(0)), s)
     return re.sub(r"[^a-z' ]+", " ", s).split()
 
 

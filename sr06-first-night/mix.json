@@ -1,114 +1,200 @@
 {
- "room_db": -62,
- "voice_over_music_db": 9,
- "vo_pa": false,
- "beds": {},
+ "room_db": -58,
+ "voice_db": 0,
+ "voice_peak_db": -18,
+ "duck_db": 15,
+ "music_db": -16,
+ "deck_hiss_db": -44,
+ "plr_db": 11.7,
+ "beds_db": 33,
+ "close_db": 6,
+ "devices": {
+  "office": "cam",
+  "walk": "cam",
+  "fit": "cam",
+  "cctv1": "cctv",
+  "turn": "cam",
+  "cctv2": "cctv"
+ },
+ "cam": {
+  "lo": 110,
+  "hi": 8500,
+  "noise_db": -50,
+  "noise_lp": 7000,
+  "target": -21,
+  "boost": 4,
+  "cut": 26,
+  "att": 0.22,
+  "rel": 1.1,
+  "pre": 0,
+  "ceil": -7
+ },
+ "cctv": {
+  "lo": 200,
+  "hi": 3500,
+  "order": 4,
+  "noise_db": -44,
+  "noise_lp": 4500,
+  "target": -15.5,
+  "boost": 4,
+  "cut": 20,
+  "att": 0.2,
+  "rel": 0.9,
+  "pre": 0,
+  "ceil": -8,
+  "clip_first": false
+ },
+ "derived": {
+  "store_hum_clean": {
+   "from": "store_hum",
+   "skip": 1.2
+  }
+ },
  "foley": {
   "static": {
    "fx": "static",
-   "g": -12,
-   "fin": 0.003,
-   "fout": 0.04
+   "g": -19,
+   "space": "tape",
+   "fin": 0.004,
+   "fout": 0.03
   },
   "glitch": {
    "fx": "glitch",
-   "g": -15,
+   "g": -21,
+   "space": "tape",
+   "align": true,
+   "fin": 0.004,
+   "fout": 0.06
+  },
+  "vcr": {
+   "fx": "vcr_clunk",
+   "g": -24,
+   "space": "archive",
    "align": true,
    "fin": 0.002,
    "fout": 0.08
   },
-  "breath": {
-   "fx": "breath",
-   "g": -18,
-   "fin": 0.05,
-   "fout": 0.4
-  },
-  "switch": {
-   "fx": "switch",
-   "g": -17,
+  "camclick": {
+   "fx": "camclick",
+   "g": -24,
+   "space": "close",
+   "align": true,
    "fin": 0.002,
+   "fout": 0.08
+  },
+  "tick": {
+   "fx": "tube_tick",
+   "g": -25,
+   "space": "shop",
+   "align": true,
+   "fin": 0.001,
    "fout": 0.05
   },
   "step": {
    "fx": "step",
-   "g": -19,
+   "g": -21,
+   "space": "shop",
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.08,
+   "trim": 0.16
+  },
+  "step_hall": {
+   "fx": "step",
+   "g": -23,
+   "space": "hall",
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.3
+  },
+  "step_far": {
+   "fx": "step_far",
+   "g": -18,
+   "space": "hall",
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.4
+  },
+  "scuff": {
+   "fx": "step",
+   "g": -18,
+   "space": "close",
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.06,
+   "trim": 0.12
+  },
+  "handling": {
+   "fx": "handling",
+   "g": -18,
+   "space": "close",
    "align": true,
    "fin": 0.002,
    "fout": 0.15
   },
-  "zoom": {
-   "fx": "zoom",
+  "rustle": {
+   "fx": "handling",
+   "g": -22,
+   "space": "close",
+   "fin": 0.02,
+   "fout": 0.2
+  },
+  "rings": {
+   "fx": "rings",
+   "g": -22,
+   "space": "shop",
+   "align": true,
+   "fin": 0.005,
+   "fout": 0.2
+  },
+  "shuffle": {
+   "fx": "shuffle",
    "g": -24,
+   "space": "shop",
+   "align": true,
    "fin": 0.02,
    "fout": 0.3
   },
   "curtain": {
    "fx": "curtain",
-   "g": -14,
+   "g": -15,
+   "space": "shop",
    "align": true,
    "fin": 0.005,
    "fout": 0.2
   },
-  "whoosh": {
-   "fx": "whoosh",
-   "g": -15,
+  "creak": {
+   "fx": "bone_creak",
+   "g": -18,
+   "space": "shop",
    "align": true,
-   "fin": 0.01,
-   "fout": 0.2
+   "fin": 0.002,
+   "fout": 0.15
   },
-  "sting": {
-   "fx": "sting",
-   "g": 4,
+  "tube_pop": {
+   "fx": "tube_pop",
+   "g": -15,
+   "space": "shop",
    "align": true,
    "fin": 0.001,
-   "fout": 0.3
+   "fout": 0.2
   },
-  "step_far": {
-   "fx": "step_far",
-   "g": -17,
+  "hit": {
+   "fx": "cam_hit",
+   "g": 3,
+   "space": "close",
    "align": true,
-   "fin": 0.002,
-   "fout": 0.4
+   "fin": 0.001,
+   "fout": 0.25
   },
-  "handling": {
+  "knock": {
    "fx": "handling",
-   "g": -16,
+   "g": -1,
+   "space": "close",
    "align": true,
-   "fin": 0.002,
-   "fout": 0.15
-  },
-  "camclick": {
-   "fx": "camclick",
-   "g": -17,
-   "align": true,
-   "fin": 0.002,
-   "fout": 0.1
-  },
-  "roll": {
-   "fx": "roll",
-   "g": -16,
-   "fin": 0.002,
-   "fout": 0.1
-  },
-  "creak": {
-   "fx": "creak",
-   "g": -14,
-   "align": true,
-   "fin": 0.002,
-   "fout": 0.15
-  },
-  "swell": {
-   "fx": "swell",
-   "g": -15,
-   "fin": 0.05,
-   "fout": 0.02
-  },
-  "lights_off": {
-   "fx": "lights_off",
-   "g": -12,
-   "align": true,
-   "fin": 0.002,
-   "fout": 0.1
+   "fin": 0.001,
+   "fout": 0.2
   }
- }
+ },
+ "duck_preroll": 0.12
 }
