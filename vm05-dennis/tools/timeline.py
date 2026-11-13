@@ -27,7 +27,8 @@ for k in order:
                "col": SUBCOL[lines[k]["who"]], "gain_db": lines[k].get("gain_db", 0)})
     t = start + d
 END_BEAT = 4.8
-DUR = round(t + END_BEAT, 2)
+ENDCARD = 2.5                                   # owner 11/13: the end card holds 2.5 s; the extra 1.25 s is a held tail after the button
+DUR = round(t + END_BEAT + (ENDCARD - 1.25), 2)
 for i, v in enumerate(VO):
     v["s0"] = round(max(0.0, v["t"] - 0.08), 3)
     nxt = VO[i + 1]["t"] - 0.12 if i + 1 < len(VO) else DUR - 0.3
@@ -65,7 +66,7 @@ SHOTS = [
 SHOTS = [[n, round(a, 3), round(b, 3)] for n, a, b in SHOTS]
 for a, b in zip(SHOTS, SHOTS[1:]):
     assert abs(a[2] - b[1]) < 1e-6 and a[2] > a[1], (a, b)
-TL = {"BPM": BPM, "BEAT": BEAT, "BAR": 4 * BEAT, "DUR": DUR, "VO": VO, "SHOTS": SHOTS, **T}
+TL = {"BPM": BPM, "BEAT": BEAT, "BAR": 4 * BEAT, "DUR": DUR, "ENDCARD": ENDCARD, "VO": VO, "SHOTS": SHOTS, **T}
 os.makedirs(os.path.join(HERE, "out"), exist_ok=True)
 json.dump(TL, open(os.path.join(HERE, "out", "timeline.json"), "w"), indent=1)
 CH = {k: json.load(open(os.path.join(HERE, "voice", "out", k + ".json")))["chars"] for k in V}

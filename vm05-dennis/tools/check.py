@@ -17,7 +17,7 @@ from scipy import signal
 
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 NAME = os.path.basename(HERE)
-MP4 = os.path.join(HERE, NAME + ".mp4")
+MP4 = sys.argv[sys.argv.index("--mp4") + 1] if "--mp4" in sys.argv else os.path.join(HERE, NAME + ".mp4")   # check a draft in out/ before it replaces the tracked file
 SR = 48000
 TL = json.load(open(os.path.join(HERE, "out", "timeline.json")))
 LINES = {l["id"]: l for l in json.load(open(os.path.join(HERE, "voice", "lines.json")))["lines"]}

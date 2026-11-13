@@ -117,7 +117,8 @@ HOPS.push({ t0: TL.ME - .18, d: .78, h: 270, cheer: true });
 HOPS.push({ t0: V.L6.t - .1, d: .55, h: 150, can: true });
 HOPS.push({ t0: TL.JUMP, d: .9, h: 330, cheer: true });
 for (let k = 0; k < 3; k++) HOPS.push({ t0: V.L13.t - .2 + k * .5, d: .5, h: k === 0 ? 210 : 140, cheer: k === 0 });
-function hopAt(t) { for (const h of HOPS) if (t >= h.t0 && t < h.t0 + h.d) return { ...h, ...hopPose((t - h.t0) / h.d, h.h) }; return null; }
+const HOP_MAX = PIPW - AISLE.top - 12;                        // owner 11/13: no torso ending in the air: the hem never rises above the shelf top
+function hopAt(t) { for (const h of HOPS) if (t >= h.t0 && t < h.t0 + h.d) return { ...h, ...hopPose((t - h.t0) / h.d, Math.min(h.h, HOP_MAX)) }; return null; }
 // arms straight up with fists (in Pip's local units, after drawPip2's own transform)
 function cheerArms(g, k) {
   const P = TOON.pip;

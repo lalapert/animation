@@ -11,6 +11,7 @@ $PY tools/score.py
 node tools/render.cjs events
 $PY tools/mix.py
 node tools/render.cjs video 4
-sh tools/mux.sh out/video.mp4 out/mix.wav vm05-dennis.mp4
+sh tools/mux.sh out/video.mp4 out/mix.wav out/vm05-dennis.mp4
 $PY tools/srt.py
-$PY tools/check.py                     # margins, loudness, linear loudnorm, blackdetect, speech-to-text, contact sheet
+$PY tools/check.py --mp4 out/vm05-dennis.mp4      # margins, loudness, linear loudnorm, blackdetect, speech-to-text, contact sheet
+cp out/vm05-dennis.mp4 vm05-dennis.mp4    # the tracked file only after every check passed

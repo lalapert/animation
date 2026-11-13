@@ -12,6 +12,7 @@ $PY tools/score.py
 node tools/render.cjs events
 $PY tools/mix.py
 node tools/render.cjs video 4
-sh tools/mux.sh out/video.mp4 out/mix.wav vm06-employee-of-the-month.mp4
+sh tools/mux.sh out/video.mp4 out/mix.wav out/vm06-employee-of-the-month.mp4
 $PY tools/srt.py
-$PY tools/check.py                     # margins, loudness, linear loudnorm, blackdetect, speech-to-text, contact sheet
+$PY tools/check.py --mp4 out/vm06-employee-of-the-month.mp4      # margins, loudness, linear loudnorm, blackdetect, speech-to-text, contact sheet
+cp out/vm06-employee-of-the-month.mp4 vm06-employee-of-the-month.mp4    # the tracked file only after every check passed
