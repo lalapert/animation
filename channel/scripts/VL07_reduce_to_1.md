@@ -1,0 +1,109 @@
+# Volt Labs 7화 *Reduce to 1%* (11/20 금 10:00 KST, 목표 40초 + 엔드 카드 꼬리 1.25초)
+
+한 줄: Vera가 1% 축소 복사기로 집세 고지서를 손톱보다 작게 줄인다. "못 읽으면 못 받지." 4화의 그 집주인이 계단을 내려온다. 손에는 커다란 돋보기. "It's next month." 그리고 복사기 다이얼을 400%로 돌린다.
+
+## 0. 지금까지 통한 것과 이 편에서 쓰는 법 (품질 기준 3)
+
+- 인스타그램 숫자(11/13까지): Void Mart는 3초 넘게 보는 비율 67~76%, 평균 시청 22~25초. Volt Labs는 56~68%, 11~18초. Volt Labs 2화는 유튜브에서 평균 7초로 죽었다. Volt Labs는 첫 몇 초에서 사람을 잃는다.
+- 그래서 **첫 프레임이 이 화에서 가장 강한 그림**이고, **소리 없이 2초 안에 설정이 읽힌다**: 복사기 클로즈업, 큰 화면에 "1%", 유리판 위의 빨간 FINAL NOTICE "$1,200", 초록 COPY 버튼을 누른 Vera의 손가락과 웃는 얼굴, 이미 지나가는 스캔 빛, 0.35초에 손톱만 한 복사본이 튀어나온다. 훅 카드는 실험 대상(VL4, VM5, VL5, VM6)이 아니라서 쓰지 않는다. 그림만으로 읽혀야 한다.
+- Void Mart에서 통한 것: 손님(외부 인물)이 사건을 끝까지 끌고 간다, 한 화 안에서 끝나는 농담, 눈으로 웃기는 장면. 이 편은 4화의 집주인이 돌아와 끝까지 끌고 간다(4화 "Next month is fine."의 다음 달). 4화를 안 봐도 통하게 "It's next month."는 그 자체로 웃기다.
+- 길이 40초 안팎, 대사는 짧게(가장 긴 줄 2.5초 이하), 1~2초마다 그림이 바뀐다.
+
+## 1. 영미권 관객 점검
+
+| 항목 | 점수 | 근거와 고칠 점 |
+|---|---|---|
+| 첫 2초 그림 훅 | 4 | 위의 첫 프레임. 위험: "1%"가 폰에서 안 읽힐 수 있다. 대책: 화면 숫자를 크게(프레임 폭의 1/5), 고지서의 "$1,200"과 빨간 FINAL NOTICE 도장도 크게, 0.35초에 튀어나오는 작은 복사본과 크기 대비 |
+| 설정이 한 줄로 이해되는가 | 5 | "집세 고지서를 1%로 줄였다. 집주인이 돋보기를 가져왔다." 앞 화 몰라도 된다 |
+| 공감 | 5 | 집세, 집주인, 청구서를 안 보면 없어질 것 같은 마음. 미국·영국 세입자 모두 안다 |
+| 웃음 밀도 | 5 | 1) 손톱만 한 복사본(소리 없이) 2) "It still says twelve hundred." 3) "Not if he can't read it." 4) 돋보기 너머 거대한 눈(소리 없이) 5) "It's next month." 6) 렌즈 속 또렷한 "$1,200 FRIDAY" 7) "Last month, you had a laser." 8) "It was a pointer." 9) 400% 복사본이 Vera를 덮친다(소리 없이) 10) "...Okay. I can read it." 11) 종이 더미에서 올라온 팔이 작은 고지서를 백기처럼 흔든다 |
+| 영어가 자연스러운가 | 4 | 짧은 일상 말투. "It's next month."는 4화를 몰라도 "지난달에 미뤘구나"로 읽힌다 |
+| 아는 사람만 아는 문화 코드 | 5 | 없음. 복사기와 돋보기는 어디나 있다 |
+| 끝 버튼과 반복 재생 | 4 | 종이 더미의 백기(작은 고지서) → 칠판 여덟 번째 동그라미. 다시 보면 첫 프레임의 "1%"가 결말의 "400%"로 뒤집힌 게 보인다 |
+| 댓글 거리 | 4 | "집주인 준비성", "1% 집세 나도", 펜 레이저 기억하는 사람 |
+| 반복 금지와 움직임 | 4 | 발명품: 사무용 복사기(처음, 광선·로봇·물약 아님). 결말: 자기 발명품의 반대 버튼(400%)에 파묻혀 백기(VL2 예의 바른 동네, VL3 작은 폭발, VL4 역전 위협, VL5 무표정 판정과 띵, VL6 딸꾹 연기와 다름). 움직임: 집주인이 계단을 내려와 허리 위로 걸어 들어옴, 400% 종이가 쏟아져 Vera가 벤치 뒤로 쓰러짐(몸은 벤치와 종이에 가려 허리 아래가 안 보인다), 집주인이 걸어 나감. 동물 없음. 실내(8화가 거리로 나간다) |
+
+- 합계 40/45(기존 8항목 36/40), 4점 미만 없음. 진행.
+- 미국 중심(집세, 집주인), 영국도 통한다.
+- 가장 큰 위험: 중반(집주인 등장 전 3.5초)이 늘어질 수 있다. 대책: 계단을 내려오는 무거운 발소리와 문 삐걱임이 대사 사이를 채우고, 걸어 들어오는 첫 프레임에 이미 거대한 눈(돋보기)이 보인다.
+- 썸네일 각도: Vera가 손톱만 한 고지서를 들고 의기양양하게 웃는 얼굴, 뒤에 복사기 "1%", 커버 글자 "SHE SHRANK THE RENT".
+- 유튜브 제목 후보:
+  | 공식 | 제목 | 점수 |
+  |---|---|---|
+  | 2 Negative Command | Never shrink your rent notice to 1% | 84.4 (채택: 짧고 숫자와 물건이 있다) |
+  | 23 The Statistic | 1% of a rent notice is still $1,200 | 66.2 |
+  | 24 The Reveal | She shrank the rent notice to 1%. The landlord brought a magnifying glass | 47.8 |
+
+## 2. 대본
+
+| id | 누가 | 감정 지시 (오디오 태그) | 대사 (영어) | 행동 지시 (그림, 카메라, 소리) |
+|---|---|---|---|---|
+| — | | | | **0초. COPIER_OPEN.** 벤치 가운데 산성 초록 복사기 "SHRINK-O-MATIC" 클로즈업. 화면에 큰 "1%", 유리판 위에 빨간 FINAL NOTICE 도장이 찍힌 고지서 "RENT DUE $1,200 / FRIDAY". 왼쪽에서 Vera가 오른팔째로 COPY 버튼을 누른 채 웃는다(scheme). 스캔 빛이 이미 지나가고, 0.35초에 손톱만 한 복사본이 배출구로 톡. 복사기 모터 소리, 종이 나오는 소리. 음악: 테마가 첫 프레임부터 |
+| L1 | VERA | `[triumphant, scheming]` | Rent notice. / Reduced to one percent. | VERA_CU. 엄지와 검지로(팔째로) 작은 복사본을 들어 카메라에 보인다 |
+| L2 | CLEO | `[flatly]` | It still says / twelve hundred. | CLEO_CU. Cleo가 몸을 숙여 들여다본다 |
+| L3 | VERA | `[airy, smug]` | Not if he can't read it. | VERA_CU. 작은 고지서를 벤치 위에 톡 올려놓는다(팔째로). 음악 멈춤 |
+| — | | | | **WIDE.** 오른쪽 위에서 계단 문 삐걱, 무거운 발소리가 나무 계단을 내려온다(오른쪽에서 점점 가깝게). 셋째 걸음쯤 집주인이 오른쪽에서 허리 위로 걸어 들어온다(걸음마다 몸이 살짝 내려앉음, 벤치가 아래를 가림): 4화의 대머리 옆머리 넘김, 두꺼운 안경, 머스터드 카디건. 오른손(팔째로)에 커다란 돋보기를 얼굴 앞에 들고 있어 눈 하나가 거대하다. 왼손에는 자기 고지서 한 장 |
+| L4 | LANDLORD | `[gruff, pleased with himself]` | Miss Volt. / It's next month. | LANDLORD_CU, 돋보기 너머 거대한 눈 |
+| L5 | VERA | `[too casual, nervous]` | Your notice is right there. | VERA_CU. 벤치 위의 작은 고지서를 가리킨다(팔째로) |
+| — | | | | **MAG_CU.** 돋보기가 작은 고지서 위로 내려온다. 렌즈 안에서만 글자가 또렷하다: "RENT DUE $1,200 / FRIDAY" |
+| L6 | LANDLORD | `[reading slowly, flat]` | Twelve hundred. / Friday. | MAG_CU에서 LANDLORD_CU로 |
+| L7 | VERA | `[stunned, small]` | You brought / a magnifying glass? | VERA_CU, fluster |
+| L8 | LANDLORD | `[deadpan, gruff]` | Last month, / you had a laser. | LANDLORD_CU |
+| L9 | CLEO | `[flatly]` | It was a pointer. | CLEO_CU |
+| — | | | | **DIAL_CU.** 집주인의 손(팔째로)이 다이얼을 1%에서 400%로 돌린다(딸깍딸깍). 자기 고지서를 유리판에 올리고 COPY를 누른다. **WIDE.** 복사기가 덜컹이며 400% 복사본이 쏟아진다: 거대한 고지서가 펼쳐지며 Vera를 덮고, Vera는 벤치 뒤로 쓰러져 안 보인다(종이 더미만). 음악 히트 1 |
+| L10 | VERA | `[muffled, defeated]` | ...Okay. / I can read it. | WIDE. 종이 더미 아래에서 먹먹하게 |
+| L11 | LANDLORD | `[gruff, satisfied]` | Friday. | 돋보기를 들고 오른쪽으로 걸어 나간다(허리 위), 계단을 올라가는 발소리, 문 닫힘 |
+| — | | | | **버튼.** 종이 더미 위로 Vera의 팔이 올라와(팔째로, 소매가 종이 밖으로) 작은 고지서를 백기처럼 흔든다. **BOARD_END.** Cleo의 팔이 PAY RENT에 여덟 번째 동그라미를 그린다. 밴드 버튼(히트 2). 엔드 카드 2.5초(마지막 1.25초는 그대로 둔 꼬리) |
+
+## 3. 숨긴 장치와 줄기
+
+- 이스터에그: 벽의 3화 구인 전단(HIRED)이 그대로 붙어 있다. 4화의 건틀릿을 선반에 두려 했으나 클로즈업 가장자리에 빨간 점으로만 보여 뺐다.
+- 반복 장치: PAY RENT 동그라미 8개(7화). 집주인 두 번째 등장(4화 → 7화 → 21화 *Rent Is Due*). 4화 "Next month is fine." → 이 편 "It's next month." / "Last month, you had a laser."
+- 목소리: Vera, Cleo, 집주인(4화와 같은 "Bill" 스톡 보이스, 같은 설정). 동물 없음.
+- 홀로그램 스캔 없음(이 편은 첫 3초가 더 중요하다. 다음 스캔은 9화 이후).
+
+## 4. 게시 문구
+
+```
+What's the worst trick you've ever tried on a bill?
+Volt Labs is an animated sitcom about a broke mad scientist and her deadpan assistant. Today she shrinks the rent notice to 1%.
+
+Volt Labs, episode 7.
+
+#animation #cartoon #comedy #madscientist
+```
+
+- 검색어 2개: animated sitcom, mad scientist
+- 훅 카드: 없음(실험 대상 편이 아니다)
+- 유튜브 제목: Never shrink your rent notice to 1% | Volt Labs Ep 7 #shorts
+
+## 5. Sound and music (11/13 기준: 자연스러운 효과음, 장면을 따르는 음악)
+
+- **음악.** Volt Labs 밴드(`tools/band.py`, 4~6화와 같은 악기: 피치카토 베이스와 "폼" 화음, 낮은 클라리넷, 바순 스타카토, 브러시, 셰이커; 스윙, 사람 손 타이밍, 작은 방). `tools/score.py` 큐:
+  - 첫 프레임부터 테마(고지서가 들어가고 1% 복사본이 나온다, "Rent notice. Reduced to one percent.") → "It still says twelve hundred." 전에 D로 종지. L2, L3은 정적.
+  - 계단: 집주인의 퉁명스러운 스톰프, 박이 나무 계단 발소리(0.42초 간격)에 맞음 → 그가 멈추는 순간 끊김("It's next month."는 정적).
+  - "Your notice is right there."부터 돋보기가 내려오는 동안 커지는 페달 → 렌즈 안 글자가 읽히는 순간 뚝("Twelve hundred. Friday."는 정적). L7~L9 정적.
+  - 다이얼: 딸깍 소리와 버거워하는 복사기에 맞춰 커지는 페달 → 400% 복사본이 터지는 순간 뚝 → **히트 1**: Vera가 종이 밑으로 쓰러질 때 "uh-oh"(낮은 유니즌 반음 하강). L10, L11 정적.
+  - 백기와 칠판: 테마 첫 마디 → **히트 2**: 여덟 번째 동그라미가 닫히는 프레임에 버튼. 엔드 카드는 그 여운과 룸톤 위.
+  - 음악 13.2/40.2초, 히트 2개. 대사 아래 150 ms 전부터 12 dB 더 내려간다.
+- **효과음.** 보이는 동작마다 그 프레임에, 공간의 울림으로(`tools/mix.py`): 첫 프레임에 이미 돌고 있는 복사기(그 녹음의 종이 나오는 순간을 작은 복사본이 튀어나오는 프레임에 맞춤), 트레이에 떨어지는 작은 복사본, 벤치에 내려놓는 톡, 오른쪽 계단 문(멀리), 나무 계단을 내려오는 무거운 걸음 셋(한 걸음씩 다른 소리), 콘크리트 위 걸음, 다이얼 딸깍 넷, 그의 고지서가 슬롯으로 들어가는 종이 소리, 버거워하는 모터, 400% 복사본이 터져 나오는 종이 소리, 종이 밑으로 쓰러지는 소리, 나가는 걸음과 계단을 올라가는 걸음(멀어짐), 백기를 흔드는 종이 바스락, 분필. L10은 종이 밑에서 먹먹하게(저역 통과). 만화 효과음 없음(유리 반짝은 그림만).
+- **룸톤.** 실험실 공기와 60 Hz 험을 길이만큼 생성(루프 없음, 이음새 없음, 디지털 무음 0).
+- **새 효과음(ElevenLabs).** copy, strain, burst, stairs_wood, fall_paper 5개, 611자, 9.2초. 재사용: door_open·steps_lab·chalk(VL6), click(VL4), unroll(VL5).
+- **목소리.** 11줄, 474자(eleven_v4, 첫 녹음 그대로). 받아쓰기 검사가 "1%", "1,200"을 숫자로 적어 처음엔 BAD였다: 검사 도구가 숫자와 %를 말로 읽게 고쳐(`tools/asr_eleven.py`, `tools/final_check.py`) 다시 돌려 11/11 OK.
+
+## 6. 제작하며 고친 것
+
+- 첫 프레임: 복사기 클로즈업에서 Vera의 손가락이 고지서 위에 보이게(손이 종이 뒤에 숨어 있었다). 자막이 복사기 글자 위에 겹치지 않게 카메라를 내림.
+- 작은 복사본이 폰에서 안 보였다: 크기를 키우고(가로 15 px 정도) 튀어나올 때와 들어 보일 때 반짝임 세 개.
+- 클로즈업 가장자리에 다른 인물의 반쪽 얼굴: 클로즈업에는 그 인물만 그린다(VERA_CU, CLEO_CU, LAND_CU, DIAL_CU, MAG_CU).
+- 자막이 복사기 화면 "1%"와 겹침(VERA_CU, LAND_CU): 두 클로즈업을 조금 위로 잡고, 집주인이 고지서를 든 손을 낮춤.
+- 돋보기 클로즈업에서 렌즈 안이 비어 있었다(확대 중심이 어긋남): 렌즈가 작은 고지서 바로 위로 오고 "RENT DUE $1,200"이 렌즈 안에서만 읽힘.
+- 다이얼 클로즈업에서 고지서가 손 옆에 떠 있었다: 뺌. 그의 손이 다이얼을 돌리고, 고지서는 슬롯에 넣을 때 손과 함께 보인다.
+- 400% 복사본 더미가 낮아 "큰 종이"로 안 읽혔다: Vera 머리 위까지 덮는 텐트 모양으로 키우고 글자를 크게.
+- 4화 건틀릿 소품이 클로즈업 가장자리에 빨간 점으로만 보여 뺐다.
+- 하반신: 모두 벤치 뒤. 집주인의 걸음 흔들림은 위로 6 px까지만 올라가 허리가 벤치 위로 나오지 않는다. Vera가 쓰러질 때는 벤치 높이에서 잘라 그려 몸이 벤치 아래로 사라진다(허리에서 끝나는 몸이 보이지 않음).
+
+## 7. 결과
+
+- 40.16초(엔드 카드 2.5초, 마지막 1.25초는 그대로 둔 꼬리), -14.0 LUFS, true peak -1.9 dBTP, loudnorm 2차 linear, 대사 마진 최소 +18.1 dB(K-가중, 최악 400 ms 창 +8.6 dB), ElevenLabs STT 11/11줄, blackdetect 없음, check_english 통과, 표지(그린 표지) 확인. 다시 만들기: `sh build.sh`(초안은 out/에, 검사를 다 통과하면 추적 파일로 복사).
+- 게시 문구: `channel/ig/posts/vl07-reduce-to-1.txt`, postlint VERDICT READY, 휴머나이저 변경 0. 유튜브 제목 "Never shrink your rent notice to 1% | Volt Labs Ep 7 #shorts"(84.4).

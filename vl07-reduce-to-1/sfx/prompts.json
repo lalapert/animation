@@ -1,0 +1,41 @@
+{
+ "door_open": [
+  1.2,
+  "a heavy basement door unlatched and swung open: a metal latch click and a short low creak, indoors, no voices"
+ ],
+ "steps_lab": [
+  4.5,
+  "slow footsteps of one person in soft leather shoes on a bare concrete basement floor, eight separate steps with short gaps, dry, no music, no voices",
+  "generated 11/13 in vl04-laser-pointer's run, used here"
+ ],
+ "copy": [
+  1.6,
+  "an old office photocopier making one copy: a short motor whirr, the scan light humming, paper rollers, a small page sliding out, no voices, no music"
+ ],
+ "strain": [
+  1.4,
+  "an overloaded office photocopier straining: the motor whining higher, rollers rattling and shaking, no voices, no music"
+ ],
+ "burst": [
+  1.0,
+  "a huge sheet of paper bursting out of a machine and flapping through the air: one loud papery whoosh and flap, no voices"
+ ],
+ "stairs_wood": [
+  4.0,
+  "a heavy man walking slowly down old wooden basement stairs, six separate creaky steps, no voices, no music"
+ ],
+ "fall_paper": [
+  1.2,
+  "someone sliding down to the floor behind a desk under a huge sheet of paper: loud crumpling and a soft bump, no voices"
+ ],
+ "click": [
+  0.5,
+  "a tiny cheap pen laser pointer button click",
+  "copied from vl04-laser-pointer"
+ ],
+ "unroll": [
+  1.6,
+  "a very long paper receipt unrolling fast and spilling onto the floor, rustling paper",
+  "copied from vl05-the-monologue"
+ ]
+}

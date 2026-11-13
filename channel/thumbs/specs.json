@@ -413,5 +413,28 @@
    800
   ],
   "zoom": 1.35
+ },
+ {
+  "folder": "vl07-reduce-to-1",
+  "t": 2.6,
+  "series": "vl",
+  "ep": 7,
+  "lines": [
+   "SHE SHRANK",
+   "THE RENT"
+  ],
+  "hl": [
+   "SHRANK"
+  ],
+  "focus": [
+   600,
+   1000
+  ],
+  "zoom": 1.25,
+  "place": [
+   540,
+   1160
+  ],
+  "drawn": true
  }
 ]

@@ -1,0 +1,28 @@
+{
+ "seed": 8,
+ "voice_db": 0,
+ "music_db": -9,
+ "duck_db": 12,
+ "tone_db": -50,
+ "hum_db": -61,
+ "plr_db": 11.5,
+ "min_margin_db": 8,
+ "pan": {"VERA": -0.15, "CLEO": -0.35, "LANDLORD": 0.3},
+ "voices": {"L10": {"lp": 1700, "gdb": -1}},
+ "grains": {"steps_lab": {"len": 0.3, "merge": 0.2, "thr": 0.3}, "stairs_wood": {"len": 0.34, "merge": 0.2, "thr": 0.3}, "unroll": {"len": 0.3, "merge": 0.2, "thr": 0.3}},
+ "foley": {
+  "copy": {"fx": "copy", "g": -15, "space": "lab", "fout": 0.15},
+  "speck": {"fx": "click", "g": -34, "space": "close", "align": true, "lp": 3000, "fout": 0.04},
+  "tap": {"fx": "click", "g": -31, "space": "close", "align": true, "lp": 3500, "fout": 0.04},
+  "door": {"fx": "door_open", "g": -21, "space": "out", "pan": 0.9, "fout": 0.2},
+  "stair": {"grain": "stairs_wood", "g": -17, "space": "lab", "pan": 0.85, "vary": 0.4},
+  "step": {"grain": "steps_lab", "g": -21, "space": "lab", "vary": 0.5},
+  "dial": {"fx": "click", "g": -25, "space": "close", "align": true, "fout": 0.04},
+  "feed": {"grain": "unroll", "g": -25, "space": "lab", "vary": 0.4},
+  "strain": {"fx": "strain", "g": -15, "space": "lab", "fin": 0.08, "fout": 0.08},
+  "blast": {"fx": "burst", "g": -12, "space": "lab", "align": true, "fout": 0.15},
+  "fall": {"fx": "fall_paper", "g": -15, "space": "lab", "fout": 0.15},
+  "flag": {"grain": "unroll", "g": -25, "space": "close", "vary": 0.6},
+  "chalk": {"fx": "chalk", "g": -17, "space": "lab", "fin": 0.02, "fout": 0.15}
+ }
+}

@@ -1,0 +1,116 @@
+{
+ "model_id": "eleven_v4",
+ "cast": {
+  "VERA": {
+   "voice_id": "buRySvQEB2e8Dcglym6i",
+   "name": "LAB Vera Volt",
+   "settings": {
+    "stability": 0.3,
+    "similarity_boost": 0.8,
+    "style": 0.7,
+    "speed": 1.0
+   }
+  },
+  "CLEO": {
+   "voice_id": "biUhGlVm4NoNe58piPit",
+   "name": "LAB Cleo",
+   "settings": {
+    "stability": 0.6,
+    "similarity_boost": 0.8,
+    "style": 0.25,
+    "speed": 0.92
+   }
+  },
+  "LANDLORD": {
+   "voice_id": "pqHfZKP75CvOlQylNhV4",
+   "name": "Bill (stock)",
+   "settings": {
+    "stability": 0.4,
+    "similarity_boost": 0.8,
+    "style": 0.55,
+    "speed": 1.0
+   }
+  }
+ },
+ "lines": [
+  {
+   "id": "L1",
+   "who": "VERA",
+   "text": "[triumphant, scheming] Rent notice. Reduced to one percent.",
+   "plain": "Rent notice. Reduced to one percent.",
+   "sub": "Rent notice.\nReduced to one percent."
+  },
+  {
+   "id": "L2",
+   "who": "CLEO",
+   "text": "[flatly] It still says twelve hundred.",
+   "plain": "It still says twelve hundred.",
+   "sub": "It still says\ntwelve hundred."
+  },
+  {
+   "id": "L3",
+   "who": "VERA",
+   "text": "[airy, smug] Not if he can't read it.",
+   "plain": "Not if he can't read it.",
+   "sub": "Not if he can't read it."
+  },
+  {
+   "id": "L4",
+   "who": "LANDLORD",
+   "text": "[gruff, pleased with himself] Miss Volt. It's next month.",
+   "plain": "Miss Volt. It's next month.",
+   "sub": "Miss Volt.\nIt's next month."
+  },
+  {
+   "id": "L5",
+   "who": "VERA",
+   "text": "[too casual, nervous] Your notice is right there.",
+   "plain": "Your notice is right there.",
+   "sub": "Your notice is right there."
+  },
+  {
+   "id": "L6",
+   "who": "LANDLORD",
+   "text": "[reading slowly, flat] Twelve hundred. Friday.",
+   "plain": "Twelve hundred. Friday.",
+   "sub": "Twelve hundred.\nFriday."
+  },
+  {
+   "id": "L7",
+   "who": "VERA",
+   "text": "[stunned, small] You brought a magnifying glass?",
+   "plain": "You brought a magnifying glass?",
+   "sub": "You brought\na magnifying glass?"
+  },
+  {
+   "id": "L8",
+   "who": "LANDLORD",
+   "text": "[deadpan, gruff] Last month, you had a laser.",
+   "plain": "Last month, you had a laser.",
+   "sub": "Last month,\nyou had a laser."
+  },
+  {
+   "id": "L9",
+   "who": "CLEO",
+   "text": "[flatly] It was a pointer.",
+   "plain": "It was a pointer.",
+   "sub": "It was a pointer.",
+   "noctx": true
+  },
+  {
+   "id": "L10",
+   "who": "VERA",
+   "text": "[muffled, defeated] ...Okay. I can read it.",
+   "plain": "...Okay. I can read it.",
+   "sub": "...Okay.\nI can read it."
+  },
+  {
+   "id": "L11",
+   "who": "LANDLORD",
+   "text": "[gruff, satisfied] Friday.",
+   "plain": "Friday.",
+   "sub": "Friday.",
+   "noctx": true
+  }
+ ]
+}

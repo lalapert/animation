@@ -17,3 +17,4 @@
 | 11/17 09:00 | vm06-employee-of-the-month | 17 Head To Head | Pip vs. a security camera for Employee of the Month | Who took credit for your work? Tell me. | yes |
 | 11/18 09:00 | vl06-lab-inspection | 25 Someone Else's Result | The city inspector gave her fake bakery five stars | What's the first thing you hide when someone knocks? Tell me. | no |
 | 11/19 09:00 | vm07-tip-jar | 24 The Reveal | This tip screen stares at you until you tap 30% | Ever tapped a tip button just because someone was watching? Tell me. | no |
+| 11/20 10:00 | vl07-reduce-to-1 | 2 Negative Command | Never shrink your rent notice to 1% | What's the worst trick you've ever tried on a bill? Tell me. | no |
