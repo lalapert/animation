@@ -1,82 +1,28 @@
 {
- "store_hum": [
-  10.0,
-  "a quiet convenience store at night: soft fridge hum, fluorescent light buzz, faint distant space wind, loopable, no voices, no music"
- ],
- "chime": [
-  1.4,
-  "a convenience store automatic door opening with a bright two-note electronic entry chime"
- ],
- "blip": [
-  0.5,
-  "a short friendly electronic computer blip"
- ],
- "whoosh": [
-  0.6,
-  "a quick soft cartoon whoosh swish"
- ],
- "step": [
-  0.5,
-  "one soft footstep of a shoe on a concrete basement floor"
- ],
- "sparkle": [
-  1.0,
-  "a tiny cartoon sparkle twinkle"
- ],
- "hop": [
-  0.5,
-  "a small light cartoon hop landing, a soft springy bounce, short and cute"
- ],
- "holo": [
-  0.8,
-  "a futuristic hologram display popping up, a bright digital shimmer"
- ],
- "comet": [
-  1.2,
-  "a tiny comet whizzing in and pinging off a metal sign: a fast sparkly whoosh and one bright metallic clang"
- ],
- "jar": [
-  0.9,
-  "a small glowing object dropping into an empty glass jar: a clear glass clink and a little rattle"
- ],
- "fizz": [
-  3.0,
-  "a tiny comet fizzing and spinning inside a glass jar: soft crackling sparkler hiss with a faint hum, loopable"
- ],
- "tooth": [
-  0.6,
-  "a cartoon tooth being yanked out: one quick comedic cork pop"
- ],
- "pod": [
-  2.4,
-  "a small hover car gliding in and settling: a soft sci-fi engine whir that winds down"
- ],
- "pod_out": [
-  2.0,
-  "a small hover car lifting off and gliding away: a soft sci-fi engine whir rising and fading"
- ],
- "claw": [
-  1.8,
-  "an arcade claw machine: a motor whine as the claw lowers, then the claw snapping shut with a metal clack"
- ],
- "claw_up": [
-  1.0,
-  "an arcade claw machine claw zipping back up fast: a quick rising motor whine and a cable rattle"
- ],
- "lens": [
-  1.0,
-  "a security camera lens zooming in: a small motorized whir and a soft focus click"
- ],
- "approve": [
-  0.8,
-  "a card payment terminal approval sound: two quick bright beeps"
- ],
- "coin": [
-  0.8,
-  "a single coin dropped into a glass jar: one bright clink and a short spin"
- ],
- "tap": [
-  0.7,
-  "a small metal claw tapping twice on the back of a hand: two soft metallic taps"
- ]
+ "store_hum": [10.0, "a quiet convenience store at night: soft fridge hum, fluorescent light buzz, faint distant space wind, loopable, no voices, no music"],
+ "chime": [1.4, "a convenience store automatic door opening with a bright two-note electronic entry chime"],
+ "blip": [0.5, "a short friendly electronic computer blip"],
+ "whoosh": [0.6, "a quick soft cartoon whoosh swish"],
+ "step": [0.5, "one soft footstep of a shoe on a concrete basement floor"],
+ "sparkle": [1.0, "a tiny cartoon sparkle twinkle"],
+ "hop": [0.5, "a small light cartoon hop landing, a soft springy bounce, short and cute"],
+ "holo": [0.8, "a futuristic hologram display popping up, a bright digital shimmer"],
+ "comet": [1.2, "a tiny comet whizzing in and pinging off a metal sign: a fast sparkly whoosh and one bright metallic clang"],
+ "jar": [0.9, "a small glowing object dropping into an empty glass jar: a clear glass clink and a little rattle"],
+ "fizz": [3.0, "a tiny comet fizzing and spinning inside a glass jar: soft crackling sparkler hiss with a faint hum, loopable"],
+ "tooth": [0.6, "a cartoon tooth being yanked out: one quick comedic cork pop"],
+ "pod": [2.4, "a small hover car gliding in and settling: a soft sci-fi engine whir that winds down"],
+ "pod_out": [2.0, "a small hover car lifting off and gliding away: a soft sci-fi engine whir rising and fading"],
+ "claw": [1.8, "an arcade claw machine: a motor whine as the claw lowers, then the claw snapping shut with a metal clack"],
+ "claw_up": [1.0, "an arcade claw machine claw zipping back up fast: a quick rising motor whine and a cable rattle"],
+ "lens": [1.0, "a security camera lens zooming in: a small motorized whir and a soft focus click"],
+ "approve": [0.8, "a card payment terminal approval sound: two quick bright beeps"],
+ "coin": [0.8, "a single coin dropped into a glass jar: one bright clink and a short spin"],
+ "tap": [0.7, "a small metal claw tapping twice on the back of a hand: two soft metallic taps"],
+ "steps": [4.0, "one person walking slowly in soft sneakers on a hard vinyl floor in a small quiet shop at night, six separate unhurried footsteps, close, no music, no voices"],
+ "hops": [3.5, "a small person doing little two-footed hops in sneakers on a hard shop floor, four separate soft rubbery landings with pauses between, close, no music, no voices"],
+ "jar_down": [0.6, "a glass jar set down firmly on a wooden shop counter: one solid glassy thunk with a small rattle of coins inside, close, no music"],
+ "mags_servo": [1.0, "a small ceiling-mounted robot camera turning on its mount: one short soft electric servo motor whir, close, quiet shop, no music"],
+ "store_tone": [8.0, "quiet late-night convenience store ambience, fluorescent light hum and a soft refrigerator compressor drone, no people, no music"],
+ "hand_glass": [0.6, "a palm pressing flat against a glass window, a soft dull thump, close"]
 }

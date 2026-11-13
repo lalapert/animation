@@ -414,32 +414,38 @@ window.render = render;
 
 // ---------------------------------------------------------------- sound cues
 window.EV = [
-  { type: 'bed', fx: 'store_hum', t: 0, t1: DUR + .5, g: -30 },
-  { type: 'comet', t: 0 },
-  { type: 'flip', t: TL.HIT + .02 },
-  { type: 'jar', t: TL.LAND },
-  { type: 'bed', fx: 'fizz', t: TL.LAND + .1, t1: TL.CLAWIN + .4, g: -31 },
-  ...HOPS.map(h => ({ type: 'hop', t: h.t0 + h.d * .84 })),
-  { type: 'chime', t: TL.POD0 - .1 },
-  { type: 'pod', t: TL.POD0 },
-  { type: 'tooth', t: TL.YANK },
-  { type: 'jar', t: TL.DROP + .17 },
-  { type: 'pod_out', t: TL.PODOUT },
-  { type: 'holo', t: V.L6.t + 1.1 },
-  { type: 'jar', t: TL.SETDOWN },
-  { type: 'claw', t: TL.CLAW0 },
-  { type: 'claw_up', t: TL.CLAWUP },
-  { type: 'servo', t: TL.MAGSDOWN },
-  { type: 'holo', t: TL.SCREEN },
-  { type: 'lens', t: TL.LENS },
-  { type: 'approve', t: TL.PRESS },
-  { type: 'servo', t: TL.END0 },
-  ...footfalls(TL.RAEW0, TL.RAE_X0, RX, TL.RAE_STEP, TL.RAE_SPS).map(x => ({ type: 'step', t: x })),
-  { type: 'coin', t: TL.COIN + .14 },
-  { type: 'claw', t: TL.CLAW2 },
-  { type: 'tap', t: TL.TAP1 },
-  { type: 'claw_up', t: TL.CLAWBACK },
-  { type: 'chime', t: DUR - 1.2 },
+  // 11/13 natural-sound pass: foley for what we see, in the store's room (tools/mix.py adds the room tone under everything)
+  { type: 'whoosh', t: 0, pan: -.5 },                                                    // the comet flying in (visual gag)
+  { type: 'comet', t: TL.HIT - .02, pan: -.4 },                                          // it pings off the incident board
+  { type: 'flip', t: TL.HIT + .02, pan: -.4 },                                           // 1 -> 0
+  { type: 'jar', t: TL.LAND, pan: -.1 },                                                 // into the glass jar
+  { type: 'bed', fx: 'fizz', t: TL.LAND + .1, t1: TL.CLAWIN + .4, g: -33, fin: .3, fout: .4 },   // fizzing in the jar until the claw takes it
+  ...HOPS.map(h => ({ type: 'hop', t: h.t0 + h.d * .84, pan: -.3 })),                  // Pip landing behind the counter
+  { type: 'chime', t: TL.POD0 - .1, pan: .5 },                                           // the door: a customer
+  { type: 'pod', t: TL.POD0, pan: .4 },                                                  // his hover pod gliding in
+  { type: 'tooth', t: TL.YANK },                                                         // the tooth (visual gag)
+  { type: 'jar', t: TL.DROP + .17 },                                                     // the tooth into the jar
+  { type: 'pod_out', t: TL.PODOUT, pan: .5 },                                            // he glides off
+  { type: 'holo', t: V.L6.t + 1.1 },                                                     // the 60/40 board
+  { type: 'jar_down', t: TL.SETDOWN, pan: -.2 },                                         // Pip slams the jar down
+  { type: 'hatch', t: TL.CLAW0 - .2 },                                                   // the ceiling hatch opens
+  { type: 'claw', t: TL.CLAW0, dur: 1.0 },                                               // the claw lowers
+  { type: 'clack', t: TL.CLAWGRAB + .1 },                                                // and closes on the comet
+  { type: 'claw_up', t: TL.CLAWUP },                                                     // zips up and dangles
+  { type: 'servo', t: TL.CLAWIN, g: .6 },                                                // back into the ceiling
+  { type: 'servo', t: TL.MAGSDOWN },                                                     // MAGS comes down on his pole
+  { type: 'holo', t: TL.SCREEN },                                                        // the tip screen
+  { type: 'lens', t: TL.LENS },                                                          // the lens zooms in on Pip
+  { type: 'approve', t: TL.PRESS },                                                      // 30%: THANK YOU!
+  { type: 'servo', t: TL.END0 },                                                         // MAGS goes back up
+  ...footfalls(TL.RAEW0, TL.RAE_X0, RX, TL.RAE_STEP, TL.RAE_SPS).map(x => ({ type: 'step', t: x, pan: .2 })),
+  { type: 'coin', t: TL.COIN + .14 },                                                    // Rae's coin
+  { type: 'hatch', t: TL.CLAW2 - .2 },
+  { type: 'claw', t: TL.CLAW2, dur: TL.CLAWSTOP - TL.CLAW2 },                            // the claw again
+  { type: 'palm', t: TL.COVER },                                                         // Rae's palm over the jar
+  { type: 'tap', t: TL.TAP1 + .2 },                                                      // two taps on the back of her hand
+  { type: 'claw_up', t: TL.CLAWBACK, g: .7 },                                            // and it goes up, limp
+  { type: 'chime', t: DUR - .8, pan: .5 },                                               // the door again: back to the first frame
 ];
 
 (async () => {
