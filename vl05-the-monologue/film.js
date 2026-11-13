@@ -146,7 +146,7 @@ const CAM = Object.assign({}, LABCAM, {
 });
 // 11/13: frame 1 already has the receipt pouring off the bench; the camera pushes in from the first frame straight into VERA_MED
 function openCam(g, t) {
-  const O = window.OPEN_CAM || [1.22, 430, 1090], e = ease(clamp(t / TL.SHOTS[1][1]));
+  const O = window.OPEN_CAM || [1.4, 390, 1075], e = ease(clamp(t / TL.SHOTS[1][1]));
   const z = Math.exp(lerp(Math.log(O[0]), Math.log(CAM.VERA_MED[2]), e)), cx = lerp(O[1], CAM.VERA_MED[0], e), cy = lerp(O[2], CAM.VERA_MED[1], e);
   g.setTransform(z, 0, 0, z, 540 - cx * z, 960 - cy * z);
 }
@@ -218,22 +218,22 @@ function hookCard(g, t) {
 function render(t) { t = clamp(t, 0, DUR - 1e-3); drawScene(t); composeFrame(OUT, SC, t); hookCard(OUT, t); endCard(OUT, t, 'vl'); }
 window.render = render;
 
-// sound cues: footsteps on her pacing beat (slow, then fast in the montage)
-const STEPS = (() => { const out = []; let next = STEP; for (let t = TL.PACE0; t < M1; t += 1 / 120) { if (paceDist(t) >= next) { out.push({ type: 'step', t: +t.toFixed(3) }); next += STEP; } } return out; })();
+// sound cues (11/13 natural-sound pass, tools/mix.py): footsteps on her pacing bob (slow, then fast in the montage), the receipt
+// dragging along the bench on every other step, the microwave running from Cleo's press to the ding; no sound without a source
+const STEPS = (() => { const out = []; let next = STEP, k = 0; for (let t = TL.PACE0; t < M1; t += 1 / 120) { if (paceDist(t) >= next) { out.push({ type: 'step', t: +t.toFixed(3), i: k }); if (k % 2) out.push({ type: 'drag', t: +(t + .05).toFixed(3) }); next += STEP; k++; } } return out; })();
+const MICRO_CU0 = TL.SHOTS.find(s => s[0] === 'MICRO_CU')[1];
 window.EV = [
-  { type: 'bed', fx: 'lab_hum', t: 0, t1: DUR + .5, g: -31 },
-  { type: 'unroll', t: .1 },
-  { type: 'beep', t: V.L2.t + .3 },
+  { type: 'unroll', t: 0 },                                       // the receipt pouring off the bench (already moving on frame 1)
+  { type: 'beep', t: V.L2.t + .3 },                               // Cleo starts the microwave
+  { type: 'machine', kind: 'microwave', t: V.L2.t + .34, t1: TL.DING + .05, g: -37 },   // it runs, three hours, until the ding
   ...STEPS,
-  { type: 'ffwd', t: M0 + .1, dur: 5.6 },
-  { type: 'tick', t: M0 + 2.2, dur: 1.4 },
-  { type: 'munch', t: M0 + 1.2 },
-  { type: 'wilt', t: M0 + .8 }, { type: 'wilt', t: M0 + 1.9 }, { type: 'wilt', t: M0 + 3.0 },
-  { type: 'whoosh', t: M1 - .05 },
+  { type: 'ffwd', t: M0 + .1, dur: 5.6 },                         // her monologue, fast-forwarded through the time-lapse
+  { type: 'tick', t: MICRO_CU0, dur: 1.4 },                       // the timer racing (the microwave close-up)
+  { type: 'munch', t: M0 + 1.2 },                                 // Cleo's popcorn
   { type: 'munch', t: V.L6.t + .9 },
-  { type: 'wilt', t: V.L7.t - .4 },
-  { type: 'flop', t: TL.DROP + .3 },
-  { type: 'rip', t: TL.RIP },
+  { type: 'wilt', t: V.L7.t - .4 },                               // the last plant wilts (on screen: the gag)
+  { type: 'flop', t: TL.DROP + .3 },                              // its flower lands on the bench
+  { type: 'rip', t: TL.RIP },                                     // the short version, torn off
   { type: 'ding', t: TL.DING },
   { type: 'chalk', t: TL.BOARDT + .4, dur: .9 },
 ];

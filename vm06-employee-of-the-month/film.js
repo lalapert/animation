@@ -198,8 +198,8 @@ function drawScene(t) {
   c.setTransform(1, 0, 0, 1, 0, 0); c.fillStyle = '#221a4f'; c.fillRect(0, 0, W, H);
   let runX = null;
   if (n === 'OPEN') {                                   // from one frame (October) back to the whole wall
-    const [fx, fy] = frameXY(35), k = smooth(.1, 1.45, t), z = 1 / lerp(1 / 5.5, 1 / .9, k) * (1 + .03 * smooth(1.45, V.L3.t, t));
-    setCam(c, lerp(fx + FR.w / 2, 1560, k), lerp(fy + FR.h / 2, 1050, k), z);
+    const [fx, fy] = frameXY(28), k = smooth(.1, 1.45, t), z = 1 / lerp(1 / 3.3, 1 / .9, k) * (1 + .03 * smooth(1.45, V.L3.t, t));   // 11/13: frame 1 shows four of the camera's photos, not one
+    setCam(c, lerp(fx + FR.dx - 6, 1560, k), lerp(fy + FR.dy - 120, 1050, k), z);
   } else if (n === 'MONTAGE') {
     const tr = travel(t, TL.RUN0, RUN.x0, RUN.x1, RUN.step, RUN_SPS);
     setCam(c, clamp(tr.x + 140, 432 + 10, AISLE.w - 432), 1230, 1.25);
