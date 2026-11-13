@@ -1,0 +1,17 @@
+{
+ "model_id": "eleven_v4",
+ "cast": {
+  "LEON": {
+   "voice_id": "Uy5Zv42tAoMnz16B9JZo",
+   "name": "HA Leon Marsh",
+   "settings": {"stability": 0.55, "similarity_boost": 0.8, "style": 0.25, "speed": 0.92}
+  }
+ },
+ "lines": [
+  {"id": "L1", "who": "LEON", "text": "[tired, quiet] Night log. December third. Two fourteen A.M.", "sub": "NIGHT LOG. DECEMBER THIRD. 2:14 A.M.", "asr": "Night log December third two fourteen AM"},
+  {"id": "L2", "who": "LEON", "text": "[low, uneasy] That fire door only opens out.", "sub": "THAT FIRE DOOR ONLY OPENS OUT.", "asr": "That fire door only opens out"},
+  {"id": "L3", "who": "LEON", "text": "[whispering, uneasy] It's the same hallway.", "sub": "IT'S THE SAME HALLWAY.", "asr": "It's the same hallway"},
+  {"id": "L4", "who": "LEON", "text": "[whispering, terrified] It's right next to me.", "sub": "IT'S RIGHT NEXT TO ME.", "asr": "It's right next to me"}
+ ],
+ "context": false
+}

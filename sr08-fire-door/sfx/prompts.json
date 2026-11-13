@@ -1,0 +1,82 @@
+{
+ "static": [
+  2.0,
+  "harsh analog VHS tape static, loud white noise hiss with crackle and a low hum, a tape ending on a blank channel"
+ ],
+ "glitch": [
+  0.6,
+  "a very short VHS tape tracking glitch: a warbling distorted electrical crackle and a brief buzz"
+ ],
+ "tape_hiss": [
+  8.0,
+  "constant soft analog videotape hiss and faint mechanical motor whir, steady, loopable"
+ ],
+ "breath": [
+  2.0,
+  "one slow quiet human exhale very close to a microphone, muffled, no voice"
+ ],
+ "breath_bed": [
+  8.0,
+  "a frightened man breathing shakily and quietly right next to a camcorder microphone, uneven breaths, trying to stay quiet, loopable"
+ ],
+ "near_breath": [
+  8.0,
+  "slow, deep, calm breathing of someone standing right against a microphone, very close and intimate, long inhales and exhales, unhurried, not scared, no voice, loopable"
+ ],
+ "handling": [
+  0.8,
+  "a camcorder microphone rubbed and knocked by a hand as the camera is spun around fast"
+ ],
+ "step": [
+  0.5,
+  "one single footstep of a work boot on a hard polished stone floor in a large empty hall, close, with a short echo"
+ ],
+ "camclick": [
+  0.6,
+  "a 1990s camcorder record button pressed: a plastic click and the tape transport motor starting up"
+ ],
+ "tube_tick": [
+  0.5,
+  "a single sharp electrical tick of a flickering fluorescent tube, one click with a tiny buzz, dry"
+ ],
+ "tube_pop": [
+  1.0,
+  "a fluorescent tube dying: a sharp electrical pop and its buzz cutting off into silence"
+ ],
+ "fluor_hum": [
+  10.0,
+  "an empty tiled corridor at night: a buzzing fluorescent light that flickers now and then, ventilation hum, no people, loopable"
+ ],
+ "vcr_clunk": [
+  0.6,
+  "a 1990s VCR jog shuttle control: one hard mechanical clunk and a quick whir of the tape heads"
+ ],
+ "crt_hum": [
+  8.0,
+  "a small security guard office at night with a wall of old CRT monitors: steady high-pitched television whine and low electrical hum, loopable"
+ ],
+ "cam_hit": [
+  1.0,
+  "something heavy slamming against a plastic security camera housing on a ceiling bracket, recorded by the camera's own tiny microphone: one dull heavy thump right on the microphone, a hard plastic crack and the metal bracket rattling, close, no voice"
+ ],
+ "firedoor_open": [
+  2.5,
+  "a heavy steel fire door swinging open slowly on old hinges in a concrete service corridor: a long low metal hinge groan and the push bar clacking, close, no voices"
+ ],
+ "firedoor_close": [
+  1.5,
+  "a heavy steel fire door swinging shut by itself in a concrete corridor: a short hinge creak and a deep heavy metal slam, then silence"
+ ],
+ "torch_drop": [
+  1.5,
+  "a heavy metal flashlight knocked from a hand onto a bare concrete floor: one hard metallic clatter, a bounce, then it rolls a little and stops"
+ ],
+ "duct_hum": [
+  8.0,
+  "a narrow concrete service corridor behind a shopping mall at night: a low steady ventilation duct hum and a faint electrical buzz, no people, no music, loopable"
+ ],
+ "gasp": [
+  0.8,
+  "one short sharp frightened gasp of a man very close to a microphone, a quick intake of breath, no words"
+ ]
+}

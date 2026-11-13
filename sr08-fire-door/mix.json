@@ -1,0 +1,231 @@
+{
+ "room_db": -58,
+ "voice_db": 0,
+ "duck_db": 12,
+ "duck_preroll": 0.12,
+ "music_db": -16,
+ "deck_hiss_db": -44,
+ "plr_db": 11.7,
+ "devices": {
+  "office": "cam",
+  "corridor": "cam",
+  "cctv": "cctv"
+ },
+ "cam": {
+  "lo": 110,
+  "hi": 8500,
+  "noise_db": -50,
+  "noise_lp": 7000,
+  "target": -21,
+  "boost": 4,
+  "cut": 26,
+  "att": 0.22,
+  "rel": 1.1,
+  "pre": 0,
+  "ceil": -7
+ },
+ "cctv": {
+  "lo": 250,
+  "hi": 3500,
+  "order": 4,
+  "noise_db": -44,
+  "noise_lp": 4500,
+  "target": -22.5,
+  "boost": 4,
+  "cut": 14,
+  "att": 0.03,
+  "rel": 0.5,
+  "pre": 0,
+  "ceil": -9,
+  "post_lp": 4200
+ },
+ "derived": {},
+ "foley": {
+  "tick": {
+   "fx": "tube_tick",
+   "g": -25,
+   "space": "shop",
+   "align": true,
+   "fin": 0.001,
+   "fout": 0.05
+  },
+  "step": {
+   "fx": "step",
+   "g": -21,
+   "space": "shop",
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.08,
+   "trim": 0.16
+  },
+  "echo_step": {
+   "fx": "step",
+   "g": -26,
+   "space": "hall",
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.08,
+   "trim": 0.16
+  },
+  "scuff": {
+   "fx": "step",
+   "g": -17,
+   "space": "close",
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.06,
+   "trim": 0.12
+  },
+  "camclick": {
+   "fx": "camclick",
+   "g": -24,
+   "space": "close",
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.08
+  },
+  "handling": {
+   "fx": "handling",
+   "g": -18,
+   "space": "close",
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.15
+  },
+  "rustle": {
+   "fx": "handling",
+   "g": -22,
+   "space": "close",
+   "fin": 0.02,
+   "fout": 0.2
+  },
+  "knock": {
+   "fx": "handling",
+   "g": 0,
+   "space": "close",
+   "align": true,
+   "fin": 0.001,
+   "fout": 0.2
+  },
+  "breath": {
+   "fx": "breath",
+   "g": -20,
+   "space": "close",
+   "fin": 0.02,
+   "fout": 0.3
+  },
+  "echo_breath": {
+   "fx": "breath",
+   "g": -27,
+   "space": "hall",
+   "fin": 0.02,
+   "fout": 0.3
+  },
+  "door_open": {
+   "fx": "firedoor_open",
+   "g": -13,
+   "space": "shop",
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.4
+  },
+  "door_open_far": {
+   "fx": "firedoor_open",
+   "g": -21,
+   "space": "hall",
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.4
+  },
+  "tube_pop": {
+   "fx": "tube_pop",
+   "g": -15,
+   "space": "shop",
+   "align": true,
+   "fin": 0.001,
+   "fout": 0.2
+  },
+  "tube_pop_far": {
+   "fx": "tube_pop",
+   "g": -25,
+   "space": "hall",
+   "align": true,
+   "fin": 0.001,
+   "fout": 0.2
+  },
+  "gasp": {
+   "fx": "gasp",
+   "g": -3,
+   "space": "close",
+   "align": true,
+   "fin": 0.001,
+   "fout": 0.15
+  },
+  "hit": {
+   "fx": "cam_hit",
+   "g": 11,
+   "space": "close",
+   "align": true,
+   "fin": 0.001,
+   "fout": 0.2
+  },
+  "torch_drop": {
+   "fx": "torch_drop",
+   "g": -4,
+   "space": "shop",
+   "align": true,
+   "fin": 0.001,
+   "fout": 0.3
+  },
+  "torch_drop_far": {
+   "fx": "torch_drop",
+   "g": -21,
+   "space": "hall",
+   "align": true,
+   "fin": 0.001,
+   "fout": 0.3
+  },
+  "slam": {
+   "fx": "firedoor_close",
+   "g": -3,
+   "space": "shop",
+   "align": true,
+   "fin": 0.001,
+   "fout": 0.3
+  },
+  "creak": {
+   "fx": "firedoor_open",
+   "g": -24,
+   "space": "shop",
+   "align": true,
+   "fin": 0.05,
+   "fout": 0.5
+  },
+  "vcr": {
+   "fx": "vcr_clunk",
+   "g": -24,
+   "space": "archive",
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.08
+  },
+  "glitch": {
+   "fx": "glitch",
+   "g": -21,
+   "space": "tape",
+   "align": true,
+   "fin": 0.012,
+   "fout": 0.06
+  },
+  "static": {
+   "fx": "static",
+   "g": -14,
+   "space": "tape",
+   "fin": 0.004,
+   "fout": 0.03
+  }
+ },
+ "beds_db": 26.5,
+ "close_db": 6,
+ "voice_peak_db": -20
+}
