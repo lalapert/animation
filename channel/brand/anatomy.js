@@ -104,7 +104,7 @@ function drawBodyLegs(g, kind, pose, dir = 1, o = {}) {
   const shoe = L => {
     const fy = L.ankle[1] + B.ankleH;
     if (front) shoeFront(g, L.ankle[0], fy, B.footL, B.shoe, B.sole);
-    else shoeSide(g, L.ankle[0], fy, B.footL, dir, L.f.swing ? -.25 * Math.sin(Math.PI * L.f.u) * dir : 0, L.far ? B.shoeS : B.shoe, B.sole);
+    else shoeSide(g, L.ankle[0], fy, B.footL, dir, L.f.tilt != null ? L.f.tilt * dir : L.f.swing ? -.25 * Math.sin(Math.PI * L.f.u) * dir : 0, L.far ? B.shoeS : B.shoe, B.sole);   // f.tilt (11/13): a pointed foot for floats and hops
   };
   if (front) {
     inkFill(g, [gg => pelvisPath(gg, B, pose.drop), ...legs.flatMap(L => legParts(B, L))], B.pants);

@@ -1,0 +1,58 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Full-body poses</title><style>html,body{margin:0;background:#000}canvas{display:block}</style></head>
+<body><canvas id="c" width="2160" height="1920"></canvas>
+<script>window.TL = { DUR: 6, VO: [], SHOTS: [] }; window.CHARS = {};</script>
+<script src="toon.js"></script><script src="vmkit.js"></script><script src="anatomy.js"></script>
+<script>
+// Owner 11/13 (after VM4: Pip floated up and her body ended at the waist): whole bodies (arms, pelvis, legs) whenever a body is
+// seen in open space. Four poses on the store set, with the v3 proportions (anatomy.js): ceiling (upside down, the VM4 gag),
+// floating, a hop over the counter, standing. Two 1080x1920 frames side by side.
+'use strict';
+const cv = document.getElementById('c'), g = cv.getContext('2d');
+// legs (anatomy.js) + the upper-body rig, waist (vest hem) at (x, waist); rot rotates the whole body about its middle
+function body(kind, x, waist, s, pose, dir, o = {}) {
+  const B = BODY[kind], k = s / 100;
+  g.save();
+  if (o.rot) { const my = waist + (B.F * .2) * k; g.translate(x, my); g.rotate(o.rot); g.translate(-x, -my); }
+  g.save(); g.translate(x, waist); g.scale(k, k); drawBodyLegs(g, kind, pose, dir, o); g.restore();
+  g.save(); g.translate(x, waist + pose.drop * k);
+  const ro = Object.assign({ turn: o.view === 'front' ? 0 : .7 * dir, armsDown: o.arms || { l: 0, r: 0 }, handY: B.handY }, o.rig || {});
+  if (kind === 'pip') drawPip2(g, 0, 0, s, Object.assign({ expr: 'grin' }, ro));
+  else drawRae2(g, 0, 0, s, Object.assign({ expr: 'deadpan', scanner: false }, ro));
+  g.restore(); g.restore();
+}
+function label(t, x, y, size = 34, col = '#fbf7ff') { g.font = `600 ${size}px "Fredoka"`; g.fillStyle = col; g.textAlign = 'center'; g.fillText(t, x, y); }
+function storeBg(ox) {
+  g.save(); g.translate(ox, 0); g.drawImage(STATIC.store, 0, 0);
+  const fl = g.createLinearGradient(0, CT, 0, 1920); fl.addColorStop(0, '#4a2c8a'); fl.addColorStop(1, '#2a1858'); g.fillStyle = fl; g.fillRect(0, CT, 1080, 640);
+  g.restore();
+}
+(async () => {
+  await toonFonts('fonts/'); buildStore();
+  // ---- frame 1: the VM4 ceiling gag, whole bodies ----
+  storeBg(0);
+  g.fillStyle = '#2a1858'; g.fillRect(0, 0, 1080, 90); g.fillStyle = 'rgba(255,255,255,.85)'; g.fillRect(140, 70, 260, 14); g.fillRect(680, 70, 260, 14);
+  // Pip standing upside down on the ceiling (boots on backwards): the stand pose turned over, soles on the ceiling at y 90
+  const sP = 150, BP = BODY.pip;
+  body('pip', 380, 90 + BP.F * sP / 100, sP, standPose3(), 1, { view: 'front', rot: Math.PI, arms: { l: -14, r: 14 }, rig: { expr: 'grin' } });
+  // Rae on the floor behind the counter line, magnetic boots, full body in front of the shelves
+  const sR = 150, BR = BODY.rae;
+  body('rae', 760, 1840 - BR.F * sR / 100, sR, standPose3(), 1, { view: 'front', arms: { l: 0, r: 0 }, rig: { expr: 'deadpan' } });
+  label('CEILING (the VM4 gag): soles on the ceiling, legs, hips', 540, 1890, 30, '#ffe2ae');
+  // ---- frame 2: floating and a hop ----
+  storeBg(1080);
+  g.save(); g.translate(1080, 0);
+  // Pip floating mid-air, 3/4, one knee up, toes pointed, arms out, a little tilt
+  const fl = { feet: [{ side: -1, x: -24, y: -40, tilt: .55 }, { side: 1, x: 46, y: -150, tilt: .8 }], drop: 0, swing: 0 };
+  g.restore();
+  body('pip', 1080 + 360, 820, 150, fl, 1, { rot: -.18, arms: { l: -46, r: 52, bend: .25 }, rig: { expr: 'gasp' } });
+  // Rae hopping over the counter: knees tucked, arms up a little
+  // feet kicked back behind her (she faces left, so behind = +x), knees forward and down, leaning into the jump
+  const hop = { feet: [{ side: -1, x: -36, y: -215, tilt: 1.0 }, { side: 1, x: -10, y: -185, tilt: .8 }], drop: 0, swing: 0 };
+  body('rae', 1080 + 780, 1080, 140, hop, -1, { rot: -.08, arms: { l: 34, r: -40, bend: .45 }, rig: { expr: 'smirk' } });
+  // the counter in front of the lower half of the frame
+  g.save(); g.translate(1080, 0); g.globalAlpha = 1; g.drawImage(STATIC.front, 0, CT + 220); g.restore();
+  label('FLOATING (3/4, knee up, toes pointed)  ·  HOP (knees tucked)', 1620, 1890, 30, '#ffe2ae');
+  g.fillStyle = '#000'; g.fillRect(1077, 0, 6, 1920);
+  window.READY = true; window.render = () => {};
+})();
+</script></body></html>
