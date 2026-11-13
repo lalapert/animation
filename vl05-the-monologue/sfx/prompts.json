@@ -1,14 +1,55 @@
 {
- "lab_hum": [10.0, "a basement laboratory ambience: soft electrical hum, gentle bubbling beakers, an old pipe ticking, loopable, no voices, no music"],
- "unroll": [1.6, "a very long paper receipt unrolling fast and spilling onto the floor, rustling paper"],
- "beep": [0.5, "a microwave oven button beep, one short electronic beep"],
- "step": [0.5, "one soft footstep of a shoe on a concrete basement floor"],
- "tick": [3.0, "a timer counting very fast, rapid digital ticking clicks accelerating"],
- "wilt": [0.8, "a soft sad cartoon droop sound, a small descending wobble"],
- "flop": [0.6, "a flower head falling off and landing softly, a tiny cartoon plop"],
- "munch": [1.2, "someone calmly munching popcorn, crunchy, close"],
- "rip": [0.5, "a tiny piece of paper torn off a receipt, one quick small rip"],
- "ding": [0.8, "a microwave oven ding, one bright bell"],
- "chalk": [1.2, "chalk drawing a big circle on a chalkboard, one continuous scrape"],
- "whoosh": [0.6, "a quick soft cartoon whoosh swish"]
+ "lab_hum": [
+  10.0,
+  "a basement laboratory ambience: soft electrical hum, gentle bubbling beakers, an old pipe ticking, loopable, no voices, no music"
+ ],
+ "unroll": [
+  1.6,
+  "a very long paper receipt unrolling fast and spilling onto the floor, rustling paper"
+ ],
+ "beep": [
+  0.5,
+  "a microwave oven button beep, one short electronic beep"
+ ],
+ "step": [
+  0.5,
+  "one soft footstep of a shoe on a concrete basement floor"
+ ],
+ "tick": [
+  3.0,
+  "a timer counting very fast, rapid digital ticking clicks accelerating"
+ ],
+ "wilt": [
+  0.8,
+  "a soft sad cartoon droop sound, a small descending wobble"
+ ],
+ "flop": [
+  0.6,
+  "a flower head falling off and landing softly, a tiny cartoon plop"
+ ],
+ "munch": [
+  1.2,
+  "someone calmly munching popcorn, crunchy, close"
+ ],
+ "rip": [
+  0.5,
+  "a tiny piece of paper torn off a receipt, one quick small rip"
+ ],
+ "ding": [
+  0.8,
+  "a microwave oven ding, one bright bell"
+ ],
+ "chalk": [
+  1.2,
+  "chalk drawing a big circle on a chalkboard, one continuous scrape"
+ ],
+ "whoosh": [
+  0.6,
+  "a quick soft cartoon whoosh swish"
+ ],
+ "steps_lab": [
+  4.5,
+  "slow footsteps of one person in soft leather shoes on a bare concrete basement floor, eight separate steps with short gaps, dry, no music, no voices",
+  "generated 11/13 in vl04-laser-pointer's run, used here"
+ ]
 }
