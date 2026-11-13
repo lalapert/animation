@@ -398,5 +398,20 @@
    800
   ],
   "zoom": 1.15
+ },
+ {
+  "folder": "sr08-fire-door",
+  "t": 20.4,
+  "series": "sr",
+  "tape": "TAPE 08",
+  "lines": [
+   "IT'S RIGHT",
+   "NEXT TO ME."
+  ],
+  "focus": [
+   640,
+   800
+  ],
+  "zoom": 1.35
  }
 ]
