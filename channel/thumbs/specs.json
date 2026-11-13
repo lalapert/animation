@@ -343,7 +343,8 @@
   "place": [
    540,
    1160
-  ]
+  ],
+  "drawn": true
  },
  {
   "folder": "vm07-tip-jar",
@@ -365,7 +366,8 @@
   "place": [
    540,
    1170
-  ]
+  ],
+  "drawn": true
  },
  {
   "folder": "sr06-first-night",
