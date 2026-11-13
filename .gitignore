@@ -4,3 +4,6 @@
 /*/out/
 /*/.venv
 __pycache__/
+
+# mux temp files
+/*/.norm*.wav
