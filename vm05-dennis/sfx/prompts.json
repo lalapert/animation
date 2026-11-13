@@ -10,5 +10,13 @@
  "tears": [2.4, "cartoon tears gushing like two little fountains, splashing water, comedic"],
  "squeak": [1.0, "a wet mop squeaking and splashing on a slimy floor, someone slipping, comedic"],
  "flip": [0.6, "a mechanical flip-number sign flipping over once, a plastic clack"],
- "cart": [1.6, "a heavy shopping cart full of boxes rolling away with a squeaky wheel"]
+ "cart": [1.6, "a heavy shopping cart full of boxes rolling away with a squeaky wheel"],
+ "mags_servo": [1.0, "a small ceiling-mounted robot camera turning on its mount: one short soft electric servo motor whir, close, quiet shop, no music"],
+ "carton_up": [0.6, "a full cardboard milk carton snatched up quickly and held up: a short cardboard rustle and a small slosh of milk inside, close, no music"],
+ "under_counter": [1.2, "a hand reaching under a shop counter: a small cupboard door clicks open and a hand rummages briefly on a shelf, close, indoors, no music"],
+ "mop": [4.0, "a wet string mop pushed slowly back and forth across a hard shop floor, steady soft wet swishes, close, quiet, no music"],
+ "door": [2.0, "automatic sliding glass door opening with a soft pneumatic whoosh, then a cheerful two-tone electronic convenience store entry chime"],
+ "store_tone": [8.0, "quiet late-night convenience store ambience, fluorescent light hum and a soft refrigerator compressor drone, no people, no music"],
+ "drip": [1.5, "slow drips of slushie dripping onto a counter, a few drops"],
+ "holo": [0.8, "a futuristic hologram display popping up, a bright digital shimmer"]
 }

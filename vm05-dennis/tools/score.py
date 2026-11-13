@@ -1,119 +1,97 @@
-"""Original score for Void Mart 5 "Dennis" (F major, 120 BPM): the show's jazzy bed for a regular.
-The bed under the usual; it stops dead on "We're out."; a sad trombone slide for the stalks; the MAGS jingle for the
-subscription; a low tuba for the melt; a warm swell with strings for the hidden carton; a xylophone button on the counter.
-CC0 samples (VSCO 2 CE, VCSL, FreePats).
-  .venv/bin/python tools/score.py            → out/music.wav
+"""Score for Void Mart 5 "Dennis" (natural-sound pass, 11/13): the house trio (tools/band.py) playing the scene, F major.
+  - the usual (0-4 s): a walking bass, brushes and vibes for the regular sliding in; the band stops dead on "We're out."
+  - silence for "...Out?", the stalks drooping and Pip's milk parade (the foley carries it)
+  - "Nine years.": a mock-sentimental ballad (vibes with the motor on, a two-feel bass); out before "Eleven."
+  - MAGS: his glockenspiel jingle just before he speaks, then a bright little sales vamp under the pitch; out at the price
+  - hit 1, the melt: bass and vibes fall chromatically with him
+  - silence for "Relax. I hid one."; then the usual comes back, warmer, for the spring and the happy tears; out before
+    "You leave a trail when you cry."
+  - hit 2, the button: the xylophone on the incident counter, one warm chord, a short answer from the vibes under the mop
+Every punchline sits in a TACET window (the band damped, room tone only). CC0 samples (VSCO 2 CE, VCSL, FreePats).
+  .venv/bin/python tools/score.py            -> out/music.wav, out/score.json
 """
 import json, os, sys
 import numpy as np
 import soundfile as sf
-from fractions import Fraction
-from scipy import signal
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import audio
-from audio import SR, HERE, buf, add, note, m, lowpass, highpass, room, rms
+from audio import SR, HERE
+from band import Band
 
 TL = json.load(open(os.path.join(HERE, "out", "timeline.json")))
-B, BAR, DUR = TL["BEAT"], TL["BAR"], TL["DUR"]
+DUR = TL["DUR"]
 V = {v["id"]: v for v in TL["VO"]}
 end = lambda k: V[k]["t"] + V[k]["dur"]
-stems = {k: buf(DUR + 4) for k in ["bass", "keys", "drums", "brass", "strings", "fx", "winds"]}
-USED = set()
+b = Band(DUR, seed=5, bpm=120)
 
+# 1. the usual: Dennis slides in, "Evening, Rae! The usual!"; stops dead into "We're out."
+t0, stop1 = .05, V["L2"]["t"] - .07
+b.chord_hit(t0, "F6", 1.6, .3, roll=.02)
+b.fill(.62, 1.32, "F6", vel=.34, direction=1)
+b.walk(t0, stop1, ["F6", "D7"], vel=.5, last="Gm7")
+b.brushes(t0, stop1, vel=.42, fade_in=.25, fade_out=.06)
+b.comp(2.05, stop1, ["D7"], vel=.32, density=.7)
 
-def N(t, inst, name, beats, vel=.5, pan=0.0, release=None, attack=0.0, stem="keys"):
-    USED.add(inst)
-    add(stems[stem], note(inst, m(name), beats * B, vel, release=release, attack=attack), t, 1.0, pan)
+# 2. "Nine years. Same milk. Every night.": the ballad, out before "Eleven."
+s2, e2 = V["L5"]["t"] - .25, V["L6"]["t"] - .3
+b.last_voicing = None
+b.pad(s2, e2, ["Dm7", "Bbmaj7", "Gm7 C7sus"], vel=.3, motor=.24)
+b.prev_bass = 38
+b.two(s2, e2, ["Dm7", "Bbmaj7", "Gm7 C7sus"], vel=.4, skip=.2)
 
-
-_rr = {}
-def perc(t, inst, var, vel=.5, pan=0.0, stem="drums"):
-    """unpitched hit: pick a zone whose variant contains `var`, round-robin, no transposition"""
-    USED.add(inst)
-    Z = [z for z in audio.index()[inst]["zones"] if var in (z.get("var") or "")]
-    k = _rr.get((inst, var), 0); _rr[(inst, var)] = k + 1
-    z = Z[k % len(Z)]
-    x, s = audio._sample(z["f"])
-    x = x[z.get("on", 0):]
-    if s != SR:
-        fr = Fraction(SR, s).limit_denominator(1000)
-        x = signal.resample_poly(x, fr.numerator, fr.denominator).astype(np.float32)
-    x = x * (.12 / max(z.get("rms", .05), 1e-4)) * vel
-    add(stems[stem], x[:int(2.5 * SR)], t, 1.0, pan)
-
-
-def walk(t0, t1, notes, vel=.5):
-    """walking bass, one note per beat"""
-    t, i = t0, 0
-    while t < t1 - .05:
-        N(t, "contrabass_pizz", notes[i % len(notes)], .9, vel * (1 if i % 4 == 0 else .85), -.1, .25, stem="bass"); t += B; i += 1
-
-
-def brushes(t0, t1, vel=.3):
-    t, i = t0, 0
-    while t < t1 - .05:
-        perc(t, "drum_kit", "hi_hat_closed", vel * (1 if i % 2 else .7), .25)
-        if i % 4 in (1, 3): perc(t, "drum_kit", "snare_rest", vel * .8, .1)
-        t += B; i += 1
-
-
-def vchord(t, names, beats, vel=.36, inst="vibraphone"):
-    for k, n in enumerate(names):
-        N(t + k * .012, inst, n, beats, vel, -.25 + .17 * k, 1.2)
-
-
-FM7, BB7, C7, DM7, GM7 = ["F3", "A3", "C4", "E4"], ["Bb3", "D4", "F4", "A4"], ["C3", "E3", "G3", "Bb3"], ["D3", "F3", "A3", "C4"], ["G3", "Bb3", "D4", "F4"]
-# the bed under "Evening, Rae! The usual!", stopped dead by "We're out."
-bed0, bed_end = .3, V["L2"]["t"] - .05
-walk(bed0, bed_end, ["F2", "A2", "C3", "A2", "Bb2", "D3", "C3", "A2"], .36)
-brushes(bed0, bed_end, .2)
-for i, ch in enumerate([FM7, BB7, C7]):
-    if bed0 + BAR * i < bed_end - .3: vchord(bed0 + BAR * i, ch, 3, .2)
-# the stalks droop: a sad trombone, one note each
-for k, (n, tt) in enumerate([("Bb2", TL["DROOP1"]), ("A2", TL["DROOP2"])]): N(tt, "trombone", n, 1.6 if k else .9, .4, 0, .6, stem="winds")
-# Pip's milks: three plinks; then the bed again, quiet, under "Nine years."
-for i, tt in enumerate(TL["CARTONS"]): N(tt, "xylophone", ["C5", "E5", "G5"][i], .5, .4, .2, .3)
-walk(V["L5"]["t"], V["L7"]["t"] - .2, ["D2", "A2", "D3", "A2", "G2", "D3", "C3", "A2"], .26)
-# MAGS: the jingle, then a bright vamp under the subscription
+# 3. MAGS: the jingle right before him, then the sales vamp under the pitch
 mg = V["L7"]["t"]
-for i, n in enumerate(["C5", "F5", "A5", "C6"]): N(mg - .05 + i * .11, "glockenspiel", n, 1, .32, .1, .9)
-brushes(mg + .6, V["L8"]["t"] - .1, .2)
-for i in range(3): vchord(mg + .6 + i * BAR, [FM7, GM7, C7][i], 3, .22)
-# the melt: a low tuba sliding down
-for i, n in enumerate(["F2", "E2", "Eb2", "D2", "Db2"]): N(TL["MELT"] + i * .32, "tuba", n, 1.0 if i < 4 else 3, .45, 0, .4 if i < 4 else 1.2, stem="bass")
-# "I hid one.": a warm swell; joy for the tears
-hid = TL["HID"] + .25
-for k, n in enumerate(["F3", "A3", "C4", "F4"]): N(hid + .01 * k, "violins", n, 4, .3, -.2 + .13 * k, 1.5, attack=.4, stem="strings")
-sp = TL["SPRING"]
-walk(sp + .3, TL["FLIP"] - .1, ["F2", "C3", "F3", "C3", "Bb2", "F3", "C3", "A2"], .4)
-brushes(sp + .3, TL["FLIP"] - .1, .26)
-for i in range(3): vchord(sp + .3 + i * BAR, [FM7, BB7, C7][i], 3, .26)
-# button on the incident counter
+b.jingle(mg - .5)
+s3, e3 = mg + .05, end("L7") + .02
+b.last_voicing = None
+b.two(s3, e3, ["Fmaj7", "Gm7 C7", "Fmaj7", "Gm7 C7"], vel=.42, skip=.3)
+b.brushes(s3, e3, vel=.32, fade_in=.4, fade_out=.06)
+b.comp(s3, e3, ["Fmaj7", "Gm7 C7", "Fmaj7", "Gm7 C7"], vel=.3, density=.8)
+
+# 4. hit 1, the melt: everything falls with him (bass and vibes, chromatic, parallel)
+mt = TL["MELT"]
+for i, (bn, top) in enumerate(zip([41, 40, 39, 38, 37], [[69, 72, 77], [68, 71, 76], [67, 70, 75], [66, 69, 74], [65, 68, 73]])):
+    tt, last = mt + i * .3, i == 4
+    b.bass_note(tt, bn, 3 if last else .55, .5 if not last else .55, release=1.2 if last else .12)
+    for j, p in enumerate(top):
+        b.n("vibes", "vibraphone", p, tt + j * .012, (3 if last else .5) * b.B, .3 if not last else .33, .2 + .05 * j, release=1.0 if last else .15)
+b.set_motor(mt + 1.2, mt + 2.6, .3)
+
+# 5. the usual again, warmer: the spring, "Rae... you DO care!"; out before the punchline
+s5, e5 = end("L9") + .05, V["L11"]["t"] - .15
+b.last_voicing = None
+b.prev_bass = 41
+b.walk(s5, e5, ["F6", "D7", "Gm7 C7", "F6"], vel=.5, last="F6")
+b.brushes(s5, e5, vel=.4, fade_in=.3, fade_out=.06)
+b.comp(s5, e5, ["F6", "D7", "Gm7 C7", "F6"], vel=.32, density=.7)
+
+# 6. hit 2, the button on the incident counter; a short answer from the vibes under the mop
 en = TL["FLIP"] + .15
-for i, n in enumerate(["C5", "F5", "A5", "C6"]): N(en + i * .07, "xylophone", n, .6 if i < 3 else 2, .44, -.2 + i * .13, .3 if i < 3 else 1.2)
-vchord(en + .28, ["F3", "A3", "C4", "F4"], 4, .32)
-N(en + .28, "contrabass_pizz", "F2", 2, .55, -.1, .6, stem="bass")
-perc(en + .28, "triangle", "open", .3, .3, stem="fx")
+b.button(en)
+b.fill(en + 1.9, en + 3.0, "F6", vel=.3, direction=-1)
 
-
-def active_rms(x):
-    w = int(.1 * SR); n = len(x) // w
-    e = np.sqrt((x[:n * w].reshape(n, w, 2) ** 2).mean((1, 2))); e = e[e > 1e-4]
-    return float(np.sqrt((e ** 2).mean())) if len(e) else 0.0
-
-
-GP = os.path.join(HERE, "tools", "score_gain.json")
-GAIN = json.load(open(GP)) if os.path.exists(GP) else {}
-mus = np.zeros_like(stems["bass"])
-for k, v in stems.items():
-    print(f"stem {k:8s} active rms {20 * np.log10(active_rms(v) + 1e-9):6.1f} dB  gain {GAIN.get(k, 1.0)}")
-    mus += v * GAIN.get(k, 1.0)
-mus = highpass(mus, 38)
-mus = room(mus, size=.35, mix=.18, damp=.55)
-endi = int((DUR - .05) * SR); mus[endi:] *= 0
-mus = mus[:int(DUR * SR)]
-mus *= .5 / (np.abs(mus).max() + 1e-9)
-sf.write(os.path.join(HERE, "out", "music.wav"), mus, SR, subtype="FLOAT")
-json.dump(sorted(USED), open(os.path.join(HERE, "out", "instruments_used.json"), "w"))
-print("per 2 s dB:", " ".join(f"{b * 2}:{20 * np.log10(np.sqrt(np.mean(mus[int(b * 2 * SR):int((b + 1) * 2 * SR)] ** 2)) + 1e-12):.0f}" for b in range(int(DUR / 2) + 1)))
+# punchlines and the room after them: nothing from the band
+TACET = [[stop1, s2], [e2, mg - .55], [e3, mt - .06], [mt + 2.6, s5], [e5, en - .02]]
+music, stems = b.render(json.load(open(os.path.join(HERE, "tools", "score_gain.json"))))     # the band's balance
+env = np.ones(len(music), np.float32)
+for a, z in TACET:
+    i, j = int(a * SR), int(z * SR)
+    k = int(.09 * SR)
+    env[i:j] = 0
+    env[max(0, i - k):i] = np.minimum(env[max(0, i - k):i], np.linspace(1, 0, i - max(0, i - k)))
+    env[j:j + int(.03 * SR)] = np.minimum(env[j:j + int(.03 * SR)], np.linspace(0, 1, len(env[j:j + int(.03 * SR)])))
+music *= env[:, None]
+music[int((DUR - .05) * SR):] = 0
+music = music[:int(DUR * SR)]
+act = np.abs(music).max(1) > 1e-4
+music *= 10 ** (-24 / 20) / np.sqrt(np.mean(music[act] ** 2))           # active level -24 dBFS; mix.py sets it against the voices
+sf.write(os.path.join(HERE, "out", "music.wav"), music.astype(np.float32), SR, subtype="FLOAT")
+json.dump({"tacet": TACET, "hits": [["melt", mt], ["button", en]], "instruments": sorted(b.used), "fills": b.log},
+          open(os.path.join(HERE, "out", "score.json"), "w"), indent=1)
+json.dump(sorted(b.used), open(os.path.join(HERE, "out", "instruments_used.json"), "w"))
+print("instruments:", ", ".join(sorted(b.used)))
+print("tacet:", ", ".join(f"{a:.2f}-{z:.2f}" for a, z in TACET))
+print("per 1 s dB:", " ".join(f"{i}:{20 * np.log10(np.sqrt(np.mean(music[i * SR:(i + 1) * SR] ** 2)) + 1e-12):.0f}" for i in range(int(DUR) + 1)))
+for k, x in stems.items():
+    a = np.abs(x).max(1) > 1e-5
+    if a.any(): print(f"  stem {k:6s} active rms {20 * np.log10(np.sqrt(np.mean(x[a] ** 2))):6.1f} dB, peak {20 * np.log10(np.abs(x).max()):6.1f} dB")

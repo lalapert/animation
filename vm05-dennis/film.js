@@ -68,7 +68,7 @@ function drawDennis5(g, t, x, y, s, o = {}) {
     if (sad > .5 || dr > .3) tLine(g, [ex - side * 14, ey - 12, ex + side * 12, ey - 20], 3.6);     // sad brow
     else tCurve(g, ex - 13, ey - 13, ex, ey - 22, ex + 13, ey - 13, 3.6);
     if (o.tears > 0) {                                                                             // joy: two little fountains
-      for (let i = 0; i < 7; i++) { const p = ((t * 1.6 + i / 7) % 1), k = o.tears, tx = ex + side * (16 + p * 150 * k), ty = ey - 8 - Math.sin(p * Math.PI) * 90 * k + p * p * 160 * k;
+      for (let i = 0; i < 7; i++) { const p = ((t * 1.6 + i / 7) % 1), k = o.tears, tx = ex - side * (4 + p * 66 * k), ty = ey - 10 - Math.sin(p * Math.PI) * 100 * k + p * p * 70 * k;   // 11/13: the fountains arc inward over his cap, never across the clerks' faces
         g.fillStyle = 'rgba(140,220,255,.9)'; g.beginPath(); g.ellipse(tx, ty, 6, 8, 0, 0, 6.2832); g.fill(); g.lineWidth = 2; g.strokeStyle = TOON.ink; g.stroke(); }
     }
   }
@@ -146,7 +146,7 @@ function dennisState(t) {
   const melt = t < TL.MELT ? 0 : (t < TL.SPRING ? smooth(TL.MELT, TL.MELT + 1.0, t) : 1 - smooth(TL.SPRING, TL.SPRING + .35, t));
   const droop = Math.max(0, 1 - smooth(TL.SPRING, TL.SPRING + .3, t)) * (1 - melt);      // melting: the stalks stand up out of the puddle
   return {
-    x: t < 1.1 ? lerp(1250, DEN.x, ease(t / 1.1)) : DEN.x, melt,
+    x: t < .9 ? lerp(880, DEN.x, ease(t / .9)) : DEN.x, melt,                                   // 11/13: in frame from the first frame
     droopL: smooth(TL.DROOP1, TL.DROOP1 + .25, t) * droop, droopR: smooth(TL.DROOP2, TL.DROOP2 + .25, t) * droop,
     sad: t >= V.L3.t && t < TL.SPRING ? 1 : 0, mouth: mouthFor('DENNIS', t), item: t >= TL.SPRING + .2 ? 'DENNIS' : null,
     tears: t >= V.L10.t - .1 ? smooth(V.L10.t - .1, V.L10.t + .4, t) * (1 - smooth(TL.FLIP + 2.2, TL.FLIP + 3, t)) : 0,
@@ -179,7 +179,10 @@ function drawScene(t) {
   applyCam(c, CAM[n], sk, shake);
   c.drawImage(STATIC.store, 0, 0);
   drawBoardNumber(c, t, 1, 0, TL.FLIP);
+  const mk = clamp((t - TL.MAGSTURN) / .4) - 1, sw = .12 * (1 - (1 + 2.2 * mk * mk * mk + 1.2 * mk * mk));   // 11/13: he turns to the customer for the pitch (a little overshoot)
+  c.save(); c.translate(MAGS.x, MAGS.y); c.rotate(sw); c.translate(-MAGS.x, -MAGS.y);
   drawMags(c, MAGS.x, MAGS.y, MAGS.s, { talk: talkLevel('MAGS', t) });
+  c.restore();
   priceTag(c, t);
   const bobR = Math.sin(t * 1.7 + 1) * 1.5, bobP = Math.sin(t * 2.1) * 2 + (speaking('PIP', t) ? Math.sin(t * 15) * 2.5 : 0);
   const R = raeState(t, n);
@@ -214,22 +217,23 @@ function render(t) { t = clamp(t, 0, DUR - 1e-3); drawScene(t); composeFrame(OUT
 window.render = render;
 
 window.EV = [
-  { type: 'bed', fx: 'store_hum', t: 0, t1: DUR + .5, g: -30 },
-  { type: 'chime', t: .02 },
-  { type: 'slide', t: .1 },
-  { type: 'cart', t: .05 },
-  { type: 'droop', t: TL.DROOP1 },
-  { type: 'droop', t: TL.DROOP2 },
-  ...TL.CARTONS.map(x => ({ type: 'carton', t: x - .05 })),
-  ...vmShotsFrom('MAGS_MED').map(x => ({ type: 'blip', t: x + .02 })),
-  { type: 'blip', t: V.L7.t + 1.0 },
-  { type: 'melt', t: TL.MELT },
-  { type: 'carton', t: TL.HID + .3 },
-  { type: 'pop', t: TL.SPRING },
-  { type: 'tears', t: V.L10.t, dur: 2.4 },
-  { type: 'flip', t: TL.FLIP },
-  { type: 'squeak', t: TL.FLIP + .9 },
-  { type: 'chime', t: DUR - 1.2 },
+  // 11/13 natural-sound pass: foley for what we see, in the store's room (tools/mix.py adds the room tone under everything)
+  { type: 'door', t: -.85 },                                                     // the automatic door: its chime lands as he crosses in
+  { type: 'slide', t: 0, pan: .35 },                                             // Dennis gliding to the counter
+  { type: 'cart', t: .05, pan: -.45 },                                           // the battery cart rolling out the back
+  { type: 'droop', t: TL.DROOP1 }, { type: 'droop', t: TL.DROOP2 },             // the stalks (a visual gag: cartoon allowed)
+  ...TL.CARTONS.map(x => ({ type: 'carton_up', t: x - .1, pan: -.3 })),          // Pip whips up each carton
+  { type: 'servo', t: TL.MAGSTURN - .02 },                                       // MAGS turns to the customer
+  { type: 'holo', t: V.L7.t + 1.0 },                                             // the price tag appears
+  { type: 'melt', t: TL.MELT },                                                  // the melt (visual gag)
+  { type: 'under', t: V.L9.t + .2, pan: .3 },                                    // Rae reaches under the counter
+  { type: 'carton', t: TL.HID + .3, pan: .2 },                                   // and sets the carton down
+  { type: 'pop', t: TL.SPRING },                                                 // he springs back up (visual gag)
+  { type: 'tears', t: V.L10.t, dur: 2.2 },                                       // the fountains
+  ...[0, .8, 1.5, 2.3, 3.0, 3.9, 4.5, 5.3, 6.1].map((d, i) => ({ type: 'drip', t: V.L10.t + 2.3 + d, pan: (i % 2 ? .25 : -.2) })),   // the trail
+  { type: 'flip', t: TL.FLIP - .04 },                                            // the incident counter
+  ...TL.MOP.map((x, i) => ({ type: 'mop', t: x, pan: -.3 + (i % 2) * .15 })),   // Pip's mop strokes
+  { type: 'chime', t: DUR - 1.2 },                                               // the next customer: back to the first frame
 ];
 
 (async () => {

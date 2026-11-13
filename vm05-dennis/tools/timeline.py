@@ -42,6 +42,9 @@ w4 = W("L4"); T["CARTONS"] = [round(V["L4"]["t"] + [x for x in w4 if x["w"].lowe
 w9 = W("L9"); T["HID"] = round(V["L9"]["t"] + [x for x in w9 if x["w"].lower().startswith("hid")][0]["t0"] - 0.25, 3)
 w7 = W("L7"); T["ONLY"] = round(V["L7"]["t"] + [x for x in w7 if x["w"].lower().startswith("only")][0]["t0"] - 0.1, 3)
 T["FLIP"] = round(end("L11") + 0.5, 3)                                                       # the incident counter goes back to 0
+T["MAGSTURN"] = round(V["L7"]["t"] + 0.02, 3)                                                # 11/13: MAGS turns to the customer on his cut (the servo)
+import math
+T["MOP"] = [round(k * math.pi / 6 - 0.12, 3) for k in range(70, 80) if T["FLIP"] + 0.8 < k * math.pi / 6 < DUR - 0.25]   # mop strokes (film.js: sin(6t))
 SHOTS = [
     ["WIDE_OPEN", 0.0, V["L1"]["t"] - .05],
     ["DENNIS_CU", V["L1"]["t"] - .05, V["L2"]["t"]],

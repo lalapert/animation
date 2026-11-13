@@ -1,84 +1,28 @@
 {
-  "room_db": -60,
-  "voice_over_music_db": 12,
-  "beds": {},
-  "foley": {
-    "chime": {
-      "fx": "chime",
-      "g": -14,
-      "align": false,
-      "fin": 0.01,
-      "fout": 0.15
-    },
-    "slide": {
-      "fx": "slide",
-      "g": -16,
-      "align": false,
-      "fin": 0.01,
-      "fout": 0.15
-    },
-    "cart": {
-      "fx": "cart",
-      "g": -22,
-      "align": false,
-      "fin": 0.01,
-      "fout": 0.15
-    },
-    "droop": {
-      "fx": "droop",
-      "g": -17,
-      "align": false,
-      "fin": 0.01,
-      "fout": 0.15
-    },
-    "carton": {
-      "fx": "carton",
-      "g": -15,
-      "align": true,
-      "fin": 0.002,
-      "fout": 0.1
-    },
-    "blip": {
-      "fx": "blip",
-      "g": -18,
-      "align": false,
-      "fin": 0.01,
-      "fout": 0.15
-    },
-    "melt": {
-      "fx": "melt",
-      "g": -13,
-      "align": false,
-      "fin": 0.01,
-      "fout": 0.15
-    },
-    "pop": {
-      "fx": "pop",
-      "g": -13,
-      "align": true,
-      "fin": 0.002,
-      "fout": 0.2
-    },
-    "tears": {
-      "fx": "tears",
-      "g": -17,
-      "align": false,
-      "fin": 0.05,
-      "fout": 0.4
-    },
-    "flip": {
-      "fx": "flip",
-      "g": -14,
-      "align": true,
-      "fin": 0.002,
-      "fout": 0.1
-    },
-    "squeak": {
-      "fx": "squeak",
-      "g": -16,
-      "align": false,
-      "fin": 0.01,
-      "fout": 0.15
-    }
-  }
+ "room": {"src": "store_tone", "db": -55, "buzz_db": -70, "seed": 1},
+ "store_room": {"rt": 0.5, "mix": 0.22, "bright": 8000},
+ "music_db": -11,
+ "duck_db": -10,
+ "duck_pre": 0.15,
+ "duck_post": 0.3,
+ "foley_duck_db": -2,
+ "plr_db": 11.0,
+ "foley": {
+  "door":      {"fx": "door", "g": -27, "fin": 0.3, "fout": 0.3},
+  "slide":     {"fx": "slide", "g": -25, "fin": 0.05, "fout": 0.3},
+  "cart":      {"fx": "cart", "g": -33, "fin": 0.2, "fout": 0.5},
+  "droop":     {"fx": "droop", "g": -27},
+  "carton_up": {"fx": "carton_up", "g": -25, "cents": 40, "gvar": 1},
+  "servo":     {"fx": "mags_servo", "g": -30, "fout": 0.15},
+  "holo":      {"fx": "holo", "g": -32},
+  "melt":      {"fx": "melt", "g": -25, "fout": 0.3},
+  "under":     {"fx": "under_counter", "g": -29, "fout": 0.15},
+  "carton":    {"fx": "carton", "g": -26, "align": true},
+  "pop":       {"fx": "pop", "g": -23},
+  "tears":     {"fx": "tears", "g": -33, "fin": 0.15, "fout": 0.6, "tail": 0.3},
+  "drip":      {"takes": ["drip", [[0.0, 0.32], [0.36, 0.7]]], "g": -34, "cents": 80, "gvar": 2},
+  "flip":      {"fx": "flip", "g": -22},
+  "mop":       {"takes": ["mop", [[0.75, 1.3], [1.3, 2.05], [2.22, 2.62]]], "g": -30, "cents": 30, "gvar": 1.5, "fin": 0.06, "fout": 0.12},
+  "chime":     {"fx": "chime", "g": -27, "fout": 0.3}
+ }
 }
