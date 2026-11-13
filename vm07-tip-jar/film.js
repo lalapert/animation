@@ -57,7 +57,7 @@ function jarPos(t) {                                         // bottom centre of
   return [JAR.x, CT];
 }
 function cometPos(t) {
-  if (t < TL.HIT) { const k = clamp(t / TL.HIT); return [lerp(-70, BOARD.x + 30, k), lerp(150, BOARD.y + 10, k * k * .4 + k * .6)]; }
+  if (t < TL.HIT) { const k = t / TL.HIT; return [lerp(60, BOARD.x + 30, k), lerp(240, BOARD.y + 10, k * k * .4 + k * .6)]; }   // 11/13: already in frame on the first frame, its tail trailing off the edge
   if (t < TL.LAND) { const k = (t - TL.HIT) / (TL.LAND - TL.HIT); return [qb(BOARD.x + 30, 420, JAR.x, k), qb(BOARD.y + 10, 150, CT - 60, k)]; }
   const cl = clawState(t);
   if (cl.comet) return [cl.x + Math.sin(t * 13) * 3, cl.y + 66];
@@ -368,6 +368,7 @@ const CAM = Object.assign({}, VMCAM, {
   MAGS_MED: [MAGS.x, MAGSY + 150, 1.95, 2.05],
   MAGS_CLAW: [505, 290, 2.3, 2.45],
   WIDE_CLAW: [470, 800, 1.45, 1.45],
+  RAE_TOOTH: [735, 1040, 2.3, 2.45],
   TWO_SHOT: [440, 900, 1.45, 1.55],
   TIP_CU: [360, 1010, 1.95, 2.08],
   WIDE_END: [500, 1050, 1.5, 1.6],
@@ -377,6 +378,7 @@ const CAM = Object.assign({}, VMCAM, {
 function drawScene(t) {
   const shot = shotAt(t); let n = shot[0]; const sk = (t - shot[1]) / Math.max(.01, shot[2] - shot[1]);
   if (n === 'MAGS_CU') n = t < V.L7.t ? 'MAGS_MED' : 'MAGS_CLAW';   // L6 needs room under MAGS for the board; L8 for the claw
+  if (n === 'RAE_CU' && t >= V.L4.t - .01 && t < V.L5.t) n = 'RAE_TOOTH';   // 11/13: the trucker's gap-toothed grin sits above the subtitle, not under it
   const shake = t > TL.SETDOWN && t < TL.SETDOWN + .2 ? Math.sin(t * 90) * 6 * (1 - (t - TL.SETDOWN) / .2) : 0;
   c.setTransform(1, 0, 0, 1, 0, 0);
   c.fillStyle = '#1e1044'; c.fillRect(0, 0, W, H);
