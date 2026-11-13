@@ -73,7 +73,7 @@ def main(a):
             i = 0
             for t in got:                                          # the line's words, in order, inside its window
                 if i < len(want) and t == want[i]: i += 1
-            ok = i == len(want)
+            ok = i == len(want) or "".join(want) in "".join(got)   # the same words, spelled joined or apart (pickup / pick up)
             heard += ok; bad += not ok
             print(f"{'OK ' if ok else 'BAD'} {v['id']:4s} want {' '.join(want)!r} heard {' '.join(got)!r}")
         print(f"lines heard: {heard}/{len(TL['VO'])}")

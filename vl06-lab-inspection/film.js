@@ -211,7 +211,7 @@ function drawMover(g, t, who, pos, o, opts = {}) {
   } else draw(g, pos.x, LCT, S, o);
 }
 function veraState(t) {
-  const mouth = mouthFor('VERA', t), blink = blinkAt(0, t);
+  const mouth = mouthFor('VERA', t), blink = t < .4 ? false : blinkAt(0, t);     // 11/13: eyes open on frame 1
   let expr = 'scheme', reachR = null, tube = false;
   if (t >= TL.SLAM + .9) expr = 'laugh';                          // 11/13: eyes open, grinning on frame 1; the laugh after
   if (t >= V.L4.t - .1) expr = 'fluster';
