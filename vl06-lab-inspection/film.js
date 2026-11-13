@@ -202,7 +202,8 @@ function drawMover(g, t, who, pos, o, opts = {}) {
   const draw = who === 'V' ? drawVera2 : who === 'C' ? drawCleo2 : drawInspector;
   if (pos.moving) {
     const step = pos.run ? 190 : 150, bob = walkBob(pos.dist, step, pos.run ? 20 : 11);
-    g.save(); g.translate(pos.x, LCT + 4 + bob.dy); g.rotate(bob.rot * (pos.run ? 1.6 : 1));
+    const dy = -6 * Math.tanh(-bob.dy / 6);                        // 11/13 (owner: no torso ending at the waist in the air): the rise of the bob
+    g.save(); g.translate(pos.x, LCT + 4 + dy); g.rotate(bob.rot * (pos.run ? 1.6 : 1));   // is capped near 6 px, so the waist stays behind the bench
     if (pos.run) g.rotate(.06 * pos.dir);                                           // leaning into the dash
     const arms = { l: bob.swing * (pos.run ? 30 : 16) * pos.dir, r: -bob.swing * (pos.run ? 30 : 16) * pos.dir, bend: pos.run ? .7 : .05 };
     draw(g, 0, 0, S, Object.assign({ turn: .7 * pos.dir, armsDown: arms, remote: false }, o));
@@ -311,7 +312,7 @@ function hiccup(g, t) {
 // ---------------------------------------------------------------- cameras
 const CAM = {
   WIDE_OPEN: [540, 990, 1.0, 1.04], WIDE: [540, 990, 1.0, 1.03],
-  VERA_MED: [VX0 + 40, VFACE + 150, 1.6, 1.66], VERA_CU: [VX0 + 10, VFACE + 80, 2.3, 2.45], VERA_END: [VX0 + 10, VFACE + 20, 2.1, 1.9],
+  VERA_MED: [VX0 + 40, VFACE + 150, 1.6, 1.66], VERA_CU: [VX0 + 10, VFACE + 80, 2.3, 2.45], VERA_END: [VX0 + 32, VFACE + 20, 2.1, 1.9],
   INSP_CU: [IX - 10, INSPFACE + 80, 2.3, 2.45], INSP_MED: [IX - 30, INSPFACE + 150, 1.6, 1.66],
   CLEO_CU: [700, LCT - 200 * S / 100 + 80, 2.3, 2.45],
 };

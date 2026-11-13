@@ -321,7 +321,7 @@ function pipPressHand(g, t, k, bob) {                        // world coordinate
 }
 function drawPipAll(g, t) {
   const P = pipState(t), bob = pipBob(t), hp = P.hp;
-  g.save(); g.translate(PIP.x, CT + bob + (hp ? hp.dy : 0)); if (hp) g.scale(hp.sx, hp.sy);
+  g.save(); g.translate(PIP.x, CT + bob + (hp ? Math.max(hp.dy, -2) : 0)); if (hp) g.scale(hp.sx, hp.sy);   // owner 11/13: her waist never leaves the counter (no torso ending in the air): the hops are bounces in place
   drawPip2(g, 0, 0, PIP.s, P.o);
   if (P.pressArm) { g.save(); g.scale(PIP.s / 100, PIP.s / 100); pipPressArms(g, P.pressArm.k); g.restore(); }
   g.restore();
@@ -340,7 +340,7 @@ function drawRaeAll(g, t) {
   const R = raeState(t), STEP = TL.RAE_STEP;
   if (t < TL.RAEW0) return drawRae2(g, RAE.x, CT + Math.sin(t * 1.7 + 1) * 1.5, RAE.s, Object.assign({ mug: 0 }, R));
   const tr = travel(t, TL.RAEW0, TL.RAE_X0, RX, STEP, TL.RAE_SPS);
-  if (tr.moving) return drawTraveller(g, (gg, x, y, s, o) => drawRae2(gg, x, y, s, o), tr.x, CT, RAE.s, Object.assign({ scanner: false }, R), walkBob(tr.dist, STEP, 10), -1);
+  if (tr.moving) return drawTraveller(g, (gg, x, y, s, o) => drawRae2(gg, x, y, s, o), tr.x, CT + 10, RAE.s, Object.assign({ scanner: false }, R), walkBob(tr.dist, STEP, 10), -1);
   const u = RAE.s / 100, jx = (JAR.x - RX) / u, jy = (JMOUTH - 8 - CT) / u;
   const up1 = smooth(TL.RAEW1 + .05, TL.COIN - .05, t), dn1 = smooth(TL.COIN + .15, TL.COIN + .4, t), up2 = smooth(TL.COVER - .3, TL.COVER, t);
   let rx = lerp(-30, jx + 4, up1), ry = lerp(30, jy - 10, up1);
