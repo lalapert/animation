@@ -180,8 +180,10 @@ function composeFrame(out, scene, t) {
 // The last 1.25 s, at the top of the frame (inside the Shorts/Reels safe zone, clear of the subtitles at the bottom).
 // show: 'vm' (Rae, Pip, MAGS) or 'vl' (Vera, Cleo; needs lab.js). The two shows alternate daily on the channel, so the small
 // line names tomorrow's show. Call it last in render(): endCard(OUT, t, 'vm').
+// owner 11/13: the card stays 2-3 s. Episodes set TL.ENDCARD (seconds, e.g. 2.5) and add the extra time as a held tail after the
+// button (DUR + ENDCARD - 1.25), so the button still lands before the card; episodes without it keep the old 1.25 s.
 function endCard(g, t, show) {
-  const t0 = TL.DUR - 1.25, a = clamp((t - t0) / .15); if (a <= 0) return;
+  const t0 = TL.DUR - (TL.ENDCARD || 1.25), a = clamp((t - t0) / .15); if (a <= 0) return;
   const pop = 1 + .08 * Math.sin(Math.PI * clamp((t - t0) / .3)), vl = show === 'vl';
   const acc = vl ? '#d8ff7a' : TOON.orangeL, x0 = 130, y0 = 230, w = 820, h = 360;
   g.save(); g.setTransform(1, 0, 0, 1, 0, 0); g.globalAlpha = a;
