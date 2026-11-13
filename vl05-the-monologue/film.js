@@ -56,6 +56,7 @@ function receiptStrip(g, hx, hy, dir) {                            // behind the
   g.save(); g.lineCap = 'round';
   const path = gg => { gg.beginPath(); gg.moveTo(hx, hy); gg.quadraticCurveTo(hx - dir * 40, (hy + by) / 2, hx - dir * 90, by); gg.lineTo(70, by); };
   path(g); g.strokeStyle = TOON.ink; g.lineWidth = 30; g.stroke(); path(g); g.strokeStyle = '#fbfaf2'; g.lineWidth = 24; g.stroke();
+  path(g); g.setLineDash([9, 7]); g.strokeStyle = '#9a98a8'; g.lineWidth = 3; g.stroke(); g.setLineDash([]);
   g.restore();
 }
 function receiptCascade(g, k) {                                   // in front of the bench: paper folding down to the floor and a pile
@@ -64,6 +65,7 @@ function receiptCascade(g, k) {                                   // in front of
   g.save(); g.lineCap = 'round'; g.lineJoin = 'round';
   const path = gg => { gg.beginPath(); gg.moveTo(70, top); let y = top, i = 0; while (y < bottom) { const ny = Math.min(bottom, y + 70); gg.quadraticCurveTo(70 + (i % 2 ? -36 : 36), (y + ny) / 2, 70, ny); y = ny; i++; } };
   path(g); g.strokeStyle = TOON.ink; g.lineWidth = 30; g.stroke(); path(g); g.strokeStyle = '#fbfaf2'; g.lineWidth = 24; g.stroke();
+  path(g); g.setLineDash([9, 7]); g.strokeStyle = '#9a98a8'; g.lineWidth = 3; g.stroke(); g.setLineDash([]);       // 11/13: the speech's lines of text
   if (k > .9) for (let i = 0; i < 5; i++) { tShape(g, '#fbfaf2', gg => gg.ellipse(70 + (i - 2) * 26, 1890 - (i % 2) * 18, 44, 16, (i - 2) * .2, 0, 6.2832), 2.6); }
   g.restore();
 }
@@ -136,12 +138,18 @@ function drawChalkArm(g, t, i) {
 
 // ---------------------------------------------------------------- cameras for this episode
 const CAM = Object.assign({}, LABCAM, {
-  OPEN: [500, 1080, 1.05, 1.1],
+  OPEN: [500, 1080, 1.05, 1.1],                                   // (unused: the opening push-in is openCam below)
   CLEO_MICRO: [700, CLEOFACE + 150, 1.8, 1.9],
   MICRO_CU: [MICRO.x + 30, MICRO.y - 70, 3.8, 4.2],
   PLANTS_CU: [975, LCT - 70, 3.0, 3.2],
   BOARD_END: [LBOARD.x - 40, LBOARD.y - 5, 2.75, 2.85],
 });
+// 11/13: frame 1 already has the receipt pouring off the bench; the camera pushes in from the first frame straight into VERA_MED
+function openCam(g, t) {
+  const O = window.OPEN_CAM || [1.22, 430, 1090], e = ease(clamp(t / TL.SHOTS[1][1]));
+  const z = Math.exp(lerp(Math.log(O[0]), Math.log(CAM.VERA_MED[2]), e)), cx = lerp(O[1], CAM.VERA_MED[0], e), cy = lerp(O[2], CAM.VERA_MED[1], e);
+  g.setTransform(z, 0, 0, z, 540 - cx * z, 960 - cy * z);
+}
 function paceCam(t, night) {                                      // follows her, waist-up
   const P = veraPos(t); return [540 + (P.x - 300) * .55, 1000, night ? 1.3 : 1.42, night ? 1.3 : 1.42];
 }
@@ -151,7 +159,7 @@ function drawScene(t) {
   const shot = shotAt(t), n = shot[0], sk = (t - shot[1]) / Math.max(.01, shot[2] - shot[1]);
   c.setTransform(1, 0, 0, 1, 0, 0); c.fillStyle = '#12302a'; c.fillRect(0, 0, W, H);
   const cam = n === 'PACE' || n === 'PACE_NIGHT' ? paceCam(t, n === 'PACE_NIGHT') : CAM[n];
-  applyCam(c, cam, n === 'PACE' || n === 'PACE_NIGHT' ? 0 : sk, 0);
+  if (n === 'OPEN') openCam(c, t); else applyCam(c, cam, n === 'PACE' || n === 'PACE_NIGHT' ? 0 : sk, 0);
   c.drawImage(LAB_STATIC.lab, 0, 0);
   drawWindow(c, t, 0); nightWindow(c, smooth(M0 + .4, M0 + 3.4, t));
   drawRentCircles(c, n === 'BOARD_END' && t > TL.BOARDT + 1.3 ? 6 : 5, n === 'BOARD_END' && t > TL.BOARDT + .4 && t <= TL.BOARDT + 1.3 ? (t - TL.BOARDT - .4) / .9 : 0);
@@ -159,13 +167,15 @@ function drawScene(t) {
   flyer(c, FLYER_WALL.x, FLYER_WALL.y, .42);
   drawFridge(c, 0);
   // Vera: standing, or pacing waist-up behind the bench
+  const cast = n !== 'BOARD_END';                                  // 11/13: the board close-up showed the top of Vera's head
   const P = veraPos(t), tired = t >= M1 ? 1 : 0;
   let expr = 'scheme';
   if (t >= M1) expr = t < V.L6.t ? 'laugh' : t < V.L7.t ? 'cool' : t < V.L9.t ? 'cool' : 'scheme';
   if (t >= V.L7.t && t < V.L8.t) expr = 'fluster';
-  const mouth = mouthFor('VERA', t), blink = blinkAt(0, t);
+  const mouth = mouthFor('VERA', t), blink = t < .4 ? false : blinkAt(0, t);     // 11/13: eyes open on frame 1
   let hand = null;
-  if (P.moving) {
+  if (!cast) { /* nobody in the board close-up */ }
+  else if (P.moving) {
     const bob = walkBob(P.dist, STEP, 10), sx = P.x;
     c.save(); c.translate(sx, LCT + 6 + bob.dy); c.rotate(bob.rot);
     const reach = { x: 64 + bob.swing * 4, y: -152 + Math.abs(bob.swing) * 4 };          // she reads from the receipt as she walks
@@ -178,19 +188,19 @@ function drawScene(t) {
     drawVera2(c, VERA.x, LCT, VERA.s, { expr, mouth, blink, reachR: reach, tube: false });
     hand = [VERA.x + reach.x * VERA.s / 100, LCT + reach.y * VERA.s / 100];
   }
-  if (tired) frizz(c, VERA.x, LCT - 238 * VERA.s / 100, VERA.s, 1);
+  if (tired && cast) frizz(c, VERA.x, LCT - 238 * VERA.s / 100, VERA.s, 1);
   if (hand) { receiptStrip(c, hand[0], hand[1] + 10, P.moving ? P.dir : 1); receiptTop(c, hand[0], hand[1] + 14, -.08); }
   // Cleo: presses the microwave; popcorn through the montage
   const press = t > V.L2.t - .2 && t < V.L2.t + .6, popcorn = t > M0 + 1.0;
   const C2 = { expr: 'deadpan', remote: !popcorn, mouth: mouthFor('CLEO', t), blink: blinkAt(1, t), look: P.moving ? (P.x - CLEO.x) / 260 : -1 };
   if (press) C2.reachL = { x: -66, y: -40 };
   drawMicrowave(c, t);
-  drawCleo2(c, CLEO.x, LCT, CLEO.s, C2);
-  if (popcorn) popcornBag(c, CLEO.x, LCT - 64, t);
+  if (cast) drawCleo2(c, CLEO.x, LCT, CLEO.s, C2);
+  if (popcorn && cast) popcornBag(c, CLEO.x, LCT - 64, t);
   c.drawImage(LAB_STATIC.front, 0, LCT);
   PLANTS.forEach((x, i) => drawPlant(c, x, plantWilt(i, t), t, i));
   g2Sign(c);
-  receiptCascade(c, smooth(.1, 1.4, t));
+  receiptCascade(c, smooth(-.7, 1.5, t));                          // 11/13: already pouring off the bench on frame 1
   // the torn-off piece
   if (t > TL.RIP && t < TL.RIP + 1.2 && hand) { const k = (t - TL.RIP) / 1.2; c.save(); c.translate(hand[0] + 30 + k * 60, hand[1] - 40 + k * k * 300); c.rotate(k * 6); tShape(c, '#fbfaf2', gg => gg.rect(-8, -6, 16, 12), 2); c.restore(); }
 }
