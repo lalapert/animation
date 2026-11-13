@@ -375,40 +375,43 @@ function render(t) {
 }
 window.render = render;
 
-// ---------------------------------------------------------------- sound cues
-// the projector hum on every Screen 2 shot, wavering, dipping where the lamp drops out (an envelope in dB); a tick on each dropout
-const A_SEGS = TL.SEGS.filter(s => s[0] === 'A'), L_SEGS = TL.SEGS.filter(s => s[0] === 'L');
-const projEv = [], ticks = [];
-for (const s of A_SEGS) {
-  const t1 = s[3] === 5 ? TL.PROJ_DIE + .05 : s[2], env = [];
-  for (let k = Math.ceil(s[1] * FPS_CCTV); k / FPS_CCTV < t1; k++) {
-    const tq = k / FPS_CCTV, L = lamp(tq, s[3]), wob = 1.6 * Math.sin(tq * 2.3) + 1.1 * Math.sin(tq * 5.9 + 1);
-    env.push([Math.round(tq * 1000) / 1000, Math.round((wob + (L < .2 ? -9 : L < .6 ? -4 : 0)) * 10) / 10]);
-    if (L < .6 && k / FPS_CCTV > s[1] + .1) ticks.push({ type: 'lamp_tick', t: Math.round(tq * 1000) / 1000, g: L < .2 ? 1 : .55 });
+// ---------------------------------------------------------------- sound cues (owner 11/13: natural sound only)
+// Everything is in the scene and heard through the camera on screen: CAM 12 in Screen 2 (the projector's hum wavering and
+// dipping with its lamp, a tick on each drop-out, the PA, a seat going down, its neck in held steps, the crack, the projector
+// dying, a breath at the mic) or CAM 11 in the lobby (the mall's ventilation, the door swinging shut). The multiplexer cuts
+// carry only the tape's head-switch noise; the archive's zooms are silent; the deck clunks on the tracking roll.
+// space: shop (Screen 2), hall (the lobby), close (at the camera), tape, archive.
+function buildEvents() {
+  const EV = [], cq = x => +(Math.ceil(x * FPS_CCTV - 1e-6) / FPS_CCTV).toFixed(3);
+  const A_SEGS = TL.SEGS.filter(s => s[0] === 'A'), L_SEGS = TL.SEGS.filter(s => s[0] === 'L');
+  for (const s of A_SEGS) {
+    const t1 = s[3] === 5 ? TL.PROJ_DIE + .05 : s[2], env = [];
+    for (let k = Math.ceil(s[1] * FPS_CCTV); k / FPS_CCTV < t1; k++) {
+      const tq = k / FPS_CCTV, L = lamp(tq, s[3]), wob = 1.6 * Math.sin(tq * 2.3) + 1.1 * Math.sin(tq * 5.9 + 1);
+      const gdb = wob + (L < .2 ? -9 : L < .6 ? -4 : 0);
+      env.push([+tq.toFixed(3), +Math.pow(10, gdb / 20).toFixed(3)], [+(tq + 1 / FPS_CCTV - .01).toFixed(3), +Math.pow(10, gdb / 20).toFixed(3)]);
+      if (L < .6 && tq > s[1] + .1) EV.push({ type: 'lamp_tick', t: +tq.toFixed(3), g: L < .2 ? 1 : .55 });
+    }
+    EV.push({ type: 'bed', fx: 'projector', space: 'shop', t: s[1], t1, g: s[3] === 5 ? -29 : -27 + (s[3] - 1) * .8, fin: .01, fout: s[3] === 5 ? .04 : .01, env });
   }
-  projEv.push({ type: 'bed', fx: 'projector', t: s[1], t1, g: s[3] === 5 ? -29 : -26 + (s[3] - 1) * .8, fin: .02, fout: s[3] === 5 ? .04 : .02, env });
+  for (const s of L_SEGS) EV.push({ type: 'bed', fx: 'mall_hum', space: 'hall', t: s[1], t1: s[2], g: -38, fin: .01, fout: .01 });   // the lobby: near silent
+  EV.push(
+    { type: 'static', t: 0.0, dur: TL.STATIC[0][1] },
+    { type: 'chime', t: TL.STATIC[0][1] + .05 },                                         // the mall's PA chime, then the announcement
+    ...TL.GLITCH.map(([t0, d]) => ({ type: 'glitch', t: t0, dur: d, g: t0 > 32 ? 1.4 : .8 })),
+    { type: 'door', t: TL.DOOR + 1.6 - .4 },                                              // its thud lands as the door closes
+    { type: 'vcr', t: TL.ROLL[0] },
+    { type: 'seat', t: cq(TL.SEAT) },
+    ...TL.HEAD.map(([x], i) => ({ type: 'bone_creak', t: x, g: .55 + .05 * i, pan: .12 })),
+    { type: 'neck_last', t: TL.SNAP - .02, pan: .12 }, { type: 'bone_crack', t: TL.SNAP, pan: .12 },   // the rest of the way in one frame: a creak into the crack
+    { type: 'projector_down', t: TL.PROJ_DIE },
+    { type: 'breath', t: TL.BREATH },
+    { type: 'static', t: TL.END, dur: DUR - TL.END },
+    { type: 'mute', t: TL.BLACK[0], t1: TL.BLACK[1] },                                    // the tape drops out: the recording is dead
+  );
+  return EV.sort((a, b) => a.t - b.t);
 }
-window.EV = [
-  { type: 'static', t: 0.0, dur: .6 },
-  ...projEv, ...ticks,
-  ...TL.SWITCHES.map(x => ({ type: 'switch', t: x - .02 })),
-  ...TL.GLITCH.map(([t0, d]) => ({ type: 'glitch', t: t0, dur: d, g: t0 > 32 ? 1.4 : .8 })),
-  ...TL.JERKS.map((x, i) => ({ type: 'lurch', t: x, g: .7 + .25 * i })),
-  { type: 'door', t: TL.DOOR },
-  { type: 'roll', t: TL.ROLL[0] }, { type: 'switch', t: TL.ROLL[0] - .02 },
-  { type: 'seat', t: TL.SEAT },
-  { type: 'vcr_clunk', t: TL.CRASH[0] - .02 },
-  { type: 'bed', fx: 'dread', t: TL.BLACK[1], t1: TL.SNAP, g: -30, fin: 2.5, fout: .01 },
-  ...TL.HEAD.map(([x], i) => ({ type: 'bone_creak', t: x, g: .55 + .05 * i, pan: .12 })),
-  { type: 'swell', t: TL.SNAP - 2.0, dur: 2.0 },
-  { type: 'bone_crack', t: TL.SNAP, pan: .12 },
-  { type: 'projector_down', t: TL.PROJ_DIE },
-  { type: 'breath', t: TL.BREATH },
-  { type: 'static', t: TL.END, dur: DUR - TL.END },
-  { type: 'mute', t: TL.BLACK[0], t1: TL.BLACK[1] },                                     // the black frames: dead silence
-  { type: 'bed', fx: 'tape_hiss', t: 0, t1: TL.BLACK[0], g: -38, fin: .3, fout: .01 },
-  { type: 'bed', fx: 'tape_hiss', t: TL.BLACK[1], t1: DUR + .5, g: -40, fin: .05, fout: .3 },
-];
+window.EV = buildEvents();
 
 (async () => {
   try {

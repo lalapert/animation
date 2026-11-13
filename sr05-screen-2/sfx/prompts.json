@@ -23,10 +23,6 @@
   8.0,
   "the steady fan hum and faint electrical buzz of a video projector in an empty cinema auditorium, loopable, no music, no voices"
  ],
- "switch": [
-  0.5,
-  "an old security camera multiplexer switching channels: a dry relay click with a tiny burst of video buzz"
- ],
  "door": [
   2.0,
   "a heavy padded cinema door slowly swinging shut by itself, a long low creak and a soft thud"
@@ -55,24 +51,8 @@
   0.5,
   "a projector lamp flickering for an instant: a short electrical crackle and a buzzing dropout"
  ],
- "dread": [
-  8.0,
-  "a very deep sub-bass rumble slowly building pressure in an empty room, an ominous low drone, dark and quiet, no melody, no voices"
- ],
- "lurch": [
-  0.7,
-  "a short dull muffled thump with a dry crackle, like a very tall body lurching forward one step, heard from a distance through a wall"
- ],
- "swell": [
-  2.0,
-  "a slow rising horror tension swell, reversed cymbal and dissonant strings rising to a sudden stop"
- ],
- "roll": [
-  0.6,
-  "a VHS tape tracking roll: a warbling wow and flutter distortion with a rushing hiss"
- ],
- "flicker": [
-  2.0,
-  "a fluorescent tube light flickering on and off with sharp electrical clicks and a stuttering buzz"
+ "chime": [
+  2.5,
+  "an old 1990s shopping mall public address chime, three slow descending electronic tones from ceiling speakers, slightly warped tape, empty hall echo"
  ]
 }
