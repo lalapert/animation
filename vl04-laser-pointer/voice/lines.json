@@ -1,117 +1,118 @@
 {
- "model_id": "eleven_v4",
- "cast": {
-  "VERA": {
-   "voice_id": "buRySvQEB2e8Dcglym6i",
-   "name": "LAB Vera Volt",
-   "settings": {
-    "stability": 0.3,
-    "similarity_boost": 0.8,
-    "style": 0.7,
-    "speed": 1.0
-   }
+  "model_id": "eleven_v4",
+  "cast": {
+    "VERA": {
+      "voice_id": "buRySvQEB2e8Dcglym6i",
+      "name": "LAB Vera Volt",
+      "settings": {
+        "stability": 0.3,
+        "similarity_boost": 0.8,
+        "style": 0.7,
+        "speed": 1.0
+      }
+    },
+    "CLEO": {
+      "voice_id": "biUhGlVm4NoNe58piPit",
+      "name": "LAB Cleo",
+      "settings": {
+        "stability": 0.6,
+        "similarity_boost": 0.8,
+        "style": 0.25,
+        "speed": 0.92
+      }
+    },
+    "LANDLORD": {
+      "voice_id": "pqHfZKP75CvOlQylNhV4",
+      "name": "Bill (stock)",
+      "settings": {
+        "stability": 0.4,
+        "similarity_boost": 0.8,
+        "style": 0.55,
+        "speed": 1.0
+      }
+    }
   },
-  "CLEO": {
-   "voice_id": "biUhGlVm4NoNe58piPit",
-   "name": "LAB Cleo",
-   "settings": {
-    "stability": 0.6,
-    "similarity_boost": 0.8,
-    "style": 0.25,
-    "speed": 0.92
-   }
-  },
-  "LANDLORD": {
-   "voice_id": "pqHfZKP75CvOlQylNhV4",
-   "name": "Bill (stock)",
-   "settings": {
-    "stability": 0.4,
-    "similarity_boost": 0.8,
-    "style": 0.55,
-    "speed": 1.0
-   }
-  }
- },
- "lines": [
-  {
-   "id": "L1",
-   "who": "VERA",
-   "text": "[grand, triumphant] Behold. The Annihilator.",
-   "plain": "Behold. The Annihilator.",
-   "sub": "Behold.\nThe Annihilator."
-  },
-  {
-   "id": "L2",
-   "who": "CLEO",
-   "text": "[flatly] That was the rent money.",
-   "plain": "That was the rent money.",
-   "sub": "That was the rent money."
-  },
-  {
-   "id": "L3",
-   "who": "VERA",
-   "text": "[ignoring her, booming] Earth... KNEEL!",
-   "plain": "Earth... KNEEL!",
-   "sub": "Earth...\nKNEEL!"
-  },
-  {
-   "id": "L4",
-   "who": "CLEO",
-   "text": "[deadpan] Wow.",
-   "plain": "Wow.",
-   "sub": "Wow."
-  },
-  {
-   "id": "L5",
-   "who": "VERA",
-   "text": "[defensive, flustered] It's... warming up.",
-   "plain": "It's... warming up.",
-   "sub": "It's... warming up."
-  },
-  {
-   "id": "L6",
-   "who": "LANDLORD",
-   "text": "[gruff, impatient, shouting through glass] Miss Volt! Rent! Today!",
-   "plain": "Miss Volt! Rent! Today!",
-   "sub": "Miss Volt! Rent! Today!"
-  },
-  {
-   "id": "L7",
-   "who": "LANDLORD",
-   "text": "[terrified, voice cracking] ...You know what? Next month is fine.",
-   "plain": "...You know what? Next month is fine.",
-   "sub": "...You know what?\nNext month is fine."
-  },
-  {
-   "id": "L8",
-   "who": "VERA",
-   "text": "[stunned, then thrilled] It works!",
-   "plain": "It works!",
-   "sub": "It works!",
-   "noctx": true
-  },
-  {
-   "id": "L9",
-   "who": "CLEO",
-   "text": "[deadpan] On landlords.",
-   "plain": "On landlords.",
-   "sub": "On landlords."
-  },
-  {
-   "id": "L10",
-   "who": "CLEO",
-   "text": "[flatly] My paycheck?",
-   "plain": "My paycheck?",
-   "sub": "My paycheck?",
-   "noctx": true
-  },
-  {
-   "id": "L11",
-   "who": "VERA",
-   "text": "[terrified squeak] Next month is fine!",
-   "plain": "Next month is fine!",
-   "sub": "Next month is fine!",
-   "noctx": true
-  }
- ]
+  "lines": [
+    {
+      "id": "L1",
+      "who": "VERA",
+      "text": "[grand, triumphant] Behold. The Annihilator.",
+      "plain": "Behold. The Annihilator.",
+      "sub": "Behold.\nThe Annihilator."
+    },
+    {
+      "id": "L2",
+      "who": "CLEO",
+      "text": "[flatly] That was the rent money.",
+      "plain": "That was the rent money.",
+      "sub": "That was the rent money."
+    },
+    {
+      "id": "L3",
+      "who": "VERA",
+      "text": "[ignoring her, booming] Earth... KNEEL!",
+      "plain": "Earth... KNEEL!",
+      "sub": "Earth...\nKNEEL!"
+    },
+    {
+      "id": "L4",
+      "who": "CLEO",
+      "text": "[deadpan] Wow.",
+      "plain": "Wow.",
+      "sub": "Wow."
+    },
+    {
+      "id": "L5",
+      "who": "VERA",
+      "text": "[defensive, flustered] It's... warming up.",
+      "plain": "It's... warming up.",
+      "sub": "It's... warming up."
+    },
+    {
+      "id": "L6",
+      "who": "LANDLORD",
+      "text": "[gruff, impatient, shouting through glass] Miss Volt! Rent! Today!",
+      "plain": "Miss Volt! Rent! Today!",
+      "sub": "Miss Volt! Rent! Today!",
+      "asr": "Ms. Volt, rent today."
+    },
+    {
+      "id": "L7",
+      "who": "LANDLORD",
+      "text": "[terrified, voice cracking] ...You know what? Next month is fine.",
+      "plain": "...You know what? Next month is fine.",
+      "sub": "...You know what?\nNext month is fine."
+    },
+    {
+      "id": "L8",
+      "who": "VERA",
+      "text": "[stunned, then thrilled] It works!",
+      "plain": "It works!",
+      "sub": "It works!",
+      "noctx": true
+    },
+    {
+      "id": "L9",
+      "who": "CLEO",
+      "text": "[deadpan] On landlords.",
+      "plain": "On landlords.",
+      "sub": "On landlords."
+    },
+    {
+      "id": "L10",
+      "who": "CLEO",
+      "text": "[flatly] My paycheck?",
+      "plain": "My paycheck?",
+      "sub": "My paycheck?",
+      "noctx": true
+    },
+    {
+      "id": "L11",
+      "who": "VERA",
+      "text": "[terrified squeak] Next month is fine!",
+      "plain": "Next month is fine!",
+      "sub": "Next month is fine!",
+      "noctx": true
+    }
+  ]
 }
