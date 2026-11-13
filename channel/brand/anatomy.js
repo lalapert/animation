@@ -115,3 +115,26 @@ function drawBodyLegs(g, kind, pose, dir = 1, o = {}) {
   shoe(far); inkFill(g, legParts(B, far), B.pantsS);
   shoe(near); inkFill(g, [gg => pelvisPath(gg, B, pose.drop), ...legParts(B, near)], B.pants);
 }
+
+// ---------- whole bodies for the shots that show them (owner 11/13: approved, "natural, not stiff"; usually the body stays hidden) ----------
+// Presets in the v3 proportions. Feet are offsets from the standing ankle (x along the facing, y up < 0); tilt points the foot.
+const POSE3 = {
+  stand: () => standPose3(),
+  float: (k = 1) => ({ feet: [{ side: -1, x: -24 * k, y: -40 * k, tilt: .55 }, { side: 1, x: 46 * k, y: -150 * k, tilt: .8 }], drop: 0, swing: 0 }),   // one knee up, toes pointed
+  hop: (k = 1) => ({ feet: [{ side: -1, x: -36 * k, y: -215 * k, tilt: 1 }, { side: 1, x: -10 * k, y: -185 * k, tilt: .8 }], drop: 0, swing: 0 }),   // knees tucked
+};
+// legs (above) + the upper-body rig (toon.js), the vest hem at (x, waist), s = the rig scale; o.rot turns the whole body about its
+// middle (o.rot = Math.PI for upside down), o.arms = hangingArms swing {l, r, bend}, o.rig = extra rig options (expr, blink, mouth...).
+// Natural, not stiff: knees bent unless the body stands, feet pointed in the air, arms away from the body when floating, a little
+// asymmetry; when it moves, ease into and out of the pose over 4-8 frames (anticipation before a hop, a settle after landing).
+function drawWhole(g, kind, x, waist, s, pose, dir = 1, o = {}) {
+  const B = BODY[kind], k = s / 100;
+  g.save();
+  if (o.rot) { const my = waist + (B.F * .2) * k; g.translate(x, my); g.rotate(o.rot); g.translate(-x, -my); }
+  g.save(); g.translate(x, waist); g.scale(k, k); drawBodyLegs(g, kind, pose, dir, o); g.restore();
+  g.save(); g.translate(x, waist + pose.drop * k);
+  const ro = Object.assign({ turn: o.view === 'front' ? 0 : .7 * dir, armsDown: o.arms || { l: 0, r: 0 }, handY: B.handY }, o.rig || {});
+  if (kind === 'pip') drawPip2(g, 0, 0, s, Object.assign({ expr: 'grin' }, ro));
+  else drawRae2(g, 0, 0, s, Object.assign({ expr: 'deadpan', scanner: false }, ro));
+  g.restore(); g.restore();
+}
