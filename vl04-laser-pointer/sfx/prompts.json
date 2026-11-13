@@ -54,5 +54,22 @@
  "chalk": [
   1.2,
   "chalk drawing a big circle on a chalkboard, one continuous scrape"
+ ],
+ "pave_run": [
+  2.5,
+  "a heavy man running away fast on a concrete pavement outdoors in leather shoes, eight separate footsteps, no music"
+ ],
+ "cloth": [
+  3.0,
+  "four separate quick rustles of a stiff cotton lab coat sleeve as arms are thrown up, close, dry, pauses between, no voice"
+ ],
+ "keys_drop": [
+  1.0,
+  "a heavy ring of keys dropped onto a concrete pavement outdoors: one metallic jangle and clatter, no music"
+ ],
+ "street": [
+  10.0,
+  "a quiet residential street heard through an open basement window: distant traffic, a few birds, light breeze, no voices, loopable",
+  "copied from vl02-obedience-ray"
  ]
 }

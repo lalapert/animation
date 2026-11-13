@@ -124,13 +124,13 @@ function drawChalkArm(g, t, i) {
 
 // ---------------------------------------------------------------- cameras for this episode
 const CAM = Object.assign({}, LABCAM, {
-  OPEN: [540, 990, 1.18, 1.2],
+  OPEN: [540, 990, 1.18, 1.2],                                    // (unused: the opening pull-back is openCam below)
   CANNON: [470, 960, 1.42, 1.5],
   CHARGE: [540, 960, 1.22, 1.3],
   DOT_CU: [DOTP.win[0] + 10, DOTP.win[1] + 30, 3.4, 3.6],
   WINDOW_LL: [LWIN.x - 20, LWIN.y + 50, 2.75, 2.9],
   DOT_CHEST: [DOTP.chest[0] - 10, DOTP.chest[1] - 10, 4.4, 4.7],
-  WINDOW_WIDE: [LWIN.x - 120, LWIN.y + 80, 2.1, 2.2],
+  WINDOW_WIDE: [LWIN.x - 120, LWIN.y + 30, 2.45, 2.55],          // 11/13: tighter, so no half-head of Cleo at the bottom edge
   BOARD_END: [LBOARD.x - 40, LBOARD.y - 5, 2.75, 2.85],
 });
 
@@ -163,7 +163,7 @@ function drawPedestal(g, t, sheet, onIt) {
   tShape(g, '#5b4636', gg => gg.roundRect(PED.x - 70, PED.y - 70, 140, 70, 8), 3.4);
   tShape(g, '#b3263c', gg => gg.roundRect(PED.x - 60, PED.y - 86, 120, 22, 10), 3);   // velvet cushion
   g.save(); g.translate(PED.x, PED.y - 76); g.rotate(-.04); tShape(g, '#fff6c8', gg => gg.rect(-74, 74, 148, 26), 2.4); tText(g, 'THE ANNIHILATOR', 0, 87, 13, TOON.ink, '"Bungee"', 'center', 400); g.restore();
-  if (onIt) drawGauntlet(g, t, PED.x - 10, PED.y - 112, -.05, 0);
+  if (onIt) drawGauntlet(g, t, PED.x - 10, PED.y - 112, -.05, .35 + .3 * Math.sin(t * 7));   // 11/13: the lens pulses on the cushion
   if (sheet < 1) {
     const k = ease(sheet);
     g.save(); g.translate(PED.x + k * 120, PED.y - 140 - k * 900); g.rotate(-k * .7);
@@ -173,10 +173,20 @@ function drawPedestal(g, t, sheet, onIt) {
   }
 }
 
+// 11/13: frame 1 is the episode's strongest picture: the Annihilator big on its velvet cushion, lens glowing, the sheet already
+// flying off; it holds a beat, then the camera pulls back (centre and zoom together) into the CANNON framing as Vera says "Behold"
+function openCam(g, t) {
+  const e = ease(clamp((t - .18) / (V.L1.t - .05 - .18)));
+  const O = window.OPEN_CAM || [2.2, 440, 1010];                 // Vera's grin, the glowing gauntlet and the flying sheet in one frame
+  const z = Math.exp(lerp(Math.log(O[0]), Math.log(CAM.CANNON[2]), e));
+  const cx = lerp(O[1], CAM.CANNON[0], e), cy = lerp(O[2], CAM.CANNON[1], e);
+  g.setTransform(z, 0, 0, z, 540 - cx * z, 960 - cy * z);
+}
+
 // ---------------------------------------------------------------- character states
 function veraState(t, n) {
-  let expr = 'cool', point = 0, cheer = false, reachR = null, blink = blinkAt(0, t);
-  if (t < V.L1.t - .1) { const k = ease(clamp(t / .45)); reachR = { x: lerp(80, 100, k), y: lerp(-120, -200, k) }; expr = 'scheme'; }
+  let expr = 'cool', point = 0, cheer = false, reachR = null, blink = t < .4 ? false : blinkAt(0, t);   // 11/13: eyes open on frame 1
+  if (t < V.L1.t - .1) { const k = ease(clamp(.3 + t / .45)); reachR = { x: lerp(80, 100, k), y: lerp(-120, -200, k) }; expr = 'scheme'; }
   else if (t < TL.HUD1) { cheer = true; expr = 'scheme'; }
   else if (t < V.L3.t - .2) expr = 'cool';
   else if (t < TL.PEW + .5) expr = t < TL.CHARGE ? 'scheme' : 'laugh';
@@ -202,21 +212,26 @@ function drawScene(t) {
   const shake = chg > 0 ? Math.sin(t * 90) * 14 * chg * chg : 0;
   c.setTransform(1, 0, 0, 1, 0, 0);
   c.fillStyle = '#12302a'; c.fillRect(0, 0, W, H);
-  applyCam(c, CAM[n], sk, shake);
+  if (n === 'OPEN') openCam(c, t); else applyCam(c, CAM[n], sk, shake);
   c.drawImage(LAB_STATIC.lab, 0, 0);
   drawWindowLL(c, t);
   drawRentCircles(c, n === 'BOARD_END' && t > TL.BOARDT + 1.3 ? 5 : 4, n === 'BOARD_END' && t > TL.BOARDT + .4 && t <= TL.BOARDT + 1.3 ? (t - TL.BOARDT - .4) / .9 : 0);
   if (n === 'BOARD_END') drawChalkArm(c, t, 4);
   flyer(c, FLYER_WALL.x, FLYER_WALL.y, .42);
   drawFridge(c, 0);
-  drawPedestal(c, t, clamp(t / .5), t < V.L3.t - .2);
+  drawPedestal(c, t, clamp(.45 + t / .6), t < V.L3.t - .2);
   const bobV = Math.sin(t * 2.1) * 2 - jump, bobC = Math.sin(t * 1.7 + 1) * 1.5;
-  drawVera2(c, VERA.x, LCT + bobV, VERA.s, veraState(t, n));
+  const cast = n !== 'BOARD_END';                                  // 11/13: the board close-up showed the tops of their heads and loose hands
+  const VS = veraState(t, n);
+  if (cast) drawVera2(c, VERA.x, LCT + bobV, VERA.s, VS);
+  if (cast && VS.reachR && !aimAt(t)) {                           // 11/13: lab.js leaves the hand off a reaching arm; draw it here (kit unchanged)
+    c.save(); c.translate(VERA.x, LCT + bobV); c.scale(VERA.s / 100, VERA.s / 100); tHand(c, VS.reachR.x, VS.reachR.y, 9.5, LAB2.vera.skin, LAB2.vera.skinS, true); c.restore();
+  }
   const C2 = cleoState(t, n);
-  drawCleo2(c, CLEO.x, LCT + bobC, CLEO.s, C2);
-  if (C2.reachL) drawPen(c, CLEO.x + C2.reachL.x * CLEO.s / 100, LCT + bobC + C2.reachL.y * CLEO.s / 100);
+  if (cast) drawCleo2(c, CLEO.x, LCT + bobC, CLEO.s, C2);
+  if (cast && C2.reachL) drawPen(c, CLEO.x + C2.reachL.x * CLEO.s / 100, LCT + bobC + C2.reachL.y * CLEO.s / 100);
   const A = aimAt(t);
-  if (A) drawGauntlet(c, t, A.hx, A.hy + bobV + (A ? 0 : 0), A.a, chg > 0 ? chg : (t >= TL.PEW && t < TL.PEW + .2 ? 1 : 0));
+  if (A && cast) drawGauntlet(c, t, A.hx, A.hy + bobV + (A ? 0 : 0), A.a, chg > 0 ? chg : (t >= TL.PEW && t < TL.PEW + .2 ? 1 : 0));
   c.drawImage(LAB_STATIC.front, 0, LCT);
   const d = dotAt(t); if (d && n !== 'BOARD_END') drawLaserDot(c, d[0], d[1], n === 'DOT_CU' || n === 'DOT_CHEST' ? 6 : 7);
   if (t >= TL.PEN + .3 && n !== 'BOARD_END') drawLaserDot(c, VERA.x + 6, LCT + bobV - 150 * VERA.s / 100, 7);     // Cleo's dot on Vera's chest
@@ -247,7 +262,7 @@ const HUDSPEC = { code: 'VOLT LABS // SPEC SCAN', title: 'ANNIHILATOR', sub: 'WR
 
 // the hook card (experiment, owner's 4-episode trial): first 2.5 s, top of the frame, inside the safe zone
 function hookCard(g, t) {
-  const a = clamp((t + .01) / .12) * clamp((2.5 - t) / .25); if (a <= 0) return;
+  const a = clamp((2.5 - t) / .25); if (a <= 0) return;                                  // 11/13: fully readable from frame 1
   g.save(); g.setTransform(1, 0, 0, 1, 0, 0); g.globalAlpha = a;
   tShape(g, 'rgba(18,10,42,.88)', gg => gg.roundRect(110, 250, 860, 190, 26), 5);
   tText(g, 'SHE SPENT THE RENT', 540, 314, 64, '#fbf7ff', '"Bungee"', 'center', 400);
@@ -263,20 +278,34 @@ function render(t) {
 }
 window.render = render;
 
+// sound cues (11/13 natural-sound pass): every visible action gets its own sound on its frame, in its space (tools/mix.py);
+// the room tone runs under everything (generated in the mix), the street comes up through the glass on the window shots (mix.json)
+const runSteps = () => {                                          // the landlord's footfalls, from drawLegs: a foot lands when cos(phase) turns down
+  const ev = [], t0 = TL.RUN + .25, t1 = TL.RUN + 1.6;
+  for (let k = 0; k < 40; k++) {
+    const t = (Math.PI / 2 + k * Math.PI) / 15; if (t <= t0 || t >= t1) continue;
+    const q = (t - t0) / (t1 - t0); ev.push({ type: 'pave', t, pan: .5 - 1.1 * q, gdb: -9 * q });
+  }
+  return ev;
+};
 window.EV = [
-  { type: 'bed', fx: 'lab_hum', t: 0, t1: DUR + .5, g: -31 },
-  { type: 'sheet', t: .02 },
-  { type: 'scan', t: TL.HUD0 + .05 },
-  { type: 'lever', t: V.L3.t + .3 },
-  { type: 'charge', t: TL.CHARGE, dur: TL.PEW - TL.CHARGE + .02 },
+  { type: 'sheet', t: 0 },                                        // the sheet whips off (already flying on frame 1)
+  { type: 'cloth', t: V.L1.t - .14 },                              // her arms go up for "Behold"
+  { type: 'scan', t: TL.HUD0 + .05 },                              // the hologram's own read-out
+  { type: 'servo', t: V.L3.t - .04 },                              // the gauntlet arm comes up
+  { type: 'charge', t: TL.CHARGE, dur: TL.PEW - TL.CHARGE },       // the power-up, cut by the dot
   { type: 'pew', t: TL.PEW },
-  { type: 'knock', t: TL.KNOCK },
-  { type: 'whoosh', t: TL.KNOCK + .5 },
-  { type: 'keys', t: V.L6.t + .2 },
-  { type: 'gulp', t: TL.LOOK + .3 },
-  { type: 'run', t: TL.RUN, dur: 1.4 },
-  { type: 'keys', t: TL.RUN + .2 },
+  { type: 'knock', t: TL.KNOCK },                                  // knuckles on the window pane
+  { type: 'cloth', t: TL.KNOCK + .06, gdb: -2 },                   // Vera jumps
+  ...[.25, .95, 1.65, 2.35, 3.05].map((d, i) => ({ type: 'keys', t: TL.KNOCK + d, i })),   // he shakes the key ring at her
+  { type: 'gulp', t: TL.LOOK + .55 },                              // the dot on his chest
+  { type: 'keys', t: TL.HANDS + .05, gdb: -4, i: 1 },              // hands up, keys still in his fist
+  ...runSteps(),
+  { type: 'keys_drop', t: TL.RUN + .2 },                           // the key ring hits the pavement
+  { type: 'cloth', t: V.L8.t - .14 },                              // "It works!": arms up
+  { type: 'pocket', t: TL.PEN },                                   // Cleo's pen laser out of the apron pocket
   { type: 'click', t: TL.PEN + .3 },
+  { type: 'cloth', t: V.L11.t - .2, gdb: 1 },                      // hands up
   { type: 'chalk', t: TL.BOARDT + .4, dur: .9 },
 ];
 

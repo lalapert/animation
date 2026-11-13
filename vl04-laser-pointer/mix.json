@@ -1,91 +1,32 @@
 {
-  "room_db": -60,
-  "voice_over_music_db": 12,
-  "beds": {},
-  "foley": {
-    "sheet": {
-      "fx": "sheet",
-      "g": -15,
-      "align": false,
-      "fin": 0.005,
-      "fout": 0.2
-    },
-    "scan": {
-      "fx": "scan",
-      "g": -19,
-      "align": false,
-      "fin": 0.05,
-      "fout": 0.3
-    },
-    "lever": {
-      "fx": "servo",
-      "g": -15,
-      "align": false,
-      "fin": 0.01,
-      "fout": 0.15
-    },
-    "charge": {
-      "fx": "charge",
-      "g": -12,
-      "align": false,
-      "fin": 0.05,
-      "fout": 0.03
-    },
-    "pew": {
-      "fx": "pew",
-      "g": -16,
-      "align": true,
-      "fin": 0.002,
-      "fout": 0.1
-    },
-    "whoosh": {
-      "fx": "whoosh",
-      "g": -19,
-      "align": false,
-      "fin": 0.01,
-      "fout": 0.15
-    },
-    "knock": {
-      "fx": "knock",
-      "g": -12,
-      "align": true,
-      "fin": 0.002,
-      "fout": 0.15
-    },
-    "keys": {
-      "fx": "keys",
-      "g": -17,
-      "align": false,
-      "fin": 0.01,
-      "fout": 0.15
-    },
-    "gulp": {
-      "fx": "gulp",
-      "g": -14,
-      "align": true,
-      "fin": 0.002,
-      "fout": 0.1
-    },
-    "run": {
-      "fx": "run",
-      "g": -15,
-      "align": false,
-      "fin": 0.02,
-      "fout": 0.4
-    },
-    "click": {
-      "fx": "click",
-      "g": -14,
-      "align": true,
-      "fin": 0.002,
-      "fout": 0.05
-    },
-    "chalk": {
-      "fx": "chalk",
-      "g": -18,
-      "align": false,
-      "fin": 0.02,
-      "fout": 0.15
-    }
-  }
+ "seed": 5,
+ "voice_db": 0,
+ "music_db": -9,
+ "duck_db": 12,
+ "tone_db": -50,
+ "hum_db": -61,
+ "plr_db": 11.5,
+ "min_margin_db": 8,
+ "pan": {"VERA": -0.15, "CLEO": 0.15, "LANDLORD": 0.25},
+ "voices": {"L6": {"space": "out", "lp": 5500}, "L7": {"space": "out", "lp": 5500}},
+ "shots": {"WINDOW_LL": {"street": -42}, "DOT_CHEST": {"street": -42}, "WINDOW_WIDE": {"street": -41}},
+ "beds": {"street": {"fx": "street", "skip": 0.5, "space": "out"}},
+ "grains": {"cloth": {"len": 0.45, "merge": 0.3, "thr": 0.3}, "pave_run": {"len": 0.28, "merge": 0.14}},
+ "derived": {"pocket_src": {"from": "cloth", "skip": 1.55, "len": 0.35, "lp": 6000}},
+ "foley": {
+  "sheet": {"fx": "sheet", "g": -16, "space": "lab", "fout": 0.15},
+  "cloth": {"grain": "cloth", "g": -21, "space": "close", "vary": 0.8},
+  "pocket": {"fx": "pocket_src", "g": -25, "space": "close"},
+  "scan": {"fx": "scan", "g": -19, "space": "dry", "fin": 0.05, "fout": 0.3, "lp": 9000},
+  "servo": {"fx": "servo", "g": -23, "space": "lab", "fout": 0.1},
+  "charge": {"fx": "charge", "g": -12, "space": "lab", "fin": 0.05, "fout": 0.02},
+  "pew": {"fx": "pew", "g": -12, "space": "lab", "align": true, "fout": 0.1},
+  "knock": {"fx": "knock", "g": -12, "space": "lab", "align": true, "fout": 0.15},
+  "keys": {"fx": "keys", "g": -21, "space": "out", "fout": 0.15},
+  "gulp": {"fx": "gulp", "g": -15, "space": "dry", "align": true, "fout": 0.1},
+  "pave": {"grain": "pave_run", "g": -13, "space": "out", "vary": 0.7},
+  "keys_drop": {"fx": "keys_drop", "g": -15, "space": "out", "align": true, "fout": 0.15},
+  "click": {"fx": "click", "g": -17, "space": "close", "align": true, "fout": 0.05},
+  "chalk": {"fx": "chalk", "g": -17, "space": "lab", "fin": 0.02, "fout": 0.15}
+ }
 }
