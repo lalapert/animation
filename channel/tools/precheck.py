@@ -121,7 +121,24 @@ def main():
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", dl, "-vn", "-ac", "1", "-ar", "16000", "-b:a", "64k", audio], check=True)
         r = subprocess.run([sys.executable, os.path.join(fdir, "tools", "asr_eleven.py"), audio, "x"], capture_output=True, text=True).stdout
         heard = r.split("|", 1)[-1].strip()
-        clean = lambda x: re.sub(r"[^a-z' ]+", " ", re.sub(r"\[[^\]]*\]", " ", x.lower().replace("-", " "))).split()
+        # 11/14: the transcriber writes numbers as digits ("11", "1,200", "3rd") and spells names its own way (Rae -> Ray/Rey):
+        # compare words, not spellings
+        ONES = "zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen".split()
+        TENS = "_ _ twenty thirty forty fifty sixty seventy eighty ninety".split()
+        ORD = {"1st": "first", "2nd": "second", "3rd": "third", "4th": "fourth", "5th": "fifth", "6th": "sixth", "7th": "seventh", "8th": "eighth", "9th": "ninth", "10th": "tenth", "11th": "eleventh", "12th": "twelfth", "13th": "thirteenth", "20th": "twentieth", "21st": "twenty first", "30th": "thirtieth", "31st": "thirty first"}
+        def words(n):
+            if n < 20: return ONES[n]
+            if n < 100: return TENS[n // 10] + ("" if n % 10 == 0 else " " + ONES[n % 10])
+            if n < 1000: return ONES[n // 100] + " hundred" + ("" if n % 100 == 0 else " " + words(n % 100))
+            return words(n // 1000) + " thousand" + ("" if n % 1000 == 0 else " " + words(n % 1000))
+        def spell(x):
+            x = x.lower()
+            for k, v in ORD.items(): x = re.sub(r"\b" + k + r"\b", v, x)
+            x = re.sub(r"(\d),(\d{3})", r"\1\2", x)
+            x = re.sub(r"\d+", lambda m: " " + words(int(m.group())) + " " if int(m.group()) < 1000000 else m.group(), x)
+            x = x.replace("%", " percent ")
+            return re.sub(r"\b(ray|rey)\b", "rae", x)
+        clean = lambda x: re.sub(r"[^a-z' ]+", " ", re.sub(r"\[[^\]]*\]", " ", spell(x).replace("-", " "))).split()
         hw = " ".join(clean(heard)); miss = [l["id"] for l in lines if " ".join(clean(l.get("asr", l.get("plain") or l["text"])))[:24] not in hw]
         say("PASS" if not miss else "FAIL", f"every line is heard in the published file" if not miss else f"not heard (check by ear): {miss}")
         print("    heard:", heard[:400])
