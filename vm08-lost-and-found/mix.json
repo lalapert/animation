@@ -1,0 +1,28 @@
+{
+ "room": {"src": "store_tone", "db": -55, "buzz_db": -70, "seed": 4},
+ "store_room": {"rt": 0.5, "mix": 0.22, "bright": 8000},
+ "music_db": -11,
+ "duck_db": -10,
+ "duck_pre": 0.15,
+ "duck_post": 0.3,
+ "foley_duck_db": -2,
+ "plr_db": 11.0,
+ "foley": {
+  "swish":     {"fx": "cloth_flutter", "g": -35, "cents": 80, "gvar": 2},
+  "cloth":     {"fx": "cloth_flutter", "g": -33},
+  "rummage":   {"fx": "rummage", "g": -28, "fout": 0.15},
+  "page":      {"fx": "page", "g": -29, "cents": 40},
+  "chime":     {"fx": "chime", "g": -30, "fout": 0.3},
+  "step":      {"takes": ["steps", [[0.33, 0.7], [0.97, 1.35], [1.57, 1.95], [2.17, 2.55], [2.81, 3.2], [3.33, 3.75]]], "g": -29, "cents": 30, "gvar": 1},
+  "run":       {"takes": ["steps", [[0.33, 0.7], [0.97, 1.35], [1.57, 1.95], [2.17, 2.55], [2.81, 3.2], [3.33, 3.75]]], "g": -26, "cents": 70, "gvar": 1},
+  "case":      {"fx": "case_down", "g": -25, "align": true},
+  "flip":      {"fx": "cal_flip", "g": -27, "align": true},
+  "servo":     {"fx": "mags_servo", "g": -30, "fout": 0.15},
+  "holo":      {"fx": "holo", "g": -32},
+  "tear":      {"fx": "tear", "g": -29, "fout": 0.1},
+  "drop":      {"fx": "ballot", "g": -26, "align": true},
+  "case_drop": {"fx": "box_thump", "g": -25, "align": true},
+  "float":     {"fx": "float", "g": -31, "fout": 0.4},
+  "sip":       {"fx": "sip", "g": -29}
+ }
+}

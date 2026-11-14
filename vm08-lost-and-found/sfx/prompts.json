@@ -1,0 +1,17 @@
+{
+ "chime": [1.4, "a convenience store automatic door opening with a bright two-note electronic entry chime"],
+ "steps": [4.0, "one person walking slowly in soft sneakers on a hard vinyl floor in a small quiet shop at night, six separate unhurried footsteps, close, no music, no voices"],
+ "mags_servo": [1.0, "a small ceiling-mounted robot camera turning on its mount: one short soft electric servo motor whir, close, quiet shop, no music"],
+ "store_tone": [8.0, "quiet late-night convenience store ambience, fluorescent light hum and a soft refrigerator compressor drone, no people, no music"],
+ "holo": [0.8, "a futuristic hologram display popping up, a bright digital shimmer"],
+ "tear": [0.6, "a strip of paper torn off a flyer, one quick rip"],
+ "ballot": [0.6, "a folded paper slip dropped into a cardboard ballot box, a soft papery thump"],
+ "float": [1.5, "a soft magical whoosh as gravity switches off, gentle shimmering hum, cartoon"],
+ "sip": [1.2, "one long loud slurp of hot coffee from a mug, close"],
+ "cloth_flutter": [0.5, "a single sock flicked through the air: a soft quick fabric flutter, close, quiet room, no music"],
+ "rummage": [1.2, "a hand rummaging through a cardboard box full of odds and ends: cardboard rustle and small objects knocking together, close, no music"],
+ "page": [0.5, "a single sheet of stiff paper picked up and held out: one crisp paper rustle, close, quiet room, no music"],
+ "case_down": [0.6, "a leather briefcase set down on a wooden shop counter: one solid soft thump with a little buckle rattle, close, no music"],
+ "cal_flip": [0.5, "one page of a desk calendar flipped over fast: a single crisp paper flip, close, no music"],
+ "box_thump": [0.6, "a small briefcase dropped into an open cardboard box: one hollow cardboard thump, close, no music"]
+}

@@ -436,5 +436,28 @@
    1160
   ],
   "drawn": true
+ },
+ {
+  "folder": "vm08-lost-and-found",
+  "t": 0.5,
+  "series": "vm",
+  "ep": 8,
+  "lines": [
+   "SO THAT'S",
+   "WHERE"
+  ],
+  "hl": [
+   "WHERE"
+  ],
+  "focus": [
+   540,
+   1000
+  ],
+  "zoom": 1.2,
+  "place": [
+   540,
+   1150
+  ],
+  "drawn": true
  }
 ]

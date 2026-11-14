@@ -1,0 +1,9 @@
+Void Mart, episode 8: "Lost & Found" (2026). Original characters, story, pictures and music.
+
+Pictures: drawn in code (canvas 2D) with the Void Mart toon kit (channel/brand/toon.js, channel/brand/vmkit.js) and the movement helpers (channel/brand/travel.js). The commuter with the calendar head, the lost-and-found box, the sock planet, the day pages and the briefcase are drawn in film.js.
+Fonts: Bungee (The Bungee Project Authors) and Fredoka (The Fredoka Project Authors), SIL Open Font License 1.1.
+Voices: ElevenLabs text-to-speech, model eleven_v4.
+  Pip: "Win2" (owner's own designed voice). Rae: "Kar2" (owner's own designed voice, pitched 1.5 semitones down).
+  MAGS: "VM MAGS" (ElevenLabs Voice Design, made for this show). The commuter: "Chris" (ElevenLabs stock voice).
+Sound effects: generated with ElevenLabs Sound Effects (prompts in sfx/prompts.json).
+Music: original score for the house jazz trio (tools/band.py, tools/score.py) played with CC0 samples from VSCO 2 Community Edition, VCSL and FreePats.

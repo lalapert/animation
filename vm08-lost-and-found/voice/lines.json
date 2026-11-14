@@ -1,0 +1,127 @@
+{
+ "model_id": "eleven_v4",
+ "cast": {
+  "PIP": {
+   "voice_id": "BiP91t4ozM9IZajOdSu2",
+   "name": "Win2",
+   "settings": {
+    "stability": 0.3,
+    "similarity_boost": 0.8,
+    "style": 0.65,
+    "speed": 1.05
+   }
+  },
+  "RAE": {
+   "voice_id": "oy557F0mOsPZZqdz8oK6",
+   "name": "Kar2",
+   "settings": {
+    "stability": 0.6,
+    "similarity_boost": 0.8,
+    "style": 0.2,
+    "speed": 0.9
+   },
+   "pitch": -1.5
+  },
+  "MAGS": {
+   "voice_id": "WkUURyKtbzB9IM50qGdP",
+   "name": "VM MAGS",
+   "settings": {
+    "stability": 0.45,
+    "similarity_boost": 0.8,
+    "style": 0.5,
+    "speed": 1.0
+   }
+  },
+  "CUST": {
+   "voice_id": "iP95p4xoKVk53GoZ742B",
+   "name": "Chris (stock), calendar-head commuter",
+   "settings": {
+    "stability": 0.4,
+    "similarity_boost": 0.8,
+    "style": 0.5,
+    "speed": 1.0
+   }
+  }
+ },
+ "lines": [
+  {
+   "id": "L1",
+   "who": "PIP",
+   "text": "[gasps, delighted] Rae! Someone lost a whole planet!",
+   "plain": "Rae! Someone lost a whole planet!",
+   "sub": "Rae! Someone lost\na whole planet!",
+   "asr": "Ray! Someone lost a whole planet!"
+  },
+  {
+   "id": "L2",
+   "who": "RAE",
+   "text": "[flatly] That's where the socks go.",
+   "plain": "That's where the socks go.",
+   "sub": "That's where the socks go."
+  },
+  {
+   "id": "L3",
+   "who": "PIP",
+   "text": "[curious, amazed] And... somebody's Tuesday?",
+   "plain": "And... somebody's Tuesday?",
+   "sub": "And... somebody's Tuesday?"
+  },
+  {
+   "id": "L4",
+   "who": "RAE",
+   "text": "[deadpan] That explains last week.",
+   "plain": "That explains last week.",
+   "sub": "That explains last week."
+  },
+  {
+   "id": "L5",
+   "who": "CUST",
+   "text": "[exhausted, polite] Hi. Did anyone turn in a Tuesday? I've had three Mondays.",
+   "plain": "Hi. Did anyone turn in a Tuesday? I've had three Mondays.",
+   "sub": "Hi. Did anyone turn in a Tuesday?\nI've had three Mondays."
+  },
+  {
+   "id": "L6",
+   "who": "PIP",
+   "text": "[beaming, proud] We found it!",
+   "plain": "We found it!",
+   "sub": "We found it!"
+  },
+  {
+   "id": "L7",
+   "who": "MAGS",
+   "text": "[bright, salesy] Welcome back! Your storage fee is one Wednesday.",
+   "plain": "Welcome back! Your storage fee is one Wednesday.",
+   "sub": "Welcome back!\nYour storage fee is one Wednesday."
+  },
+  {
+   "id": "L8",
+   "who": "RAE",
+   "text": "[deadpan] That's where Wednesdays go.",
+   "plain": "That's where Wednesdays go.",
+   "sub": "That's where Wednesdays go."
+  },
+  {
+   "id": "L9",
+   "who": "CUST",
+   "text": "[panicked gasp] It's Thursday?! I'm late!",
+   "plain": "It's Thursday?! I'm late!",
+   "sub": "It's Thursday?!\nI'm late!"
+  },
+  {
+   "id": "L10",
+   "who": "PIP",
+   "text": "[calling after him] Sir! Your briefcase!",
+   "plain": "Sir! Your briefcase!",
+   "sub": "Sir! Your briefcase!"
+  },
+  {
+   "id": "L11",
+   "who": "PIP",
+   "text": "[gasps, thrilled] Rae! Our planet has a moon!",
+   "plain": "Rae! Our planet has a moon!",
+   "sub": "Rae! Our planet\nhas a moon!",
+   "asr": "Ray! Our planet has a moon!"
+  }
+ ]
+}
