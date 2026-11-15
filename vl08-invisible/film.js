@@ -316,13 +316,15 @@ function drawLab(t, n) {
   if (n === 'BOARD_END') drawChalkArm(c, t, 8);
   drawFridge(c, 0);
   if (n !== 'BOARD_END') {
-    if (n !== 'LAB_OPEN' && n !== 'LAB_COAT') drawCleo2(c, CLEO.x, LCT, CLEO.s, { expr: 'deadpan', mouth: mouthFor('CLEO', t), blink: blinkAt(1, t), look: t > TL.EXIT ? 1 : -1, remote: true });
     if (n !== 'CLEO_CU') {
       const st = labCoatState(t);
       const bob = st.moving ? walkBob(st.dist, 150, 10) : { dy: 0, swing: 0 };
       const dy = st.moving ? -6 * Math.tanh(-bob.dy / 6) : 0;
-      drawCoat(c, st.x, LCT + dy, VERA.s, { pose: st.pose, swing: bob.swing, sway: st.moving ? Math.sin(st.dist / 150 * Math.PI) : Math.sin(t * 1.3) * .3, talk: st.talk, t, flask: true });
+      const hid = st.moving && Math.abs(st.x - CLEO.x) < 45;            // lenses wholly behind Cleo's hair: no lone strap ends either side
+      drawCoat(c, st.x, LCT + dy, VERA.s, { pose: st.pose, swing: bob.swing, sway: st.moving ? Math.sin(st.dist / 150 * Math.PI) : Math.sin(t * 1.3) * .3, talk: st.talk, t, flask: true, goggles: !hid });
     }
+    // Cleo after the coat: when it strides out past her it goes behind her (its goggles never sit on her face)
+    if (n !== 'LAB_OPEN' && n !== 'LAB_COAT') drawCleo2(c, CLEO.x, LCT, CLEO.s, { expr: 'deadpan', mouth: mouthFor('CLEO', t), blink: blinkAt(1, t), look: t > TL.EXIT ? 1 : -1, remote: true });
   }
   c.drawImage(LAB_STATIC.front, 0, LCT);
 }
