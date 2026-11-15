@@ -67,12 +67,13 @@ function drawBlob(g, t, x, y, o = {}) {
   tEllipse(g, -12, -42, 5, 6, TOON.ink, 0); tEllipse(g, 12, -42, 5, 6, TOON.ink, 0);
   tEllipse(g, 12, -42, 10, 10, null, 2.6); tCurve(g, 21, -38, 26, -26, 22, -12, 1.6, '#ffd23f');
   tCurve(g, -8, -28, 0, -23, 8, -28, 2.6);
-  if (o.carry) {
-    tTube(g, [-38, -30, -46, -18, -34, -8], 12, '#7ec8ff'); tTube(g, [38, -30, 46, -18, 34, -8], 12, '#7ec8ff', '#5aa2e0');
-  }
   g.restore();
+  if (o.carry) {                                             // the milk beside it, bigger than it, one nub arm round it: the face stays in view
+    drawCarton(g, x + 58, y - hop * .6, 1.05);
+    tTube(g, [34, -40 - hop, 56, -46 - hop * .8, 80, -40 - hop * .7].map((v, i) => i % 2 ? v + y : v + x), 12, '#7ec8ff', '#5aa2e0');
+    tEllipse(g, x + 82, y - 40 - hop * .7, 7, 7, '#7ec8ff', 2.4);
+  }
   if (o.crown) drawCrown(g, x, y - hop - 72 * sq, .8, -.08);
-  if (o.carry) drawCarton(g, x, y - hop - 4, .95);
   g.restore();
 }
 // the tiny robot: a box on one wheel, a screen face, two little claw arms; (x, y) = bottom centre on the counter
@@ -314,7 +315,7 @@ const CAM = Object.assign({}, VMCAM, {
   DENNIS_CU: [DEN.x, 905, 1.6, 1.66],                          // room for the sign over his head, clear of the subtitles
   PIP_CRY: [PIP.x + 60, 1010, 1.9, 1.98],
   MAGS_MED: [705, 300, 1.95, 2.0],                             // MAGS and the Employee of the Month frame on the wall
-  END_WIDE: [580, 940, 1.2, 1.24],    
+  END_WIDE: [580, 860, 1.2, 1.24],                             // the whole sign sits under the end card
 });
 
 // ---------------------------------------------------------------- frame
