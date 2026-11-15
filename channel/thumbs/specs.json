@@ -459,5 +459,20 @@
    1150
   ],
   "drawn": true
+ },
+ {
+  "folder": "sr09-carousel",
+  "t": 36.3,
+  "series": "sr",
+  "tape": "TAPE 09",
+  "lines": [
+   "DON'T FOLLOW",
+   "THE HORSES."
+  ],
+  "focus": [
+   560,
+   880
+  ],
+  "zoom": 1.2
  }
 ]
