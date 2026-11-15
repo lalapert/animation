@@ -20,3 +20,4 @@
 | 11/20 10:00 | vl07-reduce-to-1 | 2 Negative Command | Never shrink your rent notice to 1% | What's the worst trick you've ever tried on a bill? Tell me. | no |
 | 11/21 10:00 | vm08-lost-and-found | 23 The Statistic | 100% of your lost socks end up on one planet | Where do you think your lost socks actually go? Tell me. | no |
 | 11/22 10:00 | vl08-invisible | 25 Someone Else's Result | She turned invisible. The guy at the bus stop didn't look up | Who's the hardest person to impress you know? Tell me. | no |
+| 11/23 10:00 | vm09-secret-shopper | 1 Cost Confession | One carton of milk cost her Employee of the Month | What's the smallest thing you ever gave a one-star review for? Tell me. | no |

@@ -1,0 +1,14 @@
+{
+ "store_tone": [8.0, "quiet late-night convenience store ambience, fluorescent light hum and a soft refrigerator compressor drone, no people, no music"],
+ "chime": [1.4, "a convenience store automatic door opening with a bright two-note electronic entry chime"],
+ "holo": [0.8, "a futuristic hologram display popping up, a bright digital shimmer"],
+ "page": [0.5, "a single sheet of stiff paper picked up and held out: one crisp paper rustle, close, quiet room, no music"],
+ "sip": [1.2, "one long loud slurp of hot coffee from a mug, close"],
+ "blorp": [0.6, "a small squishy jelly blob landing on a plastic tray: a wet wobbly plop, cartoon, short"],
+ "carton": [0.5, "a milk carton set down on a counter, a light cardboard tap"],
+ "slide": [1.2, "a large wet slimy creature sliding across a smooth floor, a soft squelchy glide"],
+ "droop": [0.6, "a soft cartoon deflating droop, a small sad wobble sound"],
+ "carpet": [1.0, "a small rolled-up rug pushed and unrolling fast along a shop counter: a soft fabric whump and a short slide, close, no music"],
+ "bot_roll": [1.2, "a tiny toy robot rolling along a counter on one rubber wheel: a small quiet electric motor whir, close, no music"],
+ "spring_sign": [0.8, "a spring-loaded sign popping up out of a hat on a metal spring: one bright springy boing and a little wobble, cartoon, no music"]
+}

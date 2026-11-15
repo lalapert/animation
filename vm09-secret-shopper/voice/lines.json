@@ -1,0 +1,112 @@
+{
+ "model_id": "eleven_v4",
+ "cast": {
+  "PIP": {
+   "voice_id": "BiP91t4ozM9IZajOdSu2",
+   "name": "Win2",
+   "settings": {
+    "stability": 0.3,
+    "similarity_boost": 0.8,
+    "style": 0.65,
+    "speed": 1.05
+   }
+  },
+  "RAE": {
+   "voice_id": "oy557F0mOsPZZqdz8oK6",
+   "name": "Kar2",
+   "settings": {
+    "stability": 0.6,
+    "similarity_boost": 0.8,
+    "style": 0.2,
+    "speed": 0.9
+   },
+   "pitch": -1.5
+  },
+  "MAGS": {
+   "voice_id": "WkUURyKtbzB9IM50qGdP",
+   "name": "VM MAGS",
+   "settings": {
+    "stability": 0.45,
+    "similarity_boost": 0.8,
+    "style": 0.5,
+    "speed": 1.0
+   }
+  },
+  "DENNIS": {
+   "voice_id": "4vRkwG6IFLYddvxhEKmU",
+   "name": "VM Dennis",
+   "settings": {
+    "stability": 0.4,
+    "similarity_boost": 0.8,
+    "style": 0.55,
+    "speed": 1.0
+   }
+  }
+ },
+ "lines": [
+  {
+   "id": "L1",
+   "who": "MAGS",
+   "text": "[bright, important announcement] Attention! A secret shopper visits tonight. Best review wins Employee of the Month!",
+   "plain": "Attention! A secret shopper visits tonight. Best review wins Employee of the Month!",
+   "sub": "Attention! A secret shopper visits tonight.\nBest review wins Employee of the Month!"
+  },
+  {
+   "id": "L2",
+   "who": "PIP",
+   "text": "[gasps, fired up] Then every customer is royalty!",
+   "plain": "Then every customer is royalty!",
+   "sub": "Then every customer\nis royalty!"
+  },
+  {
+   "id": "L3",
+   "who": "PIP",
+   "text": "[grand, bowing] Complimentary milk, Your Majesty!",
+   "plain": "Complimentary milk, Your Majesty!",
+   "sub": "Complimentary milk,\nYour Majesty!"
+  },
+  {
+   "id": "L4",
+   "who": "RAE",
+   "text": "[flatly] That was the last milk.",
+   "plain": "That was the last milk.",
+   "sub": "That was the last milk."
+  },
+  {
+   "id": "L5",
+   "who": "DENNIS",
+   "text": "[booming, cheerful] Evening, Rae! The usual!",
+   "plain": "Evening, Rae! The usual!",
+   "sub": "Evening, Rae!\nThe usual!",
+   "asr": "Evening, Ray! The usual!"
+  },
+  {
+   "id": "L6",
+   "who": "RAE",
+   "text": "[flatly] We're out.",
+   "plain": "We're out.",
+   "sub": "We're out."
+  },
+  {
+   "id": "L7",
+   "who": "DENNIS",
+   "text": "[cold, official] Secret shopper. One star.",
+   "plain": "Secret shopper. One star.",
+   "sub": "Secret shopper.\nOne star."
+  },
+  {
+   "id": "L8",
+   "who": "PIP",
+   "text": "[heartbroken wail] But I gave everyone a crown!",
+   "plain": "But I gave everyone a crown!",
+   "sub": "But I gave everyone\na crown!"
+  },
+  {
+   "id": "L9",
+   "who": "MAGS",
+   "text": "[smug, satisfied] Noted. Employee of the Month: MAGS.",
+   "plain": "Noted. Employee of the Month: MAGS.",
+   "sub": "Noted.\nEmployee of the Month: MAGS."
+  }
+ ]
+}

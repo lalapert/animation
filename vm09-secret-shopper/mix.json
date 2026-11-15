@@ -1,0 +1,23 @@
+{
+ "room": {"src": "store_tone", "db": -55, "buzz_db": -70, "seed": 5},
+ "store_room": {"rt": 0.5, "mix": 0.22, "bright": 8000},
+ "music_db": -11,
+ "duck_db": -10,
+ "duck_pre": 0.15,
+ "duck_post": 0.3,
+ "foley_duck_db": -2,
+ "plr_db": 11.0,
+ "foley": {
+  "holo":   {"fx": "holo", "g": -31},
+  "chime":  {"fx": "chime", "g": -30, "fout": 0.3},
+  "squish": {"takes": ["blorp", [[0.0, 0.2], [0.22, 0.4]]], "g": -32, "cents": 120, "gvar": 1.5},
+  "carpet": {"fx": "carpet", "g": -27, "fout": 0.2},
+  "paper":  {"fx": "page", "g": -30, "cents": 60},
+  "carton": {"fx": "carton", "g": -27, "align": true, "cents": 40},
+  "motor":  {"fx": "bot_roll", "g": -33, "fin": 0.1, "fout": 0.25},
+  "slide":  {"fx": "slide", "g": -25, "fin": 0.05, "fout": 0.3},
+  "droop":  {"fx": "droop", "g": -27},
+  "sign":   {"fx": "spring_sign", "g": -25},
+  "sip":    {"fx": "sip", "g": -29}
+ }
+}

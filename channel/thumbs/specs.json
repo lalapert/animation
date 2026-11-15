@@ -497,5 +497,28 @@
    1160
   ],
   "drawn": true
+ },
+ {
+  "folder": "vm09-secret-shopper",
+  "t": 28.5,
+  "series": "vm",
+  "ep": 9,
+  "lines": [
+   "THE SHOPPER",
+   "WAS..."
+  ],
+  "hl": [
+   "WAS..."
+  ],
+  "focus": [
+   540,
+   1000
+  ],
+  "zoom": 1.2,
+  "place": [
+   540,
+   1150
+  ],
+  "drawn": true
  }
 ]
