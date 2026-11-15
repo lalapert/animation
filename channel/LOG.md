@@ -187,3 +187,6 @@
 
 | 2026-11-22 (일) 10:00 | `vl08-invisible/` | Volt Labs 8화 *Invisible* | 42.32초 | −14.0 LUFS, 피크 −2.6 dB, linear | 대사 13줄 받아쓰기 일치, 목소리 +17.5 dB 이상, 검은 프레임 0, 한국어 0, 콘택트 시트 확인(고글이 Cleo 눈에 겹치던 것 고침) | 428663647 | 대본 점검 36/40(4점 미만 없음), 바깥 거리 장면, 홀로그램 스캔(VL4 이후 처음), 9번째 집세 동그라미, 밴드 배경음·자연 효과음, 안내 화면 2.5초, 그린 표지 "WHO'S IN THE COAT?", 제목 "She turned invisible. The guy at the bus stop didn't look up"; ElevenLabs 약 1,590자(목소리 608 + 효과 981, 그중 654는 VL7 효과를 잘못 다시 만든 낭비) |
 - 03:41 run 11/16: covers: nothing to redraw. Banks: Void Mart 3 (11/17, 19, 21), Volt Labs 4 (11/16, 18, 20, 22), horror 5 (11/17-11/25). Making Void Mart 9 *Secret Shopper* (11/23) with the agent.
+
+| 2026-11-23 (월) 10:00 | `vm09-secret-shopper/` | Void Mart 9화 *Secret Shopper* | 40.68초 | −14.0 LUFS, 피크 −3.6 dB, linear | 대사 9줄 받아쓰기 일치, 목소리 +10.0 dB 이상, 검은 프레임 0, 한국어 0, 콘택트 시트 확인(젤리 손님 얼굴이 우유팩에 가리던 것, 안내 화면이 간판 윗줄을 가리던 것 고침; 1576e67), Metricool 사본 sha256 일치 | 429185120 | 대본 점검 43/45(4점 미만 없음), 가게 트리오·자연 효과음, 안내 화면 2.5초, 그린 표지 "THE SHOPPER / WAS...", 제목 "One carton of milk cost her Employee of the Month"; VM5 Dennis 대사 재사용, VM6 이달의 직원 이어받기; ElevenLabs 약 751자(대사 388 + 효과 3개 363) + 받아쓰기 |
+- 03:41 run 11/16 done: Void Mart 9 scheduled 11/23 10:00 (429185120, YouTube + Instagram + TikTok). Banks: Void Mart 4 (11/17, 19, 21, 23), Volt Labs 4 (11/16, 18, 20, 22), horror 5 (11/17-11/25).
