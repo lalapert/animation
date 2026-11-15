@@ -1,0 +1,190 @@
+{
+ "room_db": -58,
+ "voice_db": 0,
+ "duck_db": 12,
+ "duck_preroll": 0.12,
+ "music_db": -23,
+ "deck_hiss_db": -44,
+ "plr_db": 11.7,
+ "devices": {
+  "court": "cam",
+  "cctv1": "cctv",
+  "hall": "cam",
+  "cctv2": "cctv",
+  "hall2": "cam",
+  "cctv3": "cctv"
+ },
+ "cam": {
+  "lo": 110,
+  "hi": 8500,
+  "noise_db": -50,
+  "noise_lp": 7000,
+  "target": -21,
+  "boost": 4,
+  "cut": 26,
+  "att": 0.22,
+  "rel": 1.1,
+  "pre": 0,
+  "ceil": -7
+ },
+ "cctv": {
+  "lo": 250,
+  "hi": 3500,
+  "order": 4,
+  "noise_db": -44,
+  "noise_lp": 4500,
+  "target": -22.5,
+  "boost": 4,
+  "cut": 14,
+  "att": 0.03,
+  "rel": 0.5,
+  "pre": 0,
+  "ceil": -9,
+  "post_lp": 4200
+ },
+ "derived": {
+  "organ_drag": {
+   "from": "band_organ",
+   "skip": 0.6,
+   "dur": 6.6,
+   "rate": 0.86,
+   "wow": [
+    0.022,
+    0.31
+   ]
+  },
+  "organ_slow": {
+   "from": "band_organ",
+   "skip": 0.6,
+   "dur": 6.6,
+   "rate": 0.72,
+   "wow": [
+    0.035,
+    0.23
+   ]
+  },
+  "mech_far": {
+   "from": "carousel_mech",
+   "lp": 900
+  }
+ },
+ "foley": {
+  "tick": {
+   "fx": "tube_tick",
+   "g": -25,
+   "space": "shop",
+   "align": true,
+   "fin": 0.001,
+   "fout": 0.05
+  },
+  "step": {
+   "fx": "step",
+   "g": -21,
+   "space": "shop",
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.08,
+   "trim": 0.16
+  },
+  "scuff": {
+   "fx": "step",
+   "g": -17,
+   "space": "close",
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.06,
+   "trim": 0.12
+  },
+  "camclick": {
+   "fx": "camclick",
+   "g": -24,
+   "space": "close",
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.08
+  },
+  "handling": {
+   "fx": "handling",
+   "g": -18,
+   "space": "close",
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.15
+  },
+  "rustle": {
+   "fx": "handling",
+   "g": -22,
+   "space": "close",
+   "fin": 0.02,
+   "fout": 0.2
+  },
+  "breath": {
+   "fx": "breath",
+   "g": -20,
+   "space": "close",
+   "fin": 0.02,
+   "fout": 0.3
+  },
+  "vcr": {
+   "fx": "vcr_clunk",
+   "g": -24,
+   "space": "archive",
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.08
+  },
+  "glitch": {
+   "fx": "glitch",
+   "g": -21,
+   "space": "tape",
+   "align": true,
+   "fin": 0.012,
+   "fout": 0.06
+  },
+  "static": {
+   "fx": "static",
+   "g": -14,
+   "space": "tape",
+   "fin": 0.004,
+   "fout": 0.03
+  },
+  "clank": {
+   "fx": "pole_scrape",
+   "g": -24,
+   "space": "shop",
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.08,
+   "trim": 0.16
+  },
+  "creak": {
+   "fx": "wood_creak",
+   "g": -21,
+   "space": "shop",
+   "align": true,
+   "fin": 0.003,
+   "fout": 0.1,
+   "trim": 0.32
+  },
+  "crack": {
+   "fx": "wood_creak",
+   "g": -9,
+   "space": "shop",
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.25
+  },
+  "scrape": {
+   "fx": "pole_scrape",
+   "g": -11,
+   "space": "shop",
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.05,
+   "dur": 0.68
+  }
+ },
+ "beds_db": 26.5,
+ "close_db": 6,
+ "voice_peak_db": -20
+}

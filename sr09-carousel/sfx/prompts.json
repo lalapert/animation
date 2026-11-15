@@ -1,0 +1,70 @@
+{
+ "step": [
+  0.5,
+  "one single footstep of a work boot on a hard polished stone floor in a large empty hall, close, with a short echo"
+ ],
+ "breath": [
+  2.0,
+  "one slow quiet human exhale very close to a microphone, muffled, no voice"
+ ],
+ "breath_bed": [
+  8.0,
+  "a frightened man breathing shakily and quietly right next to a camcorder microphone, uneven breaths, trying to stay quiet, loopable"
+ ],
+ "near_breath": [
+  8.0,
+  "slow, deep, calm breathing of someone standing right against a microphone, very close and intimate, long inhales and exhales, unhurried, not scared, no voice, loopable"
+ ],
+ "handling": [
+  0.8,
+  "a camcorder microphone rubbed and knocked by a hand as the camera is spun around fast"
+ ],
+ "camclick": [
+  0.6,
+  "a 1990s camcorder record button pressed: a plastic click and the tape transport motor starting up"
+ ],
+ "vcr_clunk": [
+  0.6,
+  "a 1990s VCR jog shuttle control: one hard mechanical clunk and a quick whir of the tape heads"
+ ],
+ "glitch": [
+  0.6,
+  "a very short VHS tape tracking glitch: a warbling distorted electrical crackle and a brief buzz"
+ ],
+ "static": [
+  2.0,
+  "harsh analog VHS tape static, loud white noise hiss with crackle and a low hum, a tape ending on a blank channel"
+ ],
+ "tape_hiss": [
+  8.0,
+  "constant soft analog videotape hiss and faint mechanical motor whir, steady, loopable"
+ ],
+ "tube_tick": [
+  0.5,
+  "a single sharp electrical tick of a flickering fluorescent tube, one click with a tiny buzz, dry"
+ ],
+ "gasp": [
+  0.8,
+  "one short sharp frightened gasp of a man very close to a microphone, a quick intake of breath, no words"
+ ],
+ "band_organ": [
+  10.0,
+  "an old carousel band organ playing a slow waltz in an empty indoor shopping mall at night, the music running down and dragging, slightly out of tune, pipes and drum, heard from a few meters away, no voices"
+ ],
+ "carousel_mech": [
+  8.0,
+  "an old carousel turning slowly with no music: the wooden platform creaking and rumbling, gears and overhead cranks squeaking rhythmically, metal poles clinking, in a large empty hall, loopable"
+ ],
+ "pole_scrape": [
+  2.0,
+  "a heavy brass pole dragged a short distance across a tiled floor: one harsh metallic scrape that stops abruptly, close, no voices"
+ ],
+ "wood_creak": [
+  1.2,
+  "a carved wooden carousel horse creaking and cracking as its wooden neck bends: one sharp dry wood crack, close, no voices"
+ ],
+ "hall_tone": [
+  8.0,
+  "a huge empty shopping mall concourse at night with the power off: very quiet low room tone, faint wind over a glass skylight, distant building creaks, no people, no music, loopable"
+ ]
+}

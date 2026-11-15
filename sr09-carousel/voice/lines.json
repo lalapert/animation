@@ -1,0 +1,46 @@
+{
+ "model_id": "eleven_v4",
+ "cast": {
+  "LEON": {
+   "voice_id": "Uy5Zv42tAoMnz16B9JZo",
+   "name": "HA Leon Marsh",
+   "settings": {
+    "stability": 0.55,
+    "similarity_boost": 0.8,
+    "style": 0.25,
+    "speed": 0.92
+   }
+  }
+ },
+ "lines": [
+  {
+   "id": "L1",
+   "who": "LEON",
+   "text": "[tired, quiet] Night log. December fourth. One fifty A.M.",
+   "sub": "NIGHT LOG. DECEMBER FOURTH. 1:50 A.M.",
+   "asr": "Night log December fourth one fifty AM"
+  },
+  {
+   "id": "L2",
+   "who": "LEON",
+   "text": "[low, uneasy] The power's off. It's still turning.",
+   "sub": "THE POWER'S OFF. IT'S STILL TURNING.",
+   "asr": "The power's off. It's still turning."
+  },
+  {
+   "id": "L3",
+   "who": "LEON",
+   "text": "[whispering, uneasy] They're out here.",
+   "sub": "THEY'RE OUT HERE.",
+   "asr": "They're out here."
+  },
+  {
+   "id": "L4",
+   "who": "LEON",
+   "text": "[whispering, terrified] They're closer. I never looked away.",
+   "sub": "THEY'RE CLOSER. I NEVER LOOKED AWAY.",
+   "asr": "They're closer. I never looked away."
+  }
+ ],
+ "context": false
+}
