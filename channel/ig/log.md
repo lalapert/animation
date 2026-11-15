@@ -19,3 +19,4 @@
 | 11/19 09:00 | vm07-tip-jar | 24 The Reveal | This tip screen stares at you until you tap 30% | Ever tapped a tip button just because someone was watching? Tell me. | no |
 | 11/20 10:00 | vl07-reduce-to-1 | 2 Negative Command | Never shrink your rent notice to 1% | What's the worst trick you've ever tried on a bill? Tell me. | no |
 | 11/21 10:00 | vm08-lost-and-found | 23 The Statistic | 100% of your lost socks end up on one planet | Where do you think your lost socks actually go? Tell me. | no |
+| 11/22 10:00 | vl08-invisible | 25 Someone Else's Result | She turned invisible. The guy at the bus stop didn't look up | Who's the hardest person to impress you know? Tell me. | no |

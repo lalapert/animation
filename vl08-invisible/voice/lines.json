@@ -1,0 +1,135 @@
+{
+ "model_id": "eleven_v4",
+ "cast": {
+  "VERA": {
+   "voice_id": "buRySvQEB2e8Dcglym6i",
+   "name": "LAB Vera Volt",
+   "settings": {
+    "stability": 0.3,
+    "similarity_boost": 0.8,
+    "style": 0.7,
+    "speed": 1.0
+   }
+  },
+  "CLEO": {
+   "voice_id": "biUhGlVm4NoNe58piPit",
+   "name": "LAB Cleo",
+   "settings": {
+    "stability": 0.6,
+    "similarity_boost": 0.8,
+    "style": 0.25,
+    "speed": 0.92
+   }
+  },
+  "MAN": {
+   "voice_id": "CwhRBWXzGAHq8TQ4Fs17",
+   "name": "Roger (stock), bus-stop commuter",
+   "settings": {
+    "stability": 0.4,
+    "similarity_boost": 0.8,
+    "style": 0.5,
+    "speed": 1.0
+   }
+  }
+ },
+ "lines": [
+  {
+   "id": "L1",
+   "who": "VERA",
+   "text": "[giddy, triumphant] I'm invisible! Totally invisible!",
+   "plain": "I'm invisible! Totally invisible!",
+   "sub": "I'm invisible!\nTotally invisible!"
+  },
+  {
+   "id": "L2",
+   "who": "CLEO",
+   "text": "[deadpan] You look better.",
+   "plain": "You look better.",
+   "sub": "You look better."
+  },
+  {
+   "id": "L3",
+   "who": "VERA",
+   "text": "[offended, then grand] Rude. Now... the city is mine.",
+   "plain": "Rude. Now... the city is mine.",
+   "sub": "Rude.\nNow... the city is mine."
+  },
+  {
+   "id": "L4",
+   "who": "VERA",
+   "text": "[spooky] Boo!",
+   "plain": "Boo!",
+   "sub": "Boo!",
+   "noctx": true
+  },
+  {
+   "id": "L5",
+   "who": "MAN",
+   "text": "[bored, not looking up] Bus is late again.",
+   "plain": "Bus is late again.",
+   "sub": "Bus is late again.",
+   "noctx": true
+  },
+  {
+   "id": "L6",
+   "who": "VERA",
+   "text": "[thrown, insistent] I'm a floating coat!",
+   "plain": "I'm a floating coat!",
+   "sub": "I'm a floating coat!"
+  },
+  {
+   "id": "L7",
+   "who": "MAN",
+   "text": "[glancing, unimpressed] Nice coat.",
+   "plain": "Nice coat.",
+   "sub": "Nice coat.",
+   "noctx": true
+  },
+  {
+   "id": "L8",
+   "who": "VERA",
+   "text": "[spooky, waving] Fear me!",
+   "plain": "Fear me!",
+   "sub": "Fear me!"
+  },
+  {
+   "id": "L9",
+   "who": "MAN",
+   "text": "[polite, absent] Here.",
+   "plain": "Here.",
+   "sub": "Here.",
+   "noctx": true
+  },
+  {
+   "id": "L10",
+   "who": "VERA",
+   "text": "[confused, polite] ...Thank you.",
+   "plain": "...Thank you.",
+   "sub": "...Thank you.",
+   "noctx": true
+  },
+  {
+   "id": "L11",
+   "who": "MAN",
+   "text": "[terrified scream] AAAH! A FACE!",
+   "plain": "AAAH! A FACE!",
+   "sub": "AAAH! A FACE!",
+   "asr": "Ah! A face!",
+   "noctx": true
+  },
+  {
+   "id": "L12",
+   "who": "VERA",
+   "text": "[exasperated] Seriously?",
+   "plain": "Seriously?",
+   "sub": "Seriously?"
+  },
+  {
+   "id": "L13",
+   "who": "CLEO",
+   "text": "[deadpan] Told you. You looked better.",
+   "plain": "Told you. You looked better.",
+   "sub": "Told you.\nYou looked better."
+  }
+ ]
+}

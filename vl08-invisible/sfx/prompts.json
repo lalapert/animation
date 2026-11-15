@@ -1,0 +1,49 @@
+{
+ "cloth": [
+  3.0,
+  "four separate quick rustles of a stiff cotton lab coat sleeve as arms are thrown up, close, dry, pauses between, no voice",
+  "copied from vl04-laser-pointer"
+ ],
+ "scan": [
+  3.4,
+  "a futuristic hologram scanner sweeping: soft digital chirps, data ticking and rolling numbers, sci-fi interface beeps, clean",
+  "copied from vl04-laser-pointer"
+ ],
+ "pave_run": [
+  2.5,
+  "a heavy man running away fast on a concrete pavement outdoors in leather shoes, eight separate footsteps, no music",
+  "copied from vl04-laser-pointer"
+ ],
+ "steps_lab": [
+  4.5,
+  "slow footsteps of one person in soft leather shoes on a bare concrete basement floor, eight separate steps with short gaps, dry, no music, no voices",
+  "copied from vl07-reduce-to-1"
+ ],
+ "door_open": [
+  1.2,
+  "a heavy basement door unlatched and swung open: a metal latch click and a short low creak, indoors, no voices",
+  "copied from vl07-reduce-to-1"
+ ],
+ "unroll": [
+  1.6,
+  "a very long paper receipt unrolling fast and spilling onto the floor, rustling paper",
+  "copied from vl07-reduce-to-1"
+ ],
+ "chalk": [
+  1.2,
+  "chalk drawing a big circle on a chalkboard, one continuous scrape",
+  "copied from vl05-the-monologue (via vl06, vl07)"
+ ],
+ "potion_fizz": [
+  2.0,
+  "a small glass flask of potion fizzing softly: tiny bubbles popping and a faint hiss, close, no music"
+ ],
+ "street_day": [
+  22.0,
+  "a quiet city street in the daytime: distant traffic, a car passing now and then, light wind, faraway footsteps, no voices, no music"
+ ],
+ "reappear": [
+  1.2,
+  "a magic potion wearing off: a short fizzing crackle of sparkles ending in one soft pop, no music"
+ ]
+}

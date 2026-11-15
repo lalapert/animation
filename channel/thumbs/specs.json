@@ -474,5 +474,28 @@
    880
   ],
   "zoom": 1.2
+ },
+ {
+  "folder": "vl08-invisible",
+  "t": 0.5,
+  "series": "vl",
+  "ep": 8,
+  "lines": [
+   "WHO'S IN",
+   "THE COAT?"
+  ],
+  "hl": [
+   "COAT?"
+  ],
+  "focus": [
+   540,
+   960
+  ],
+  "zoom": 1.25,
+  "place": [
+   540,
+   1160
+  ],
+  "drawn": true
  }
 ]
