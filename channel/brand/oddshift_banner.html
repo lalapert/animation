@@ -19,7 +19,7 @@
 // preview is channel/brand/out/oddshift_banner_preview.jpg. Based on banner.html (the Void Mart banner).
 const W = 2560, H = 1440, c = document.getElementById('c').getContext('2d');
 const SAFE = { x0: 507, x1: 2053, y0: 508, y1: 931 };
-const CT = 872;                                                    // counter / bench top
+const CT = 862;                                                    // counter / bench top
 const ORANGE = TOON.orange, ACID = LAB.glow, CREAM = '#fbf3dc';
 function label(s, x, y, size, color, align, font, weight) { tText(c, s, x, y, size, color || TOON.white, font || '"Fredoka"', align, weight); }
 
@@ -76,10 +76,10 @@ toonFonts().then(() => {
   label('DAYS SINCE LAST INCIDENT', 190, 144, 17, TOON.ink);
   tShape(c, '#e23b4a', g => g.roundRect(162, 158, 56, 38, 6), 3); label('0', 190, 178, 30, '#fff');
   c.fillStyle = '#24134e'; c.fillRect(0, 0, 1340, 44);
-  tLine(c, [600, 44, 600, 536], 8);                                    // MAGS's ceiling arm
-  drawMags(c, 600, 546, 92);
-  drawPip2(c, 690, CT, 100, { expr: 'grin' });                        // waving: her arm goes all the way to the hand
-  drawRae2(c, 875, CT, 100, { look: -1.2 });
+  tLine(c, [590, 44, 590, 536], 8);                                    // MAGS's ceiling arm
+  drawMags(c, 590, 546, 92);
+  drawPip2(c, 668, CT, 100, { expr: 'grin' });                        // waving: her arm goes all the way to the hand
+  drawRae2(c, 848, CT, 100, { look: -1.2 });
   tShape(c, ORANGE, g => g.rect(-10, CT, 1360, 34), 5);              // the counter
   c.fillStyle = '#3a2470'; c.fillRect(-10, CT + 36, 1360, H);
   label('THANK YOU. COME AGAIN. (PLEASE.)', 640, 1150, 44, 'rgba(255,176,102,.5)', 'center', '"Bungee"', 400);
@@ -106,8 +106,8 @@ toonFonts().then(() => {
   for (const [bx, col] of [[1450, '#ff7aa8'], [1530, '#7ef0ff'], [1610, ACID]]) {    // flasks on the shelf (desktop and TV)
     c.save(); c.shadowColor = col; c.shadowBlur = 18; tShape(c, col, g => { g.moveTo(bx - 12, 380); g.lineTo(bx + 12, 380); g.lineTo(bx + 12, 404); g.lineTo(bx + 28, 438); g.lineTo(bx - 28, 438); g.lineTo(bx - 12, 404); g.closePath(); }, 3.4); c.restore();
   }
-  drawVera2(c, 1735, CT, 100, { expr: 'scheme' });                  // her glowing test tube in her hand
-  drawCleo2(c, 1935, CT, 100, { expr: 'deadpan', look: -.8 });      // her red button remote in both hands
+  drawVera2(c, 1758, CT, 100, { expr: 'cool' });                    // her glowing test tube in her hand
+  drawCleo2(c, 1952, CT, 100, { expr: 'deadpan', look: -.8 });      // her red button remote in both hands
   tShape(c, '#4b5a63', g => g.rect(1210, CT, W, 30), 5);             // the bench
   c.fillStyle = '#26323a'; c.fillRect(1210, CT + 32, W, H);
   c.save(); c.beginPath(); c.rect(1200, 1000, W, 40); c.clip(); for (let k = 0; k < 60; k++) { c.fillStyle = k % 2 ? '#ffd23f' : '#20183a'; c.beginPath(); c.moveTo(1200 + k * 50, 1040); c.lineTo(1250 + k * 50, 1000); c.lineTo(1275 + k * 50, 1000); c.lineTo(1225 + k * 50, 1040); c.closePath(); c.fill(); } c.restore();
@@ -119,14 +119,14 @@ toonFonts().then(() => {
 
   // ---------- the plate, the wordmark and the line (inside the safe area) ----------
   c.save(); c.shadowColor = 'rgba(0,0,0,.5)'; c.shadowBlur = 34;
-  tShape(c, '#120a2a', g => g.roundRect(952, 540, 656, 262, 30), 6); c.restore();
-  drawStars(c, 640, 250, 46, 33, 960, 546);
-  wordmark(1280, 626, 84);
+  tShape(c, '#120a2a', g => g.roundRect(926, 536, 708, 270, 30), 6); c.restore();
+  drawStars(c, 690, 258, 48, 33, 934, 542);
+  wordmark(1280, 624, 78);
   label('Two animated sitcoms. One weird universe.', 1280, 720, 31, TOON.white, 'center', '"Fredoka"', 600);
   label('New episode every day.', 1280, 763, 31, '#ffd23f', 'center', '"Fredoka"', 600);
   // each show's name, small, under its half (on the counter and the bench fronts)
-  label('VOID MART', 782, 908, 30, ORANGE, 'center', '"Bungee"', 400);
-  label('VOLT LABS', 1835, 908, 30, ACID, 'center', '"Bungee"', 400);
+  label('VOID MART', 758, 914, 26, '#ffb066', 'center', '"Bungee"', 400);
+  label('VOLT LABS', 1855, 914, 26, ACID, 'center', '"Bungee"', 400);
   window.READY = true;
 });
 </script>
