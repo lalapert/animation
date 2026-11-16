@@ -1,0 +1,134 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Odd Shift banner</title>
+<style>html, body { margin: 0; background: #120a2a; } canvas { display: block; }</style>
+</head>
+<body>
+<canvas id="c" width="2560" height="1440"></canvas>
+<script src="toon.js"></script>
+<script src="lab.js"></script>
+<script>
+'use strict';
+// Odd Shift YouTube banner, 2560x1440 (the Void Mart channel's umbrella name from about 11/23: two animated workplace sitcoms).
+// Safe area for every device: x 507-2053, y 508-931 (mobile shows exactly that; desktop shows the full width of that strip; TV
+// shows everything). Inside it: the ODD SHIFT wordmark, the line, Void Mart's cast behind the store counter (left) and Volt Labs'
+// cast behind the lab bench (right), each show's name small under its half. Outside it (desktop and TV only): the store's
+// shelves and window to the void, the lab's chalkboard and TV. Rendered to channel/brand/out/oddshift_banner.jpg; the crops
+// preview is channel/brand/out/oddshift_banner_preview.jpg. Based on banner.html (the Void Mart banner).
+const W = 2560, H = 1440, c = document.getElementById('c').getContext('2d');
+const SAFE = { x0: 507, x1: 2053, y0: 508, y1: 931 };
+const CT = 872;                                                    // counter / bench top
+const ORANGE = TOON.orange, ACID = LAB.glow, CREAM = '#fbf3dc';
+function label(s, x, y, size, color, align, font, weight) { tText(c, s, x, y, size, color || TOON.white, font || '"Fredoka"', align, weight); }
+
+// ---------- the wordmark (as in oddshift_profile.html): ODD in Void orange, its O a clock at 3:00; SHIFT in the lab's green
+function clockO(x, y, r, lw) {
+  c.save(); c.translate(x, y);
+  c.save(); c.shadowColor = 'rgba(255,122,26,.9)'; c.shadowBlur = r * .5; c.beginPath(); c.arc(0, 0, r, 0, 6.2832); c.fillStyle = ORANGE; c.fill(); c.restore();
+  c.beginPath(); c.arc(0, 0, r, 0, 6.2832); c.lineWidth = lw; c.strokeStyle = TOON.ink; c.stroke();
+  c.beginPath(); c.arc(0, 0, r * .74, 0, 6.2832); c.fillStyle = CREAM; c.fill(); c.lineWidth = lw * .6; c.stroke();
+  for (let i = 0; i < 12; i++) { const a = i / 12 * 6.2832, r0 = i % 3 ? r * .6 : r * .52; c.beginPath(); c.moveTo(Math.sin(a) * r0, -Math.cos(a) * r0); c.lineTo(Math.sin(a) * r * .68, -Math.cos(a) * r * .68); c.lineWidth = i % 3 ? lw * .35 : lw * .6; c.lineCap = 'round'; c.stroke(); }
+  c.lineCap = 'round'; c.lineWidth = lw * .9; c.beginPath(); c.moveTo(0, 0); c.lineTo(r * .4, 0); c.stroke();
+  c.lineWidth = lw * .6; c.beginPath(); c.moveTo(0, 0); c.lineTo(0, -r * .58); c.stroke();
+  c.beginPath(); c.arc(0, 0, lw * .7, 0, 6.2832); c.fillStyle = TOON.ink; c.fill();
+  c.restore();
+}
+function wordPart(word, px, py, cp, cols, glow) {
+  c.save(); c.font = `${cp / .72}px "Bungee"`; c.textBaseline = 'alphabetic'; c.textAlign = 'left';
+  const glyphs = [...word], track = cp * .05, wO = cp * 1.04, isO = i => word === 'ODD' && i === 0;
+  const widths = glyphs.map((g, i) => isO(i) ? wO : c.measureText(g).width);
+  const total = widths.reduce((a, b) => a + b, 0) + track * (glyphs.length - 1);
+  let gx = px - total / 2; const base = py + cp / 2, pos = [];
+  glyphs.forEach((g, i) => { pos.push(gx); gx += widths[i] + track; });
+  c.save(); c.shadowColor = glow; c.shadowBlur = cp * .35; c.fillStyle = cols[1]; glyphs.forEach((g, i) => { if (!isO(i)) c.fillText(g, pos[i], base); }); c.restore();
+  glyphs.forEach((g, i) => {
+    if (isO(i)) { clockO(pos[i] + wO / 2, base - cp / 2, cp * .56, cp * .1); return; }
+    c.lineWidth = cp * .13; c.strokeStyle = TOON.ink; c.lineJoin = 'round'; c.strokeText(g, pos[i], base);
+    const gr = c.createLinearGradient(0, base - cp, 0, base); gr.addColorStop(0, cols[0]); gr.addColorStop(1, cols[1]); c.fillStyle = gr; c.fillText(g, pos[i], base);
+  });
+  c.restore();
+  return total;
+}
+function wordmark(x, y, cap) {
+  c.save(); c.font = `${cap / .72}px "Bungee"`;
+  const wOdd = cap * 1.04 + c.measureText('DD').width + cap * .1, wSh = c.measureText('SHIFT').width + cap * .2; c.restore();
+  const gap = cap * .42, tot = wOdd + gap + wSh;
+  wordPart('ODD', x - tot / 2 + wOdd / 2, y, cap, ['#ffe2ae', ORANGE], 'rgba(255,122,26,.9)');
+  wordPart('SHIFT', x + tot / 2 - wSh / 2, y, cap, ['#f2ffc9', ACID], 'rgba(182,255,59,.8)');
+  return tot;
+}
+
+toonFonts().then(() => {
+  const SEAM0 = 1330, SEAM1 = 1230, seam = y => SEAM0 + (SEAM1 - SEAM0) * y / H;
+  // ---------- left: Void Mart, the last convenience store in the universe ----------
+  c.save(); c.beginPath(); c.moveTo(0, 0); c.lineTo(SEAM0, 0); c.lineTo(SEAM1, H); c.lineTo(0, H); c.closePath(); c.clip();
+  c.fillStyle = '#2e1a5e'; c.fillRect(0, 0, 1340, H);
+  const wg = c.createRadialGradient(760, 640, 20, 760, 640, 640); wg.addColorStop(0, '#ffb066'); wg.addColorStop(.07, '#ff4fa3'); wg.addColorStop(.3, '#4b1f8a'); wg.addColorStop(1, '#170b33');
+  c.fillStyle = wg; c.fillRect(400, 300, 980, 600); drawStars(c, 980, 600, 150, 21, 400, 300);
+  tShape(c, null, g => g.rect(400, 300, 980, 600), 10);
+  tLine(c, [890, 300, 890, 900], 8);                                   // the window's mullion
+  c.fillStyle = '#24134e'; c.fillRect(0, 240, 380, 700);              // shelves (desktop and TV)
+  const items = ['#ff7a1a', '#29d3c3', '#ffd23f', '#ff4fa3', '#b9a6ff', '#7ef0ff'];
+  for (let r = 0; r < 5; r++) { tShape(c, '#4a3192', g => g.rect(10, 370 + r * 120, 360, 14), 3); for (let i = 0; i < 6; i++) { const hh = 44 + ((i * 7 + r * 3) % 4) * 13; tShape(c, items[(i + r) % 6], g => g.roundRect(24 + i * 57, 370 + r * 120 - hh, 44, hh, 5), 3); } }
+  tShape(c, '#fbf7ff', g => g.roundRect(60, 120, 260, 84, 8), 4);     // the incident board (TV)
+  label('DAYS SINCE LAST INCIDENT', 190, 144, 17, TOON.ink);
+  tShape(c, '#e23b4a', g => g.roundRect(162, 158, 56, 38, 6), 3); label('0', 190, 178, 30, '#fff');
+  c.fillStyle = '#24134e'; c.fillRect(0, 0, 1340, 44);
+  tLine(c, [600, 44, 600, 536], 8);                                    // MAGS's ceiling arm
+  drawMags(c, 600, 546, 92);
+  drawPip2(c, 690, CT, 100, { expr: 'grin' });                        // waving: her arm goes all the way to the hand
+  drawRae2(c, 875, CT, 100, { look: -1.2 });
+  tShape(c, ORANGE, g => g.rect(-10, CT, 1360, 34), 5);              // the counter
+  c.fillStyle = '#3a2470'; c.fillRect(-10, CT + 36, 1360, H);
+  label('THANK YOU. COME AGAIN. (PLEASE.)', 640, 1150, 44, 'rgba(255,176,102,.5)', 'center', '"Bungee"', 400);
+  c.restore();
+
+  // ---------- right: Volt Labs, a broke mad scientist's basement lab ----------
+  c.save(); c.beginPath(); c.moveTo(SEAM0, 0); c.lineTo(W, 0); c.lineTo(W, H); c.lineTo(SEAM1, H); c.closePath(); c.clip();
+  const lg = c.createLinearGradient(0, 0, 0, H); lg.addColorStop(0, '#1d3b35'); lg.addColorStop(1, '#0f2420'); c.fillStyle = lg; c.fillRect(1220, 0, W - 1220, H);
+  c.strokeStyle = 'rgba(0,0,0,.18)'; c.lineWidth = 3;
+  for (let r = 0; r * 54 < H; r++) { c.beginPath(); c.moveTo(1220, r * 54); c.lineTo(W, r * 54); c.stroke(); for (let k = 0; k * 140 < W; k++) { const bx = 1220 + k * 140 + (r % 2) * 70; c.beginPath(); c.moveTo(bx, r * 54); c.lineTo(bx, r * 54 + 54); c.stroke(); } }
+  const gl = c.createRadialGradient(1830, 700, 20, 1830, 700, 520); gl.addColorStop(0, 'rgba(182,255,59,.22)'); gl.addColorStop(1, 'rgba(182,255,59,0)'); c.fillStyle = gl; c.fillRect(1220, 0, W, H);
+  tShape(c, '#5d6e7a', g => g.rect(1220, 440, W, 24), 4); tShape(c, '#5d6e7a', g => g.rect(2082, 0, 24, H), 4);
+  tShape(c, '#203a2a', g => g.roundRect(2140, 560, 380, 250, 10), 6);  // the chalkboard (desktop and TV)
+  c.save(); c.strokeStyle = '#8a5a2c'; c.lineWidth = 12; c.strokeRect(2140, 560, 380, 250); c.restore();
+  label('THE PLAN', 2330, 598, 30, '#f3f7ee');
+  label('1. BUILD DEATH RAY', 2166, 650, 27, '#f3f7ee', 'left');
+  label('2. RULE THE WORLD', 2166, 694, 27, '#f3f7ee', 'left');
+  label('3. PAY RENT', 2166, 738, 27, '#f3f7ee', 'left');
+  c.strokeStyle = '#ff8fb1'; c.lineWidth = 4; c.beginPath(); c.ellipse(2262, 739, 100, 24, -.04, 0, 6.2832); c.stroke();
+  tShape(c, '#1a1a24', g => g.roundRect(2140, 130, 380, 250, 14), 6);  // the TV with the smiling billionaire (TV only)
+  c.save(); c.beginPath(); c.roundRect(2156, 146, 348, 218, 8); c.clip();
+  const tg = c.createLinearGradient(0, 146, 0, 364); tg.addColorStop(0, '#dff3ff'); tg.addColorStop(1, '#8fcfff'); c.fillStyle = tg; c.fillRect(2156, 146, 348, 218);
+  drawBright(c, 2330, 364 + 40, 62, { arms: false }); c.restore();
+  for (const [bx, col] of [[1450, '#ff7aa8'], [1530, '#7ef0ff'], [1610, ACID]]) {    // flasks on the shelf (desktop and TV)
+    c.save(); c.shadowColor = col; c.shadowBlur = 18; tShape(c, col, g => { g.moveTo(bx - 12, 380); g.lineTo(bx + 12, 380); g.lineTo(bx + 12, 404); g.lineTo(bx + 28, 438); g.lineTo(bx - 28, 438); g.lineTo(bx - 12, 404); g.closePath(); }, 3.4); c.restore();
+  }
+  drawVera2(c, 1735, CT, 100, { expr: 'scheme' });                  // her glowing test tube in her hand
+  drawCleo2(c, 1935, CT, 100, { expr: 'deadpan', look: -.8 });      // her red button remote in both hands
+  tShape(c, '#4b5a63', g => g.rect(1210, CT, W, 30), 5);             // the bench
+  c.fillStyle = '#26323a'; c.fillRect(1210, CT + 32, W, H);
+  c.save(); c.beginPath(); c.rect(1200, 1000, W, 40); c.clip(); for (let k = 0; k < 60; k++) { c.fillStyle = k % 2 ? '#ffd23f' : '#20183a'; c.beginPath(); c.moveTo(1200 + k * 50, 1040); c.lineTo(1250 + k * 50, 1000); c.lineTo(1275 + k * 50, 1000); c.lineTo(1225 + k * 50, 1040); c.closePath(); c.fill(); } c.restore();
+  label('DO NOT PRESS THE RED BUTTON', 1900, 1150, 44, 'rgba(182,255,59,.5)', 'center', '"Bungee"', 400);
+  c.restore();
+
+  // ---------- the seam between the two workplaces ----------
+  c.save(); c.lineWidth = 10; c.strokeStyle = TOON.ink; c.beginPath(); c.moveTo(SEAM0, 0); c.lineTo(SEAM1, H); c.stroke(); c.restore();
+
+  // ---------- the plate, the wordmark and the line (inside the safe area) ----------
+  c.save(); c.shadowColor = 'rgba(0,0,0,.5)'; c.shadowBlur = 34;
+  tShape(c, '#120a2a', g => g.roundRect(952, 540, 656, 262, 30), 6); c.restore();
+  drawStars(c, 640, 250, 46, 33, 960, 546);
+  wordmark(1280, 626, 84);
+  label('Two animated sitcoms. One weird universe.', 1280, 720, 31, TOON.white, 'center', '"Fredoka"', 600);
+  label('New episode every day.', 1280, 763, 31, '#ffd23f', 'center', '"Fredoka"', 600);
+  // each show's name, small, under its half (on the counter and the bench fronts)
+  label('VOID MART', 782, 908, 30, ORANGE, 'center', '"Bungee"', 400);
+  label('VOLT LABS', 1835, 908, 30, ACID, 'center', '"Bungee"', 400);
+  window.READY = true;
+});
+</script>
+</body>
+</html>

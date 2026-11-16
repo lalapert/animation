@@ -1,0 +1,155 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Odd Shift profile picture</title>
+<style>html, body { margin: 0; background: #120a2a; } canvas { display: block; }</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1080"></canvas>
+<script src="toon.js"></script>
+<script src="lab.js"></script>
+<script>
+'use strict';
+// Odd Shift (the Void Mart channel's umbrella name from about 11/23: one channel, two animated workplace sitcoms, Void Mart and
+// Volt Labs; "strange jobs, strange hours"). Profile picture options, 1080x1080: YouTube and Instagram crop it to a circle, so
+// everything that matters sits inside r = 480 and must still read at 110 px. ?opt=A | B | C
+//   A  the ODD SHIFT wordmark on a punch-clock time card (the O is a clock at 3:00)
+//   B  Pip (Void Mart) and Cleo (Volt Labs) side by side, faces big, behind their counter and bench, a small ODD SHIFT badge
+//   C  a time card punched at 3:00 AM, with a tiny green alien thumbprint
+// Rendered to channel/brand/out/oddshift_profile_<opt>_1080.jpg and _800.jpg (and the small-size sheet oddshift_profile_small.jpg).
+const S = 1080, c = document.getElementById('c').getContext('2d');
+const opt = new URLSearchParams(location.search).get('opt') || 'A';
+const MINT = '#29d3c3', LAV = '#b9a6ff', YEL = '#ffd23f', ACID = LAB.glow, ORANGE = TOON.orange, CREAM = '#fbf3dc';
+
+function night(seed, glowG) {
+  const g = c.createRadialGradient(540, 520, 40, 540, 540, 780); g.addColorStop(0, '#3d1d78'); g.addColorStop(.55, '#20103f'); g.addColorStop(1, '#0c0720');
+  c.fillStyle = g; c.fillRect(0, 0, S, S); drawStars(c, S, S, 120, seed);
+  if (glowG) {                                                     // the lab's acid green from below, the store's orange from above
+    const a = c.createRadialGradient(820, 980, 10, 820, 980, 560); a.addColorStop(0, 'rgba(182,255,59,.32)'); a.addColorStop(1, 'rgba(182,255,59,0)'); c.fillStyle = a; c.fillRect(0, 0, S, S);
+    const b = c.createRadialGradient(240, 120, 10, 240, 120, 560); b.addColorStop(0, 'rgba(255,122,26,.30)'); b.addColorStop(1, 'rgba(255,122,26,0)'); c.fillStyle = b; c.fillRect(0, 0, S, S);
+  }
+}
+// a round wall clock (the O of ODD), showing 3:00
+function clockO(x, y, r, lw) {
+  c.save(); c.translate(x, y);
+  c.save(); c.shadowColor = 'rgba(255,122,26,.9)'; c.shadowBlur = r * .5; c.beginPath(); c.arc(0, 0, r, 0, 6.2832); c.fillStyle = ORANGE; c.fill(); c.restore();
+  c.beginPath(); c.arc(0, 0, r, 0, 6.2832); c.lineWidth = lw; c.strokeStyle = TOON.ink; c.stroke();
+  c.beginPath(); c.arc(0, 0, r * .74, 0, 6.2832); c.fillStyle = CREAM; c.fill(); c.lineWidth = lw * .6; c.stroke();
+  for (let i = 0; i < 12; i++) { const a = i / 12 * 6.2832, r0 = i % 3 ? r * .6 : r * .52; c.beginPath(); c.moveTo(Math.sin(a) * r0, -Math.cos(a) * r0); c.lineTo(Math.sin(a) * r * .68, -Math.cos(a) * r * .68); c.lineWidth = i % 3 ? lw * .35 : lw * .6; c.lineCap = 'round'; c.stroke(); }
+  c.lineCap = 'round'; c.lineWidth = lw * .9; c.beginPath(); c.moveTo(0, 0); c.lineTo(r * .4, 0); c.stroke();          // hour hand on 3
+  c.lineWidth = lw * .6; c.beginPath(); c.moveTo(0, 0); c.lineTo(0, -r * .58); c.stroke();                             // minute hand on 12
+  c.beginPath(); c.arc(0, 0, lw * .7, 0, 6.2832); c.fillStyle = TOON.ink; c.fill();
+  c.restore();
+}
+// the ODD SHIFT wordmark: Bungee, ink outline, ODD in Void orange (its O is the clock), SHIFT in the lab's acid green.
+// (x, y) = centre of the line, cap = cap height. stacked: ODD over SHIFT. Returns nothing.
+function wordmark(x, y, cap, o = {}) {
+  const font = s => `${s / .72}px "Bungee"`;
+  const part = (word, px, py, cp, cols, glow) => {
+    c.save(); c.font = font(cp); c.textBaseline = 'alphabetic'; c.textAlign = 'left';
+    const glyphs = [...word], track = cp * .05, wO = cp * 1.04, isO = (g, i) => word === 'ODD' && i === 0;
+    const widths = glyphs.map((g, i) => isO(g, i) ? wO : c.measureText(g).width);
+    const total = widths.reduce((a, b) => a + b, 0) + track * (glyphs.length - 1);
+    let gx = px - total / 2; const base = py + cp / 2, pos = [];
+    glyphs.forEach((g, i) => { pos.push(gx); gx += widths[i] + track; });
+    c.save(); c.shadowColor = glow; c.shadowBlur = cp * .35; c.fillStyle = cols[1];
+    glyphs.forEach((g, i) => { if (!isO(g, i)) c.fillText(g, pos[i], base); }); c.restore();
+    glyphs.forEach((g, i) => {
+      if (isO(g, i)) { clockO(pos[i] + wO / 2, base - cp / 2, cp * .56, cp * .1); return; }
+      c.lineWidth = cp * .13; c.strokeStyle = TOON.ink; c.lineJoin = 'round'; c.strokeText(g, pos[i], base);
+      const gr = c.createLinearGradient(0, base - cp, 0, base); gr.addColorStop(0, cols[0]); gr.addColorStop(1, cols[1]);
+      c.fillStyle = gr; c.fillText(g, pos[i], base);
+    });
+    c.restore();
+  };
+  if (o.stacked) {
+    part('ODD', x, y - cap * .62, cap * 1.18, ['#ffe2ae', ORANGE], 'rgba(255,122,26,.9)');
+    part('SHIFT', x, y + cap * .78, cap * .92, ['#d4ff7a', '#5cbf1a'], 'rgba(182,255,59,.8)');
+  } else {
+    c.save(); c.font = font(cap); const wOdd = cap * 1.04 + c.measureText('DD').width + cap * .1, wSh = c.measureText('SHIFT').width + cap * .2; c.restore();
+    const gap = cap * .42, tot = wOdd + gap + wSh;
+    part('ODD', x - tot / 2 + wOdd / 2, y, cap, ['#ffe2ae', ORANGE], 'rgba(255,122,26,.9)');
+    part('SHIFT', x + tot / 2 - wSh / 2, y, cap, [o.lightGreen ? '#f2ffc9' : '#d4ff7a', o.lightGreen ? ACID : '#5cbf1a'], 'rgba(182,255,59,.8)');
+  }
+}
+// a punch-clock time card (local: centred, w x h), the header band in the given colour
+function timeCard(w, h, band, rows) {
+  c.save(); c.shadowColor = 'rgba(0,0,0,.45)'; c.shadowBlur = 40; c.shadowOffsetY = 16;
+  tShape(c, CREAM, g => g.roundRect(-w / 2, -h / 2, w, h, 26), 10); c.restore();
+  tShape(c, CREAM, g => g.roundRect(-w / 2, -h / 2, w, h, 26), 10);
+  c.save(); c.beginPath(); c.roundRect(-w / 2, -h / 2, w, h, 26); c.clip();
+  c.fillStyle = band; c.fillRect(-w / 2, -h / 2, w, h * .17);
+  c.strokeStyle = 'rgba(26,16,48,.16)'; c.lineWidth = 4;
+  for (let i = 0; i < rows; i++) { const ry = -h / 2 + h * .17 + (i + 1) * (h * .83) / (rows + 1); c.beginPath(); c.moveTo(-w / 2, ry); c.lineTo(w / 2, ry); c.stroke(); }
+  c.beginPath(); c.moveTo(-w * .12, -h / 2 + h * .17); c.lineTo(-w * .12, h / 2); c.moveTo(w * .2, -h / 2 + h * .17); c.lineTo(w * .2, h / 2); c.stroke();
+  c.restore();
+  c.lineWidth = 8; c.strokeStyle = TOON.ink; c.beginPath(); c.moveTo(-w / 2, -h / 2 + h * .17); c.lineTo(w / 2, -h / 2 + h * .17); c.stroke();
+  for (const sx of [-1, 1]) { c.beginPath(); c.arc(sx * (w / 2 - h * .075), -h / 2 + h * .085, h * .026, 0, 6.2832); c.fillStyle = '#120a2a'; c.fill(); c.lineWidth = 4; c.stroke(); }   // punched holes, at the ends of the band
+}
+// a little green alien thumbprint (whorl ridges)
+function thumbprint(x, y, r, rot) {
+  c.save(); c.translate(x, y); c.rotate(rot);
+  c.save(); c.beginPath(); c.ellipse(0, 0, r * .78, r, 0, 0, 6.2832); c.clip();
+  c.strokeStyle = 'rgba(111,207,31,.95)'; c.lineWidth = r * .09; c.lineCap = 'round';
+  for (let k = 1; k <= 6; k++) { const rr = k * r * .17; c.beginPath(); c.ellipse(r * .05, r * .08, rr * .78, rr, 0, 3.6 - k * .12, 3.6 - k * .12 + 5.2); c.stroke(); }
+  c.restore(); c.restore();
+}
+
+toonFonts().then(() => {
+  if (opt === 'A') {                                               // wordmark on a time card
+    night(5, true);
+    c.save(); c.translate(540, 552); c.rotate(-.07);
+    timeCard(760, 560, ORANGE, 4);
+    tText(c, 'TIME CARD', 0, -232, 36, TOON.ink, '"Bungee"', 'center', 400);
+    c.restore();
+    c.save(); c.translate(540, 588); c.rotate(-.07); wordmark(0, 0, 150, { stacked: true }); c.restore();
+  } else if (opt === 'B') {                                        // Pip and Cleo, faces big
+    // the store (left, night purple and stars) and the lab (right, green brick), split on a slant
+    const seam = y => 560 + (y - 540) * .12;
+    c.save(); c.beginPath(); c.moveTo(0, 0); c.lineTo(seam(0), 0); c.lineTo(seam(S), S); c.lineTo(0, S); c.closePath(); c.clip();
+    const g1 = c.createRadialGradient(330, 420, 20, 330, 420, 620); g1.addColorStop(0, '#ff9a52'); g1.addColorStop(.18, '#c8418f'); g1.addColorStop(.5, '#3b1d6e'); g1.addColorStop(1, '#170b33');
+    c.fillStyle = g1; c.fillRect(0, 0, S, S); drawStars(c, 600, S, 70, 21);
+    c.restore();
+    c.save(); c.beginPath(); c.moveTo(seam(0), 0); c.lineTo(S, 0); c.lineTo(S, S); c.lineTo(seam(S), S); c.closePath(); c.clip();
+    const g2 = c.createLinearGradient(0, 0, 0, S); g2.addColorStop(0, '#24483f'); g2.addColorStop(1, '#10261f'); c.fillStyle = g2; c.fillRect(0, 0, S, S);
+    c.strokeStyle = 'rgba(0,0,0,.2)'; c.lineWidth = 4;
+    for (let r = 0; r * 64 < S; r++) { c.beginPath(); c.moveTo(0, r * 64); c.lineTo(S, r * 64); c.stroke(); for (let k = 0; k * 170 < S; k++) { const bx = k * 170 + (r % 2) * 85; c.beginPath(); c.moveTo(bx, r * 64); c.lineTo(bx, r * 64 + 64); c.stroke(); } }
+    const g3 = c.createRadialGradient(780, 430, 10, 780, 430, 420); g3.addColorStop(0, 'rgba(182,255,59,.35)'); g3.addColorStop(1, 'rgba(182,255,59,0)'); c.fillStyle = g3; c.fillRect(0, 0, S, S);
+    c.restore();
+    c.save(); c.lineWidth = 12; c.strokeStyle = TOON.ink; c.beginPath(); c.moveTo(seam(0), 0); c.lineTo(seam(S), S); c.stroke(); c.restore();
+    const CT = 905;
+    drawPip2(c, 298, CT, 290, { expr: 'grin' });                       // waving, her arm drawn to the hand
+    drawCleo2(c, 806, CT, 262, { expr: 'deadpan', look: -.6 });        // her remote in both gloved hands
+    // the counter (orange, Void Mart) and the bench (steel, the lab) hide them from the waist down
+    tShape(c, ORANGE, g => g.rect(-20, CT, seam(CT) + 20, 40), 7);
+    tShape(c, '#4b5a63', g => g.rect(seam(CT), CT, S, 40), 7);
+    c.fillStyle = '#3a2470'; c.fillRect(-20, CT + 44, seam(CT) + 20, S); c.fillStyle = '#26323a'; c.fillRect(seam(CT), CT + 44, S, S);
+    c.save(); c.lineWidth = 12; c.strokeStyle = TOON.ink; c.beginPath(); c.moveTo(seam(CT), CT); c.lineTo(seam(S), S); c.stroke(); c.restore();
+    // the badge
+    c.save(); c.translate(540, 968); c.rotate(-.03);
+    tShape(c, TOON.ink, g => g.roundRect(-196, -44, 392, 88, 44), 6);
+    tShape(c, YEL, g => g.roundRect(-188, -36, 376, 72, 36), 5);
+    tText(c, 'ODD SHIFT', 0, 3, 46, TOON.ink, '"Bungee"', 'center', 400);
+    c.restore();
+  } else {                                                         // a time card punched at 3:00 AM, an alien thumbprint
+    night(11, true);
+    c.save(); c.translate(540, 548); c.rotate(.06);
+    const w = 600, h = 790;
+    timeCard(w, h, ORANGE, 6);
+    tText(c, 'ODD SHIFT', 0, -h / 2 + h * .087, 64, TOON.ink, '"Bungee"', 'center', 400);
+    // the rows: IN / OUT, one punched in red at 3:00 AM
+    const rowY = i => -h / 2 + h * .17 + (i + .5) * (h * .83) / 7;
+    tText(c, 'IN', -w * .31, rowY(0) + 4, 34, 'rgba(26,16,48,.55)', '"Bungee"', 'center', 400);
+    tText(c, 'OUT', w * .35, rowY(0) + 4, 34, 'rgba(26,16,48,.55)', '"Bungee"', 'center', 400);
+    c.save(); c.translate(-w * .02, rowY(2) + 30); c.rotate(-.04);
+    tText(c, '3:00 AM', 0, 0, 104, '#d0263a', '"Bungee"', 'center', 400); c.restore();
+    for (const [i, s] of [[4, '11:58 PM'], [5, '4:44 AM']]) tText(c, s, -w * .06, rowY(i) + 18, 40, 'rgba(26,16,48,.4)', '"Bungee"', 'center', 400);
+    thumbprint(w * .3, rowY(4) + 40, 62, .5);
+    c.restore();
+  }
+  window.READY = true;
+});
+</script>
+</body>
+</html>
