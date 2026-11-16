@@ -310,8 +310,8 @@ function tear(g, t, k) {
 }
 // camcorder: autofocus hunts at each new shot, through the zoom, on the empty stand, and when he spins
 function focusBlur(t, s) {
-  let b = 7 * Math.exp(-(t - s[1]) / .22);
-  if (s[0] === 'office') { const k = (t - TL.ZOOM[0]) / (TL.ZOOM[1] - TL.ZOOM[0]); if (k > 0 && k < 1.15) b += 4.5 * Math.abs(Math.sin(k * Math.PI * 1.5)); }
+  let b = (s[0] === 'office' ? 1.2 : 7) * Math.exp(-(t - s[1]) / .22);                         // the tape opens in focus
+  if (s[0] === 'office') { const k = (t - TL.ZOOM[0]) / (TL.ZOOM[1] - TL.ZOOM[0]); if (k > 0 && k < 1.15) b += 4.5 * Math.abs(Math.sin(k * Math.PI * 1.5)) * (1 - .92 * Math.exp(-Math.pow((t - TL.EGG.t - .05) / .16, 2))); }   // sharp on the six frames of the number
   if (s[0] === 'walk' && t > TL.FOCUS_HUNT[0] && t < TL.FOCUS_HUNT[1]) b += 6 * Math.abs(Math.sin((t - TL.FOCUS_HUNT[0]) / (TL.FOCUS_HUNT[1] - TL.FOCUS_HUNT[0]) * Math.PI * 2));
   if (s[0] === 'walk' && t > TL.WHIP_BACK[0] && t < TL.WHIP_BACK[1] + .3) b += 4;
   if (s[0] === 'turn' && t < TL.WHIP[1] + .3) b += 3;
@@ -364,7 +364,8 @@ function render(t) {
     let roll = 0;
     if (s[0] === 'office') {
       office(RG, t);
-      const z = ease((t - TL.ZOOM[0]) / (TL.ZOOM[1] - TL.ZOOM[0])), [x9, y9] = monXY(8), cx = lerp(610, x9 + MW / 2, z), cy = lerp(480, y9 + MH / 2 - 8, z), sc = lerp(1.12, 2.7, z);
+      // 11/16: frame 1 is monitor 9 itself, large (the feet under curtain 3 readable at phone size); the camcorder pushes in closer
+      const z = ease((t - TL.ZOOM[0]) / (TL.ZOOM[1] - TL.ZOOM[0])), [x9, y9] = monXY(8), cx = x9 + MW / 2 - 18 * (1 - z), cy = y9 + MH / 2 - 8 + 10 * (1 - z), sc = lerp(2.3, 2.75, z);
       const h = handheld(t, 0, 0, false, .2), hx = h.yaw * 600, hy = h.pitch * 600;
       WK.setTransform(1, 0, 0, 1, 0, 0); WK.fillStyle = '#000'; WK.fillRect(0, 0, TK.TW, TK.TH);
       WK.setTransform(sc, 0, 0, sc, 540 - cx * sc + hx, 405 - cy * sc + hy); WK.filter = `blur(${focusBlur(t, s).toFixed(2)}px)`; WK.drawImage(RAW, 0, 0); WK.filter = 'none'; WK.setTransform(1, 0, 0, 1, 0, 0);
@@ -415,7 +416,6 @@ function buildEvents() {
   // its arm comes up in held frames: a joint creak each time the pose jumps (CAM 09 hears it)
   const creaks = []; { let last = -1; for (let t = TL.REACH[0]; t < TL.REACH[1]; t += F) { const tr = TK.motion.stutter(t, FPS_CCTV, 6); if (tr !== last && t > TL.REACH[0] + .05) { creaks.push(Math.round(t * 1000) / 1000); last = tr; } } }
   EV.push(
-    { type: 'static', t: 0, dur: TL.STATIC[0][1] },
     // the guard office: the monitors' whine and hum
     { type: 'bed', fx: 'crt_hum', space: 'shop', t: SH.office[1], t1: SH.office[2] - .06, g: -33, fin: .01, fout: .02 },
     ...TL.RECCUT.map(c => ({ type: 'camclick', t: c + .16 })),

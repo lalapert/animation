@@ -1,0 +1,54 @@
+{
+ "cloth": [
+  3.0,
+  "four separate quick rustles of a stiff cotton lab coat sleeve as arms are thrown up, close, dry, pauses between, no voice",
+  "copied from vl04-laser-pointer"
+ ],
+ "steps_lab": [
+  4.5,
+  "slow footsteps of one person in soft leather shoes on a bare concrete basement floor, eight separate steps with short gaps, dry, no music, no voices",
+  "copied from vl05-the-monologue"
+ ],
+ "click": [
+  0.5,
+  "a single small plastic remote control button click, close",
+  "copied from vl01-day-one"
+ ],
+ "beep": [
+  0.5,
+  "a microwave oven button beep, one short electronic beep",
+  "copied from vl05-the-monologue"
+ ],
+ "flutter": [
+  2.0,
+  "a single dry leaf fluttering and tumbling down through still air, very soft papery flutter",
+  "copied from the-last-leaf"
+ ],
+ "puff": [
+  1.2,
+  "a small cartoon smoke puff, a soft poof with a little sputter",
+  "copied from vl06-lab-inspection"
+ ],
+ "spring_sign": [
+  0.8,
+  "a spring-loaded sign popping up out of a hat on a metal spring: one bright springy boing and a little wobble, cartoon, no music",
+  "copied from vm09-secret-shopper"
+ ],
+ "chalk": [
+  1.2,
+  "chalk drawing a big circle on a chalkboard, one continuous scrape",
+  "copied from vl01-day-one"
+ ],
+ "klaxon": [
+  3.5,
+  "a basement laboratory self-destruct alarm: a loud repeating electronic klaxon whoop, small concrete room, no voices, no music"
+ ],
+ "slide": [
+  3.0,
+  "a small plastic remote control set down on a metal lab bench, then two remotes slid quickly across it, four short separate scrapes, close, no music"
+ ],
+ "self_pop": [
+  1.2,
+  "a small electronic gadget blowing itself up in someone's hands: one sharp little bang, crackle and a sputter, close, no music"
+ ]
+}

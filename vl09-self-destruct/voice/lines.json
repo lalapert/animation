@@ -1,0 +1,104 @@
+{
+ "model_id": "eleven_v4",
+ "cast": {
+  "VERA": {
+   "voice_id": "buRySvQEB2e8Dcglym6i",
+   "name": "LAB Vera Volt",
+   "settings": {
+    "stability": 0.3,
+    "similarity_boost": 0.8,
+    "style": 0.7,
+    "speed": 1.0
+   }
+  },
+  "CLEO": {
+   "voice_id": "biUhGlVm4NoNe58piPit",
+   "name": "LAB Cleo",
+   "settings": {
+    "stability": 0.6,
+    "similarity_boost": 0.8,
+    "style": 0.25,
+    "speed": 0.92
+   }
+  }
+ },
+ "lines": [
+  {
+   "id": "L1",
+   "who": "VERA",
+   "text": "[announcing, proud] Every evil lab needs a self-destruct button.",
+   "plain": "Every evil lab needs a self-destruct button.",
+   "sub": "Every evil lab needs\na self-destruct button."
+  },
+  {
+   "id": "L2",
+   "who": "CLEO",
+   "text": "[quietly delighted] Two red buttons.",
+   "plain": "Two red buttons.",
+   "sub": "Two red buttons."
+  },
+  {
+   "id": "L3",
+   "who": "VERA",
+   "text": "[suspicious] ...Are you smiling?",
+   "plain": "...Are you smiling?",
+   "sub": "...Are you smiling?"
+  },
+  {
+   "id": "L4",
+   "who": "CLEO",
+   "text": "[softly, smiling] No.",
+   "plain": "No.",
+   "sub": "No."
+  },
+  {
+   "id": "L5",
+   "who": "VERA",
+   "text": "[stern] Don't touch it. I'm getting coffee.",
+   "plain": "Don't touch it. I'm getting coffee.",
+   "sub": "Don't touch it.\nI'm getting coffee."
+  },
+  {
+   "id": "L6",
+   "who": "VERA",
+   "text": "[slowly, dreading] Which one is the self-destruct?",
+   "plain": "Which one is the self-destruct?",
+   "sub": "Which one is the self-destruct?"
+  },
+  {
+   "id": "L7",
+   "who": "CLEO",
+   "text": "[pleased, simply] One of them.",
+   "plain": "One of them.",
+   "sub": "One of them."
+  },
+  {
+   "id": "L8",
+   "who": "VERA",
+   "text": "[nervous, warning] Cleo. Put it down.",
+   "plain": "Cleo. Put it down.",
+   "sub": "Cleo. Put it down."
+  },
+  {
+   "id": "L9",
+   "who": "VERA",
+   "text": "[panicked shriek] I never built an abort button!",
+   "plain": "I never built an abort button!",
+   "sub": "I never built\nan abort button!"
+  },
+  {
+   "id": "L10",
+   "who": "VERA",
+   "text": "[beat, then proud] ...Technically, it worked.",
+   "plain": "...Technically, it worked.",
+   "sub": "...Technically, it worked."
+  },
+  {
+   "id": "L11",
+   "who": "CLEO",
+   "text": "[deadpan] Build another one.",
+   "plain": "Build another one.",
+   "sub": "Build another one."
+  }
+ ]
+}

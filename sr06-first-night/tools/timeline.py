@@ -22,8 +22,8 @@ for i, v in enumerate(VO):
     assert v["t"] + v["dur"] < nxt + .15, v["id"]
 # v3 (owner 11/12: "not scary; more care for direction, camera moves, transitions, sound").
 # shots: office / walk / fit / turn are Leon's camcorder (colour, handheld); cctv1 / cctv2 are CAM 09 played back (black and white, 6 fps)
-SHOTS = [["office", 0.5, 8.6], ["walk", 8.6, 16.5], ["fit", 16.5, 25.0], ["cctv1", 25.0, 31.8], ["turn", 31.8, 36.6], ["cctv2", 36.6, 40.0]]
-ZOOM = [2.6, 6.4]            # the camcorder zooms in on monitor 9
+SHOTS = [["office", 0.0, 8.6], ["walk", 8.6, 16.5], ["fit", 16.5, 25.0], ["cctv1", 25.0, 31.8], ["turn", 31.8, 36.6], ["cctv2", 36.6, 40.0]]
+ZOOM = [2.6, 6.4]            # the camcorder pushes in closer on monitor 9 (it opens on it, large)
 RECCUT = [8.6, 16.5]         # he pauses and restarts the camcorder: STBY frames, a click
 WALK_STOP = 13.0             # he stops at the Fashion 99 window and pans across it
 FOCUS_HUNT = [14.0, 14.7]    # the autofocus hunts on the empty mannequin stand
@@ -48,7 +48,7 @@ QUIET = 38.75                # music and hum gone
 STING = 39.3
 END = 40.0
 DUR = 41.0
-STATIC = [[0.0, 0.5], [END, DUR]]
+STATIC = [[END, DUR]]        # 11/16: no snow before frame 1: the tape opens on monitor 9, large
 GLITCH = [[31.75, .15], [39.62, .38]]
 STEPS = [round(8.75 + i * .55, 3) for i in range(8)] + [round(16.7 + i * .62, 3) for i in range(6)]
 assert 30 <= DUR <= 50
