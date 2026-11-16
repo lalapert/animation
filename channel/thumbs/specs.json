@@ -520,5 +520,28 @@
    1150
   ],
   "drawn": true
+ },
+ {
+  "folder": "vl09-self-destruct",
+  "t": 0.5,
+  "series": "vl",
+  "ep": 9,
+  "lines": [
+   "WHY IS SHE",
+   "SMILING?"
+  ],
+  "hl": [
+   "SMILING?"
+  ],
+  "focus": [
+   540,
+   960
+  ],
+  "zoom": 1.2,
+  "place": [
+   540,
+   1160
+  ],
+  "drawn": true
  }
 ]

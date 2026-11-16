@@ -1,4 +1,4 @@
-"""Volt Labs mix (shared by Volt Labs 4-6; owner 11/13: natural sound, music that serves the scene) -> out/mix.wav
+"""Volt Labs mix (shared by Volt Labs 4-9; owner 11/13: natural sound, music that serves the scene) -> out/mix.wav
 1. Room tone: the basement lab's own air, generated for the whole film (no loop, so no seam can repeat at the cuts): ventilation
    noise shaped like a small concrete room plus the lab's 60 Hz mains hum and its harmonics. Shots listed in mix.json "shots"
    add their own air (the street through the window glass), crossfaded at the cuts. The tone runs under every shot.
@@ -156,6 +156,14 @@ def machine(kind, dur, seed=3):
 
 
 SP = {k: np.zeros((L, 2), np.float32) for k in ["lab", "out", "close", "dry", "street"]}
+# effects marked "duck" (dB) in mix.json dip under every line like the music does (the alarm under "I never built...")
+_sp0 = np.zeros(L, np.float32)
+for v in TL["VO"]:
+    _sp0[int(max(0, v["t"] - .15) * SR):int((v["t"] + v["dur"]) * SR)] = 1
+_h = SR // 1000; _e = np.zeros(len(_sp0[::_h]), np.float32); _c = 0.0
+for i, s_ in enumerate(_sp0[::_h]):
+    _c = s_ + (_c - s_) * (np.exp(-1 / 60) if s_ > _c else np.exp(-1 / 350)); _e[i] = _c
+SPEECH_ENV = np.interp(np.arange(L), np.arange(len(_e)) * _h, _e).astype(np.float32)
 for e in EV:
     ty = e["type"]
     if ty == "machine":                                                    # {type: 'machine', kind, t, t1, g (dB)}
@@ -181,6 +189,9 @@ for e in EV:
         x = x[:on + int((dur + fout) * SR)]
     x = fade(x, fin, min(fout, len(x) / SR / 2))
     if c.get("lp"): x = lowpass(x, c["lp"])
+    if c.get("duck"):
+        i0 = int((e["t"] + c.get("dt", 0)) * SR); seg = SPEECH_ENV[max(0, i0):max(0, i0) + len(x)]
+        x = x[:len(seg)] * (1 - (1 - db(-c["duck"])) * seg)[:, None]
     place(SP[space], x, e["t"] + c.get("dt", 0), g, e.get("pan", c.get("pan", 0)) * .8, align=c.get("align", False))
 
 # the shots' own air (the street through the glass), crossfaded 120 ms at the cuts

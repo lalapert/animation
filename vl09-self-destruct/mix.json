@@ -7,18 +7,28 @@
  "hum_db": -61,
  "plr_db": 11.0,
  "min_margin_db": 8,
- "pan": {"VERA": -0.15, "CLEO": 0.15, "MAN": 0.3},
- "spans": {"street": {"fx": "street_day", "t0": "STREET", "t1": "BOARDT", "db": -29, "skip": 0.4, "space": "dry", "mute_tone": true}},
- "grains": {"cloth": {"len": 0.45, "merge": 0.3, "thr": 0.3}, "steps_lab": {"len": 0.3, "merge": 0.2, "thr": 0.3}, "pave_run": {"len": 0.28, "merge": 0.14}, "unroll": {"len": 0.3, "merge": 0.2, "thr": 0.3}},
+ "pan": {"VERA": -0.15, "CLEO": 0.15},
+ "derived": {
+  "set_clack": {"from": "slide", "len": 0.22},
+  "scrape_a": {"from": "slide", "skip": 0.44, "len": 0.26},
+  "scrape_b": {"from": "slide", "skip": 2.3, "len": 0.3},
+  "crackle": {"from": "self_pop", "len": 0.5}
+ },
+ "grains": {"cloth": {"len": 0.45, "merge": 0.3, "thr": 0.3}, "steps_lab": {"len": 0.3, "merge": 0.2, "thr": 0.3}},
  "foley": {
-  "fizz": {"fx": "potion_fizz", "g": -22, "space": "close", "fout": 0.3},
   "cloth": {"grain": "cloth", "g": -21, "space": "close", "vary": 0.8},
-  "scan": {"fx": "scan", "g": -19, "space": "dry", "fin": 0.05, "fout": 0.3, "lp": 9000},
   "step": {"grain": "steps_lab", "g": -22, "space": "lab", "vary": 0.5},
-  "door": {"fx": "door_open", "g": -19, "space": "street", "pan": -0.6, "fout": 0.2},
-  "bill": {"grain": "unroll", "g": -27, "space": "close", "vary": 0.6},
-  "fizz_out": {"fx": "reappear", "g": -15, "space": "dry", "fout": 0.15},
-  "run": {"grain": "pave_run", "g": -17, "space": "street", "vary": 0.6},
+  "set": {"fx": "set_clack", "g": -22, "space": "close"},
+  "scrape": {"fx": "scrape_a", "g": -24, "space": "close"},
+  "scrape2": {"fx": "scrape_b", "g": -25, "space": "close"},
+  "note": {"fx": "flutter", "g": -27, "space": "close", "align": true, "dur": 0.9, "fout": 0.3},
+  "pick": {"fx": "set_clack", "g": -29, "space": "close"},
+  "click": {"fx": "click", "g": -16, "space": "close", "align": true},
+  "klaxon": {"fx": "klaxon", "g": -27, "space": "lab", "duck": 9, "fin": 0.01, "fout": 0.04},
+  "beep": {"fx": "beep", "g": -23, "space": "lab", "dur": 0.12, "fout": 0.05},
+  "pop": {"fx": "puff", "g": -15, "space": "close", "align": true},
+  "crackle": {"fx": "crackle", "g": -25, "space": "close", "fout": 0.25},
+  "boing": {"fx": "spring_sign", "g": -19, "space": "dry", "align": true},
   "chalk": {"fx": "chalk", "g": -17, "space": "lab", "fin": 0.02, "fout": 0.15}
  }
 }
