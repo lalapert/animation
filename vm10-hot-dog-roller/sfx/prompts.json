@@ -1,0 +1,12 @@
+{
+ "store_tone": [8.0, "quiet late-night convenience store ambience, fluorescent light hum and a soft refrigerator compressor drone, no people, no music", "copied from vm09-secret-shopper"],
+ "click": [0.5, "a single small plastic remote control button click, close", "copied from vm07-tip-jar (the roller's switch)"],
+ "steps": [4.0, "one person walking slowly in soft sneakers on a hard vinyl floor in a small quiet shop at night, six separate unhurried footsteps, close, no music, no voices", "copied from vm08-lost-and-found"],
+ "holo": [0.8, "a futuristic hologram display popping up, a bright digital shimmer", "copied from vm09-secret-shopper"],
+ "munch": [1.2, "someone calmly munching popcorn, crunchy, close", "copied from vl05-the-monologue (pitched down in the mix: chewing rock)"],
+ "roller_hum": [10.0, "a gas station hot dog roller grill running on a shop counter: a steady low electric motor hum, metal rollers turning with a faint rhythmic squeak, a soft quiet sizzle of grease, close, no music, no voices"],
+ "tug": [1.0, "metal kitchen tongs gripping a small stone stuck to a hot metal grill and pulling hard: tongs clacking, scraping and grinding against the stone, close, no music"],
+ "crack": [0.6, "a small rock breaking off a metal grill: one sharp dry stony crack, close, no music"],
+ "knock": [0.5, "a small hard stone knocked once on a laminate shop counter: one hollow hard tock, close, no music"],
+ "crunch": [0.8, "one big bite crunching through hard rock: a loud gritty stony crunch, close, no music, no voice"]
+}

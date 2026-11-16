@@ -22,3 +22,4 @@
 | 11/22 10:00 | vl08-invisible | 25 Someone Else's Result | She turned invisible. The guy at the bus stop didn't look up | Invisible for one day: good deeds or pure chaos? Tell me. (11/16 two-choice) | no |
 | 11/23 10:00 | vm09-secret-shopper | 1 Cost Confession | One carton of milk cost her Employee of the Month | One star because the milk was sold out: fair or harsh? Tell me. (11/16 two-choice) | no |
 | 11/24 10:00 | vl09-self-destruct | 2 Negative Command | Never give your assistant two red buttons | Two identical red buttons. Press one or walk away? Tell me. (11/16 two-choice) | no |
+| 11/25 10:00 | vm10-hot-dog-roller | 17 Head To Head | Gas station hot dogs vs. 13.8 billion years | A hot dog that has been rolling since the Big Bang: eat it or run? Tell me. (11/16 two-choice) | no |

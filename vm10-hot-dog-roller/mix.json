@@ -1,0 +1,23 @@
+{
+ "room": {"src": "store_tone", "db": -55, "buzz_db": -70, "seed": 6},
+ "store_room": {"rt": 0.5, "mix": 0.22, "bright": 8000},
+ "slow": {"audio_rate": 0.45, "room_gain_db": 3, "bed_gain_db": -2, "motor_db": -8, "tape_stop": 0.75},
+ "music_db": -11,
+ "duck_db": -10,
+ "duck_pre": 0.15,
+ "duck_post": 0.3,
+ "foley_duck_db": -2,
+ "bed_duck_db": -4,
+ "plr_db": 11.0,
+ "foley": {
+  "tug":    {"fx": "tug", "g": -27, "fout": 0.12, "tail": 0.05},
+  "crack":  {"fx": "crack", "g": -23, "align": true, "cents": 60},
+  "drop":   {"takes": ["knock", [[0.0, 0.2]]], "g": -27, "align": true, "shift": -500, "cents": 40},
+  "knock":  {"takes": ["knock", [[0.0, 0.2], [0.23, 0.45]]], "g": -24, "align": true, "cents": 50, "gvar": 1},
+  "holo":   {"fx": "holo", "g": -31},
+  "switch": {"fx": "click", "g": -23, "align": true, "shift": -300, "cents": 30},
+  "step":   {"takes": ["steps", [[0.33, 0.7], [0.97, 1.35], [1.57, 1.95], [2.17, 2.55], [2.81, 3.2], [3.33, 3.75]]], "g": -29, "cents": 30, "gvar": 1},
+  "crunch": {"fx": "crunch", "g": -21, "offset": -0.29},
+  "chew":   {"fx": "munch", "g": -28, "shift": -500, "cents": 60, "offset": -0.3, "tail": 0.3}
+ }
+}

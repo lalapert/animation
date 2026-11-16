@@ -543,5 +543,28 @@
    1160
   ],
   "drawn": true
+ },
+ {
+  "folder": "vm10-hot-dog-roller",
+  "t": 23.4,
+  "series": "vm",
+  "ep": 10,
+  "lines": [
+   "DON'T TURN",
+   "IT OFF"
+  ],
+  "hl": [
+   "IT OFF"
+  ],
+  "focus": [
+   540,
+   1000
+  ],
+  "zoom": 1.2,
+  "place": [
+   540,
+   1150
+  ],
+  "drawn": true
  }
 ]

@@ -1,0 +1,139 @@
+{
+ "model_id": "eleven_v4",
+ "cast": {
+  "PIP": {
+   "voice_id": "BiP91t4ozM9IZajOdSu2",
+   "name": "Win2",
+   "settings": {
+    "stability": 0.3,
+    "similarity_boost": 0.8,
+    "style": 0.65,
+    "speed": 1.05
+   }
+  },
+  "RAE": {
+   "voice_id": "oy557F0mOsPZZqdz8oK6",
+   "name": "Kar2",
+   "settings": {
+    "stability": 0.6,
+    "similarity_boost": 0.8,
+    "style": 0.2,
+    "speed": 0.9
+   },
+   "pitch": -1.5
+  },
+  "MAGS": {
+   "voice_id": "WkUURyKtbzB9IM50qGdP",
+   "name": "VM MAGS",
+   "settings": {
+    "stability": 0.45,
+    "similarity_boost": 0.8,
+    "style": 0.5,
+    "speed": 1.0
+   }
+  },
+  "CUST": {
+   "voice_id": "FGY2WhTYpPnrIDTdsKH5",
+   "name": "Laura (stock), one-eyed hungry customer",
+   "settings": {
+    "stability": 0.4,
+    "similarity_boost": 0.8,
+    "style": 0.5,
+    "speed": 1.0
+   }
+  }
+ },
+ "lines": [
+  {
+   "id": "L1",
+   "who": "CUST",
+   "text": "[hungry, eager] One hot dog, please!",
+   "plain": "One hot dog, please!",
+   "sub": "One hot dog, please!"
+  },
+  {
+   "id": "L2",
+   "who": "PIP",
+   "text": "[delighted] Coming right up!",
+   "plain": "Coming right up!",
+   "sub": "Coming right up!"
+  },
+  {
+   "id": "L3",
+   "who": "CUST",
+   "text": "[hesitant] ...Are they fresh?",
+   "plain": "...Are they fresh?",
+   "sub": "...Are they fresh?"
+  },
+  {
+   "id": "L4",
+   "who": "RAE",
+   "text": "[flatly] Those have been rolling since the Big Bang.",
+   "plain": "Those have been rolling since the Big Bang.",
+   "sub": "Those have been rolling\nsince the Big Bang."
+  },
+  {
+   "id": "L5",
+   "who": "CUST",
+   "text": "[hesitant] ...Are they good?",
+   "plain": "...Are they good?",
+   "sub": "...Are they good?"
+  },
+  {
+   "id": "L6",
+   "who": "RAE",
+   "text": "[deadpan] They're consistent.",
+   "plain": "They're consistent.",
+   "sub": "They're consistent."
+  },
+  {
+   "id": "L7",
+   "who": "CUST",
+   "text": "[cheerful, clearly] Make it two!",
+   "plain": "Make it two!",
+   "sub": "Make it two!"
+  },
+  {
+   "id": "L8",
+   "who": "MAGS",
+   "text": "[bright, salesy] Now with thirteen billion years of flavor!",
+   "plain": "Now with thirteen billion years of flavor!",
+   "sub": "Now with thirteen billion years\nof flavor!"
+  },
+  {
+   "id": "L9",
+   "who": "PIP",
+   "text": "[gasps, sympathetic] Thirteen billion years? They need a break!",
+   "plain": "Thirteen billion years? They need a break!",
+   "sub": "Thirteen billion years?\nThey need a break!"
+  },
+  {
+   "id": "L10",
+   "who": "RAE",
+   "text": "[deadpan, unbothered] Rule one: never turn off the roller.",
+   "plain": "Rule one: never turn off the roller.",
+   "sub": "Rule one: never turn off\nthe roller."
+  },
+  {
+   "id": "L11",
+   "who": "PIP",
+   "text": "[dazed, blinking] Did time just... slow down?",
+   "plain": "Did time just... slow down?",
+   "sub": "Did time just...\nslow down?"
+  },
+  {
+   "id": "L12",
+   "who": "RAE",
+   "text": "[deadpan] It does that.",
+   "plain": "It does that.",
+   "sub": "It does that."
+  },
+  {
+   "id": "L13",
+   "who": "CUST",
+   "text": "[muffled, chewing] ...Consistent.",
+   "plain": "...Consistent.",
+   "sub": "...Consistent."
+  }
+ ]
+}
