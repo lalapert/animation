@@ -768,7 +768,7 @@ function shotCourt(g, fg, t) {
   const { cam: cs, h } = poseCourt(t), cc = mkCam(cs);
   const sw = kOf(t, TL.SWEEP), yawOff = (t < TL.SWEEP[0] ? -.32 : t > TL.SWEEP[1] ? .02 : lerp(-.32, .3, ease(sw))) + .03 * Math.sin(t * 2.1);
   const T = { hand: handBeam(cc, cs, yawOff, -.06, courtHit), spill: .07 };
-  const Lt = { amb: .05, moon: .85, exit: 1 };
+  const Lt = { amb: .09, moon: 1.25, exit: 1 };                                             // 11/16: the opening reads on a phone (brighter moonlight)
   courtView(g, t, cs, Lt, T);
   fg.clearRect(0, 0, W, H);
   const hx = 915 + h.yaw * -120, hy = 712 + h.y * 380, vp = project(cc, add3([cs.x, cs.y, cs.z], [Math.sin(cs.yaw + yawOff) * 6, -.3, Math.cos(cs.yaw + yawOff) * 6])) || [540, 430];
@@ -918,7 +918,7 @@ function camcorder(s, t) {
   WK.translate(540, 405); WK.rotate(r.roll || 0); WK.scale(1.05, 1.05); WK.translate(-540, -405);
   WK.filter = `blur(${(r.bgBlur || 0).toFixed(2)}px)`; WK.drawImage(RAW, 0, 0);
   WK.filter = `blur(${(r.fgBlur || 0).toFixed(2)}px)`; WK.drawImage(FG, 0, 0); WK.filter = 'none'; WK.setTransform(1, 0, 0, 1, 0, 0);
-  TK.grade(WG, WORK, t, 'camcorder', { brightness: .99 + .05 * Math.sin(t * 1.7) + .03 * Math.sin(t * 4.3) });
+  TK.grade(WG, WORK, t, 'camcorder', { brightness: (s[0] === 'court' ? 1.12 : 1) * .99 + .05 * Math.sin(t * 1.7) + .03 * Math.sin(t * 4.3) });
   if (r.noise) gainNoise(WG, t, r.noise);
   const gk = glitchAt(t); TK.vhs(WG, t, gk ? 2.2 : .9, 6);
   if (gk) { tear(WG, t, Math.sin(gk[0] * Math.PI)); TK.statics(WG, t, .35 * Math.sin(gk[0] * Math.PI)); }

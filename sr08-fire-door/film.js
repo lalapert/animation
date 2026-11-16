@@ -547,8 +547,8 @@ function shotOffice(g, t) {
   const k = ease(kOf(t, TL.PUSH_IN)), h = handheld(t, 0, 0, false, .15 + (t > 5.3 ? .25 : 0));
   // the push-in centres on the door as it shows on monitor 14
   const d = DOOR_ON_FEED, fx = MON.sx + d[0] / W * MON.sw, fy = MON.sy + d[1] / H * MON.sh;
-  const Z = 1.14 + .46 * k, stand = ease(kOf(t, [TL.GRAB + .45, TL.GRAB + 1.3]));
-  const cx = lerp(540, fx, k * .85), cy = lerp(405, fy, k * .85) + stand * 140;
+  const Z = 1.5 + .25 * k, stand = ease(kOf(t, [TL.GRAB + .45, TL.GRAB + 1.3]));
+  const cx = lerp(lerp(540, fx, .6), fx, k * .85), cy = lerp(lerp(405, fy, .6), fy, k * .85) + stand * 140;   // 11/16: centred near the door from frame 1
   TG.setTransform(1, 0, 0, 1, 0, 0); office(TG, t);
   g.setTransform(1, 0, 0, 1, 0, 0); g.fillStyle = '#000'; g.fillRect(0, 0, W, H);
   g.translate(540 - h.yaw * 900, 405 + h.pitch * 900 - h.y * 300); g.scale(Z, Z); g.translate(-cx, -cy); g.drawImage(TMP, 0, 0); g.setTransform(1, 0, 0, 1, 0, 0);
