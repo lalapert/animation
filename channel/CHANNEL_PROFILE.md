@@ -122,3 +122,42 @@ New episode daily ↓
 - 주의: 플랫폼마다 변경 제한이 다르다(외부 블로그 기준, 공식 문서 미확인: 유튜브 핸들 14일에 2번, 틱톡 사용자 이름 30일에 1번, 인스타 이름 칸 14일에 2번). 틱톡 사용자 이름은 한 번 바꾸면 30일 못 바꾸니 신중히.
 - 영상 제목의 "| Void Mart Ep N", "| Volt Labs Ep N"과 재생목록 이름은 작품 이름이라 그대로 둔다.
 
+
+### 7.1 결정: **Odd Shift** (작가님 11/16, "추천대로")
+
+세 작품(Void Mart 편의점 야간, Volt Labs 지하 실험실, 다음 작품 Last Mile 배달)의 공통점인 '이상한 직장, 이상한 시간'을 담은 이름. 작품 이름(영상 제목, 재생목록)은 그대로 둔다.
+
+**핸들 (세 곳 같은 철자로 맞춘다)**
+
+| 순위 | 핸들 | 유튜브 (11/16 youtube.com 확인) | 인스타·틱톡 |
+|---|---|---|---|
+| - | @oddshift | 이미 있음 (구독자 1명 채널) | 작가님 확인 |
+| - | @oddshifttoons | 이미 있음 ("Oddshift Toons", 구독자 1명, 영상 2개) | 작가님 확인 |
+| **1** | **@oddshiftshow** | 비어 있음 | 작가님 확인 |
+| 2 | @oddshifttv | 비어 있음 | 작가님 확인 |
+| 3 | @oddshiftanimation | 비어 있음 | 작가님 확인 |
+
+- 유튜브 확인 방법: `youtube.com/@핸들`이 404면 빈 것으로 봤다. 실제 등록은 유튜브 스튜디오에서만 확정된다.
+- 인스타·틱톡은 로그인 벽 때문에 여기서 확인할 수 없다. 1순위가 한 곳이라도 막히면 세 곳 모두 2순위로 맞춘다.
+- 약점: "Oddshift Toons"라는 작은 채널이 이미 있어 검색에서 섞일 수 있다(구독자 1명이라 영향은 작다고 본다, 추측).
+- 지금 핸들(@thevoidmart, voidmartshow, void.mart)을 버리면 다른 사람이 가져갈 수 있다. 바꾼 직후 옛 핸들로 들어오는 링크는 끊긴다(구독자가 적은 지금이 비용이 가장 작다).
+
+**이름 칸**
+- 유튜브: `Odd Shift`
+- 인스타 이름 칸(검색에 걸림): `Odd Shift | animated sitcoms`
+- 틱톡: `Odd Shift`
+
+**소개글**
+- 인스타 (150자 이하):
+  ```
+  Two animated sitcoms about very strange jobs.
+  Void Mart: the last store in the universe.
+  Volt Labs: a broke mad scientist.
+  New episode every day.
+  ```
+- 틱톡 (80자 이하): `Animated sitcoms about very strange jobs. New episode every day.`
+- 유튜브 설명: 2절의 설명에서 첫 줄만 `Odd Shift: animated sitcoms about very strange jobs. A new episode every day.`로 바꾸고 나머지(VOID MART, VOLT LABS 문단)는 그대로 둔다.
+
+**그림:** 프로필 사진(1080, 800)과 유튜브 배너(2560×1440)는 `channel/brand/oddshift_profile.html`, `channel/brand/oddshift_banner.html`, 출력은 `channel/brand/out/oddshift_*`.
+
+**11/23 순서 (작가님 손으로):** 1) 세 곳 핸들 확인 → 2) 이름·핸들 변경 → 3) 프로필 사진·배너 → 4) 소개글 → 5) 바뀐 핸들을 알려 주시면 문서와 Metricool 쪽 표기를 맞춘다. Metricool 브랜드 연결은 계정 ID 기준이라 그대로 유지될 것으로 본다(추측, 바꾼 뒤 첫 게시로 확인).
