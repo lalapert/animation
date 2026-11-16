@@ -158,6 +158,6 @@ New episode daily ↓
 - 틱톡 (80자 이하): `Animated sitcoms about very strange jobs. New episode every day.`
 - 유튜브 설명: 2절의 설명에서 첫 줄만 `Odd Shift: animated sitcoms about very strange jobs. A new episode every day.`로 바꾸고 나머지(VOID MART, VOLT LABS 문단)는 그대로 둔다.
 
-**그림:** 프로필 사진(1080, 800)과 유튜브 배너(2560×1440)는 `channel/brand/oddshift_profile.html`, `channel/brand/oddshift_banner.html`, 출력은 `channel/brand/out/oddshift_*`.
+**그림:** 프로필 사진(1080, 800)과 유튜브 배너(2560×1440)는 `channel/brand/oddshift_profile.html`, `channel/brand/oddshift_banner.html`, 출력은 `channel/brand/out/oddshift_*`. 11/16 완성(c07bd5e). 프로필은 A안(타임카드 위 "ODD SHIFT", O는 3시 시계) 추천: 110px에서 이름이 읽히는 유일한 안. B안(Pip·Cleo 얼굴)은 110px에서 배지가 안 읽혀 나중에 계절판·인스타 대안. 배너는 가운데 안전 영역에 로고판과 두 작품 인물, 바깥은 가게·실험실 세트.
 
 **11/23 순서 (작가님 손으로):** 1) 세 곳 핸들 확인 → 2) 이름·핸들 변경 → 3) 프로필 사진·배너 → 4) 소개글 → 5) 바뀐 핸들을 알려 주시면 문서와 Metricool 쪽 표기를 맞춘다. Metricool 브랜드 연결은 계정 ID 기준이라 그대로 유지될 것으로 본다(추측, 바꾼 뒤 첫 게시로 확인).
