@@ -75,12 +75,12 @@ SHOTS = [
     ["CLEO_MED", T["PICK0"], V["L8"]["t"]],             # Cleo picks one up
     ["VERA_MED", V["L8"]["t"], T["PRESS"] - .35],
     ["CLEO_CU", T["PRESS"] - .35, T["ALARM"]],          # and presses it
-    ["WIDE", T["ALARM"], V["L9"]["t"]],                 # the panel wakes: beacon, red light, 5
+    ["TWO", T["ALARM"], V["L9"]["t"]],                  # the panel wakes: beacon, red light, 5
     ["VERA_MED", V["L9"]["t"], end("L9") + .25],
-    ["CLEO_CU", end("L9") + .25, T["ZERO"] - 1.15],     # Cleo, still delighted
-    ["PANEL_CU", T["ZERO"] - 1.15, T["ZERO"]],          # 1 ...
-    ["CLEO_MED", T["ZERO"], V["L10"]["t"]],             # 0: the remote blows up itself; the panel reads COMPLETE
-    ["VERA_MED", V["L10"]["t"], V["L11"]["t"]],
+    ["CLEO_CU", end("L9") + .25, T["ZERO"] - 1.0],      # Cleo, still delighted
+    ["PANEL_CU", T["ZERO"] - 1.0, T["ZERO"]],           # 1 ...
+    ["CLEO_MED", T["ZERO"], V["L10"]["t"]],             # 0: the remote in her hands blows up itself, and only itself
+    ["TWO", V["L10"]["t"], V["L11"]["t"]],              # the lab is fine; the panel reads COMPLETE
     ["CLEO_CU", V["L11"]["t"], T["BOARDT"]],
     ["BOARD_END", T["BOARDT"], DUR],
 ]
