@@ -206,5 +206,14 @@ function endCard(g, t, show) {
   });
   tText(g, 'NEW EPISODE EVERY DAY', 540, y0 + 232, 52, '#fbf7ff', '"Bungee"', 'center', 400);
   tText(g, 'TOMORROW: ' + (vl ? 'VOID MART' : 'VOLT LABS'), 540, y0 + 302, 36, acc, '"Bungee"', 'center', 400);
+  // Owner 11/16 (comments): the episode's two-choice question under the card, e.g. TL.ASK = 'TEAM PIP OR TEAM MAGS?'.
+  // Same words as the caption's first line and the first comment; it shrinks to fit 740 px.
+  if (TL.ASK) {
+    const ay = y0 + h + 22, ah = 112, s = String(TL.ASK).toUpperCase();
+    tShape(g, acc, gg => gg.roundRect(x0 + 40, ay, w - 80, ah, ah / 2), 5);
+    g.font = '400 46px "Bungee"'; const tw = g.measureText(s).width, size = Math.floor(46 * Math.min(1, 680 / tw));
+    tText(g, s, 540, ay + ah / 2 - 4, size, TOON.ink, '"Bungee"', 'center', 400);
+    tText(g, 'COMMENT BELOW', 540, ay + ah + 34, 26, '#fbf7ff', '"Bungee"', 'center', 400);
+  }
   g.restore();
 }

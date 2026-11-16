@@ -14,11 +14,11 @@
 | (changed 11/8) | vl02-obedience-ray | 23 The Statistic | She made 8 billion people obey her. Politely | What would you make everyone do with an obedience megaphone? | no |
 | (changed 11/8) | vl04-laser-pointer | 24 The Reveal + twist | She spent the rent on a doomsday laser. The landlord ran | What would you do with a doomsday laser? Be honest. | yes |
 | 11/16 09:00 | vl05-the-monologue | 2 Negative Command | Never time a villain's monologue | Who do you know whose story never ends? Tell me. | yes |
-| 11/17 09:00 | vm06-employee-of-the-month | 17 Head To Head | Pip vs. a security camera for Employee of the Month | Who took credit for your work? Tell me. | yes |
-| 11/18 09:00 | vl06-lab-inspection | 25 Someone Else's Result | The city inspector gave her fake bakery five stars | What's the first thing you hide when someone knocks? Tell me. | no |
-| 11/19 09:00 | vm07-tip-jar | 24 The Reveal | This tip screen stares at you until you tap 30% | Ever tapped a tip button just because someone was watching? Tell me. | no |
-| 11/20 10:00 | vl07-reduce-to-1 | 2 Negative Command | Never shrink your rent notice to 1% | What's the worst trick you've ever tried on a bill? Tell me. | no |
-| 11/21 10:00 | vm08-lost-and-found | 23 The Statistic | 100% of your lost socks end up on one planet | Where do you think your lost socks actually go? Tell me. | no |
-| 11/22 10:00 | vl08-invisible | 25 Someone Else's Result | She turned invisible. The guy at the bus stop didn't look up | Who's the hardest person to impress you know? Tell me. | no |
-| 11/23 10:00 | vm09-secret-shopper | 1 Cost Confession | One carton of milk cost her Employee of the Month | What's the smallest thing you ever gave a one-star review for? Tell me. | no |
-| 11/24 10:00 | vl09-self-destruct | 2 Negative Command | Never give your assistant two red buttons | What's the one button you can never resist pressing? Tell me. | no |
+| 11/17 09:00 | vm06-employee-of-the-month | 17 Head To Head | Pip vs. a security camera for Employee of the Month | Pip or the security camera: who should win Employee of the Month? Tell me. (11/16 two-choice) | yes |
+| 11/18 09:00 | vl06-lab-inspection | 25 Someone Else's Result | The city inspector gave her fake bakery five stars | Would a fake bakery fool you, yes or no? Tell me. (11/16 two-choice) | no |
+| 11/19 09:00 | vm07-tip-jar | 24 The Reveal | This tip screen stares at you until you tap 30% | The tip screen is watching. Do you tap 30% or No Tip? Tell me. (11/16 two-choice) | no |
+| 11/20 10:00 | vl07-reduce-to-1 | 2 Negative Command | Never shrink your rent notice to 1% | Shrinking your rent notice to 1%: genius or doomed? Tell me. (11/16 two-choice) | no |
+| 11/21 10:00 | vm08-lost-and-found | 23 The Statistic | 100% of your lost socks end up on one planet | Lost socks: eaten by the dryer or sent to another planet? Tell me. (11/16 two-choice) | no |
+| 11/22 10:00 | vl08-invisible | 25 Someone Else's Result | She turned invisible. The guy at the bus stop didn't look up | Invisible for one day: good deeds or pure chaos? Tell me. (11/16 two-choice) | no |
+| 11/23 10:00 | vm09-secret-shopper | 1 Cost Confession | One carton of milk cost her Employee of the Month | One star because the milk was sold out: fair or harsh? Tell me. (11/16 two-choice) | no |
+| 11/24 10:00 | vl09-self-destruct | 2 Negative Command | Never give your assistant two red buttons | Two identical red buttons. Press one or walk away? Tell me. (11/16 two-choice) | no |
