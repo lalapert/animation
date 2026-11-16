@@ -30,14 +30,14 @@ fr = lambda k: round(k / 6, 4)                 # CCTV frame k (6 fps): every mov
 # stage on A: what the screen shows (1-3 the lobby with the figure far, middle, under the camera; 4 Screen 2 itself with
 # someone in row G; 5 the screen is blank light and the real row G is not empty). On L: 'l1', 'l2' empty, 'open' the Screen 2
 # door open, closing by itself.
-SEGS = [["A", 0.6, 6.0, 1], ["L", 6.0, 10.0, "l1"], ["A", 10.0, 16.0, 2], ["L", 16.0, 19.5, "l2"], ["A", 19.5, 26.0, 3],
+SEGS = [["A", 0.0, 6.0, 1], ["L", 6.0, 10.0, "l1"], ["A", 10.0, 16.0, 2], ["L", 16.0, 19.5, "l2"], ["A", 19.5, 26.0, 3],
         ["L", 26.0, 28.0, "open"], ["A", 28.0, 32.9, 4], ["A", 33.15, 40.8, 5]]
 SWITCHES = [6.0, 10.0, 16.0, 19.5, 26.0]       # multiplexer clicks (28.0 is a tracking roll)
 ROLL = [28.0, 28.35]
 BLACK = [32.9, 33.15]                          # a tear, then a few frames of black and dead sound before the real row G
 GLITCH = [[t - .06, .2] for t in SWITCHES] + [[32.72, .18]]
 # the playback zoom for each segment: [z0, z1] over the segment (A5 is special: a crash zoom onto the head)
-ZOOM = [[1.0, 1.22], [1.0, 1.1], [1.18, 1.5], [1.0, 1.12], [1.45, 1.9], [1.0, 1.14], [1.0, 1.3], [1.0, 1.0]]
+ZOOM = [[1.12, 1.32], [1.0, 1.1], [1.18, 1.5], [1.0, 1.12], [1.45, 1.9], [1.0, 1.14], [1.0, 1.3], [1.0, 1.0]]
 JERKS = [fr(32), fr(88), fr(147)]              # the figure on the screen jumps forward in one frame (5.33, 14.67, 24.5)
 DOOR = 26.25                # the Screen 2 door swings shut by itself
 SEAT = 28.7                 # a seat goes down in the real room (row G is empty)
@@ -50,7 +50,7 @@ BREATH = 39.7
 QUIET = BLACK[0]            # music gone at the black frames
 END = 40.8
 DUR = 41.8
-STATIC = [[0.0, 0.6], [END, DUR]]
+STATIC = [[END, DUR]]        # 11/16: no snow before frame 1: the tape opens on the lit screen (the feed shows frame 1)
 assert 30 <= DUR <= 50
 TL = {"DUR": DUR, "VO": VO, "SEGS": SEGS, "SWITCHES": SWITCHES, "ROLL": ROLL, "BLACK": BLACK, "GLITCH": GLITCH, "ZOOM": ZOOM,
       "JERKS": JERKS, "DOOR": DOOR, "SEAT": SEAT, "CRASH": CRASH, "HEAD": HEAD, "SNAP": SNAP, "PROJ_DIE": PROJ_DIE, "BREATH": BREATH,

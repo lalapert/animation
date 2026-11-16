@@ -13,5 +13,5 @@ $PY tools/mix.py
 node tools/render.cjs video 4
 sh tools/mux.sh out/video.mp4 out/mix.wav sr05-screen-2.mp4      # stops unless loudnorm runs in linear mode
 $PY tools/srt.py
-python3 tools/loudcheck.py sr05-screen-2.mp4 38.167 0.6 40.8 --skip 0:0.65 40.8:41.8
-$PY tools/listencheck.py out/mix.wav --skip 0:0.65 38.1:38.7 40.75:41.8
+python3 tools/loudcheck.py sr05-screen-2.mp4 38.167 0.0 40.8 --skip 40.8:41.8
+$PY tools/listencheck.py out/mix.wav --skip 38.1:38.7 40.75:41.8

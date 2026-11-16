@@ -238,7 +238,7 @@ function screenLight(g, cam, L, stage) {
     poly(g, c); g.fillStyle = `rgb(${20 + 18 * L | 0},${20 + 18 * L | 0},${22 + 18 * L | 0})`; g.fill();   // the projector's black level outside the picture
     const tl = project(cam, [FEEDQ.x0, SCR.y1, SCR.z - .02]), tr = project(cam, [FEEDQ.x1, SCR.y1, SCR.z - .02]), bl = project(cam, [FEEDQ.x0, SCR.y0, SCR.z - .02]);
     g.setTransform((tr[0] - tl[0]) / TK.TW, (tr[1] - tl[1]) / TK.TW, (bl[0] - tl[0]) / TK.TH, (bl[1] - tl[1]) / TK.TH, tl[0], tl[1]);
-    g.filter = `brightness(${(1.85 * L).toFixed(3)}) contrast(.88)`; g.drawImage(FEED, 0, 0); g.filter = 'none';
+    g.filter = `brightness(${((stage === 1 ? 2.3 : 1.85) * L).toFixed(3)}) contrast(${stage === 1 ? .95 : .88})`; g.drawImage(FEED, 0, 0); g.filter = 'none';
   }
   g.restore();
 }
@@ -295,10 +295,10 @@ function drawRaw(seg, tq, egg) {
   const key = `${seg[1]}|${tq}|${egg}`; if (key === rawKey) return; rawKey = key;
   const [which, , , stage] = seg;
   if (which === 'L') { lobby(RG, tq, egg, null, stage === 'open'); return; }
-  const L = lamp(tq, stage), bright = stage === 5 ? 1 : .45;
+  const L = lamp(tq, stage), bright = stage === 5 || stage === 1 ? 1 : .45;            // 11/16: the opening is lit by the screen like the end
   if (stage <= 4) makeFeed(tq, stage);
-  const cam = TK.render(RG, AUD, CAM12, { ambient: 1.15 + .35 * L * bright, fog: .05, sprites: [{ x: 0, y: 4.1, z: 14.9, draw: (gg, c) => screenLight(gg, c, L, stage) }] });
-  spill(RG, cam, L, bright);
+  const cam = TK.render(RG, AUD, CAM12, { ambient: 1.15 + .35 * L * (stage === 1 ? .45 : bright), fog: .05, sprites: [{ x: 0, y: 4.1, z: 14.9, draw: (gg, c) => screenLight(gg, c, L, stage) }] });
+  spill(RG, cam, L, stage === 1 ? .45 : bright);                                       // the seats stay dark silhouettes in front of it
   beam(RG, cam, L, tq, bright);
   if (stage === 5) { const [phi, roll] = headPose(tq); seatedOne(RG, cam, phi, roll, L); }
 }
@@ -359,7 +359,7 @@ function render(t) {
     drawRaw(seg, tq, egg);
     const z = zoomFor(seg, si, t);
     zoomTo(WK, z.s, z.c[0], z.c[1], z.blur);
-    TK.grade(WG, WORK, tq, 'cctv', { brightness: which === 'L' ? 1.2 : 1.22, contrast: 1.3 });
+    TK.grade(WG, WORK, tq, 'cctv', { brightness: which === 'L' ? 1.2 : stage === 1 ? 1.45 : 1.22, contrast: stage === 1 ? 1.22 : 1.3 });
     const gk = glitchAt(t);
     TK.vhs(WG, tq, gk >= 0 ? 2.5 : 1, 5);
     if (gk >= 0) { tear(WG, t, gk); TK.statics(WG, t, .4 * Math.sin(gk * Math.PI)); }
@@ -396,8 +396,7 @@ function buildEvents() {
   }
   for (const s of L_SEGS) EV.push({ type: 'bed', fx: 'mall_hum', space: 'hall', t: s[1], t1: s[2], g: -38, fin: .01, fout: .01 });   // the lobby: near silent
   EV.push(
-    { type: 'static', t: 0.0, dur: TL.STATIC[0][1] },
-    { type: 'chime', t: TL.STATIC[0][1] + .05 },                                         // the mall's PA chime, then the announcement
+    { type: 'chime', t: .65 },                                         // the mall's PA chime, then the announcement
     ...TL.GLITCH.map(([t0, d]) => ({ type: 'glitch', t: t0, dur: d, g: t0 > 32 ? 1.4 : .8 })),
     { type: 'door', t: TL.DOOR + 1.6 - .4 },                                              // its thud lands as the door closes
     { type: 'vcr', t: TL.ROLL[0] },
