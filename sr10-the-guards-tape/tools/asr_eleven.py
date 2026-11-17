@@ -21,6 +21,8 @@ def norm(s):
     s = s.lower().replace("-", " ").replace("\u2019", "'")
     s = re.sub(r"\ba\.\s?m\.?", "am", s)                                   # 3:12 a.m. / A.M.
     for k, v in {"1st": "first", "2nd": "second", "3rd": "third", "4th": "fourth", "5th": "fifth"}.items(): s = re.sub(rf"\b{k}\b", v, s)   # December 3rd
+    s = re.sub(r"\b(\d{1,2}):0(\d)\b", r"\1 oh \2", s)                        # tape 10: 3:05 is said "three oh five"
+    s = re.sub(r"\b(\d{1,2}):(\d\d)\b", r"\1 \2", s)
     s = re.sub(r"\d+", lambda m: words(m.group(0)), s)
     s = re.sub(r"\bzero\b", "oh", s)                                     # tape 10: "three oh five" is heard as "three zero five"
     return re.sub(r"[^a-z' ]+", " ", s).split()

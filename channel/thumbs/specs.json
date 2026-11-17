@@ -566,5 +566,20 @@
    1150
   ],
   "drawn": true
+ },
+ {
+  "folder": "sr10-the-guards-tape",
+  "t": 0.2,
+  "series": "sr",
+  "tape": "TAPE 10",
+  "lines": [
+   "IT'S RIGHT",
+   "BEHIND HIM."
+  ],
+  "focus": [
+   610,
+   960
+  ],
+  "zoom": 1.45
  }
 ]

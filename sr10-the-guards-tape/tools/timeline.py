@@ -17,7 +17,7 @@ cfg = json.load(open(os.path.join(HERE, "voice", "lines.json")))
 lines = {l["id"]: l for l in cfg["lines"]}
 durs = json.load(open(os.path.join(HERE, "voice", "out", "durations.json")))
 START = {"L1": 0.35, "L2": 5.15, "L3": 11.55, "L4": 19.75}
-GAIN = {"L3": -2.0, "L4": -1.5}                     # the whispers sit a little lower (still 8 dB over everything else)
+GAIN = {"L1": -.5, "L2": -1.5, "L3": -3.0, "L4": -2.0}                     # the whispers sit a little lower (still 8 dB over everything else)
 VO = []
 for k in ["L1", "L2", "L3", "L4"]:
     VO.append({"id": k, "who": lines[k]["who"], "t": START[k], "dur": durs[k], "sub": lines[k].get("sub", lines[k]["text"]), "col": "#f2f2f2",
@@ -69,7 +69,7 @@ TL = {"DUR": DUR, "VO": VO, "SHOTS": SHOTS, "RECCUT": RECCUT, "HOLD_B": HOLD_B, 
       "PRESS": PRESS, "PAUSE": PAUSE, "LIVE": LIVE, "PUSH_B": PUSH_B, "WHIP1": WHIP1, "PAN": PAN, "EGG": EGG, "WHIP2": WHIP2,
       "REACH": REACH, "QUIET": QUIET, "COVER": COVER, "STING": STING, "DARK": DARK, "RELEASE": RELEASE, "TO_A": TO_A,
       "REVEAL": REVEAL, "FOCUS": FOCUS, "END": END, "STATIC": STATIC, "GLITCH": GLITCH, "STEPS31": STEPS31, "ASK": ASK, "ASK_T": ASK_T,
-      "LABEL": "TAPE 0010", "SUB": "CAMCORDER / CAM 14 / CAM 02  ·  SECURITY OFFICE  ·  12/05/99",
+      "LABEL": "TAPE 0010", "SUB": "CAMCORDER / CAM 14  ·  SECURITY OFFICE  ·  12/05/99",
       "RULE": "RULE 10: IF THE MONITOR SHOWS IT BEHIND YOU,\nDO NOT TURN AROUND.",
       "STAMP14": [3, 1, 12], "STAMP02": [3, 5, 31], "DATE": "12-05-1999"}
 os.makedirs(os.path.join(HERE, "out"), exist_ok=True)

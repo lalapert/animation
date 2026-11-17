@@ -1,6 +1,6 @@
-"""The only "music" in tape 8 (owner 11/13: music, if any, is a low drone grown out of the room tone): the corridor's own
-duct fan, an octave down, two copies a little detuned so they beat, rising from the moment he reaches for the fire door to
-the moment the power goes, and cut dead with the organ and the tube. No score, no hits.
+"""The only "music" in tape 10 (owner 11/13: music, if any, is a low drone grown out of the room tone): the monitors' own
+whine, an octave down, two copies a little detuned so they beat, rising from the moment CAM 02 comes up to the moment he
+holds his breath, and cut dead there (the half second of near silence before the hand). No score, no hits.
   .venv/bin/python tools/score.py            → out/music.wav
 """
 import json, os, sys
@@ -15,7 +15,7 @@ from audio import SR, HERE, load, lowpass, highpass, rms
 TL = json.load(open(os.path.join(HERE, "out", "timeline.json")))
 DUR = TL["DUR"]
 N = int((DUR + 1) * SR)
-x = load(os.path.join(HERE, "sfx", "out", "carousel_mech.wav")).mean(1)
+x = load(os.path.join(HERE, "sfx", "out", "crt_hum.wav")).mean(1)
 x = lowpass(highpass(x, 50), 500, 4)
 
 
@@ -33,7 +33,7 @@ def slow(x, ratio):
 d = slow(x, .5) + .8 * slow(x, .5 * 1.009)                                    # an octave down, beating ~1 Hz
 d = lowpass(d, 240, 4)
 t = np.arange(N) / SR
-start, die = TL["WALK"][0], TL["DEAD"]
+start, die = TL["LIVE"], TL["QUIET"][0]
 env = np.clip((t - start) / (die - start), 0, 1) ** 1.5                       # grows from the hall to the dead stop
 env *= 1 + .25 * np.sin(2 * np.pi * .13 * t)                                  # breathes slowly
 env[t >= die] = 0                                                             # dead with the organ

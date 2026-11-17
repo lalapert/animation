@@ -245,7 +245,7 @@ function leon31(t) {
 // turned it is behind him again (between him and the camera). Its head lies over toward his
 function fig31(tq) {
   const L = leon31(tq);
-  if (tq < TL.TURN31[1] - 1e-6) return { x: L.x + .36, z: L.z + .4, near: false, L };
+  if (tq < TL.TURN31[1] - 1e-6) return { x: L.x + .5, z: L.z + .42, near: false, L };
   return { x: L.x + .3, z: L.z - .44, near: true, L };
 }
 
@@ -348,7 +348,7 @@ function cctv14(g, tq) {
   emittersC(g, cam, Lt);
   const view = L.turn < .2 ? 'front' : L.turn < .75 ? 'side' : 'back';
   const st = L.walking ? Math.sin(L.ph * PI) : 0, kL = figLightC([L.x, 1.3, L.z], Lt, .06);
-  const fo = { light: .2, bend: F.near ? .1 : .22, tilt: .25, armR: F.near ? .15 : .5, seed: 8, mirror: !F.near };
+  const fo = { light: .2, bend: F.near ? .1 : .3, tilt: F.near ? .25 : .1, armR: F.near ? .15 : .62, seed: 8, mirror: !F.near };
   if (!F.near) broken(g, cam, F.x, F.z, fo);
   leonOn(g, cam, L.x, L.z, view, kL, { step: st, torch: true });
   if (F.near) broken(g, cam, F.x, F.z, fo);
@@ -488,14 +488,14 @@ function office(S) {
   S.box(.5, 0, 0, .55, 2.13, .05, [96, 88, 76]); S.box(1.45, 0, 0, 1.5, 2.13, .05, [96, 88, 76]); S.box(.5, 2.08, 0, 1.5, 2.13, .05, [96, 88, 76]);
   S.box(1.56, 1.1, 0, 1.64, 1.22, .02, [210, 206, 194]);                                       // the light switch
   // lockers on the left wall (three, steel), the name tape on one
-  S.box(-OW, 0, .3, -1.26, 1.86, 1.26, [92, 106, 114]);
-  for (let i = 0; i < 3; i++) {
+  S.box(-OW, 0, .3, -1.26, 1.86, .93, [92, 106, 114]);
+  for (let i = 0; i < 2; i++) {
     const z0 = .32 + i * .313, z1 = z0 + .3;
     S.quad([[-1.258, .04, z0], [-1.258, .04, z1], [-1.258, 1.82, z1], [-1.258, 1.82, z0]], [98 + i * 3, 112 + i * 2, 120]);
     for (let k = 0; k < 4; k++) S.quad([[-1.256, 1.52 + k * .05, z0 + .08], [-1.256, 1.52 + k * .05, z1 - .08], [-1.256, 1.54 + k * .05, z1 - .08], [-1.256, 1.54 + k * .05, z0 + .08]], [40, 46, 50]);
     S.box(-1.26, 1.0, z1 - .06, -1.23, 1.12, z1 - .035, [60, 62, 64]);
   }
-  S.quad([[-1.255, 1.36, .97], [-1.255, 1.36, 1.2], [-1.255, 1.42, 1.2], [-1.255, 1.42, .97]], [226, 222, 206], { text: 'MARSH', textCol: [30, 30, 40] });
+  S.quad([[-1.255, 1.36, .66], [-1.255, 1.36, .89], [-1.255, 1.42, .89], [-1.255, 1.42, .66]], [226, 222, 206], { text: 'MARSH', textCol: [30, 30, 40] });
   // the right wall: a corkboard with papers, the extinguisher by the door
   S.box(1.66, 1.2, 1.1, OW, 1.8, 2.0, [146, 108, 72]);
   for (const [z, y, w2, h2] of [[1.2, 1.32, .2, .28], [1.48, 1.5, .22, .22], [1.76, 1.3, .17, .3]]) S.quad([[1.658, y, z + w2], [1.658, y, z], [1.658, y + h2, z], [1.658, y + h2, z + w2]], [220, 216, 200]);
@@ -503,7 +503,7 @@ function office(S) {
   // the ceiling fitting (off tonight)
   S.box(-.16, 2.54, .9, .16, 2.6, 2.2, [168, 168, 164]); S.quad([[-.13, 2.538, 2.15], [.13, 2.538, 2.15], [.13, 2.538, .95], [-.13, 2.538, .95]], [118, 120, 122]);
   // CAM 02 in the back left corner, on its bracket
-  S.box(-1.62, 2.33, .08, -1.4, 2.45, .34, [58, 58, 60]); S.box(-1.66, 2.45, .16, -1.6, OHT, .22, [90, 90, 90]);
+  S.box(-1.62, 2.33, .08, -1.4, 2.45, .34, [58, 58, 60], { cam02: true }); S.box(-1.66, 2.45, .16, -1.6, OHT, .22, [90, 90, 90], { cam02: true });
   // the desk, the monitors, the VCR, the switcher, the small monitors on their shelf; the night log, a mug, the phone
   S.box(-1.3, .7, 2.6, 1.3, .745, OD, [96, 78, 58]);
   S.box(-1.3, 0, 3.2, 1.3, .7, 3.24, [70, 58, 44]); S.box(-1.3, 0, 2.6, -1.26, .7, OD, [80, 66, 50]); S.box(1.26, 0, 2.6, 1.3, .7, OD, [80, 66, 50]);
@@ -523,18 +523,19 @@ function office(S) {
   S.box(1.16, 1.2, 2.5, 1.32, 1.28, 2.7, [52, 84, 60]);
 }
 const OFFICE = (() => { const S = new TK.Scene(); office(S); S.q.forEach(prep); return S; })();
+const OFFICE02 = (() => { const S = new TK.Scene(); S.q = OFFICE.q.filter(q => !q.cam02); return S; })();   // CAM 02 does not see its own housing
 // light, baked per quad: the screens (cold, thrown toward the room), the small monitors, the door's window, a little ambient
 function lightsO(gain = 1) {
   return { amb: .07 * gain, src: [
     { p: [-.33, 1.06, 2.7], col: [.86, .92, 1.0], s: .95 * gain, r: 1.25, dir: -1 }, { p: [.33, 1.06, 2.7], col: [.84, .9, 1.0], s: .95 * gain, r: 1.25, dir: -1 },
     { p: [0, 1.63, 2.9], col: [.8, .88, 1.0], s: .3 * gain, r: 1.0, dir: -1 }, { p: [1.0, 1.57, .1], col: [1, .96, .86], s: .3 * gain, r: .8, dir: 1 },
-    { p: [1.3, 1.2, 2.5], col: [1.0, .86, .62], s: 1.25 * gain, r: 1.25, dir: 0 }] };
+    { p: [1.3, 1.25, 2.45], col: [1.0, .86, .62], s: 1.3 * gain, r: 1.2, dir: 0 }] };
 }
 function qLightO(q, Lo) {
   const c = q.c, n = q.n; let r = Lo.amb, g = Lo.amb, b = Lo.amb * 1.06;
   for (const L of Lo.src) {
     const v = [L.p[0] - c[0], L.p[1] - c[1], L.p[2] - c[2]], d = Math.hypot(...v) || 1, cs = Math.abs(dot3(n, v)) / d;
-    const front = L.dir < 0 ? clamp((L.p[2] - c[2]) * 4 + .15) : L.dir > 0 ? clamp((c[2] - L.p[2]) * 4 + .15) : clamp((L.p[1] - c[1]) * 3 + .2);
+    const front = L.dir < 0 ? clamp((L.p[2] - c[2]) * 4 + .15) : L.dir > 0 ? clamp((c[2] - L.p[2]) * 4 + .15) : 1;
     const k = L.s * (.22 + .78 * cs) / (1 + Math.pow(d / L.r, 2)) * front;
     r += k * L.col[0]; g += k * L.col[1]; b += k * L.col[2];
   }
@@ -587,7 +588,7 @@ function officeDetails(g, cam, t, Lo, mode) {
   const kb = figLightO([.5, 1.4, .02], Lo);
   // the tear-off calendar by the door: DECEMBER, 5, SUNDAY (for six frames: 1)
   const egg = t >= TL.EGG.t && t < TL.EGG.t + TL.EGG.dur;
-  quad2(.12, 1.26, .42, 1.66, .006, 300, 400, q => {
+  quad2(.42, 1.26, .12, 1.66, .006, 300, 400, q => {                                      // (back wall: x runs right to left as seen)
     const k = clamp(kb * 1.25, .08, 1), c = v => Math.min(255, v * k) | 0;
     q.fillStyle = `rgb(${c(226)},${c(222)},${c(210)})`; q.fillRect(0, 0, 300, 400);
     q.fillStyle = `rgb(${c(176)},${c(36)},${c(30)})`; q.fillRect(0, 0, 300, 72);
@@ -597,7 +598,7 @@ function officeDetails(g, cam, t, Lo, mode) {
     q.fillStyle = `rgb(${c(150)},${c(146)},${c(136)})`; q.fillRect(0, 392, 300, 8);
   });
   // his jacket on the hook (a dark navy shape hanging flat on the wall)
-  quad2(-.62, .92, -.12, 1.7, .02, 500, 780, q => {
+  quad2(-.12, .92, -.62, 1.7, .02, 500, 780, q => {
     const k = clamp(kb * 1.1, .06, 1), c = v => Math.min(255, v * k) | 0;
     q.fillStyle = `rgb(${c(70)},${c(70)},${c(66)})`; q.fillRect(236, 0, 28, 30);
     q.beginPath(); q.moveTo(250, 24); q.bezierCurveTo(170, 40, 110, 60, 96, 130); q.lineTo(40, 560); q.lineTo(110, 572); q.lineTo(140, 300);
@@ -618,7 +619,7 @@ function officeDetails(g, cam, t, Lo, mode) {
   }
 }
 function renderOffice(g, camSpec, t, mode, Lo) {
-  const cam = TK.render(g, litScene(OFFICE, q => qLightO(q, Lo)), camSpec, { ambient: 1, fog: 0, bg: [6, 6, 7], grid: false });
+  const cam = TK.render(g, litScene(mode === 'cam02' ? OFFICE02 : OFFICE, q => qLightO(q, Lo)), camSpec, { ambient: 1, fog: 0, bg: [6, 6, 7], grid: false });
   const big = mode === 'cam02' ? .55 : 1;
   crt(g, cam, SCR.s1, SIDE[0], { glow: .55 }); crt(g, cam, SCR.s2, SIDE[1], { glow: .55 });
   crt(g, cam, SCR.A, mode === 'cam02' ? (t >= TL.REVEAL ? PAUSED2 : PAUSED) : FA, { glow: 1, bloom: .07 * big });
@@ -633,13 +634,13 @@ function state02(tq) {
   if (tq >= TL.RELEASE[0]) return null;                                                         // when it lets go: gone
   if (tq < TL.WHIP2[1]) return { x: .5, z: 1.27, bend: -.05, tilt: .15, armR: 0, mirror: true };    // standing behind his chair
   const r = ease(kOf(M.stutter(tq, FPS_CCTV, 4), TL.REACH));
-  return { x: .3, z: 1.42, bend: .42 + .12 * r, tilt: -.1, armR: .25 + .75 * r, mirror: true };     // bent over him, then reaching
+  return { x: .44, z: 1.5, bend: .26 + .06 * r, tilt: .15, armR: .05, mirror: true, reach: r };     // bent over him, then reaching
 }
 function cctv02(g, tq) {
   const Lo = lightsO(1.8), cam = renderOffice(g, CAM02, tq, 'cam02', Lo);
   // Leon (from behind, seated): drawn as if standing .55 m lower, the legs hidden by his body and the chair
   const feet = project(cam, [0, -.55, AXIS[2]]), head = project(cam, [0, 1.25, AXIS[2]]);
-  const u = (feet[1] - head[1]) / 1.8, kL = .62;
+  const u = (feet[1] - head[1]) / 1.8, kL = .78;
   g.save(); g.beginPath(); g.rect(0, 0, W, feet[1] - .92 * u); g.clip();
   leonBackAt(g, feet[0], feet[1], u, kL, { seated: true });
   g.restore();
@@ -649,13 +650,32 @@ function cctv02(g, tq) {
   const col = project(cam, [0, .1, AXIS[2] - .05]), seat = project(cam, [0, .46, AXIS[2] - .05]);
   if (col && seat) { g.strokeStyle = 'rgb(20,20,22)'; g.lineWidth = u * .05; g.beginPath(); g.moveTo(seat[0], seat[1]); g.lineTo(col[0], col[1]); g.stroke(); ell(g, col[0], col[1], u * .3, u * .06, 'rgb(18,18,20)'); }
   const F = state02(tq);
-  if (F) broken(g, cam, F.x, F.z, { light: .2, bend: F.bend, tilt: F.tilt, armR: F.armR, seed: 8, mirror: F.mirror });
+  const gr = F && broken(g, cam, F.x, F.z, { light: .2, bend: F.bend, tilt: F.tilt, armR: F.armR, seed: 8, mirror: F.mirror });
+  if (gr && F.reach > 0) reachArm(g, gr, F.bend, feet, u, F.reach);
   return cam;
+}
+// its other arm, too long, comes up from its shoulder over his head to the camcorder at his eye; the fingers close on it
+function reachArm(g, G, bend, feet, u, r) {
+  // its shoulder on his side (the figure is drawn mirrored): (.25, -.75) in its leaning frame, about the hip (0, -1.02)
+  const lean = .04 + bend, uf = G.u, lx = .25 * Math.cos(lean) + .75 * Math.sin(lean), ly = .25 * Math.sin(lean) - .75 * Math.cos(lean) - 1.02;
+  const sh = [G.feet[0] - lx * uf, G.feet[1] + ly * uf], cc = [feet[0] - .17 * u, feet[1] - 1.69 * u];
+  const hang = [sh[0] - .05 * uf, sh[1] + .7 * uf], hand = [lerp(hang[0], cc[0], r), lerp(hang[1], cc[1], r)];
+  const el = [lerp(sh[0], hand[0], .5) - .28 * uf * r, lerp(sh[1], hand[1], .5) - .12 * uf * r];
+  g.save(); g.filter = `blur(${Math.max(1, uf * .012).toFixed(1)}px)`; g.strokeStyle = 'rgb(5,5,6)'; g.lineCap = 'round'; g.lineJoin = 'round';
+  g.lineWidth = .075 * uf; g.beginPath(); g.moveTo(sh[0], sh[1]); g.lineTo(el[0], el[1]); g.stroke();
+  g.lineWidth = .055 * uf; g.beginPath(); g.moveTo(el[0], el[1]); g.lineTo(hand[0], hand[1]); g.stroke();
+  const dir = Math.atan2(hand[1] - el[1], hand[0] - el[0]);
+  for (let i = 0; i < 4; i++) {                                                                  // long fingers, curling round the camcorder
+    const a = dir + (i - 1.5) * .26, L = (.2 + .04 * (i === 1 || i === 2)) * uf, c = .9 * r;
+    g.lineWidth = .016 * uf; g.beginPath(); g.moveTo(hand[0], hand[1]);
+    g.quadraticCurveTo(hand[0] + Math.cos(a) * L * .6, hand[1] + Math.sin(a) * L * .6, hand[0] + Math.cos(a + c) * L, hand[1] + Math.sin(a + c) * L); g.stroke();
+  }
+  g.restore();
 }
 function feedB(t) {
   const tq = qf(t); if (tq === FB_T) return; FB_T = tq;
   if (t < TL.LIVE) {
-    cctv14(RBG, tq); TK.grade(FBG, RAWB, tq, 'cctv', { brightness: 1.45 }); TK.vhs(FBG, tq, .8, 4);
+    cctv14(RBG, tq); TK.grade(FBG, RAWB, tq, 'cctv', { brightness: 1.2 }); TK.vhs(FBG, tq, .8, 4);
     TK.osd(FBG, 'cctv', tq, { cam: 'CAM 14', place: 'SERVICE CORRIDOR', stamp: stamp(TL.STAMP14, tq) }); vcrText(FBG, 'PLAY ▶');
   } else {
     cctv02(RBG, tq); TK.grade(FBG, RAWB, tq, 'cctv', { brightness: 1.55 }); TK.vhs(FBG, tq, .7, 5);
@@ -730,8 +750,10 @@ function armPress(g, cam, t, light) {
   armTorch(g, hx, hy, 0, light, false);
   g.save(); g.translate(hx, hy); g.rotate(Math.atan2(p[1] - hy, p[0] - hx));
   g.fillStyle = `rgb(${186 * k | 0},${146 * k | 0},${120 * k | 0})`;
-  g.beginPath(); g.ellipse(48, 0, 46, 13, 0, 0, 6.2832); g.fill();                              // the index finger
-  for (let i = 0; i < 3; i++) { g.beginPath(); g.ellipse(14 + i * 4, 18 + i * 13, 22, 11, .4, 0, 6.2832); g.fill(); }   // the others curled
+  g.beginPath(); g.ellipse(52, -6, 50, 12, 0, 0, 6.2832); g.fill();                             // the index finger, out
+  g.beginPath(); g.ellipse(26, 16, 30, 17, .15, 0, 6.2832); g.fill();                             // the other three, curled under
+  g.beginPath(); g.ellipse(18, -30, 26, 11, -.5, 0, 6.2832); g.fill();                            // the thumb
+  g.fillStyle = `rgba(0,0,0,.18)`; g.fillRect(4, 4, 46, 3);
   g.restore();
 }
 // ---------------------------------------------------------------- its hand over the lens (screen space, right at the lens:
@@ -819,7 +841,6 @@ function render(t) {
   TK.frame(OUT, WIN, { label: TL.LABEL, sub: TL.SUB, rule: TL.RULE, ruleAlpha: clamp((t - .8) / .6), ask: t >= TL.ASK_T ? TL.ASK.slice(0, n) : null, askFull: TL.ASK });
 }
 window.render = render;
-window.DBG = { FA, FB, RAWA, RAWB, PAUSED, PAUSED2, THUMB02, feedA, feedB, cctv14, cctv02 };
 
 // ---------------------------------------------------------------- sound cues (natural sound only)
 // Everything is something in the room, picked up by his camcorder mic: the monitors' whine, the building's air, his breath,
@@ -829,11 +850,11 @@ window.DBG = { FA, FB, RAWA, RAWB, PAUSED, PAUSED2, THUMB02, feedA, feedB, cctv1
 function buildEvents() {
   const EV = [];
   EV.push(
-    { type: 'bed', fx: 'crt_hum', space: 'shop', t: 0, t1: TL.QUIET[0], g: -31, fin: .01, fout: .45, env: [[0, .9], [9.3, 1.0], [9.36, 1.15], [24, 1.1]] },
-    { type: 'bed', fx: 'crt_hum', space: 'shop', t: TL.RELEASE[0] + .2, t1: TL.END, g: -32, fin: .6, fout: .05 },
+    { type: 'bed', fx: 'crt_hum', space: 'shop', t: 0, t1: TL.QUIET[0], g: -33.5, fin: .01, fout: .45, env: [[0, .9], [9.3, 1.0], [9.36, 1.15], [24, 1.1]] },
+    { type: 'bed', fx: 'crt_hum', space: 'shop', t: TL.RELEASE[0] + .2, t1: TL.END, g: -34, fin: .6, fout: .05 },
     { type: 'bed', fx: 'duct_hum', space: 'hall', t: 0, t1: TL.QUIET[0], g: -42, fin: .01, fout: .3 },
     { type: 'bed', fx: 'duct_hum', space: 'hall', t: TL.RELEASE[0], t1: TL.END, g: -42, fin: 1, fout: .05 },
-    { type: 'bed', fx: 'breath_bed', space: 'close', t: .2, t1: TL.WHIP1[0], g: -32, fin: .5, fout: .3 },
+    { type: 'bed', fx: 'breath_bed', space: 'close', t: .2, t1: TL.WHIP1[0], g: -34, fin: .5, fout: .3 },
     // the TV's speaker: his 3:01 tape (the corridor's tube buzz, his steps, his breath, the whip of his turn), cut by PAUSE
     { type: 'bed', fx: 'fluor_tv', space: 'shop', t: 0, t1: TL.PAUSE, g: -36, fin: .01, fout: .01 },
     ...TL.STEPS31.map((x, i) => ({ type: 'step_tv', t: x, g: .9, pan: 0 })),
@@ -843,15 +864,15 @@ function buildEvents() {
     { type: 'rustle', t: TL.PRESS[0] + .05, g: .4 }, { type: 'rustle', t: TL.PRESS[1] - .2, g: .35 },
     // he turns round in the chair (its swivel creaks), looks, turns back
     { type: 'creak', t: TL.WHIP1[0] + .05 }, { type: 'rustle', t: TL.WHIP1[0] + .1, g: .55 },
-    { type: 'bed', fx: 'near_breath', space: 'close', t: TL.WHIP1[1], t1: TL.WHIP2[0], g: -27, fin: .6, fout: .3 },
+    { type: 'bed', fx: 'near_breath', space: 'close', t: TL.WHIP1[1], t1: TL.WHIP2[0], g: -29, fin: .6, fout: .3 },
     { type: 'creak', t: TL.WHIP2[0] + .05, g: .8 }, { type: 'rustle', t: TL.WHIP2[0] + .1, g: .5 },
-    { type: 'bed', fx: 'breath_bed', space: 'close', t: TL.WHIP2[1] + .2, t1: TL.QUIET[0], g: -30, fin: .8, fout: .2 },
+    { type: 'bed', fx: 'breath_bed', space: 'close', t: TL.WHIP2[1] + .2, t1: TL.QUIET[0], g: -32, fin: .8, fout: .2 },
     // the grab: right on the mic (a thump, the preamp overloads), the fingers rubbing on the mic, his breath under the hand
-    { type: 'grab', t: TL.STING }, { type: 'hit', t: TL.STING + .005 },
-    { type: 'grab_rub', t: TL.STING + .35 }, { type: 'grab_rub', t: TL.STING + 1.5, g: .6 },
+    { type: 'grab', t: TL.STING }, { type: 'hit', t: TL.STING + .005 }, { type: 'gasp', t: TL.STING + .07, g: 1 },
+    { type: 'grab_rub', t: TL.STING + .08, g: 7 }, { type: 'hit', t: TL.STING + .21, g: .8 }, { type: 'grab_rub', t: TL.STING + .55 }, { type: 'grab_rub', t: TL.STING + 1.5, g: .6 },
     { type: 'bed', fx: 'breath_muff', space: 'close', t: TL.STING + .45, t1: TL.RELEASE[0], g: -24, fin: .3, fout: .2 },
     { type: 'handling', t: TL.RELEASE[0] + .05, g: .8 }, { type: 'gasp', t: TL.RELEASE[0] + .25, g: .35 },
-    { type: 'bed', fx: 'near_breath', space: 'close', t: TL.RELEASE[1], t1: TL.END, g: -26, fin: .3, fout: .05 },
+    { type: 'bed', fx: 'near_breath', space: 'close', t: TL.RELEASE[1], t1: TL.END, g: -28, fin: .3, fout: .05 },
     ...TL.GLITCH.map(([t0, d]) => ({ type: 'glitch', t: t0, dur: d })),
     { type: 'static', t: TL.END, dur: DUR - TL.END },
   );

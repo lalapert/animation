@@ -1,0 +1,8 @@
+STILL RECORDING, tape 10: "The Guard's Tape" (2026). Halloway Archive. Original story, pictures, sound and music. A work of fiction.
+
+Pictures: drawn in code (canvas 2D) with the tape kit (channel/brand/tapekit.js): a 2.5D renderer, CCTV grading, the handheld camcorder look and VHS damage. The security office, its monitors, VCR and switcher, the service corridor (from tape 8) and the hand over the lens are drawn for this tape (film.js).
+Fonts: VT323 (The VT323 Project Authors), SIL Open Font License 1.1. Special Elite (Astigmatic), Apache License 2.0.
+Voice: ElevenLabs text-to-speech, model eleven_v4. Leon Marsh: "HA Leon Marsh" (ElevenLabs Voice Design, made for this series).
+Sound effects: generated with ElevenLabs Sound Effects (prompts in sfx/prompts.json).
+Music: none. A low drone made from the monitors' own hum (tools/score.py).
+Sound: every sound is in the office and is heard through Leon's camcorder, including his 3:01 tape playing on the TV's small speaker (tools/mix.py: rooms, the camcorder's automatic level control, the tape).
