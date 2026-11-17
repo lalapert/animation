@@ -1,12 +1,14 @@
 """Single source of truth for timing: writes timeline.js (for the page) and out/timeline.json (for score, mix, srt).
   .venv/bin/python tools/timeline.py
-Tape 9 "Carousel": Leon Marsh, December 4, 1999. The power is off in the center court and the carousel is turning in the
-moonlight, its band organ dragging. Three poles have no horse. CAM 21 played back: on one turn, one more horse is gone
-between two frames. In the east hall his camcorder finds them: carousel horses on their broken poles, standing in the
-dark, facing him. On the camcorder they never move. On every CAM 22 cut they are closer and turned a little more toward
-the camera. At the end, on CAM 22, the nearest one turns its head to the lens in held frames; its neck bends where a
-carousel horse has no joint, its pole scrapes the floor; the organ stops dead. No jump: the ending is the movement.
-Script: channel/scripts/SR09_carousel.md
+Tape 10 "The Guard's Tape": Leon Marsh, December 5, 1999, 3:05 A.M., in the security office. His camcorder is on the two
+desk monitors. Left, the VCR plays his own camcorder tape of his 3:01 round of the service corridor: empty. Right, the
+same minute on CAM 14: something tall right behind him, its head bent over his shoulder. On both screens he turns round:
+his tape shows the empty corridor; CAM 14 shows it has stepped round to stay at his back. He pauses the VCR and switches
+the right monitor to CAM 02, live, this office: it is standing behind his chair. He turns round with the camcorder: the
+office is empty. He turns back: on CAM 02 it is bent over him, and its long arm comes up round his head to the camcorder.
+Long black fingers close over the lens from above (the grab is the one loud sound). When they let go, CAM 02 shows him
+alone, and the paused frame of his own 3:01 tape now has it in it, facing his lens.
+Script: channel/scripts/SR10_the_guards_tape.md
 """
 import json, os
 
@@ -14,45 +16,46 @@ HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 cfg = json.load(open(os.path.join(HERE, "voice", "lines.json")))
 lines = {l["id"]: l for l in cfg["lines"]}
 durs = json.load(open(os.path.join(HERE, "voice", "out", "durations.json")))
-START = {"L1": 0.5, "L2": 5.05, "L3": 18.2, "L4": 28.3}
+START = {"L1": 0.35, "L2": 5.15, "L3": 11.55, "L4": 19.75}
 GAIN = {"L3": -2.0, "L4": -1.5}                     # the whispers sit a little lower (still 8 dB over everything else)
 VO = []
 for k in ["L1", "L2", "L3", "L4"]:
     VO.append({"id": k, "who": lines[k]["who"], "t": START[k], "dur": durs[k], "sub": lines[k].get("sub", lines[k]["text"]), "col": "#f2f2f2",
                "fx": "cam", "pos": "top", "gain_db": GAIN.get(k, 0.0)})
 
-# ---------------------------------------------------------------- shots: court / hall / hall2 are Leon's camcorder (colour,
-# hand-held); cctv1 is CAM 21 (center court), cctv2 / cctv3 are CAM 22 (east hall), played back by the archive (6 fps)
-SHOTS = [["court", 0.0, 8.4], ["cctv1", 8.4, 13.8], ["hall", 13.8, 24.2], ["cctv2", 24.2, 28.0], ["hall2", 28.0, 31.6], ["cctv3", 31.6, 37.6]]
-RECCUT = [13.8]              # he pauses and restarts the camcorder on the way into the hall: STBY frames, a click
-REV = 5.2                    # one turn of the carousel, seconds (it drags)
-SWEEP = [1.4, 4.2]           # S1: his flashlight sweeps along the horses going past
-EGG = {"t": 6.6, "dur": 0.1, "what": "the sign at the carousel gate reads RIDE 2c instead of RIDE 50c for six frames"}
-ROLL1 = [8.4, 8.75]          # tracking roll into the CAM 21 playback
-PUSH1 = [8.75, 10.95]        # the playback zooms in on one horse going round and holds it in the middle (x1.0 -> x1.75)
-VANISH = 10.95               # between two CAM 21 frames (10.833 and 11.0) that horse is gone
-PAUSE = [10.95, 11.7]        # the archivist pauses on the frame before: the horse on its pole, in the middle (the deck goes quiet)
-STEP = [11.7, 12.45]         # steps one frame on: the same pole, empty
-PLAY = 12.45                 # and plays on (the tape runs 1.5 s behind from here)
-WALK = [14.0, 16.6]          # S3: into the east hall, the flashlight on the floor: long scrape marks on the tiles
-RISE = [16.6, 17.7]          # the flashlight follows the scrapes up: a carousel horse, on its pole, facing him
-FIND = [19.4, 21.0]          # the flashlight finds three more behind it
-ZOOM = [21.2, 22.5]          # the camcorder zooms on the nearest one's face
-ZOOM_OUT = [22.9, 23.6]
-STEP_BACK = 23.65            # he steps back
-ROLL2 = [24.2, 24.55]        # tracking roll into CAM 22
-FLICK = 12.6                 # the emergency light in the hall starts to flicker (it stutters on every CAM 22 cut)
-TURN = [33.2, 33.533, 33.867]  # CAM 22, held frames: the nearest horse turns its head toward the lens
-SNAP = 34.2                  # one frame: the head has turned past the lens and lies on its side, the neck cracked halfway up
-SCRAPE = [34.2, 34.85]       # it leans on its pole; the pole scrapes the floor toward the camera
-DEAD = 34.9                  # the organ stops dead, the drone with it
-CRASH = [35.4, 35.55]        # a crash zoom onto its face (silent)
-END = 37.6
-DUR = 38.6
-STATIC = [[END, DUR]]        # no static before frame 1: the tape opens on the carousel turning (the loop comes back to it)
-GLITCH = [[13.62, .12], [END - .3, .3]]
-STEPS = [round(WALK[0] + .3 + i / 1.6, 3) for i in range(4)]
-STEPS1 = [6.0, 6.55]         # S1: he steps closer to the gate
+# ---------------------------------------------------------------- one camcorder shot (colour, hand-held) in the office;
+# the two monitors carry the 3:01 tapes (left: his camcorder tape on the VCR; right: CAM 14, then CAM 02 live)
+END = 31.2
+DUR = 32.2
+SHOTS = [["office", 0.0, END]]
+RECCUT = []
+HOLD_B = [0.0, 2.4]          # frame 1: the camcorder is close on the right monitor (CAM 14, 03:01): him, and it right behind him
+PULL = [2.4, 4.0]            # it pulls back to both monitors (his own tape on the left, the same minute)
+WALK31 = [-3.0, 6.3]         # in the 3:01 tapes: he walks slowly back up the corridor toward CAM 14
+TURN31 = [6.3, 6.8]          # he turns round: his tape whips to the empty corridor; on CAM 14 it steps round to stay at his back
+PRESS = [8.45, 9.6]          # his right hand to the desk: PAUSE on the VCR, then the switcher
+PAUSE = 8.95                 # the VCR holds the frame from his tape (the empty corridor, looking at the fire door)
+LIVE = 9.35                  # the right monitor switches to CAM 02, live: this office. It stands behind his chair
+PUSH_B = [9.8, 11.6]         # the camcorder pushes in on it
+WHIP1 = [13.25, 13.95]       # he swings round in the chair with the camcorder
+PAN = [14.2, 18.2]           # the office behind him: the door, the calendar, his jacket on the hook, the lockers, CAM 02 itself
+EGG = {"t": 15.9, "dur": 0.1, "what": "the tear-off calendar by the door reads 1 instead of 5 for six frames"}
+WHIP2 = [18.55, 19.25]       # he swings back to the monitors
+REACH = [22.85, 24.15]       # CAM 02, held frames: it is bent over him; its long arm comes up round his head to the camcorder
+QUIET = [23.75, 24.3]        # near silence (he holds his breath, the room tone drops out of the camcorder's AGC)
+COVER = [24.1, 24.3]         # long black fingers slide down over the lens from the top edge
+STING = 24.3                 # the grab: the hand closes on the camcorder (a thump and a rub right on the mic, the preamp overloads)
+DARK = [24.3, 27.0]          # the hand over the lens: the monitors' light between the fingers
+RELEASE = [27.0, 27.6]       # it lets go (up and away)
+TO_A = [28.2, 29.8]          # the camcorder goes to the left monitor (the paused frame of his own tape)
+REVEAL = 28.75               # the VCR's pause bar rolls through it: now it is in the frame, facing his lens
+FOCUS = [29.2, 29.75]        # the autofocus finds it
+STATIC = [[END, DUR]]        # no static before frame 1: the tape opens on the monitor (the loop comes back to it)
+GLITCH = [[STING, .1], [END - .3, .3]]
+STEPS31 = [round(-3.0 + .3 + i * .78, 3) for i in range(12)]   # his steps in the 3:01 tape (heard from the TV's speaker)
+ASK = "TURN AROUND OR KEEP FILMING?"
+ASK_T = round(DUR - 2.5, 3)  # owner 11/16: the last 2.5 s carry the two-choice question under the rule card
+STEPS31 = [s for s in STEPS31 if 0 <= s < TURN31[0]]
 assert 30 <= DUR <= 50
 for i, v in enumerate(VO):
     v["s0"] = round(v["t"] - 0.05, 3)
@@ -61,13 +64,14 @@ for i, v in enumerate(VO):
     v["s1"] = round(min(nxt, v["t"] + v["dur"] + 0.5, cut), 3)
     assert v["t"] + v["dur"] < nxt + .15, v["id"]
     assert v["t"] + v["dur"] - .05 < cut + .06, v["id"]
-TL = {"DUR": DUR, "VO": VO, "SHOTS": SHOTS, "RECCUT": RECCUT, "REV": REV, "SWEEP": SWEEP, "EGG": EGG, "ROLL1": ROLL1, "PUSH1": PUSH1,
-      "VANISH": VANISH, "PAUSE": PAUSE, "STEP": STEP, "PLAY": PLAY, "WALK": WALK, "RISE": RISE, "FIND": FIND, "ZOOM": ZOOM, "ZOOM_OUT": ZOOM_OUT, "STEP_BACK": STEP_BACK, "ROLL2": ROLL2,
-      "FLICK": FLICK, "TURN": TURN, "SNAP": SNAP, "SCRAPE": SCRAPE, "DEAD": DEAD, "CRASH": CRASH, "END": END, "STATIC": STATIC,
-      "GLITCH": GLITCH, "STEPS": STEPS, "STEPS1": STEPS1,
-      "LABEL": "TAPE 0009", "SUB": "CAMCORDER / CAM 21-22  ·  CENTER COURT  ·  12/04/99",
-      "RULE": "RULE 9: IF THE CAROUSEL TURNS AT NIGHT,\nDO NOT FOLLOW THE HORSES.",
-      "STAMP0": [1, 50, 8], "STAMP1": [1, 52, 40], "DATE": "12-04-1999"}
+assert VO[3]["t"] + VO[3]["dur"] < QUIET[0] - .5
+TL = {"DUR": DUR, "VO": VO, "SHOTS": SHOTS, "RECCUT": RECCUT, "HOLD_B": HOLD_B, "PULL": PULL, "WALK31": WALK31, "TURN31": TURN31,
+      "PRESS": PRESS, "PAUSE": PAUSE, "LIVE": LIVE, "PUSH_B": PUSH_B, "WHIP1": WHIP1, "PAN": PAN, "EGG": EGG, "WHIP2": WHIP2,
+      "REACH": REACH, "QUIET": QUIET, "COVER": COVER, "STING": STING, "DARK": DARK, "RELEASE": RELEASE, "TO_A": TO_A,
+      "REVEAL": REVEAL, "FOCUS": FOCUS, "END": END, "STATIC": STATIC, "GLITCH": GLITCH, "STEPS31": STEPS31, "ASK": ASK, "ASK_T": ASK_T,
+      "LABEL": "TAPE 0010", "SUB": "CAMCORDER / CAM 14 / CAM 02  ·  SECURITY OFFICE  ·  12/05/99",
+      "RULE": "RULE 10: IF THE MONITOR SHOWS IT BEHIND YOU,\nDO NOT TURN AROUND.",
+      "STAMP14": [3, 1, 12], "STAMP02": [3, 5, 31], "DATE": "12-05-1999"}
 os.makedirs(os.path.join(HERE, "out"), exist_ok=True)
 json.dump(TL, open(os.path.join(HERE, "out", "timeline.json"), "w"), indent=1)
 open(os.path.join(HERE, "timeline.js"), "w").write("// generated by tools/timeline.py: do not edit\nwindow.TL = " + json.dumps(TL) + ";\n")

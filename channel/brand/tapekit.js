@@ -302,6 +302,14 @@ const TK = {};
       const lines = o.rule.split('\n');
       lines.forEach((s, i) => { out.fillStyle = 'rgba(233,228,214,' + (o.ruleAlpha ?? 1) + ')'; out.fillText(s, 540, TK.WIN_Y + TH + 92 + i * 54); });
     }
+    // owner 11/16 (additive, tape 10 on): the two-choice comment question, one typewriter line under the rule card, in the
+    // last 2.5 s. No pill, no "comment" word. o.ask = the text (pass a growing slice to type it on), o.askAlpha
+    if (o.ask) {
+      const n = o.rule ? o.rule.split('\n').length : 0, y = TK.WIN_Y + TH + 92 + Math.max(0, n - 1) * 54 + 84;
+      out.font = '40px "Special Elite"'; out.textAlign = 'left'; out.textBaseline = 'middle';
+      const full = o.askFull || o.ask, x0 = 540 - out.measureText(full).width / 2;
+      out.fillStyle = 'rgba(244,240,228,' + (o.askAlpha ?? 1) + ')'; out.fillText(o.ask, x0, y);
+    }
     out.restore();
   };
 
