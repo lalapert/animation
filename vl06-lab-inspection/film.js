@@ -311,7 +311,8 @@ function hiccup(g, t) {
 
 // ---------------------------------------------------------------- cameras
 const CAM = {
-  WIDE_OPEN: [540, 990, 1.0, 1.04], WIDE: [540, 990, 1.0, 1.03],
+  WIDE_OPEN: [395, 1100, 2.0, 2.1],   // 11/17: frame 1 pushed in (big faces, the wall still turning behind them, panel 2's lab side half-turned at the right)
+  WIDE: [540, 990, 1.0, 1.03],
   VERA_MED: [VX0 + 40, VFACE + 150, 1.6, 1.66], VERA_CU: [VX0 + 10, VFACE + 80, 2.3, 2.45], VERA_END: [VX0 + 32, VFACE + 20, 2.1, 1.9],
   INSP_CU: [IX - 10, INSPFACE + 80, 2.3, 2.45], INSP_MED: [IX - 30, INSPFACE + 150, 1.6, 1.66],
   CLEO_CU: [700, LCT - 200 * S / 100 + 80, 2.3, 2.45],
