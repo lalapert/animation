@@ -1,0 +1,46 @@
+{
+ "model_id": "eleven_v4",
+ "cast": {
+  "LEON": {
+   "voice_id": "Uy5Zv42tAoMnz16B9JZo",
+   "name": "HA Leon Marsh",
+   "settings": {
+    "stability": 0.55,
+    "similarity_boost": 0.8,
+    "style": 0.25,
+    "speed": 0.92
+   }
+  }
+ },
+ "lines": [
+  {
+   "id": "L1",
+   "who": "LEON",
+   "text": "[tired, quiet] Night log. December fifth. Three-oh-five A.M.",
+   "sub": "NIGHT LOG. DECEMBER FIFTH. 3:05 A.M.",
+   "asr": "Night log December fifth three oh five AM"
+  },
+  {
+   "id": "L2",
+   "who": "LEON",
+   "text": "[low, uneasy] Same minute. My tape shows nothing.",
+   "sub": "SAME MINUTE. MY TAPE SHOWS NOTHING.",
+   "asr": "Same minute My tape shows nothing"
+  },
+  {
+   "id": "L3",
+   "who": "LEON",
+   "text": "[whispering, frightened] It's in here.",
+   "sub": "IT'S IN HERE.",
+   "asr": "It's in here"
+  },
+  {
+   "id": "L4",
+   "who": "LEON",
+   "text": "[whispering, terrified] I can't see it. It's right there.",
+   "sub": "I CAN'T SEE IT. IT'S RIGHT THERE.",
+   "asr": "I can't see it It's right there"
+  }
+ ],
+ "context": false
+}
