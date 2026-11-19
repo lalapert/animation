@@ -145,6 +145,15 @@ def machine(kind, dur, seed=3):
     buzz with its harmonics, the turntable's slow wobble and the cooling fan; a 40 ms start, a 0.5 s spin-down"""
     r = np.random.default_rng(seed)
     n = int(dur * SR); t = np.arange(n) / SR
+    if kind == "rocket":
+        w, w2 = r.standard_normal(n).astype(np.float32), r.standard_normal(n).astype(np.float32)
+        rumble = lowpass(w, 700, 2); hiss = bandpass(w2, 1200, 5000, 2)
+        crack = lowpass(((r.random(n) < .004) * r.standard_normal(n) * 5).astype(np.float32), 3500, 2)
+        am = 1 + .22 * np.sin(2 * np.pi * 17 * t) + .1 * np.sin(2 * np.pi * 31 * t + 1)
+        x = (rumble / rms(rumble) * .75 + hiss / rms(hiss) * .3 + crack) * am
+        env = np.minimum(1, t / .08) * np.clip((dur - t) / .3, 0, 1)
+        y = (x * env).astype(np.float32)
+        return np.stack([y, y * .96], 1) * db(-20) / max(rms(y[:int(min(n, SR))]), 1e-9)
     if kind != "microwave":
         raise ValueError(kind)
     buzz = sum(a * np.sin(2 * np.pi * 120 * k * t + r.uniform(0, 6.28)) for k, a in [(1, 1), (2, .6), (3, .45), (4, .3), (5, .2), (6, .12), (8, .08)])
@@ -230,11 +239,13 @@ for name, sp in CFG.get("spans", {}).items():
         k = min(xf, len(seg), len(x)); ramp = np.linspace(0, 1, k)[:, None]
         seg[-k:] = seg[-k:] * (1 - ramp) + x[:k] * ramp
         seg = np.concatenate([seg, x[k:]])[:n]
-    add(SP[sp.get("space", "dry")], fade(seg, .15, .15), t0 - .15, db(sp.get("db", -40)))
+    first = t0 <= .15                                                         # from frame 1: no fade in, no tone at all before it
+    add(SP[sp.get("space", "dry")], fade(seg, .002 if first else .15, .15), 0 if first else t0 - .15, db(sp.get("db", -40)))
     if sp.get("mute_tone"):
-        a, b, r = int((t0 - .15) * SR), int((t1 + .15) * SR), int(.15 * SR)
-        TONE_ENV[a + r:b - r] = 0
-        TONE_ENV[a:a + r] = np.linspace(1, 0, r); TONE_ENV[b - r:b] = np.linspace(0, 1, r)
+        a, b, r = max(0, int((t0 - .15) * SR)), min(L, int((t1 + .15) * SR)), int(.15 * SR)
+        TONE_ENV[(0 if first else a + r):b - r] = 0
+        if not first: TONE_ENV[a:a + r] = np.linspace(1, 0, r)
+        if b - r > 0 and b <= L and t1 < DUR - .2: TONE_ENV[b - r:b] = np.linspace(0, 1, r)
 TONE = TONE * TONE_ENV[:, None]
 lab = room(SP["lab"], size=.04, mix=.24, predelay=.005, damp=.3, seed=7)            # the basement: short, bright, close walls
 street = room(SP["street"], size=.06, mix=.12, predelay=.022, damp=.5, seed=19)     # outdoors: a short slap off the building front

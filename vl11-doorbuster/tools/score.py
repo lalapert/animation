@@ -1,13 +1,14 @@
-"""Score for Volt Labs 10 "The Reverse Oven": the Volt Labs band (tools/band.py, the same band as VL4-9), cued to the scene
+"""Score for Volt Labs 11 "Doorbuster": the Volt Labs band (tools/band.py, the same band as VL4-10), cued to the scene
 (owner 11/13: music that fits and serves the scene, stops for punchlines, at most two or three hits).
 
-Cue sheet (music under setups and the movement, silence under punchlines; the room tone, the oven and the foley carry the rest):
-  M1  0.00 -> "Extra crispy."   the theme from frame 1 (the burnt turkey, "Thanksgiving is ruined."), resolved before Cleo's line
-  M2  the oven reverses         a pedal that climbs while the turkey un-burns, goes raw, a bag, a receipt; cut dead on the cash
-  M3  the dash                  a pizzicato scurry, out to the gauntlet and back
-  hit the clock's dial          uh-oh (a low unison semitone fall); the rewind is the episode's own sound backwards (mix.py)
-  M1' frame 1 again             the same theme bars as the opening, so the loop is the same picture and the same music
-  M4  the board                 the theme's first bar under the end card as the eleventh loop closes, then the button
+Cue sheet (music under setups and the chase, silence under punchlines; the street, the line, the rocket and the store carry the rest):
+  M1  0.00 -> "It's Black Friday."   the theme from frame 1 (the rocket cart at the end of the line), resolved before Cleo's line
+  M2  "Cleo. On three..."            a climbing pedal under the countdown, cut dead when she presses it on "two"
+  M3  the run                        the theme, faster, from the moment the cart moves: past the line, through the doors, down the
+                                     aisle; cut dead on the crash ("Got it!", "I ordered one online.", "You said 'rocket.'" in the
+                                     store's own air)
+  hit she presses it again          uh-oh
+  M4  the card                       the theme's first bar as the cart is gone, then the button under the end card
   .venv/bin/python tools/score.py            -> out/music.wav (active RMS -20 dBFS; the mix sets its level), out/music_cues.json
 """
 import json, os, sys
@@ -26,11 +27,10 @@ b = Band(DUR, bpm=TL["BPM"], seed=8)
 B = b.B
 
 b.cue(0.0, V["L2"]["t"] - .15, "theme", end="cadence", bars=["A1", "A2"], until=V["L2"]["t"] - .1)
-b.cue(TL["REV0"] + .05, TL["CASH"], "build", end="cut", rise=(TL["REV0"], TL["CASH"]), level=.65)
-b.cue(TL["RUN0"] - .05, TL["BACK"] + .35, "scurry", end="fade", fade=.25, pan=(.3, -.5), level=.75)
-b.hit(TL["C_DIAL"] + .05, "uhoh", level=.8)
-b.cue(TL["REW1"], TL["REW1"] + V["L2"]["t"] - .15, "theme", end="cadence", bars=["A1", "A2"], until=TL["REW1"] + V["L2"]["t"] - .1)
-hit = TL["BOARDT"] + 1.2                                        # the eleventh loop closes (film.js drawRentSpiral)
+b.cue(V["L4"]["t"] - .1, TL["PRESS"] - .02, "build", end="cut", rise=(V["L4"]["t"], TL["PRESS"] + .6), level=.6)
+b.cue(TL["LAUNCH"] + .05, TL["CRASH"] - .02, "theme", end="cut", level=.85, bars=["B1", "B2", "A1", "A2", "B1", "B2"], speed=1.3)
+b.hit(TL["PRESS2"] + .06, "uhoh", level=.8)
+hit = TL["GONE"] + .95                                          # the cart is gone; the card is up
 b.cue(hit - 1.92, hit - .5 * B, "tag", end="cadence", level=.85)
 b.hit(hit, "button")
 

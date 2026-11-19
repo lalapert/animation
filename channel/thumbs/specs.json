@@ -642,5 +642,28 @@
    900
   ],
   "zoom": 1.25
+ },
+ {
+  "folder": "vl11-doorbuster",
+  "t": 0.5,
+  "series": "vl",
+  "ep": 11,
+  "lines": [
+   "WHO NEEDS",
+   "LINES?"
+  ],
+  "hl": [
+   "LINES?"
+  ],
+  "focus": [
+   540,
+   960
+  ],
+  "zoom": 1.2,
+  "place": [
+   540,
+   1160
+  ],
+  "drawn": true
  }
 ]

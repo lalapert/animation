@@ -82,3 +82,34 @@ Volt Labs, episode 11.
 - 첫 댓글: Doorbuster or online?
 - 훅 카드: 없음
 - 유튜브 제목: Never take a rocket cart to a Black Friday sale | Volt Labs Ep 11 #shorts
+
+## 5. Sound and music (11/13 기준: 자연스러운 효과음, 장면을 따르는 음악)
+
+- **음악.** Volt Labs 밴드(`tools/band.py`, 4~10화와 같은 악기). `tools/score.py` 큐:
+  - 첫 프레임부터 테마(로켓 카트, 줄 끝) → "It's Black Friday." 전에 종지.
+  - "Cleo. On three. One... two..." 아래 오르는 페달 → Cleo가 "two"에서 누르는 순간 뚝(딸깍과 점화가 정적 속에).
+  - 질주: 카트가 움직이는 순간부터 테마를 1.3배 빠르게(줄, 문, 통로) → 상자 피라미드에 처박히는 순간 뚝. "Got it!", "I ordered one online.", "You said 'rocket.'"은 매장 공기만.
+  - **히트 1**: Cleo가 버튼을 다시 누를 때 "uh-oh". **히트 2**: 카트가 사라지고 엔드 카드가 뜰 때 버튼.
+  - 음악 17.7/40.2초, 히트 2개. 대사 아래 150 ms 전부터 12 dB 더 내려간다.
+- **로켓(보이는 소스).** 점화는 ElevenLabs 녹음(불꽃이 붙는 탁탁 소리)의 앞부분, 이어지는 굉음은 로켓이 타는 동안만 만든다(`tools/mix.py` machine 'rocket': 낮은 굉음, 쉿 소리, 탁탁 튀는 소리, 불꽃의 떨림). 불꽃이 화면에 있을 때만 들리고, 충돌에서 꺼지고, 다시 누르면 다시 붙어 오른쪽으로 멀어진다. 기성 효과음 쉭 소리 없음.
+- **군중(진짜 웅성거림).** 새벽 줄의 웅성거림(ElevenLabs 녹음, 말이 들리지 않는 소리)과 거리 공기를 거리 장면 내내, 매장 안에서는 문 밖 군중이 낮게. 실험실 룸톤은 밖이라 쓰지 않는다(거리와 매장의 공기가 룸톤, 디지털 무음 0).
+- **효과음.** 리모컨 딸깍(점화), 보도 위 카트 바퀴 덜컹(대사 아래 6 dB 내려감), 직원의 열쇠, 자동문 열림, 직원이 빙글 도는 옷 스침, 매장 바닥 바퀴(저역 통과), 상자를 낚아채는 소리, 상자 피라미드 붕괴, 다시 누르는 딸깍, 남은 상자를 뚫고 나가는 소리.
+- **새 효과음(ElevenLabs).** crowd_walla, rocket, cart_rattle, sliding_door, box_crash 5개를 이름으로만 생성, 563자, 20.5초. 재사용: click(VL1), keys·cloth(VL4), street_day(VL8), box_thump(VM8).
+- **목소리.** Vera, Cleo, 줄 선 손님(스톡 Jessica, 처음), 매장 직원(스톡 Will, 처음). 첫 녹음 381자, L4를 카운트다운으로 바꿔 다시 녹음 51자, L12 추가 17자, 합계 449자. L6은 "Happy Black Friday!"로 녹음해 문을 뚫는 순간 "Fri" 뒤에서 자른다(단어 타이밍에서 계산, 자막 "Happy Black Fri—", 완성본 검사 기준 "Happy Black").
+
+## 6. 제작하며 고친 것
+
+- 이야기: 처음 판은 40초에 모자랐다(33초). Vera의 "Light it."을 "On three. One... two..."로 바꿔 Cleo가 "two"에서 미리 누르는 웃음을 넣고, 버튼으로 Cleo가 다시 눌러 카트가 날아가는 장면("CLEO!")을 더했다. L4 다시 녹음, L12 새로 녹음.
+- 받아쓰기: L7 "DOORBUSTER!"를 "Door buster"로 띄어 적어 검사 기준만 띄어쓰기로(같은 말).
+- 첫 프레임: 로켓이 카트 아래(바퀴 높이)에 묶여 화면에서 거의 안 보였다 → 손잡이 뒤 기둥에 Vera 어깨 높이로 묶어 첫 프레임에서 그녀 옆에 보인다. 카트 테두리를 잡은 그녀 손이 테두리와 Cleo 뒤에 숨었다 → 손을 그녀 앞, 테두리 위로.
+- 문: 카트가 가게 앞을 옆으로 지나가기만 해서 문을 뚫는 것처럼 안 보였다 → 문 앞에서 카트가 작아지며 문 안으로 들어가고(문틀에 잘림) 문이 미끄러져 열린다. 직원은 문 옆 DEALS 통 뒤(허리 아래 가려짐), 카트가 지나가면 빙글 돈다.
+- 줄 선 손님: 소리친 사람이 옆 사람에게 가려 누군지 안 보였다 → 그녀를 맨 앞에 그리고, 화난 눈썹, 크게 벌린 입, 카트를 가리키는 팔(손까지).
+- 매장 첫 장면 왼쪽이 매장 밖(검은 띠)으로 보였다 → 통로 카메라가 매장 벽 안에 머문다.
+- 얼굴 위 소품: 낚아챈 상자가 Cleo 앞을 지날 때 그녀 턱에 걸렸다 → 받침대를 낮추고 상자를 손 높이에 맞춰 가슴 앞으로. Cleo의 휴대폰(ORDER PLACED)이 Vera 얼굴 앞에 왔다 → Cleo 가슴 앞에서 든다. Vera는 상자를 자기 왼쪽 어깨 옆으로 든다(그녀 오른쪽은 Cleo).
+- Vera의 팔이 Cleo 뒤로 지나갈 때(상자를 잡으러 오른쪽으로 뻗을 때) 손이 Cleo에 가려졌다 → 리그가 그린 팔과 같은 선을 Cleo와 겹치는 부분만 Cleo 위에 다시 그린다.
+- 몸: Vera와 Cleo는 늘 카트의 단단한 빨간 바구니 안(허리 아래 가려짐). 줄 선 사람들은 천을 씌운 차단벽 뒤(다리가 비치지 않음), 직원은 DEALS 통 뒤. 보이는 손은 모두 팔과 함께.
+
+## 7. 결과
+
+- 40.17초(엔드 카드 2.5초 포함), -13.9 LUFS, true peak -2.8 dBTP, loudnorm 2차 linear, 대사 마진 최소 +16.7 dB(K-가중, 최악 400 ms 창 +9.6 dB), ElevenLabs STT 12/12줄, blackdetect 없음, 클릭 0, 디지털 무음 0, check_english 통과, 그린 표지 확인.
+- 게시 문구: `channel/ig/posts/vl11-doorbuster.txt`, postlint VERDICT READY, 휴머나이저 변경 0. 첫 댓글 "Doorbuster or online?". 끝 화면 TL.ASK "DOORBUSTER OR ONLINE?". 유튜브 제목 "Never take a rocket cart to a Black Friday sale | Volt Labs Ep 11 #shorts"(83.2).

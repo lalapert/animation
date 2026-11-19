@@ -19,9 +19,9 @@ SUBCOL = {"VERA": "#d8ff7a", "CLEO": "#c9b8ff", "SHOPPER": "#ffd38a", "EMPLOYEE"
 CART_X0, DOOR_X = 420, 3100                              # the street: the end of the line; the store's doors
 RUN_V, ACC = 760.0, .5                                   # the rocket cart: top speed px/s, seconds to reach it
 AISLE_X0, GRAB_X, CRASH_X = -260, 1880, 2080             # the store: in at the left, the last box, the box pyramid
-REVEAL = 1.9                                             # the pan along the line to the store
-GAP = {"L1": .55, "L2": .35, "L3": None, "L4": .35, "L5": None, "L6": None, "L7": None, "L8": None, "L9": .35, "L10": .35,
-       "L11": .35, "L12": None}
+REVEAL = 2.8                                             # the pan along the line to the store
+GAP = {"L1": .6, "L2": .4, "L3": None, "L4": .35, "L5": None, "L6": None, "L7": None, "L8": None, "L9": .45, "L10": .5,
+       "L11": .45, "L12": None}
 def run_time(dist):                                      # time to cover dist from a standstill (linear ramp to RUN_V over ACC)
     ramp = RUN_V * ACC / 2
     return (2 * dist * ACC / RUN_V) ** .5 if dist <= ramp else ACC + (dist - ramp) / RUN_V
@@ -31,7 +31,7 @@ for k in order:
     if k == "L3":                                        # the line, all the way to the store
         T["REV0"] = round(t + .3, 3); T["REV1"] = round(T["REV0"] + REVEAL, 3); start = T["REV1"] + .25
     if k == "L5":                                        # Cleo presses on "two"; the rocket lights; the cart shakes, then goes
-        T["LAUNCH"] = round(T["IGNITE"] + .55, 3)
+        T["LAUNCH"] = round(T["IGNITE"] + .75, 3)
         T["DOOR"] = round(T["LAUNCH"] + run_time(DOOR_X - CART_X0), 3)
         start = T["LAUNCH"] + .6
     if k == "L6":                                        # "Happy Black Fri-": cut where the cart comes through the doors
@@ -40,19 +40,19 @@ for k in order:
         start = T["DOOR"] - T["L6CUT"]
         assert start > t + .2, (start, t)
     if k == "L7":                                        # inside: down the aisle
-        T["AISLE"] = round(T["DOOR"] + .55, 3); start = T["AISLE"] + .15
+        T["AISLE"] = round(T["DOOR"] + .9, 3); start = T["AISLE"] + .15
         T["GRAB"] = round(T["AISLE"] + run_time(GRAB_X - AISLE_X0) * .0 + (GRAB_X - AISLE_X0) / RUN_V, 3)
         T["CRASH"] = round(T["AISLE"] + (CRASH_X - AISLE_X0) / RUN_V, 3)
     if k == "L8":
-        start = T["CRASH"] + 1.35
+        start = T["CRASH"] + 1.8
     if k == "L12":                                       # she presses it again: the rocket, and off they go
-        T["PRESS2"] = round(t + .45, 3); T["IGNITE2"] = round(T["PRESS2"] + .1, 3); T["GO2"] = round(T["IGNITE2"] + .45, 3)
+        T["PRESS2"] = round(t + .7, 3); T["IGNITE2"] = round(T["PRESS2"] + .1, 3); T["GO2"] = round(T["IGNITE2"] + .45, 3)
         start = T["GO2"] + .15
     d = durs[k]
     v = {"id": k, "who": lines[k]["who"], "t": round(start, 3), "dur": d, "sub": lines[k].get("sub", TAGS.sub("", lines[k]["text"]).strip()),
          "col": SUBCOL[lines[k]["who"]], "gain_db": lines[k].get("gain_db", 0)}
     if k == "L6":
-        v.update({"cut": T["L6CUT"], "dur": T["L6CUT"], "sub": "Happy Black Fri-", "asr_final": "Happy Black"})
+        v.update({"cut": T["L6CUT"], "dur": T["L6CUT"], "sub": "Happy Black Fri\u2014", "asr_final": "Happy Black"})
         d = T["L6CUT"]
     VO.append(v)
     if k == "L4":
@@ -60,8 +60,9 @@ for k in order:
         T["PRESS"] = round(start + two["t0"] + .05, 3); T["IGNITE"] = round(T["PRESS"] + .1, 3)
     t = start + d
 T["GONE"] = round(T["GO2"] + .9, 3)
+T["SH_T"] = 0                                             # set below: the shopper stands where the cart is mid-line
 ENDCARD = 2.5
-DUR = round(t + .35 + ENDCARD, 2)                        # the card comes up as the cart is gone (the button is the relit rocket)
+DUR = round(t + .6 + ENDCARD, 2)                        # the card comes up as the cart is gone (the button is the relit rocket)
 T["ASK"] = "DOORBUSTER OR ONLINE?"                       # owner 11/16: the two-choice question under the end card
 for i, v in enumerate(VO):
     v["s0"] = round(max(0.0, v["t"] - 0.08), 3)
@@ -80,7 +81,9 @@ SHOTS = [
     ["REVEAL", T["REV0"], T["REV1"]],                    # the line, all the way to the store
     ["CART_CU", T["REV1"], T["PRESS"] - .1],             # "Which is why we brought a rocket." "Cleo. On three. One... two..."
     ["CLEO_CU", T["PRESS"] - .1, T["LAUNCH"]],           # she presses it on "two"; the rocket lights
-    ["TRACK", T["LAUNCH"], V["L6"]["t"] - .1],           # past the line ("Hey! No cutting!")
+    ["TRACK", T["LAUNCH"], V["L5"]["t"] - .05],          # past the line
+    ["SHOPPER_CU", V["L5"]["t"] - .05, end("L5") - .25],  # "Hey! No cutting!" (the cart streaks past in front of her)
+    ["TRACK", end("L5") - .25, V["L6"]["t"] - .1],
     ["DOORS", V["L6"]["t"] - .1, T["AISLE"]],            # "Happy Black Fri-": through the doors
     ["AISLE", T["AISLE"], T["CRASH"] + .9],              # "DOORBUSTER!", the last box, the crash
     ["TWO", T["CRASH"] + .9, V["L10"]["t"]],             # "Got it! The last one!" "I ordered one online."

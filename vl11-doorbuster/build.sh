@@ -1,10 +1,10 @@
 #!/bin/sh
-# Rebuild Volt Labs 10 "The Reverse Oven" from the voice takes and effects in this folder (11/13: natural-sound pass, the Volt Labs band
+# Rebuild Volt Labs 11 "Doorbuster" from the voice takes and effects in this folder (11/13: natural-sound pass, the Volt Labs band
 # score, new first frame). Nothing here calls a paid API unless a take or an effect is missing (the tracked mp3s are decoded).
 set -e
 cd "$(dirname "$0")"
 PY=.venv/bin/python
-python3 ../channel/tools/script_to_lines.py ../channel/scripts/VL10_the_reverse_oven.md .   # the script is the source of the lines
+python3 ../channel/tools/script_to_lines.py ../channel/scripts/VL11_doorbuster.md .   # the script is the source of the lines
 python3 tools/voice_eleven.py          # only missing takes
 python3 tools/asr_eleven.py            # every take heard as written (exit 0)
 $PY tools/timeline.py
@@ -13,7 +13,7 @@ $PY tools/score.py                     # the Volt Labs band (tools/band.py), cue
 node tools/render.cjs events
 $PY tools/mix.py                       # room tone, foley in its space, voices, ducked music; asserts every line >= 8 dB clear
 node tools/render.cjs video 3
-sh tools/mux.sh out/video.mp4 out/mix.wav out/vl10-the-reverse-oven.mp4   # stops unless the loudnorm second pass is linear (drafts stay in out/)
+sh tools/mux.sh out/video.mp4 out/mix.wav out/vl11-doorbuster.mp4   # stops unless the loudnorm second pass is linear (drafts stay in out/)
 $PY tools/srt.py
-python3 tools/final_check.py out/vl10-the-reverse-oven.mp4    # duration, LUFS, true peak, blackdetect, STT of every line, contact sheets
-cp out/vl10-the-reverse-oven.mp4 vl10-the-reverse-oven.mp4                 # the tracked file only once every check passes
+python3 tools/final_check.py out/vl11-doorbuster.mp4    # duration, LUFS, true peak, blackdetect, STT of every line, contact sheets
+cp out/vl11-doorbuster.mp4 vl11-doorbuster.mp4                 # the tracked file only once every check passes
