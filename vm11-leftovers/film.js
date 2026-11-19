@@ -21,12 +21,12 @@ const MW = { x0: 640, x1: 860, top: CT - 140 };              // the store microw
 const DOOR = { x0: 648, x1: 800, wy0: CT - 128, wy1: CT - 18 };   // its door (hinged on the left) and window
 const PANEL = { x: 829, disp: CT - 118, start: CT - 40, release: CT - 74 };
 const INSIDE = { x: 724, y: CT - 40 };                        // the middle of the turntable
-const ROBOT = { x: 575, q: 940 }, BLOB = { x: 466, q: 1045 }, PUFF = { x: 360, q: 1150 };   // at Pip's table; .q = in the queue, right of the microwave
+const ROBOT = { x: 360, q: 940 }, BLOB = { x: 466, q: 1045 }, PUFF = { x: 575, q: 1150 };   // at Pip's table; .q = in the queue, right of the microwave
 const atTable = t => t >= V.L3.t - .6;                       // they move to the table while we look at MAGS
 const DEN = { x: 980, y: CT + 80, s: 110 };                   // Dennis, at the front of the counter
 const BOWL_UP = { x: 890, y: CT - 22 };                       // Dennis's bowl, lifted onto the counter
 const HOLD_RAE = { x: 724, y: CT - 186 };                     // Rae's own leftovers, held at her chest at the end
-const GRAVY = { x: 414, y: CT - 2 }, GRAVY_OUT = { x: 522, y: CT - 104 };
+const GRAVY = { x: 430, y: CT - 2 }, GRAVY_OUT = { x: 612, y: CT - 246 };   // held out over the robot's head, next to Rae's leftovers
 
 // ---------------------------------------------------------------- containers and food
 function tub(g, x, y, w, h, lid, food, label) {               // a clear plastic food container, (x, y) = bottom centre
@@ -336,7 +336,8 @@ function pipArm(g, side, hx, hy, open, shade) {               // two bones of fi
   tHand(g, hx, hy, 9, P.skin, P.skinS, open);
 }
 const pipBob = t => Math.sin(t * 2.1) * 2 + (speaking('PIP', t) ? Math.sin(t * 15) * 2.5 : 0);
-const toPip = (p, bob) => ({ x: (p.x - PIP.x) / (PIP.s / 100), y: (p.y - CT - bob) / (PIP.s / 100) });
+function pipX(t) { return t < TL.PIPW0 ? TL.PIP_X0 : travel(t, TL.PIPW0, TL.PIP_X0, TL.PIP_X1, TL.PIP_STEP, TL.PIP_SPS).x; }   // after the ding she steps over toward Rae
+const toPip = (p, bob, px) => ({ x: (p.x - px) / (PIP.s / 100), y: (p.y - CT - bob) / (PIP.s / 100) });
 function pipState(t) {
   const st = { expr: 'grin', wave: false, mode: null };
   if (t >= V.L1.t + 1.9) st.expr = 'sad';
@@ -358,8 +359,10 @@ function drawPipBack(g, t) {
   const st = pipState(t), bob = pipBob(t);
   const o = { expr: st.expr, mouth: mouthFor('PIP', t), blink: st.blink, wave: st.wave, wavePhase: t * 9 };
   if (st.mode) o.arms = false;
-  drawPip2(g, PIP.x, CT + bob, PIP.s, o);
-  if (st.mode === 'gravy') { g.save(); g.translate(PIP.x, CT + bob); g.scale(PIP.s / 100, PIP.s / 100); pipArm(g, -1, -18, -13, false, false); g.restore(); }
+  const px = pipX(t), tr = travel(t, TL.PIPW0, TL.PIP_X0, TL.PIP_X1, TL.PIP_STEP, TL.PIP_SPS);
+  if (tr.moving) return drawTraveller(g, (gg, x, y, s2, oo) => drawPip2(gg, x, y, s2, oo), tr.x, CT + 10, PIP.s, Object.assign({}, o, { wave: false }), walkBob(tr.dist, TL.PIP_STEP, 10), 1);
+  drawPip2(g, px, CT + bob, PIP.s, o);
+  if (st.mode === 'gravy') { g.save(); g.translate(px, CT + bob); g.scale(PIP.s / 100, PIP.s / 100); pipArm(g, -1, -18, -13, false, false); g.restore(); }
   if (st.mode === 'cloth') {                                  // both hands up with the folded cloth at her chest, then a flick out to the sides
     const u = (t - TL.CLOTH) / .75, up = smooth(0, .35, u), fl = smooth(.42, .6, u);
     const hx = lerp(lerp(26, 34, up), 92, fl), hy = lerp(lerp(-20, -108, up), -30, fl);
@@ -375,11 +378,11 @@ function drawPipBack(g, t) {
 function drawPipFront(g, t) {                                 // her right arm with the gravy boat, in front of the counter-top things
   const st = pipState(t); if (st.mode !== 'gravy') return;
   const bob = pipBob(t), s = PIP.s / 100;
-  const k1 = smooth(TL.GRAVY - .45, TL.GRAVY - .15, t), k2 = smooth(TL.GRAVY, TL.GRAVY + .4, t);
-  const rest = { x: PIP.x + 18 * s, y: CT - 13 * s };
-  const p = lp(lp(rest, { x: GRAVY.x + 6, y: GRAVY.y - 22 }, k1), GRAVY_OUT, k2), L = toPip(p, bob);
-  g.save(); g.translate(PIP.x, CT + bob); g.scale(s, s); pipArm(g, 1, L.x, L.y, false, true); g.restore();
-  if (k1 >= 1) { gravyBoat(g, p.x + 6, p.y + 22); tHand(g, p.x, p.y, 9 * s, TOON.pip.skin, TOON.pip.skinS); }
+  const k1 = 1, k2 = smooth(TL.GRAVY - .45, TL.GRAVY + .1, t);   // she brought the gravy over with her
+  const px = pipX(t), rest = { x: px + 18 * s, y: CT - 13 * s };
+  const p = lp({ x: rest.x + 20, y: rest.y - 40 }, GRAVY_OUT, k2), L = toPip(p, bob, px);
+  g.save(); g.translate(px, CT + bob); g.scale(s, s); pipArm(g, 1, L.x, L.y, false, true); g.restore();
+  if (k1 >= 1) { g.save(); g.translate(p.x + 30, p.y + 30); g.scale(1.5, 1.5); gravyBoat(g, 0, 0); g.restore(); tHand(g, p.x, p.y, 9 * s, TOON.pip.skin, TOON.pip.skinS); }   // she holds it by the handle
 }
 
 // ---------------------------------------------------------------- Rae: deadpan; her right arm does the microwave
@@ -452,9 +455,9 @@ const CAM = Object.assign({}, VMCAM, {
   MICRO_A: [790, 1217, 3.2, 3.32], MICRO_B: [790, 1217, 3.2, 3.32], MICRO_C: [790, 1217, 3.2, 3.32],   // the microwave window, three cuts (the robot's screen stays out)
   WIDE: [590, 1000, 1.18, 1.22],
   MICRO_RAE: [800, 1150, 2.2, 2.28],                           // Rae's face above, the microwave, Dennis's eyes at the right
-  ROBOT_CU: [610, 1270, 3.2, 3.3],                             // the robot's screen; the frame top stays under the clerks' chins
-  RAE_MED: [710, 1010, 2.0, 2.06],                             // Rae with her leftovers, Pip's arm with the gravy from the left
-  END_WIDE: [530, 865, 1.82, 1.85],                            // MAGS and his wall photo out of frame; faces under y 780 for the card
+  ROBOT_CU: [372, 1345, 3.2, 3.3],                             // the robot's screen; the frame top stays under Pip's chin
+  RAE_MED: [760, 1010, 2.2, 2.26],                             // Rae with her leftovers, Pip's arm with the gravy from the left (her face just out)
+  END_WIDE: [565, 862, 1.9, 1.92],                             // Pip (stepped over) and Rae; MAGS and his wall photo out of frame; faces under y 780 for the card
 });
 
 // ---------------------------------------------------------------- frame
@@ -474,7 +477,6 @@ function drawScene(t) {
   c.drawImage(STATIC.front, 0, CT);
   drawCloth(c, t);
   drawRegister(c, false);
-  if (t >= TL.CLOTH + .55 && t < TL.GRAVY - .15) gravyBoat(c, GRAVY.x, GRAVY.y);
   drawMicrowave(c, t);
   puff(c, t);
   blob(c, t);

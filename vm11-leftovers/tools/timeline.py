@@ -57,6 +57,8 @@ T["SPLAT"] = round(end("L7") + 1.2, 3)                                          
 T["DEN_OUT"] = round(V["L8"]["t"] + 0.2, 3)                                                           # Dennis slides off, dripping
 # the ding: Rae opens the door and takes out her own leftovers; Pip holds out the gravy
 T["OPEN2"] = round(T["DING"] + 0.35, 3); T["RAEOUT"] = round(T["DING"] + 0.8, 3)
+T["PIPW0"] = round(T["DING"] + 0.05, 3)                                                              # Pip steps over toward Rae (off frame)
+T["PIP_X0"], T["PIP_X1"], T["PIP_STEP"], T["PIP_SPS"] = 330, 400, 70, 1.9
 T["GRAVY"] = round(V["L13"]["t"] + 0.3, 3)
 T["BUTTON"] = round(end("L13") + 0.45, 3)
 assert T["BUTTON"] < DUR - ENDCARD, (T["BUTTON"], DUR - ENDCARD)

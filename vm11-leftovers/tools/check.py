@@ -81,8 +81,17 @@ def media():
 NUM = {"99.99": "ninety nine ninety nine", "60": "sixty", "30": "thirty", "20": "twenty", "25": "twenty five", "1": "one", "0": "zero", "11": "eleven", "9": "nine"}
 
 
+ONES = "zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen".split()
+TENS = "_ _ twenty thirty forty fifty sixty seventy eighty ninety".split()
+def spell(n):                                    # 0-99 as words, for prices ("$3.99" is how "three ninety-nine" comes back)
+    n = int(n)
+    return ONES[n] if n < 20 else TENS[n // 10] + ("" if n % 10 == 0 else " " + ONES[n % 10])
+
+
 def words(s):
     s = re.sub(r"\[[^\]]*\]", " ", s).lower()
+    s = re.sub(r"\$(\d{1,2})\.(\d\d)\b", lambda m: " " + spell(m.group(1)) + " " + spell(m.group(2)) + " ", s)   # $3.99: three ninety nine
+    s = re.sub(r"\$(\d{1,2})\b", lambda m: " " + spell(m.group(1)) + " dollars ", s)                               # $5: five dollars
     s = re.sub(r"\$?(\d+(?:\.\d+)?)%?", lambda m: " " + NUM.get(m.group(1), m.group(1)) + " ", s)
     s = s.replace("-", " ").replace("%", " percent")
     return [{"rae": "ray", "rey": "ray", "rai": "ray"}.get(w, w) for w in re.sub(r"[^a-z' ]+", " ", s).split()]   # Rae is heard as Ray/Rey
