@@ -1,0 +1,34 @@
+{
+ "seed": 9,
+ "voice_db": 0,
+ "music_db": -9,
+ "duck_db": 12,
+ "tone_db": -50,
+ "hum_db": -61,
+ "plr_db": 11.0,
+ "min_margin_db": 8,
+ "pan": {"VERA": -0.15, "CLEO": 0.15},
+ "derived": {
+  "set_clack": {"from": "slide", "len": 0.22},
+  "scrape_a": {"from": "slide", "skip": 0.44, "len": 0.26},
+  "scrape_b": {"from": "slide", "skip": 2.3, "len": 0.3},
+  "crackle": {"from": "self_pop", "len": 0.5}
+ },
+ "grains": {"cloth": {"len": 0.45, "merge": 0.3, "thr": 0.3}, "steps_lab": {"len": 0.3, "merge": 0.2, "thr": 0.3}},
+ "foley": {
+  "cloth": {"grain": "cloth", "g": -21, "space": "close", "vary": 0.8},
+  "step": {"grain": "steps_lab", "g": -22, "space": "lab", "vary": 0.5},
+  "set": {"fx": "set_clack", "g": -22, "space": "close"},
+  "scrape": {"fx": "scrape_a", "g": -24, "space": "close"},
+  "scrape2": {"fx": "scrape_b", "g": -25, "space": "close"},
+  "note": {"fx": "flutter", "g": -27, "space": "close", "align": true, "dur": 0.9, "fout": 0.3},
+  "pick": {"fx": "set_clack", "g": -29, "space": "close"},
+  "click": {"fx": "click", "g": -16, "space": "close", "align": true},
+  "klaxon": {"fx": "klaxon", "g": -27, "space": "lab", "duck": 9, "fin": 0.01, "fout": 0.04},
+  "beep": {"fx": "beep", "g": -23, "space": "lab", "dur": 0.12, "fout": 0.05},
+  "pop": {"fx": "puff", "g": -15, "space": "close", "align": true},
+  "crackle": {"fx": "crackle", "g": -25, "space": "close", "fout": 0.25},
+  "boing": {"fx": "spring_sign", "g": -19, "space": "dry", "align": true},
+  "chalk": {"fx": "chalk", "g": -17, "space": "lab", "fin": 0.02, "fout": 0.15}
+ }
+}

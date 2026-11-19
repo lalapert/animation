@@ -1,0 +1,113 @@
+{
+ "model_id": "eleven_v4",
+ "cast": {
+  "VERA": {
+   "voice_id": "buRySvQEB2e8Dcglym6i",
+   "name": "LAB Vera Volt",
+   "settings": {
+    "stability": 0.3,
+    "similarity_boost": 0.8,
+    "style": 0.7,
+    "speed": 1.0
+   }
+  },
+  "CLEO": {
+   "voice_id": "biUhGlVm4NoNe58piPit",
+   "name": "LAB Cleo",
+   "settings": {
+    "stability": 0.6,
+    "similarity_boost": 0.8,
+    "style": 0.25,
+    "speed": 0.92
+   }
+  }
+ },
+ "lines": [
+  {
+   "id": "L1",
+   "who": "VERA",
+   "text": "[devastated] Thanksgiving is ruined.",
+   "plain": "Thanksgiving is ruined.",
+   "sub": "Thanksgiving is ruined."
+  },
+  {
+   "id": "L2",
+   "who": "CLEO",
+   "text": "[deadpan] Extra crispy.",
+   "plain": "Extra crispy.",
+   "sub": "Extra crispy."
+  },
+  {
+   "id": "L3",
+   "who": "VERA",
+   "text": "[sudden grin, scheming] Then we un-cook it.",
+   "plain": "Then we un-cook it.",
+   "sub": "Then we un-cook it.",
+   "asr": "Then we uncook it."
+  },
+  {
+   "id": "L4",
+   "who": "VERA",
+   "text": "[delighted] Perfect!",
+   "plain": "Perfect!",
+   "sub": "Perfect!"
+  },
+  {
+   "id": "L5",
+   "who": "VERA",
+   "text": "[nervous] Okay. Stop.",
+   "plain": "Okay. Stop.",
+   "sub": "Okay. Stop.",
+   "noctx": true
+  },
+  {
+   "id": "L6",
+   "who": "VERA",
+   "text": "[awed whisper] It turned dinner back into money.",
+   "plain": "It turned dinner back into money.",
+   "sub": "It turned dinner back into money."
+  },
+  {
+   "id": "L7",
+   "who": "VERA",
+   "text": "[maniacal glee] Everything goes in!",
+   "plain": "Everything goes in!",
+   "sub": "Everything goes in!"
+  },
+  {
+   "id": "L8",
+   "who": "VERA",
+   "text": "[giddy] Rent! Actual rent!",
+   "plain": "Rent! Actual rent!",
+   "sub": "Rent! Actual rent!"
+  },
+  {
+   "id": "L9",
+   "who": "CLEO",
+   "text": "[deadpan] What about this?",
+   "plain": "What about this?",
+   "sub": "What about this?"
+  },
+  {
+   "id": "L10",
+   "who": "VERA",
+   "text": "[panicked] Cleo, no. Not time!",
+   "plain": "Cleo, no. Not time!",
+   "sub": "Cleo, no. Not time!"
+  },
+  {
+   "id": "L11",
+   "who": "VERA",
+   "text": "[devastated] Thanksgiving is ruined.",
+   "plain": "Thanksgiving is ruined.",
+   "sub": "Thanksgiving is ruined."
+  },
+  {
+   "id": "L12",
+   "who": "CLEO",
+   "text": "[deadpan] Extra crispy.",
+   "plain": "Extra crispy.",
+   "sub": "Extra crispy."
+  }
+ ]
+}

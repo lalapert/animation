@@ -1,0 +1,152 @@
+{
+ "model_id": "eleven_v4",
+ "cast": {
+  "PIP": {
+   "voice_id": "BiP91t4ozM9IZajOdSu2",
+   "name": "Win2",
+   "settings": {
+    "stability": 0.3,
+    "similarity_boost": 0.8,
+    "style": 0.65,
+    "speed": 1.05
+   }
+  },
+  "RAE": {
+   "voice_id": "oy557F0mOsPZZqdz8oK6",
+   "name": "Kar2",
+   "settings": {
+    "stability": 0.6,
+    "similarity_boost": 0.8,
+    "style": 0.2,
+    "speed": 0.9
+   },
+   "pitch": -1.5
+  },
+  "MAGS": {
+   "voice_id": "WkUURyKtbzB9IM50qGdP",
+   "name": "VM MAGS",
+   "settings": {
+    "stability": 0.45,
+    "similarity_boost": 0.8,
+    "style": 0.5,
+    "speed": 1.0
+   }
+  },
+  "DENNIS": {
+   "voice_id": "4vRkwG6IFLYddvxhEKmU",
+   "name": "VM Dennis",
+   "settings": {
+    "stability": 0.4,
+    "similarity_boost": 0.8,
+    "style": 0.55,
+    "speed": 1.0
+   }
+  },
+  "ROBOT": {
+   "voice_id": "SAz9YHcvj6GT2YYXdXww",
+   "name": "River (stock), lonely little robot",
+   "settings": {
+    "stability": 0.4,
+    "similarity_boost": 0.8,
+    "style": 0.5,
+    "speed": 1.0
+   }
+  }
+ },
+ "lines": [
+  {
+   "id": "L1",
+   "who": "ROBOT",
+   "text": "[lonely sigh] Table for one. Again.",
+   "plain": "Table for one. Again.",
+   "sub": "Table for one. Again."
+  },
+  {
+   "id": "L2",
+   "who": "PIP",
+   "text": "[gasps, heartbroken] Nobody eats alone on Thanksgiving!",
+   "plain": "Nobody eats alone on Thanksgiving!",
+   "sub": "Nobody eats alone\non Thanksgiving!"
+  },
+  {
+   "id": "L3",
+   "who": "MAGS",
+   "text": "[bright, salesy] Microwave fee: five dollars! Gratitude: three ninety-nine!",
+   "plain": "Microwave fee: five dollars! Gratitude: three ninety-nine!",
+   "sub": "Microwave fee: five dollars!\nGratitude: three ninety-nine!",
+   "asr": "Microwave fee, $5. Gratitude, $3.99"
+  },
+  {
+   "id": "L4",
+   "who": "PIP",
+   "text": "[outraged] Gratitude should be free!",
+   "plain": "Gratitude should be free!",
+   "sub": "Gratitude should be free!"
+  },
+  {
+   "id": "L5",
+   "who": "RAE",
+   "text": "[flatly] Nothing is free.",
+   "plain": "Nothing is free.",
+   "sub": "Nothing is free."
+  },
+  {
+   "id": "L6",
+   "who": "DENNIS",
+   "text": "[booming, cheerful] Evening, Rae! The usual!",
+   "plain": "Evening, Rae! The usual!",
+   "sub": "Evening, Rae!\nThe usual!",
+   "asr": "Evening, Ray! The usual!"
+  },
+  {
+   "id": "L7",
+   "who": "RAE",
+   "text": "[deadpan] Rule nine: always cover it.",
+   "plain": "Rule nine: always cover it.",
+   "sub": "Rule nine:\nalways cover it."
+  },
+  {
+   "id": "L8",
+   "who": "PIP",
+   "text": "[delighted] Okay! What's everyone thankful for?",
+   "plain": "Okay! What's everyone thankful for?",
+   "sub": "Okay! What's everyone\nthankful for?"
+  },
+  {
+   "id": "L9",
+   "who": "ROBOT",
+   "text": "[softly, touched] ...Company.",
+   "plain": "...Company.",
+   "sub": "...Company."
+  },
+  {
+   "id": "L10",
+   "who": "MAGS",
+   "text": "[bright, greedy] Paying customers!",
+   "plain": "Paying customers!",
+   "sub": "Paying customers!"
+  },
+  {
+   "id": "L11",
+   "who": "PIP",
+   "text": "[hopeful] Rae? Join us!",
+   "plain": "Rae? Join us!",
+   "sub": "Rae? Join us!",
+   "asr": "Ray, join us"
+  },
+  {
+   "id": "L12",
+   "who": "RAE",
+   "text": "[flatly] I don't do holidays.",
+   "plain": "I don't do holidays.",
+   "sub": "I don't do holidays."
+  },
+  {
+   "id": "L13",
+   "who": "RAE",
+   "text": "[deadpan] ...Pass the gravy.",
+   "plain": "...Pass the gravy.",
+   "sub": "...Pass the gravy."
+  }
+ ]
+}

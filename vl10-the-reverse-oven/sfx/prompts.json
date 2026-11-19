@@ -1,0 +1,58 @@
+{
+ "click": [
+  0.5,
+  "a single small plastic remote control button click, close",
+  "copied from vl01-day-one"
+ ],
+ "self_pop": [
+  1.2,
+  "a small electronic gadget blowing itself up in someone's hands: one sharp little bang, crackle and a sputter, close, no music",
+  "copied from vl09-self-destruct"
+ ],
+ "steps_lab": [
+  4.5,
+  "slow footsteps of one person in soft leather shoes on a bare concrete basement floor, eight separate steps with short gaps, dry, no music, no voices",
+  "copied from vl05-the-monologue"
+ ],
+ "run_lab": [
+  3.0,
+  "one person running fast in sneakers across a bare concrete floor, ten separate quick footsteps, dry, no music, no voices",
+  "copied from vl06-lab-inspection"
+ ],
+ "unroll": [
+  1.6,
+  "a very long paper receipt unrolling fast and spilling onto the floor, rustling paper",
+  "copied from vl05-the-monologue"
+ ],
+ "cloth": [
+  3.0,
+  "four separate quick rustles of a stiff cotton lab coat sleeve as arms are thrown up, close, dry, pauses between, no voice",
+  "copied from vl04-laser-pointer"
+ ],
+ "chalk": [
+  1.2,
+  "chalk drawing a big circle on a chalkboard, one continuous scrape",
+  "copied from vl01-day-one"
+ ],
+ "thud": [
+  0.8,
+  "a heavy metal fire extinguisher slammed down on a lab bench, a solid clank",
+  "copied from vl03-help-wanted"
+ ],
+ "oven_hum": [
+  6.0,
+  "a countertop electric oven running: steady convection fan whir and a low heating element hum, close, no music"
+ ],
+ "oven_door": [
+  2.0,
+  "a small countertop oven door pulled open on its spring hinge, then snapped shut: metal creak and a clunk, close, no music"
+ ],
+ "cash_drop": [
+  1.2,
+  "a small stack of paper banknotes and a few coins dropped onto a metal oven rack: a soft paper slap and a coin jingle, close"
+ ],
+ "alarm_clock": [
+  4.0,
+  "an old wind-up twin bell alarm clock ticking loudly on a table, close, steady ticks, no ringing, no music"
+ ]
+}

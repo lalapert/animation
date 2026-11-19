@@ -1,0 +1,70 @@
+{
+ "step": [
+  0.5,
+  "one single footstep of a work boot on a hard polished stone floor in a large empty hall, close, with a short echo"
+ ],
+ "breath": [
+  2.0,
+  "one slow quiet human exhale very close to a microphone, muffled, no voice"
+ ],
+ "breath_bed": [
+  8.0,
+  "a frightened man breathing shakily and quietly right next to a camcorder microphone, uneven breaths, trying to stay quiet, loopable"
+ ],
+ "near_breath": [
+  8.0,
+  "slow, deep, calm breathing of someone standing right against a microphone, very close and intimate, long inhales and exhales, unhurried, not scared, no voice, loopable"
+ ],
+ "handling": [
+  0.8,
+  "a camcorder microphone rubbed and knocked by a hand as the camera is spun around fast"
+ ],
+ "camclick": [
+  0.6,
+  "a 1990s camcorder record button pressed: a plastic click and the tape transport motor starting up"
+ ],
+ "vcr_clunk": [
+  0.6,
+  "a 1990s VCR jog shuttle control: one hard mechanical clunk and a quick whir of the tape heads"
+ ],
+ "glitch": [
+  0.6,
+  "a very short VHS tape tracking glitch: a warbling distorted electrical crackle and a brief buzz"
+ ],
+ "static": [
+  2.0,
+  "harsh analog VHS tape static, loud white noise hiss with crackle and a low hum, a tape ending on a blank channel"
+ ],
+ "tape_hiss": [
+  8.0,
+  "constant soft analog videotape hiss and faint mechanical motor whir, steady, loopable"
+ ],
+ "gasp": [
+  0.8,
+  "one short sharp frightened gasp of a man very close to a microphone, a quick intake of breath, no words"
+ ],
+ "cam_hit": [
+  1.0,
+  "something heavy slamming against a plastic security camera housing on a ceiling bracket, recorded by the camera's own tiny microphone: one dull heavy thump right on the microphone, a hard plastic crack and the metal bracket rattling, close, no voice"
+ ],
+ "duct_hum": [
+  8.0,
+  "a narrow concrete service corridor behind a shopping mall at night: a low steady ventilation duct hum and a faint electrical buzz, no people, no music, loopable"
+ ],
+ "hall_tone": [
+  8.0,
+  "a huge empty shopping mall concourse at night with the power off: very quiet low room tone, faint wind over a glass skylight, distant building creaks, no people, no music, loopable"
+ ],
+ "grille_creak": [
+  2.5,
+  "a metal roll-down security grille in front of a closed shop creaking and ticking softly as someone on the other side slowly leans their weight against it, close, quiet, no voices"
+ ],
+ "grille_rattle": [
+  1.5,
+  "hands suddenly grab a metal roll-down security grille from the other side and shake it violently, a loud harsh metallic rattle and clang right in front of the microphone, then it stops, no voices"
+ ],
+ "lights_on": [
+  2.0,
+  "a heavy electrical contactor clunks in a dark closed store and a bank of halogen display spotlights switches on at once with a buzz, indoor, no voices"
+ ]
+}
