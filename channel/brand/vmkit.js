@@ -213,6 +213,8 @@ function endCard(g, t, show) {
     tShape(g, acc, gg => gg.roundRect(x0 + 40, ay, w - 80, ah, ah / 2), 5);
     g.font = '400 46px "Bungee"'; const tw = g.measureText(s).width, size = Math.floor(46 * Math.min(1, 680 / tw));
     tText(g, s, 540, ay + ah / 2 - 4, size, TOON.ink, '"Bungee"', 'center', 400);
+    // 11/19: a dark backing so the hint reads on bright sets too (VL11's store shelves)
+    g.fillStyle = 'rgba(18,10,42,.88)'; g.beginPath(); g.roundRect(540 - 132, ay + ah + 14, 264, 40, 20); g.fill();
     tText(g, 'COMMENT BELOW', 540, ay + ah + 34, 26, '#fbf7ff', '"Bungee"', 'center', 400);
   }
   g.restore();
