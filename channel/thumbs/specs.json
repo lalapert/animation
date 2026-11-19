@@ -627,5 +627,20 @@
    1150
   ],
   "drawn": true
+ },
+ {
+  "folder": "sr11-store-214",
+  "t": 0.2,
+  "series": "sr",
+  "tape": "TAPE 11",
+  "lines": [
+   "IT MOVED",
+   "AGAIN."
+  ],
+  "focus": [
+   560,
+   900
+  ],
+  "zoom": 1.25
  }
 ]
