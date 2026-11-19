@@ -581,5 +581,28 @@
    960
   ],
   "zoom": 1.45
+ },
+ {
+  "folder": "vl10-the-reverse-oven",
+  "t": 0.5,
+  "series": "vl",
+  "ep": 10,
+  "lines": [
+   "WHERE'S",
+   "DINNER?"
+  ],
+  "hl": [
+   "DINNER?"
+  ],
+  "focus": [
+   540,
+   960
+  ],
+  "zoom": 1.2,
+  "place": [
+   540,
+   1160
+  ],
+  "drawn": true
  }
 ]

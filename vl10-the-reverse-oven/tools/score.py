@@ -1,14 +1,13 @@
-"""Score for Volt Labs 9 "Self-Destruct": the Volt Labs band (tools/band.py, the same band as VL4-8), cued to the scene
+"""Score for Volt Labs 10 "The Reverse Oven": the Volt Labs band (tools/band.py, the same band as VL4-9), cued to the scene
 (owner 11/13: music that fits and serves the scene, stops for punchlines, at most two or three hits).
 
-Cue sheet (music under setups and the walks, silence under punchlines; the room tone and the foley carry the rest):
-  M1  0.00 -> "Are you smiling?"   the theme from frame 1 (Cleo smiling at two red buttons), resolved on D before "No."
-  M2  she goes for coffee          tiptoe (no brushes) under the walk out and Cleo's shell game, cut the moment Vera is back
-                                   and stops ("Which one is the self-destruct?" and "One of them." in the room's own air)
-  hit Cleo presses it              uh-oh (a low unison semitone fall)
-  M3  the countdown                a pedal that climbs with the wall display, 5 to 0, cut dead on zero: the remote's own small
-                                   bang and "...Technically, it worked." in silence
-  M4  the board                    the theme's first bar as the tenth circle goes on, then the button. Two hits in the episode.
+Cue sheet (music under setups and the movement, silence under punchlines; the room tone, the oven and the foley carry the rest):
+  M1  0.00 -> "Extra crispy."   the theme from frame 1 (the burnt turkey, "Thanksgiving is ruined."), resolved before Cleo's line
+  M2  the oven reverses         a pedal that climbs while the turkey un-burns, goes raw, a bag, a receipt; cut dead on the cash
+  M3  the dash                  a pizzicato scurry, out to the gauntlet and back
+  hit the clock's dial          uh-oh (a low unison semitone fall); the rewind is the episode's own sound backwards (mix.py)
+  M1' frame 1 again             the same theme bars as the opening, so the loop is the same picture and the same music
+  M4  the board                 the theme's first bar under the end card as the eleventh loop closes, then the button
   .venv/bin/python tools/score.py            -> out/music.wav (active RMS -20 dBFS; the mix sets its level), out/music_cues.json
 """
 import json, os, sys
@@ -26,11 +25,12 @@ DUR = TL["DUR"]
 b = Band(DUR, bpm=TL["BPM"], seed=8)
 B = b.B
 
-b.cue(0.0, end("L3") + .05, "theme", end="cadence", bars=["A1", "A2", "B1", "B2"], until=V["L4"]["t"] - .1)
-b.cue(TL["WALK0"] - .2, TL["ARR"] + .05, "tiptoe", end="cut", level=.7, bars=["A1", "A2", "B1", "B2"])
-b.hit(TL["PRESS"] + .08, "uhoh", level=.8)
-b.cue(TL["ALARM"] + .1, TL["ZERO"] - .02, "build", end="cut", rise=(TL["ALARM"] + .1, TL["ZERO"]), level=.7)
-hit = TL["BOARDT"] + 1.3                                        # the tenth circle closes (film.js drawRentCircles)
+b.cue(0.0, V["L2"]["t"] - .15, "theme", end="cadence", bars=["A1", "A2"], until=V["L2"]["t"] - .1)
+b.cue(TL["REV0"] + .05, TL["CASH"], "build", end="cut", rise=(TL["REV0"], TL["CASH"]), level=.65)
+b.cue(TL["RUN0"] - .05, TL["BACK"] + .35, "scurry", end="fade", fade=.25, pan=(.3, -.5), level=.75)
+b.hit(TL["C_DIAL"] + .05, "uhoh", level=.8)
+b.cue(TL["REW1"], TL["REW1"] + V["L2"]["t"] - .15, "theme", end="cadence", bars=["A1", "A2"], until=TL["REW1"] + V["L2"]["t"] - .1)
+hit = TL["BOARDT"] + 1.2                                        # the eleventh loop closes (film.js drawRentSpiral)
 b.cue(hit - 1.92, hit - .5 * B, "tag", end="cadence", level=.85)
 b.hit(hit, "button")
 

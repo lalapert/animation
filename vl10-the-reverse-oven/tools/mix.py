@@ -1,4 +1,4 @@
-"""Volt Labs mix (shared by Volt Labs 4-9; owner 11/13: natural sound, music that serves the scene) -> out/mix.wav
+"""Volt Labs mix (shared by Volt Labs 4-10; owner 11/13: natural sound, music that serves the scene) -> out/mix.wav
 1. Room tone: the basement lab's own air, generated for the whole film (no loop, so no seam can repeat at the cuts): ventilation
    noise shaped like a small concrete room plus the lab's 60 Hz mains hum and its harmonics. Shots listed in mix.json "shots"
    add their own air (the street through the window glass), crossfaded at the cuts. The tone runs under every shot.
@@ -58,6 +58,7 @@ def fx(name):
             if "len" in d: x = fade(x[:int(d["len"] * SR)], .005, min(.08, d["len"] / 3))
             if "lp" in d: x = lowpass(x, d["lp"], 2)
             if "hp" in d: x = highpass(x, d["hp"], 2)
+            if d.get("rev"): x = np.ascontiguousarray(x[::-1])
         else:
             p = os.path.join(FX, name + ".wav")
             x = load(p if os.path.exists(p) else os.path.join(FX, name + ".mp3"))
@@ -183,6 +184,12 @@ for e in EV:
         x = fx(c["fx"])
         if "skip" in c: x = x[int(c["skip"] * SR):]
     dur = e.get("dur", c.get("dur"))
+    if dur is not None and c.get("loop") and (dur + .2) * SR > len(x):
+        xf = int(.3 * SR); body = x.copy(); need = int((dur + .3) * SR)
+        while len(body) < need:
+            r = np.linspace(0, 1, xf, dtype=np.float32)[:, None]
+            body = np.concatenate([body[:-xf], body[-xf:] * (1 - r) + x[:xf] * r, x[xf:]])
+        x = body
     fin, fout = c.get("fin", .005), c.get("fout", .08)
     if dur is not None:
         on = active(x, .2)[0] if c.get("align") else 0
@@ -279,8 +286,24 @@ if os.path.exists(mp):
     m = load(mp); n = min(len(m), L); MUS[:n] = m[:n] * db(CFG.get("music_db", -9))
 MUS *= (1 - (1 - db(-CFG.get("duck_db", 10))) * envd)[:, None]
 
-# ---------------------------------------------------------------- 5. checks: the voices over everything else
+# ---------------------------------------------------------------- the rewind (mix.json "rewind"): from REW0 the picture runs the
+# story backwards to frame 1 (film.js storyTime: s = REW0 * (1 - (0.5 - 0.5 cos(pi u)))); the sound does the same with what was
+# heard: everything before REW0, read backwards on that curve (so it speeds up and slows down with the picture), duller and lower
 REST = TONE + FOL + MUS
+RW = CFG.get("rewind")
+if RW:
+    r0, rl = TL["REW0"], TL["REW_LEN"]
+    i0, n = int(r0 * SR), int(rl * SR)
+    src = (vox + REST)[:i0].copy()
+    u = np.arange(n) / n
+    sidx = (r0 * (1 - (.5 - .5 * np.cos(np.pi * u)))) * SR
+    seg = np.stack([np.interp(sidx, np.arange(len(src)), src[:, ch]) for ch in range(2)], 1).astype(np.float32)
+    seg = lowpass(seg, RW.get("lp", 3800), 2)
+    seg = fade(seg, .12, .25) * db(RW.get("db", -6))
+    REST[i0:i0 + n] += seg[:len(REST) - i0]
+    print(f"rewind: {r0:.2f}-{r0 + rl:.2f} s, the first {r0:.1f} s backwards at {RW.get('db', -6)} dB")
+
+# ---------------------------------------------------------------- 5. checks: the voices over everything else
 
 
 def kw(x):

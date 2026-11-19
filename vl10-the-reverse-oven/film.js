@@ -51,7 +51,7 @@ function drawTurkey(g, x, y, k, kind, crumbled) {
   tShape(g, C[0], body, 3.6);
   tShade(g, body, C[2], gg => gg.ellipse(14, -10, 70, 22, 0, 0, 6.2832));
   g.fillStyle = C[1]; g.beginPath(); g.ellipse(-18, -52, 22, 9, -.25, 0, 6.2832); g.fill();   // the highlight
-  if (kind === 'burnt') { g.strokeStyle = '#6a5048'; g.lineWidth = 2.4; for (const [a, b, c2, d] of [[-30, -40, -12, -30], [8, -50, 26, -38], [20, -22, 40, -28]]) { g.beginPath(); g.moveTo(a, b); g.lineTo(c2, d); g.stroke(); } }
+  if (kind === 'burnt') { g.save(); g.shadowColor = '#ff7a1a'; g.shadowBlur = 8; g.strokeStyle = '#ff8a2a'; g.lineWidth = 3; for (const [a, b, c2, d] of [[-34, -42, -14, -30], [6, -54, 28, -40], [18, -20, 42, -28], [-16, -18, -2, -12]]) { g.beginPath(); g.moveTo(a, b); g.lineTo((a + c2) / 2 + 4, (b + d) / 2 - 5); g.lineTo(c2, d); g.stroke(); } g.restore(); }
   if (kind === 'raw') { g.fillStyle = '#e7a998'; for (let i = 0; i < 14; i++) { g.beginPath(); g.arc(-44 + (i * 37) % 90, -52 + (i * 23) % 36, 2.2, 0, 6.2832); g.fill(); } }
   if (crumbled) { g.fillStyle = '#2a201d'; for (const [dx, dy, r] of [[-60, -4, 6], [-48, -2, 4], [-70, -3, 4], [-56, -9, 3]]) { g.beginPath(); g.arc(dx, dy, r, 0, 6.2832); g.fill(); } tShape(g, '#3a2e2a', gg => gg.ellipse(-44, -46, 7, 6, 0, 0, 6.2832), 2.4); }
   g.restore();
@@ -108,12 +108,16 @@ function drawFork(g, x, y) {                                          // the mea
   for (const dx of [-5, 5]) tLine(g, [x + 10 + dx, y + 70, x + 12 + dx, y + 96], 3.2);
   tShape(g, '#6b4a2a', gg => gg.roundRect(x - 6, y - 26, 12, 30, 4), 2.6);
 }
-function smokePuffs(g, x, y, s, inward) {                             // opaque puffs that grow and shrink (no fading)
-  for (let i = 0; i < 4; i++) {
-    let k = ((s * .55 + i * .25) % 1); if (inward) k = 1 - k;          // reversed: they shrink back down into the turkey
-    const r = 10 + 22 * Math.sin(Math.PI * k), px = x + 16 + k * 70 + Math.sin(k * 6 + i) * 8, py = y - 40 - k * 210;
-    if (r > 2) tEllipse(g, px, py, r, r * .85, '#cfc8d8', 2.6);
+function smokePuffs(g, x, y, s, inward, k0 = 1) {                     // smoke wisps: opaque curls that rise, sway and shorten (no fading)
+  g.save(); g.lineCap = 'round';
+  for (let i = 0; i < 3; i++) {
+    let k = ((s * .5 + i / 3) % 1); if (inward) k = 1 - k;             // reversed: they sink back down into the turkey
+    const len = 120 * Math.sin(Math.PI * k) * k0, bx = x + 10 + i * 22, by = y - 30 - k * 120 * k0;
+    if (len < 8) continue;
+    const pts = []; for (let j = 0; j <= 10; j++) { const u = j / 10; pts.push([bx + Math.sin(u * 5 + s * 3 + i * 2) * 14 + u * 30, by - u * len]); }
+    for (const [w, col] of [[11, TOON.ink], [6, '#c9c2d3']]) { g.lineWidth = w; g.strokeStyle = col; g.beginPath(); pts.forEach(([px, py], j) => j ? g.lineTo(px, py) : g.moveTo(px, py)); g.stroke(); }
   }
+  g.restore();
 }
 
 // ---------------------------------------------------------------- the reverse oven
@@ -161,7 +165,7 @@ function dateAt(s) {                                                   // the di
 function drawInside(g, s) {
   const it = insideAt(s); if (!it) return;
   const k = .78;
-  if (['burnt', 'golden', 'raw'].includes(it)) { drawTray(g, INX, INY + 6, k); drawTurkey(g, INX, INY - 12, k, it, it === 'burnt'); if (it === 'burnt' && s >= TL.REV0) smokePuffs(g, INX - 30, INY - 10, s, true); }
+  if (['burnt', 'golden', 'raw'].includes(it)) { drawTray(g, INX, INY + 6, k); drawTurkey(g, INX, INY - 12, k, it, it === 'burnt'); if (it === 'burnt' && s >= TL.REV0) smokePuffs(g, INX - 40, INY - 4, s, true, .7); }
   else if (it === 'bag') drawBag(g, INX, INY + 4, .9);
   else if (it === 'receipt') drawReceipt(g, INX, INY + 4, .95);
   else if (it === 'cash' || it === 'cash2') drawCash(g, INX, INY - 4, 1.05, it === 'cash' ? 3 : 5);
@@ -232,8 +236,8 @@ function veraState(s) {
   } else if (s < TL.RUN0) {                                             // takes the cash, holds it up; puts it on the bench
     expr = s < V.L7.t ? 'cool' : 'laugh';
     if (s < TL.POP + .45) { const k = smooth(TL.POP + .05, TL.POP + .25, s) * (1 - smooth(TL.POP + .3, TL.POP + .45, s)); reachR = loc(lerp(VX_OVEN + 40, INX - 10, k), lerp(LCT - 160, INY - 20, k)); hold = s > TL.POP + .25 ? 'cash' : null; }
-    else if (s < V.L7.t + .5) { reachR = { x: 34, y: -96 }; hold = 'cash'; }
-    else { const k = smooth(V.L7.t + .5, V.L7.t + .8, s); reachR = { x: lerp(34, (PILE.x - p.x) / K9, k), y: lerp(-96, -10, k) }; hold = k < .95 ? 'cash' : null; }
+    else if (s < V.L7.t + .5) { reachR = { x: 8, y: -104 }; hold = 'cash'; }
+    else { const k = smooth(V.L7.t + .5, V.L7.t + .8, s); reachR = { x: lerp(8, (PILE.x - p.x) / K9, k), y: lerp(-104, -10, k) }; hold = k < .95 ? 'cash' : null; }
   } else if (s < TL.OPEN2) {                                            // the dash: grab the gauntlet, back to the oven
     expr = 'scheme';
     if (s >= TL.GRAB - .05 && s < TL.RUN1) reachR = loc(GAUNT0.x + 10, LCT - 22);
@@ -246,7 +250,7 @@ function veraState(s) {
     expr = s < V.L10.t - .1 ? 'laugh' : 'fluster';
     const k = smooth(TL.POP2 + .05, TL.POP2 + .3, s) * (1 - smooth(TL.POP2 + .3, TL.POP2 + .55, s));
     if (s < TL.POP2 + .55) { reachR = loc(lerp(VX_OVEN + 40, INX - 10, k), lerp(LCT - 160, INY - 20, k)); hold = s > TL.POP2 + .3 ? 'stack' : null; }
-    else { reachR = { x: 36, y: -118 + Math.sin(s * 9) * 3 }; hold = 'stack'; }
+    else { reachR = { x: -2, y: -112 + Math.sin(s * 9) * 3 }; hold = 'stack'; }
   }
   return { x: p.x, moving: p.moving, dist: p.dist, o: { expr, mouth, blink: s > .6 && blinkAt(0, s), tube: false, reachR }, hold, fork };   // eyes open on frame 1
 }
@@ -258,8 +262,8 @@ function drawVeraAll(g, s) {
   if (st.o.reachR) {
     const hx = st.x + st.o.reachR.x * K9, hy = LCT + dy + st.o.reachR.y * K9;
     if (st.fork) drawFork(g, hx - 4, hy - 6);
-    if (st.hold === 'cash') drawCash(g, hx + 30, hy - 6, 1.0, 3);
-    if (st.hold === 'stack') drawCash(g, hx + 26, hy - 10, 1.35, 5);
+    if (st.hold === 'cash') drawCash(g, hx - 6, hy - 10, 1.0, 3);                 // in front of her, left of the oven
+    if (st.hold === 'stack') drawCash(g, hx - 10, hy - 14, 1.3, 5);
     if (st.hold === 'gauntlet') drawGauntlet(g, hx + 24, hy + 10, 1.0);
     tHand(g, hx, hy, 9.5 * K9, LAB2.vera.skin, LAB2.vera.skinS);         // her hand over what it holds
   }
@@ -329,7 +333,7 @@ const CAM = {
   VERA_MED: [VX_OVEN + 60, VFACE + 160, 1.6, 1.66], CLEO_MED: [CX - 80, CFACE + 160, 1.6, 1.66],
   TWO: [620, 1010, 1.25, 1.3], WIDE: [540, 990, 1.0, 1.03],
   OVEN_CU: [650, LCT - 110, 3.15, 3.3],
-  BOARD_END: [LBOARD.x - 40, LBOARD.y + 40, 2.6, 2.7],                // the spiral sits under the end card (y > 780)
+  BOARD_END: [LBOARD.x - 30, LBOARD.y + 20, 2.55, 2.65],                    // the board's lines and the spiral sit under the end card (y > 800)
 };
 
 // ---------------------------------------------------------------- frame
@@ -353,9 +357,9 @@ function drawScene(t) {
   if (showC) drawCleoAll(c, s, st.loop);
   if (showV) drawVeraAll(c, s);
   // the bench props
-  if (s < TL.SLIDE0) { drawTray(c, TRAY0.x, TRAY0.y); drawTurkey(c, TRAY0.x, TRAY0.y - 18, 1, 'burnt', s >= .4); }
+  if (s < TL.SLIDE0) { drawTray(c, TRAY0.x, TRAY0.y, 1.2); drawTurkey(c, TRAY0.x, TRAY0.y - 22, 1.2, 'burnt', s >= .4); }
   else if (s < TL.IN1) { const tx = lerp(TRAY0.x, INX, smooth(TL.SLIDE0, TL.IN1, s)); drawTray(c, tx, TRAY0.y - 30 * smooth(TL.SLIDE0, TL.SLIDE0 + .2, s), 1); drawTurkey(c, tx, TRAY0.y - 18 - 30 * smooth(TL.SLIDE0, TL.SLIDE0 + .2, s), 1, 'burnt', true); }
-  if (s < TL.REV0) smokePuffs(c, s < TL.SLIDE0 ? TRAY0.x : lerp(TRAY0.x, INX, smooth(TL.SLIDE0, TL.IN1, s)), TRAY0.y - 30, s, false);
+  if (s < TL.IN1) smokePuffs(c, s < TL.SLIDE0 ? TRAY0.x : lerp(TRAY0.x, INX, smooth(TL.SLIDE0, TL.IN1, s)), TRAY0.y - 50, s, false);
   if (s < TL.GRAB + .1) drawGauntlet(c, GAUNT0.x, GAUNT0.y, 1.0);
   if (s >= V.L7.t + .8) drawCash(c, PILE.x, PILE.y, 1.0, 3);
   if (clockAt(s).where === 'bench') drawAlarmClock(c, CLOCK0.x, CLOCK0.y, 1.0, s * 2);
