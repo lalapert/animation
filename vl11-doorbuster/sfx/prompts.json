@@ -1,0 +1,47 @@
+{
+ "click": [
+  0.5,
+  "a single small plastic remote control button click, close",
+  "copied from vl01-day-one"
+ ],
+ "keys": [
+  0.8,
+  "a big ring of keys jingling and shaking",
+  "copied from vl04-laser-pointer"
+ ],
+ "box_thump": [
+  0.6,
+  "a small briefcase dropped into an open cardboard box: one hollow cardboard thump, close, no music",
+  "copied from vm08-lost-and-found"
+ ],
+ "street_day": [
+  22.0,
+  "a quiet city street in the daytime: distant traffic, a car passing now and then, light wind, faraway footsteps, no voices, no music",
+  "copied from vl08-invisible"
+ ],
+ "cloth": [
+  3.0,
+  "four separate quick rustles of a stiff cotton lab coat sleeve as arms are thrown up, close, dry, pauses between, no voice",
+  "copied from vl04-laser-pointer"
+ ],
+ "crowd_walla": [
+  10.0,
+  "a crowd of shoppers waiting in a long line outside a store before dawn: murmuring, chatting, a few coughs, no clear words, no music"
+ ],
+ "rocket": [
+  4.0,
+  "a small homemade rocket motor igniting with a crackle and roaring steadily, close, no music"
+ ],
+ "cart_rattle": [
+  3.0,
+  "a metal shopping cart rolling very fast over a concrete sidewalk, its wheels rattling and clattering, no music"
+ ],
+ "sliding_door": [
+  1.5,
+  "large automatic sliding glass doors of a big store opening fast: a pneumatic hiss and a rumble, no chime, no music"
+ ],
+ "box_crash": [
+  2.0,
+  "a shopping cart crashing into a tall stack of cardboard boxes, the boxes tumbling and thudding to the floor, no music"
+ ]
+}
