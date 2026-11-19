@@ -604,5 +604,28 @@
    1160
   ],
   "drawn": true
+ },
+ {
+  "folder": "vm11-leftovers",
+  "t": 27.4,
+  "series": "vm",
+  "ep": 11,
+  "lines": [
+   "WHO DIDN'T",
+   "COVER IT?"
+  ],
+  "hl": [
+   "COVER IT?"
+  ],
+  "focus": [
+   540,
+   1000
+  ],
+  "zoom": 1.2,
+  "place": [
+   540,
+   1150
+  ],
+  "drawn": true
  }
 ]

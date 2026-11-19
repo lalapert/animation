@@ -120,7 +120,8 @@ def tube_buzz(n, seed=2):
 
 # ---------------------------------------------------------------- slow time (the curve film.js draws)
 SL = CFG.get("slow", {})
-OFF, ON, SLOWR, DECEL, ACCEL = TL["OFF"], TL["ON"], TL["SLOWR"], TL["DECEL"], TL["ACCEL"]
+HAS_SLOW = bool(SL) and "OFF" in TL                                         # only episodes with a slow time (VM10) use this
+OFF, ON, SLOWR, DECEL, ACCEL = (TL["OFF"], TL["ON"], TL["SLOWR"], TL["DECEL"], TL["ACCEL"]) if HAS_SLOW else (1e9, 1e9, .5, 1, 1)
 
 
 def _smooth(a, b, t):
@@ -130,6 +131,7 @@ def _smooth(a, b, t):
 
 def slowness(t):
     """0 at normal time, 1 at the slowest (the world at SLOWR)"""
+    if not HAS_SLOW: return np.zeros_like(t)
     r = np.ones_like(t)
     m1 = (t >= OFF) & (t < ON); r[m1] = 1 + (SLOWR - 1) * _smooth(OFF, OFF + DECEL, t[m1])
     m2 = t >= ON; r[m2] = SLOWR + (1 - SLOWR) * _smooth(ON, ON + ACCEL, t[m2])
@@ -187,7 +189,7 @@ roomtone = loop_bed(RC["src"], N, seed=RC.get("seed", 1))
 roomtone = highpass(roomtone, 35)
 roomtone *= db(RC.get("db", -50)) / rms(roomtone)
 roomtone += tube_buzz(N) * (db(RC.get("buzz_db", -64)) / rms(tube_buzz(int(2 * SR))))
-roomtone = warp(roomtone, 0.0, SL.get("room_gain_db", 0))                    # the store slows down with the picture
+if HAS_SLOW: roomtone = warp(roomtone, 0.0, SL.get("room_gain_db", 0))      # the store slows down with the picture
 
 # ---------------------------------------------------------------- 2. foley (events) in the store's room
 fol, beds = buf(DUR + 2), buf(DUR + 2)

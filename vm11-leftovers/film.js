@@ -1,10 +1,9 @@
-// Void Mart, episode 10: "Hot Dog Roller". The hot dogs have been rolling since the Big Bang. A one-eyed customer orders one,
-// then two; Pip switches the roller off to give them a break and time slows down; only Rae moves at her usual speed, walks over
-// and switches it back on; the customer bites. Script: channel/scripts/VM10_hot_dog_roller.md
-// Set: the counter (vmkit.js). The counter hides the clerks below the waist; the customer stands in front of it and is only ever
-// framed from the chest up (every frame checked in customer(): her waist never reaches the picture).
-// Slow time: tau(t) is the world's clock while the roller is off; everything but Rae and the spoken lines runs on it
-// (tools/mix.py slows the room and the roller's hum with the same curve).
+// Void Mart, episode 11: "Leftovers". Thanksgiving night: lonely customers from across the universe queue at the store microwave
+// with their leftovers; Pip turns the counter into a Friendsgiving; MAGS charges a microwave fee and sells gratitude; Dennis's
+// uncovered cranberry sauce meets Rae's rule nine; Rae, who doesn't do holidays, has her own leftovers in the microwave.
+// Script: channel/scripts/VM11_leftovers.md
+// Set: the counter (vmkit.js). The clerks stand behind it; the three small customers sit on the counter top, whole (a one-wheel
+// robot, a legless jelly, a floating puff); Dennis (a slug) comes up to the front of the counter.
 // Deterministic: render(t) draws frame t; window.EV lists the sound cues.
 'use strict';
 const cv = document.getElementById('c'), OUT = cv.getContext('2d', { alpha: false });
@@ -15,229 +14,310 @@ const V = Object.fromEntries(TL.VO.map(v => [v.id, v]));
 const endOf = k => V[k].t + V[k].dur;
 const smooth = (a, b, t) => ease(clamp((t - a) / (b - a)));
 const lp = (p, q, k) => ({ x: lerp(p.x, q.x, k), y: lerp(p.y, q.y, k) });
-window.WAIST_ERR = [];
-
-// ---------------------------------------------------------------- slow time (tools/mix.py uses the same curve)
-function rate(t) {
-  if (t < TL.OFF) return 1;
-  if (t < TL.ON) return lerp(1, TL.SLOWR, smooth(TL.OFF, TL.OFF + TL.DECEL, t));
-  return lerp(TL.SLOWR, 1, smooth(TL.ON, TL.ON + TL.ACCEL, t));
-}
-const TAU = (() => { const a = [0]; for (let i = 1; i <= Math.ceil(DUR * 1000) + 2; i++) a.push(a[i - 1] + rate((i - .5) / 1000) / 1000); return a; })();
-const tau = t => { t = Math.max(0, t); const i = Math.min(TAU.length - 2, Math.floor(t * 1000)), f = t * 1000 - i; return TAU[i] + (TAU[i + 1] - TAU[i]) * f; };
-const slowness = t => (1 - rate(t)) / (1 - TL.SLOWR);
+const M0 = TL.M0, MONT = TL.MONT;
 
 // ---------------------------------------------------------------- layout (world coordinates)
-const ROLL = { x: 470, w: 320, h: 72 };                      // the hot dog roller on the counter, in front of Pip's right side
-const RX0 = ROLL.x - ROLL.w / 2, RX1 = ROLL.x + ROLL.w / 2;
-const SW = { x: RX0 + 22, y: CT - 32 };                      // its ON/OFF switch, front left
-const DOGS = [[-46, -94], [46, -94], [-92, -76], [0, -76], [92, -76]];   // back row, then front row (dx, dy from the counter top)
-const TAKE1 = 3, TAKE2 = 4;                                  // the two Pip serves: front middle, front right
-const CLOCK = { x: 360, y: 700, r: 54 };                     // a wall clock over Pip's head
-const CU = { x: 930, hy: 946, waist: 1760, k: 1 };           // the customer: head centre, waist far below every frame
-const OFFER = { x: 682, y: 1168 }, HOLD = { x: 792, y: 1176 }, READY = { x: 772, y: 1010 }, KNOCK = { x: 748, y: CT - 16 }, AFTER = { x: 792, y: 1238 };
-const BUN = { w: 118 };
+const MW = { x0: 640, x1: 860, top: CT - 140 };              // the store microwave on the counter, in front of Rae
+const DOOR = { x0: 648, x1: 800, wy0: CT - 128, wy1: CT - 18 };   // its door (hinged on the left) and window
+const PANEL = { x: 829, disp: CT - 118, start: CT - 40, release: CT - 74 };
+const INSIDE = { x: 724, y: CT - 40 };                        // the middle of the turntable
+const ROBOT = { x: 575, q: 940 }, BLOB = { x: 466, q: 1045 }, PUFF = { x: 360, q: 1150 };   // at Pip's table; .q = in the queue, right of the microwave
+const atTable = t => t >= V.L3.t - .6;                       // they move to the table while we look at MAGS
+const DEN = { x: 980, y: CT + 80, s: 110 };                   // Dennis, at the front of the counter
+const BOWL_UP = { x: 890, y: CT - 22 };                       // Dennis's bowl, lifted onto the counter
+const HOLD_RAE = { x: 724, y: CT - 186 };                     // Rae's own leftovers, held at her chest at the end
+const GRAVY = { x: 414, y: CT - 2 }, GRAVY_OUT = { x: 522, y: CT - 104 };
 
-// ---------------------------------------------------------------- props
-function hotDog(g, x, y, len, rot, roll) {                   // a fossil hot dog, lying left-right; roll turns its cracks round
-  g.save(); g.translate(x, y); g.rotate(rot);
-  const body = gg => gg.roundRect(-len / 2, -12, len, 24, 12);
-  tShape(g, '#9a6444', body); tShade(g, body, '#744631', gg => gg.rect(-len / 2, 4, len, 12));
-  g.save(); g.beginPath(); body(g); g.clip();
-  g.fillStyle = '#b48a6a'; for (const [px, py, r] of [[-.3, -3, 4], [.1, 2, 3], [.35, -4, 3.5]]) { const cx = ((px * len + roll * 30) % len + len * 1.5) % len - len / 2; g.beginPath(); g.ellipse(cx, py, r * 1.6, r, 0, 0, 6.2832); g.fill(); }
-  g.strokeStyle = '#3e2418'; g.lineWidth = 2;               // cracks, sliding round as it rolls
-  for (let i = 0; i < 4; i++) { const cx = ((i * len / 4 + roll * 30) % len + len) % len - len / 2; g.beginPath(); g.moveTo(cx, -10); g.lineTo(cx + 4, -3); g.lineTo(cx, 3); g.lineTo(cx + 3, 9); g.stroke(); }
-  g.fillStyle = 'rgba(255,255,255,.3)'; g.fillRect(-len / 2 + 7, -7, len - 14, 3);
-  g.restore();
-  tShape(g, null, body, 2.8);
-  g.restore();
+// ---------------------------------------------------------------- containers and food
+function tub(g, x, y, w, h, lid, food, label) {               // a clear plastic food container, (x, y) = bottom centre
+  if (food) { g.save(); g.beginPath(); g.roundRect(x - w / 2 + 3, y - h + 6, w - 6, h - 9, 6); g.clip(); food(g, x, y, w, h); g.restore(); }
+  tShape(g, 'rgba(225,240,255,.28)', gg => gg.roundRect(x - w / 2, y - h + 4, w, h - 4, 7), 3);
+  g.fillStyle = 'rgba(255,255,255,.45)'; g.fillRect(x - w / 2 + 6, y - h + 10, 4, h - 18);
+  tShape(g, lid, gg => gg.roundRect(x - w / 2 - 4, y - h - 4, w + 8, 12, 5), 3);
+  if (label) { tShape(g, '#f4e3b5', gg => gg.rect(x - 26, y - h - 3, 52, 10), 1.6); tText(g, label, x, y - h + 2, 10, TOON.ink, '"Bungee"', 'center', 400); }
 }
-function rollerSpin(t) {                                     // the rollers turn on the world's clock while it is on and coast when off
-  const T0 = tau(t), toff = tau(TL.OFF), ton = tau(TL.ON);
-  if (t < TL.OFF) return T0 * 1.6;
-  if (t < TL.ON) return toff * 1.6 + (1 - Math.exp(-(T0 - toff) * 2.5)) * .64;
-  return toff * 1.6 + (1 - Math.exp(-(ton - toff) * 2.5)) * .64 + (T0 - ton) * 1.6;
-}
-function drawRollerBack(g, t) {                              // the bed, the rollers and the hot dogs (under the clerks' hands)
-  const spin = rollerSpin(t), top = CT - ROLL.h;
-  tShape(g, '#3b3552', gg => { gg.moveTo(RX0 + 6, top); gg.lineTo(RX0 + 26, top - 34); gg.lineTo(RX1 - 26, top - 34); gg.lineTo(RX1 - 6, top); gg.closePath(); }, 3);
-  for (let i = 0; i < 6; i++) {
-    const k = i / 5, yy = top - 3 - k * 28, inset = 8 + k * 18;
-    g.strokeStyle = '#d6d9e6'; g.lineWidth = 4 - k * 1.4; g.beginPath(); g.moveTo(RX0 + inset, yy); g.lineTo(RX1 - inset, yy); g.stroke();
-    g.strokeStyle = 'rgba(255,255,255,.7)'; g.lineWidth = 1.4; g.setLineDash([6, 10]); g.lineDashOffset = -spin * 40; g.beginPath(); g.moveTo(RX0 + inset, yy - 1); g.lineTo(RX1 - inset, yy - 1); g.stroke(); g.setLineDash([]);
-  }
-  const taken = i => (i === TAKE1 && t >= TL.CRACK) || (i === TAKE2 && t >= TL.TONG2);
-  DOGS.forEach(([dx, dy], i) => { if (!taken(i)) hotDog(g, ROLL.x + dx, CT + dy, 80, (i % 2 ? .015 : -.01), spin + i * .9); });
-}
-function drawRollerFront(g, t) {                             // the chrome box with the sign and the switch
-  const top = CT - ROLL.h;
-  tShape(g, '#c9cddd', gg => gg.roundRect(RX0, top, ROLL.w, ROLL.h, 8), 3.4);
-  tShade(g, gg => gg.roundRect(RX0, top, ROLL.w, ROLL.h, 8), '#a4a9bf', gg => gg.rect(RX0, top + 44, ROLL.w, 30));
-  tShape(g, '#fbf7ff', gg => gg.roundRect(RX0 + 46, top + 6, ROLL.w - 56, ROLL.h - 12, 5), 2.4);
-  tText(g, 'ROLLING SINCE', ROLL.x + 20, top + 22, 22, TOON.ink, '"Bungee"', 'center', 400);
-  tText(g, 'THE BIG BANG', ROLL.x + 20, top + 48, 27, '#e23b4a', '"Bungee"', 'center', 400);
-  const on = !(t >= TL.OFF && t < TL.ON);
-  tShape(g, '#2b2244', gg => gg.roundRect(SW.x - 14, SW.y - 20, 28, 40, 6), 2.6);
-  tShape(g, on ? '#8fd65a' : '#e23b4a', gg => gg.roundRect(SW.x - 9, on ? SW.y - 16 : SW.y + 2, 18, 14, 3), 2.2);
-  if (on) { g.save(); g.shadowColor = '#8fd65a'; g.shadowBlur = 10; g.fillStyle = '#c8ff9a'; g.beginPath(); g.arc(SW.x, SW.y - 9, 3, 0, 6.2832); g.fill(); g.restore(); }
-}
-function drawSteam(g, t) {                                   // steam off the hot dogs, rising on the world's clock
-  const T0 = tau(t);
-  for (let i = 0; i < 3; i++) {
-    const p = (T0 * .42 + i / 3) % 1, sx = 430 + i * 62 + Math.sin(T0 * 1.3 + i) * 6, sy = CT - 104 - p * 130;
-    g.save(); g.globalAlpha = .5 * Math.sin(Math.PI * p); g.strokeStyle = '#fbf7ff'; g.lineWidth = 5; g.lineCap = 'round';
-    g.beginPath(); g.moveTo(sx, sy); g.bezierCurveTo(sx + 12, sy - 12, sx - 12, sy - 26, sx, sy - 38); g.stroke(); g.restore();
-  }
-}
-function drawClock(g, t) {                                   // the wall clock: its second hand ticks on the world's clock
-  const T0 = tau(t) + 17, { x, y, r } = CLOCK;
-  tEllipse(g, x, y, r + 6, r + 6, '#5c577f', 4); tEllipse(g, x, y, r, r, '#fbf7ff', 3);
-  for (let i = 0; i < 12; i++) { const a = i / 12 * 6.2832; tLine(g, [x + Math.cos(a) * 40, y + Math.sin(a) * 40, x + Math.cos(a) * 47, y + Math.sin(a) * 47], i % 3 ? 2.4 : 4); }
-  const hand = (a, l, w, col) => { g.strokeStyle = col; g.lineWidth = w; g.lineCap = 'round'; g.beginPath(); g.moveTo(x, y); g.lineTo(x + Math.sin(a) * l, y - Math.cos(a) * l); g.stroke(); };
-  hand(5.4 + T0 / 43200 * 6.2832, 24, 6, TOON.ink);
-  hand(.9 + T0 / 3600 * 6.2832, 36, 4.4, TOON.ink);
-  const s = Math.floor(T0) + ease(clamp((T0 % 1) / .14));    // one tick a world-second (a tick in progress stretches out in slow time)
-  hand(s / 60 * 6.2832, 44, 2.6, '#e23b4a');
-  tEllipse(g, x, y, 4.5, 4.5, '#e23b4a', 0);
-}
-function drawBun(g, x, y, n, bite) {                         // a bun with n fossil hot dogs; (x, y) = its centre; bite: a bite out of the right end
-  g.save(); g.translate(x, y);
-  if (bite) { g.beginPath(); g.rect(-200, -200, 400, 400); g.arc(BUN.w / 2 + 4, -10, 38, 0, 6.2832, true); g.clip('evenodd'); }
-  tShape(g, '#e6a856', gg => gg.roundRect(-BUN.w / 2, -6, BUN.w, 26, 13), 3);
-  for (let i = 0; i < n; i++) hotDog(g, i ? 4 : -2, -8 - i * 14, BUN.w + 16, i ? .05 : -.03, i * 1.3);
-  tShape(g, '#f4c27a', gg => gg.roundRect(-BUN.w / 2 + 4, 6, BUN.w - 8, 12, 6), 2.2);
-  g.restore();
-  if (bite) { g.save(); g.translate(x, y); g.strokeStyle = TOON.ink; g.lineWidth = 3; for (let a = 2.1; a < 4.25; a += .3) { g.beginPath(); g.arc(BUN.w / 2 + 4 + Math.cos(a) * 38, -10 + Math.sin(a) * 38, 6, a - 1.3, a + 1.3); g.stroke(); } g.restore(); }
-}
-function tongs(g, x, y, grip) {                              // kitchen tongs, (x, y) = the tips, the handle to the left
-  for (const sd of [-1, 1]) {
-    const pts = [x, y + sd * (3 + 7 * (1 - grip)), x - 92, y + sd * 9];
-    tLine(g, pts, 7); g.strokeStyle = '#dfe2ec'; g.lineWidth = 3.4; g.beginPath(); g.moveTo(pts[0], pts[1]); g.lineTo(pts[2], pts[3]); g.stroke();
-  }
-}
-function flavorBoard(g, t) {                                 // MAGS's sales board
-  const t0 = V.L8.t + .9, k = clamp((t - t0) / .22); if (k <= 0 || t > endOf('L8') + .5) return;
-  g.save(); g.translate(MAGS.x, 362); g.scale(.6 + .4 * k, .6 + .4 * k); g.globalAlpha = k;
-  tShape(g, 'rgba(255,125,140,.2)', gg => gg.roundRect(-180, -62, 360, 124, 14), 3.4);
-  g.strokeStyle = '#ff7d8c'; g.lineWidth = 2.4; g.strokeRect(-170, -52, 340, 104);
-  tText(g, '13,800,000,000', 0, -18, 38, '#ffffff', '"Bungee"', 'center', 400);
-  tText(g, 'YEARS OF FLAVOR', 0, 24, 28, '#ffd0d4', '"Bungee"', 'center', 400);
+const PEA = (g, x, y) => { tEllipse(g, x + 6, y - 16, 12, 12, '#7ed957', 3); g.fillStyle = '#fff'; g.beginPath(); g.arc(x + 2, y - 20, 3.4, 0, 6.2832); g.fill(); };
+function peaTub(g, x, y, k = 1) { g.save(); g.translate(x, y); g.scale(k, k); tub(g, 0, 0, 132, 70, '#4aa3ff', (gg) => PEA(gg, 0, 0), null); g.restore(); }
+const MASH = (g, x, y, w, h) => { g.fillStyle = '#f6e7b8'; g.fillRect(x - w / 2, y - h * .55, w, h); g.fillStyle = '#c98a4a'; g.beginPath(); g.ellipse(x + 8, y - h * .5, w * .25, 6, 0, 0, 6.2832); g.fill(); };
+const STUFF = (g, x, y, w, h) => { g.fillStyle = '#b77a3f'; g.fillRect(x - w / 2, y - h * .5, w, h); g.fillStyle = '#7a4b22'; for (let i = 0; i < 6; i++) { g.beginPath(); g.arc(x - w / 2 + 8 + i * w / 6, y - h * .42 + (i % 2) * 6, 4, 0, 6.2832); g.fill(); } };
+const PIE = (g, x, y, w, h) => { g.fillStyle = '#e48a2c'; g.fillRect(x - w / 2, y - h * .5, w, h); g.fillStyle = '#f2c27a'; g.fillRect(x - w / 2, y - h * .55, w, 6); };
+const CRAN = (g, x, y, w, h) => { g.fillStyle = '#c4123a'; g.fillRect(x - w / 2, y - h * .6, w, h); };
+function tower(g, x, y, k = 1, sway = 0) {                    // the MOM'S tower: five containers, the top one labelled
+  g.save(); g.translate(x, y); g.rotate(sway); g.scale(k, k);
+  const fills = [MASH, STUFF, PIE, CRAN, MASH], lids = ['#ff7a1a', '#29d3c3', '#ffd23f', '#ff4fa3', '#b9a6ff'];
+  for (let i = 0; i < 5; i++) tub(g, (i % 2 ? 3 : -3), -i * 30, 76, 28, lids[i], fills[i], i === 4 ? "MOM'S" : null);
   g.restore();
 }
-function scannerAt(g, x) {                                   // Rae's scanner, left on the counter where she stood
-  g.save(); g.translate(x, CT + 10); g.scale(RAE.s / 100, RAE.s / 100);
-  tShape(g, '#9aa0b8', gg => gg.roundRect(8, -40, 34, 14, 5), 3.4); tShape(g, '#ff3355', gg => gg.roundRect(34, -37, 7, 8, 2), 2.2);
-  tShape(g, '#7a8098', gg => { gg.moveTo(14, -28); gg.lineTo(24, -28); gg.lineTo(21, -16); gg.lineTo(13, -16); gg.closePath(); }, 3.2);
+function casserole(g, x, y, k = 1, glow = 1) {                // a casserole that glows green
+  g.save(); g.translate(x, y); g.scale(k, k);
+  if (glow > 0) { g.save(); g.globalAlpha = .55 * glow; const gr = g.createRadialGradient(0, -24, 4, 0, -24, 70); gr.addColorStop(0, 'rgba(160,255,120,.9)'); gr.addColorStop(1, 'rgba(160,255,120,0)'); g.fillStyle = gr; g.fillRect(-80, -100, 160, 120); g.restore(); }
+  tShape(g, '#9be86b', gg => gg.ellipse(0, -18, 44, 10, 0, 0, 6.2832), 2.6);
+  for (const [bx, by] of [[-18, -22], [10, -16], [24, -24]]) tEllipse(g, bx, by, 5, 4, '#d8ff9a', 2);
+  tShape(g, '#f4f1ea', gg => { gg.moveTo(-50, -18); gg.lineTo(50, -18); gg.lineTo(42, 0); gg.lineTo(-42, 0); gg.closePath(); }, 3);
+  tShape(g, '#f4f1ea', gg => gg.roundRect(-60, -20, 12, 8, 3), 2.4); tShape(g, '#f4f1ea', gg => gg.roundRect(48, -20, 12, 8, 3), 2.4);
+  g.restore();
+}
+function cranBowl(g, x, y, k = 1, boil = 0) {                 // Dennis's cranberry sauce: a glass bowl, no lid
+  g.save(); g.translate(x, y); g.scale(k, k);
+  const dome = 6 + boil * 16;
+  tShape(g, '#c4123a', gg => { gg.moveTo(-34, -26); gg.quadraticCurveTo(0, -26 - dome * 2, 34, -26); gg.closePath(); }, 2.6);
+  if (boil > .2) for (const [bx, s] of [[-12, 1], [8, 1.4], [20, .8]]) tEllipse(g, bx, -28 - dome * .8 * s, 4 * s * boil, 4 * s * boil, '#e23b4a', 2);
+  tShape(g, 'rgba(200,230,255,.45)', gg => { gg.moveTo(-40, -30); gg.quadraticCurveTo(-38, 0, 0, 0); gg.quadraticCurveTo(38, 0, 40, -30); gg.closePath(); }, 3);
+  g.save(); g.beginPath(); g.moveTo(-36, -27); g.quadraticCurveTo(-34, -3, 0, -3); g.quadraticCurveTo(34, -3, 36, -27); g.closePath(); g.clip(); g.fillStyle = '#c4123a'; g.fillRect(-40, -30, 80, 30); g.restore();
+  g.fillStyle = 'rgba(255,255,255,.6)'; g.fillRect(-30, -22, 4, 14);
+  g.restore();
+}
+function raeTub(g, x, y, k = 1, labelFront = true) {          // Rae's own leftovers: turkey, stuffing, mash; tape on the lid: RAE
+  g.save(); g.translate(x, y); g.scale(k, k);
+  tub(g, 0, 0, 104, 54, '#2b2244', (gg, xx, yy, w, h) => { STUFF(gg, -22, yy, 40, h); MASH(gg, 24, yy, 44, h); gg.fillStyle = '#e9c08a'; gg.beginPath(); gg.ellipse(4, yy - 26, 18, 9, .2, 0, 6.2832); gg.fill(); }, null);
+  if (labelFront) { tShape(g, '#f4e3b5', gg => gg.rect(-30, -50, 60, 18), 2); tText(g, 'RAE', 0, -41, 15, TOON.ink, '"Bungee"', 'center', 400); }
   g.restore();
 }
 
-// ---------------------------------------------------------------- the customer: tall, one big eye, a big mouth, a long puffy jacket
-const SKIN = { c: '#ff9a5a', s: '#e0743a' };
-function customer(g, t, o) {
-  const { x, hy, waist, k } = CU, m = g.getTransform();
-  const sy = m.d * waist + m.f, sx0 = m.a * (x - 140 * k) + m.e, sx1 = m.a * (x + 140 * k) + m.e;   // her waist is never in frame
-  if (sy < H + 4 && sx1 > 0 && sx0 < W) window.WAIST_ERR.push(+t.toFixed(3));
-  const T0 = tau(t), by = Math.sin(T0 * 1.6) * 2.5;
-  g.save(); g.translate(x, hy + by); g.scale(k, k);
-  const Lw = (waist - hy) / k + 40;
-  tShape(g, SKIN.c, gg => gg.rect(-18, 70, 36, 36), 3);                           // neck
-  const jacket = gg => { gg.moveTo(-50, 104); gg.quadraticCurveTo(-122, 110, -126, 190); gg.lineTo(-138, Lw); gg.lineTo(138, Lw); gg.lineTo(126, 190); gg.quadraticCurveTo(122, 110, 50, 104); gg.closePath(); };
-  tShape(g, '#7a52d8', jacket); tShade(g, jacket, '#5f3eb3', gg => gg.rect(70, 90, 80, Lw));
-  g.save(); g.beginPath(); jacket(g); g.clip(); g.strokeStyle = 'rgba(30,16,68,.45)'; g.lineWidth = 3.4;
-  for (let yy = 200; yy < Lw; yy += 58) { g.beginPath(); g.moveTo(-150, yy); for (let xx = -150; xx < 150; xx += 50) g.quadraticCurveTo(xx + 25, yy + 12, xx + 50, yy); g.stroke(); }
+// ---------------------------------------------------------------- the microwave
+function microwaveState(t) {
+  const s = { run: false, light: 0, green: 0, door: 0, item: null, time: '11:47', splat: t >= TL.SPLAT ? Math.min(1, (t - TL.SPLAT) / .08) : 0, ding: false };
+  for (let i = 0; i < 3; i++) {                               // the montage: three cuts, each runs and dings
+    const a = M0 + i * MONT, b = a + MONT;
+    if (t >= a && t < b) { s.item = ['pea', 'tower', 'cass'][i]; s.run = t < b - .18; s.light = s.run ? 1 : .25; s.green = i === 2 ? (s.run ? 1 : .4) : 0; s.time = '0:0' + Math.max(0, Math.ceil((b - .18 - t) * 3)); s.phase = (t - a) * 4; }
+  }
+  if (t >= TL.OPEN1 - .05 && t < TL.SHUT) s.door = smooth(TL.OPEN1 - .05, TL.OPEN1 + .15, t) * (1 - smooth(TL.SHUT - .2, TL.SHUT, t));
+  if (t >= TL.IN) s.item = 'cran';
+  if (t >= TL.START && t < TL.SPLAT + .1) { s.run = true; s.light = 1; s.time = '0:' + String(Math.max(0, Math.ceil(TL.SPLAT + 1.8 - t))).padStart(2, '0'); s.phase = (t - TL.START) * 3; s.boil = smooth(TL.START + .6, TL.SPLAT, t); }
+  if (t >= TL.SPLAT + .1) { s.item = 'cranSplat'; s.time = 'OOPS'; }
+  if (t >= V.L8.t) { s.item = 'rae'; s.run = t < TL.DING; s.light = s.run ? 1 : .3; s.phase = (t - V.L8.t) * 3; s.time = s.run ? '0:' + String(Math.max(0, Math.ceil((TL.DING - t) * 2))).padStart(2, '0') : '0:00'; }
+  if (t >= TL.DING) { s.ding = t < TL.DING + .4; s.door = smooth(TL.OPEN2, TL.OPEN2 + .25, t); }
+  if (t >= TL.RAEOUT) s.item = s.item === 'rae' ? 'empty' : s.item;
+  return s;
+}
+function drawItem(g, s, t) {
+  const sw = Math.sin(s.phase || 0), x = INSIDE.x + sw * 10, y = INSIDE.y;
+  if (s.item === 'pea') peaTub(g, x, y, .8);
+  else if (s.item === 'tower') { g.save(); g.translate(x, y); g.rotate(sw * .05); g.scale(.95, .62); tower(g, 0, 0, 1); g.restore(); }
+  else if (s.item === 'cass') casserole(g, x, y, .9, 1);
+  else if (s.item === 'cran') cranBowl(g, x, y, .95, s.boil || 0);
+  else if (s.item === 'cranSplat') { g.save(); g.translate(INSIDE.x, y); tShape(g, 'rgba(200,230,255,.45)', gg => { gg.moveTo(-38, -28); gg.quadraticCurveTo(-36, 0, 0, 0); gg.quadraticCurveTo(36, 0, 38, -28); gg.closePath(); }, 3); g.restore(); }
+  else if (s.item === 'rae') raeTub(g, x, y, .9, false);
+}
+function drawMicrowave(g, t) {
+  const s = microwaveState(t), shake = s.splat > 0 && t < TL.SPLAT + .25 ? Math.sin(t * 90) * 3 * (1 - (t - TL.SPLAT) / .25) : 0;
+  g.save(); g.translate(shake, 0);
+  tShape(g, '#e9ebf3', gg => gg.roundRect(MW.x0, MW.top, MW.x1 - MW.x0, CT - MW.top, 10), 4);
+  tShade(g, gg => gg.roundRect(MW.x0, MW.top, MW.x1 - MW.x0, CT - MW.top, 10), '#c7cbdb', gg => gg.rect(MW.x0, CT - 20, MW.x1 - MW.x0, 20));
+  // the cavity (seen through the glass, or open)
+  const cx0 = DOOR.x0 + 8, cx1 = DOOR.x1 - 8;
+  g.save(); g.beginPath(); g.rect(cx0, DOOR.wy0, cx1 - cx0, DOOR.wy1 - DOOR.wy0); g.clip();
+  g.fillStyle = s.light > .5 ? (s.green ? '#9dff7a' : '#ffe9a8') : '#5d5a70'; g.fillRect(cx0, DOOR.wy0, cx1 - cx0, DOOR.wy1 - DOOR.wy0);
+  if (s.light > .5) { const gr = g.createRadialGradient(INSIDE.x, DOOR.wy0 + 20, 6, INSIDE.x, DOOR.wy0 + 20, 120); gr.addColorStop(0, 'rgba(255,255,255,.6)'); gr.addColorStop(1, 'rgba(255,255,255,0)'); g.fillStyle = gr; g.fillRect(cx0, DOOR.wy0, cx1 - cx0, DOOR.wy1 - DOOR.wy0); }
+  g.fillStyle = 'rgba(0,0,0,.18)'; g.fillRect(cx0, DOOR.wy1 - 24, cx1 - cx0, 24);
+  tShape(g, 'rgba(255,255,255,.55)', gg => gg.ellipse(INSIDE.x, INSIDE.y + 2, 54, 9, 0, 0, 6.2832), 2.4);   // the turntable
+  drawItem(g, s, t);
+  if (s.splat > 0) {                                          // the splat: cranberry all over the inside
+    g.fillStyle = '#c4123a';
+    for (const [bx, by, r] of [[-50, -70, 16], [-20, -84, 22], [16, -64, 18], [44, -80, 14], [-38, -40, 12], [30, -36, 15], [0, -50, 20], [-56, -20, 10], [52, -52, 11]]) { g.beginPath(); g.ellipse(INSIDE.x + bx, INSIDE.y + by, r * s.splat, r * .85 * s.splat, 0, 0, 6.2832); g.fill(); }
+    const drip = Math.min(1, Math.max(0, t - TL.SPLAT) / 2.5);
+    for (const [bx, by, l] of [[-46, -60, 30], [-14, -70, 44], [24, -52, 26], [46, -70, 34]]) g.fillRect(INSIDE.x + bx - 3, INSIDE.y + by, 6, l * drip);
+  }
   g.restore();
-  tLine(g, [0, 120, 0, Lw], 3); tShape(g, '#ffd23f', gg => gg.roundRect(-6, 230, 12, 22, 4), 2);
-  tShape(g, null, jacket, 4);
-  tShape(g, '#5f3eb3', gg => gg.roundRect(-56, 90, 112, 34, 16), 3.4);            // the collar
-  drawStar(g, -66, 214, 14, '#7ef0ff', 2.6);                                        // a patch
-  // the head: big, round, orange, one eye, an antenna
-  const r = 100, chew = o.chew || 0, aw = Math.sin(T0 * 3.1) * 4;
-  tCurve(g, 10, -96, 20 + aw * .5, -122, 24 + aw, -140, 4.2); tEllipse(g, 25 + aw, -146, 9, 9, '#8fd65a', 3);
-  const head = gg => gg.ellipse(0, 0, r + chew * 6, r, 0, 0, 6.2832);
-  tShape(g, SKIN.c, head); tShade(g, head, SKIN.s, gg => gg.ellipse(52, 34, 66, 86, -.3, 0, 6.2832)); tShape(g, null, head, 4.2);
-  for (const [fx, fy] of [[-56, 18], [-64, 30], [-48, 32], [56, 22], [64, 34]]) tEllipse(g, fx, fy, 3.5, 3.5, '#d65c2a', 0);
-  // the eye
-  const ey = -26;
-  tEllipse(g, 0, ey, 40, 40, '#fff', 4);
-  if (o.blink) tCurve(g, -34, ey, 0, ey + 8, 34, ey, 4.4);
+  // the door: closed (glass with a mesh), or swung open on its left hinge toward us
+  const th = s.door * 1.9, ex = DOOR.x0 + (DOOR.x1 - DOOR.x0) * Math.cos(th), ey = 14 * Math.sin(th);
+  if (s.door < .02) {
+    g.save(); g.beginPath(); g.rect(cx0, DOOR.wy0, cx1 - cx0, DOOR.wy1 - DOOR.wy0); g.clip();
+    g.fillStyle = 'rgba(20,14,40,.32)'; g.fillRect(cx0, DOOR.wy0, cx1 - cx0, DOOR.wy1 - DOOR.wy0);
+    g.fillStyle = 'rgba(0,0,0,.18)'; for (let yy = DOOR.wy0; yy < DOOR.wy1; yy += 6) for (let xx = cx0 + (yy / 6 % 2) * 3; xx < cx1; xx += 6) g.fillRect(xx, yy, 2, 2);
+    g.fillStyle = 'rgba(255,255,255,.18)'; g.beginPath(); g.moveTo(cx0 + 10, DOOR.wy0); g.lineTo(cx0 + 40, DOOR.wy0); g.lineTo(cx0 + 4, DOOR.wy1); g.lineTo(cx0, DOOR.wy1); g.closePath(); g.fill();
+    g.restore();
+    tShape(g, null, gg => gg.roundRect(DOOR.x0, MW.top + 6, DOOR.x1 - DOOR.x0, CT - MW.top - 14, 8), 3.4);
+    tShape(g, '#c7cbdb', gg => gg.roundRect(DOOR.x1 - 12, MW.top + 30, 6, 70, 3), 2.2);   // the handle
+  } else {
+    tShape(g, '#3b3552', gg => gg.rect(DOOR.x0, MW.top + 6, DOOR.x1 - DOOR.x0, 4), 0);
+    tShape(g, Math.cos(th) > 0 ? '#e9ebf3' : '#d4d7e4', gg => { gg.moveTo(DOOR.x0, MW.top + 6); gg.lineTo(ex, MW.top + 6 - ey); gg.lineTo(ex, CT - 8 + ey); gg.lineTo(DOOR.x0, CT - 8); gg.closePath(); }, 3.4);
+  }
+  // the panel: a display and the buttons
+  tShape(g, '#1a2a3a', gg => gg.roundRect(PANEL.x - 20, PANEL.disp - 10, 40, 22, 4), 2.4);
+  tText(g, s.time, PANEL.x, PANEL.disp + 1.5, s.time.length > 4 ? 11 : 13, s.time === 'OOPS' ? '#ff6b6b' : '#7ef0a0', '"Bungee"', 'center', 400);
+  for (let i = 0; i < 9; i++) tShape(g, '#c7cbdb', gg => gg.roundRect(PANEL.x - 17 + (i % 3) * 13, PANEL.disp + 22 + Math.floor(i / 3) * 11, 9, 7, 2), 1.6);
+  tShape(g, '#8fd65a', gg => gg.roundRect(PANEL.x - 17, PANEL.start - 8, 34, 14, 4), 2.2);
+  tShape(g, '#c7cbdb', gg => gg.roundRect(PANEL.x - 17, PANEL.release - 6, 34, 10, 3), 2);
+  if (s.green > 0 && s.run) { g.save(); g.globalAlpha = .5 * s.green; g.shadowColor = '#9dff7a'; g.shadowBlur = 30; g.strokeStyle = '#c8ff9a'; g.lineWidth = 6; g.strokeRect(cx0 - 4, DOOR.wy0 - 4, cx1 - cx0 + 8, DOOR.wy1 - DOOR.wy0 + 8); g.restore(); }
+  g.restore();
+}
+// MAGS's price board, on his words
+function priceBoard(g, t) {
+  const tags = [[TL.FEE, 426, 'MICROWAVE', '$5'], [TL.GRAT, 656, 'GRATITUDE', '$3.99']];
+  for (const [t0, x, a, b] of tags) {
+    const k = clamp((t - t0) / .2); if (k <= 0 || t > endOf('L3') + .6) continue;
+    g.save(); g.translate(x, 372); g.scale(.6 + .4 * k, .6 + .4 * k); g.globalAlpha = k;
+    tShape(g, 'rgba(255,125,140,.2)', gg => gg.roundRect(-104, -58, 208, 116, 14), 3.4);
+    g.strokeStyle = '#ff7d8c'; g.lineWidth = 2.4; g.strokeRect(-94, -48, 188, 96);
+    tText(g, a, 0, -22, 22, '#ffd0d4', '"Bungee"', 'center', 400);
+    tText(g, b, 0, 16, 40, '#ffffff', '"Bungee"', 'center', 400);
+    if (b === '$3.99') { g.strokeStyle = '#ffffff'; g.lineWidth = 2.6; g.beginPath(); g.roundRect(64, -6, 22, 30, 4); g.stroke(); g.fillStyle = '#ff7d8c'; g.beginPath(); g.moveTo(75, 14); g.bezierCurveTo(66, 6, 70, 0, 75, 5); g.bezierCurveTo(80, 0, 84, 6, 75, 14); g.fill(); }
+    g.restore();
+  }
+}
+// Pip's Friendsgiving: the tablecloth on the counter front, a paper garland on the wall, the gravy boat
+const CLOTHX = [0, MW.x0 - 2];
+function drawCloth(g, t) {
+  const k = smooth(TL.CLOTH + .4, TL.CLOTH + .6, t); if (k <= 0) return;
+  const xa = lerp(PIP.x - 170, CLOTHX[0], k), xb = lerp(PIP.x + 170, CLOTHX[1], k), y0 = CT + 4, y1 = lerp(CT + 60, CT + 150, k);
+  const edge = gg => { gg.moveTo(xa, y0); gg.lineTo(xb, y0); gg.lineTo(xb, y1); for (let x = xb; x > xa; x -= 30) gg.quadraticCurveTo(x - 15, y1 + 16, x - 30, y1); gg.closePath(); };
+  tShape(g, '#fbf1dc', edge);
+  g.save(); g.beginPath(); edge(g); g.clip();
+  g.fillStyle = 'rgba(255,122,26,.5)'; for (let x = 0; x < W; x += 60) g.fillRect(x, y0, 22, y1 - y0 + 20);
+  g.fillStyle = 'rgba(214,90,12,.35)'; for (let y = y0 + 20; y < y1 + 10; y += 50) g.fillRect(0, y, W, 16);
+  g.restore(); tShape(g, null, edge, 3.4);
+}
+function drawGarland(g, t) {
+  const k = smooth(TL.CLOTH + .3, TL.CLOTH + .55, t); if (k <= 0) return;
+  const L = 'FRIENDSGIVING', x0 = 118, x1 = 458, y = 612 - (1 - k) * 60, n = L.length;
+  g.save(); g.globalAlpha = Math.min(1, k * 1.5);
+  g.strokeStyle = TOON.ink; g.lineWidth = 2.4; g.beginPath(); g.moveTo(x0, y); g.quadraticCurveTo((x0 + x1) / 2, y + 26, x1, y); g.stroke();
+  const cols = ['#ff7a1a', '#ffd23f', '#e23b4a', '#8fd65a'];
+  for (let i = 0; i < n; i++) {
+    const u = (i + .5) / n, x = lerp(x0, x1, u), yy = y + 26 * 4 * u * (1 - u) * .5 * 2;
+    tShape(g, cols[i % 4], gg => { gg.moveTo(x - 12, yy); gg.lineTo(x + 12, yy); gg.lineTo(x, yy + 32); gg.closePath(); }, 2.2);
+    tText(g, L[i], x, yy + 11, 13, TOON.ink, '"Bungee"', 'center', 400);
+  }
+  g.restore();
+}
+function gravyBoat(g, x, y) {
+  tShape(g, '#fbf7ff', gg => { gg.moveTo(x - 30, y - 22); gg.quadraticCurveTo(x - 28, y, x, y); gg.quadraticCurveTo(x + 24, y, x + 40, y - 26); gg.lineTo(x + 18, y - 22); gg.closePath(); }, 3);
+  tShape(g, '#8a5a2c', gg => gg.ellipse(x - 2, y - 21, 26, 4, 0, 0, 6.2832), 2);
+  tCurve(g, x - 30, y - 20, x - 44, y - 14, x - 30, y - 6, 3);
+}
+function brightCapBox(g) {                                     // easter egg, never explained: a box on the shelf behind Rae
+  const x = 864, y = 816;
+  tShape(g, '#fbf7ff', gg => gg.roundRect(x, y, 84, 84, 6), 3.2);
+  tShape(g, '#2f7bff', gg => gg.rect(x, y + 50, 84, 34), 0); tShape(g, null, gg => gg.roundRect(x, y, 84, 84, 6), 3.2);
+  tText(g, 'FREE!', x + 42, y + 18, 20, '#e23b4a', '"Bungee"', 'center', 400);
+  tText(g, 'BrightCap', x + 42, y + 38, 13, TOON.ink, '"Fredoka"', 'center', 600);
+  tEllipse(g, x + 42, y + 67, 11, 11, '#ffd23f', 2.4);
+}
+
+// ---------------------------------------------------------------- the customers on the counter
+function robot(g, t) {                                         // the lonely little robot: one wheel, a screen face
+  const x = atTable(t) ? ROBOT.x : ROBOT.q, b = Math.sin(t * 2.3) * 1.5, talk = talkLevel('ROBOT', t), sad = t >= V.L1.t + 1.9 && t < TL.CLOTH + .5;
+  const heart = t >= V.L9.t - .1 && t < V.L10.t + 1.2;
+  g.save(); g.translate(x, CT);
+  tEllipse(g, 0, -15, 15, 15, '#3b3552', 3.2); tEllipse(g, 0, -15, 5, 5, '#c7cbdb', 2);
+  tShape(g, '#9aa0b8', gg => gg.roundRect(-34, -92 + b, 68, 66, 12), 3.4);
+  tShape(g, '#c7cbdb', gg => gg.rect(-8, -106 + b, 16, 16), 2.6);
+  tShape(g, '#c7cbdb', gg => gg.roundRect(-48, -182 + b, 96, 78, 14), 3.6);
+  tShape(g, '#1a2a3a', gg => gg.roundRect(-38, -172 + b, 76, 58, 8), 2.6);
+  tLine(g, [18, -182 + b, 26, -204 + b], 3); tEllipse(g, 27, -208 + b, 6, 6, heart ? '#ff6b9a' : '#ffd23f', 2.4);
+  const ey = -150 + b, col = '#7ef0ff';
+  if (heart) { g.fillStyle = '#ff6b9a'; g.beginPath(); g.moveTo(0, ey + 22); g.bezierCurveTo(-30, ey + 2, -18, ey - 22, 0, ey - 6); g.bezierCurveTo(18, ey - 22, 30, ey + 2, 0, ey + 22); g.fill(); }
   else {
-    const lx = (o.look || 0) * 9, ly = (o.lookY || 0) * 8 + 3;
-    g.fillStyle = '#3a1a20'; g.beginPath(); g.arc(lx, ey + ly, 17, 0, 6.2832); g.fill();
-    g.fillStyle = '#fff'; g.beginPath(); g.arc(lx - 6, ey + ly - 7, 6, 0, 6.2832); g.fill();
-    if (o.sparkle) { g.beginPath(); g.arc(lx + 7, ey + ly + 6, 3, 0, 6.2832); g.fill(); drawStar(g, 30, ey - 34, 7, '#fff6c8', 2); }
+    g.fillStyle = col;
+    if (sad) { g.fillRect(-22, ey - 2, 14, 4); g.fillRect(8, ey - 2, 14, 4); g.fillRect(-26, ey - 10, 10, 3); g.fillRect(16, ey - 10, 10, 3); }
+    else if (blinkAt(4, t)) { g.fillRect(-22, ey, 14, 3); g.fillRect(8, ey, 14, 3); }
+    else { g.fillRect(-20, ey - 8, 10, 12); g.fillRect(10, ey - 8, 10, 12); }
+    const mw = 18 + talk * 6, mh = 3 + talk * 10;
+    if (sad && !talk) { g.fillRect(-10, ey + 18, 20, 3); g.fillRect(-14, ey + 21, 4, 3); g.fillRect(10, ey + 21, 4, 3); }
+    else g.fillRect(-mw / 2, ey + 16, mw, mh);
   }
-  tCurve(g, -32, ey - 50, 0, ey - 60 - (o.brow || 0) * 8, 32, ey - 50, 4.2);
-  // the mouth: talking, gaping (slowly, in the slow time), or chewing rock with full cheeks
-  const my = 44, open = Math.max(o.mouth || 0, o.gape || 0);
-  let lip = [24, my + 4];
-  if (chew > 0) {
-    tEllipse(g, -64, my - 4, 24 * chew, 20 * chew, SKIN.c, 3); tEllipse(g, 64, my - 4, 24 * chew, 20 * chew, SKIN.c, 3);
-    const w2 = Math.sin(t * 8.5) * 5 + (o.mouth || 0) * 6;
-    tCurve(g, -20, my, 0, my + 6 + w2, 20, my, 4);
-  } else if (open > .06) {
-    const mw = 22 + open * 36, mh = 5 + open * 40, cy2 = my + mh * .35;
-    tEllipse(g, 0, cy2, mw, mh, '#4a1a20', 4);
-    if (open > .3) { g.save(); g.beginPath(); g.ellipse(0, cy2, mw, mh, 0, 0, 6.2832); g.clip(); g.fillStyle = '#ff7f97'; g.beginPath(); g.ellipse(0, cy2 + mh * .75, mw * .6, mh * .45, 0, 0, 6.2832); g.fill();
-      g.fillStyle = '#fffdf2'; for (const tx of [-18, 0, 18]) g.fillRect(tx - 6, cy2 - mh, 12, 10); g.restore(); tEllipse(g, 0, cy2, mw, mh, null, 4); }
-    lip = [mw * .55, cy2 + mh * .8];
-  } else tCurve(g, -24, my - 4, 0, my + 12, 24, my - 4, 4);
-  if (o.slobber) { g.fillStyle = 'rgba(190,240,255,.95)'; g.beginPath(); g.ellipse(lip[0] + 2, lip[1] + 8, 4.5, 8, 0, 0, 6.2832); g.fill(); g.lineWidth = 2; g.strokeStyle = TOON.ink; g.stroke(); }
-  if (o.drool) {                                                                    // a drop of drool: grows at the lip, then falls on the world's clock
-    const { size, fall } = o.drool;
-    if (fall < 900) { g.fillStyle = 'rgba(190,240,255,.95)'; g.beginPath(); g.ellipse(lip[0] + 2, lip[1] + 6 + fall, 6 * size, 9 * size, 0, 0, 6.2832); g.fill(); g.lineWidth = 2; g.strokeStyle = TOON.ink; g.stroke();
-      if (fall < 2) { g.strokeStyle = 'rgba(190,240,255,.9)'; g.lineWidth = 2.4; g.beginPath(); g.moveTo(lip[0], lip[1] - 4); g.lineTo(lip[0] + 2, lip[1] + 2); g.stroke(); } }
-  }
-  // her left arm (screen right): hangs at her side, or comes up in front of her: two fingers for "Make it two!"
-  if (o.two > 0) {
-    const hx = lerp(136, 100, o.two), hyy = lerp(640, 130, o.two);
-    tTube(g, [116, 176, lerp(150, 168, o.two), lerp(420, 270, o.two), hx, hyy], 36, '#7a52d8', '#5f3eb3');
-    if (o.two > .6) { tTube(g, [hx - 6, hyy - 10, hx - 9, hyy - 30, hx - 12, hyy - 50], 10, SKIN.c); tTube(g, [hx + 6, hyy - 10, hx + 9, hyy - 30, hx + 13, hyy - 48], 10, SKIN.c); }
-    tHand(g, hx, hyy, 16, SKIN.c, SKIN.s);
-  } else { tTube(g, [116, 176, 150, 420, 136, 640], 36, '#7a52d8', '#5f3eb3'); tHand(g, 134, 654, 16, SKIN.c, SKIN.s); }
-  // her right arm (screen left), with the bun, to a world point
-  const tx = (o.hand.x - x) / k, ty = (o.hand.y - hy - by) / k, sx = -116, sy2 = 176;
-  tTube(g, [sx, sy2, (sx + tx) / 2 - 30, Math.max(sy2, ty) + 44, tx, ty], 36, '#7a52d8');
-  if (o.bun != null) drawBun(g, tx, ty - 18, o.bun, o.bite);
-  tHand(g, tx + 10, ty, 16, SKIN.c, SKIN.s);
+  // arms to the big container in front
+  const ty = -58 + b;
+  tTube(g, [-32, -80 + b, -54, -66 + b, -50, ty + 4], 12, '#9aa0b8'); tTube(g, [32, -80 + b, 54, -66 + b, 50, ty + 4], 12, '#9aa0b8');
+  peaTub(g, 0, ty + 34, .78);
+  tEllipse(g, -48, ty + 6, 9, 8, '#c7cbdb', 2.4); tEllipse(g, 48, ty + 6, 9, 8, '#c7cbdb', 2.4);
   g.restore();
 }
-function customerState(t) {
-  const T0 = tau(t);
-  const o = { mouth: talkLevel('CUST', t), blink: blinkAt(5, T0 + 1.1), look: -1, lookY: .4, bun: 0, hand: OFFER };
-  o.sparkle = t < V.L2.t + .6 || (t >= V.L7.t - .2 && t < TL.TONG2 + 1);
-  o.slobber = t < TL.CRACK;
-  if (t >= TL.HAND - .1) o.bun = 1;
-  if (t >= TL.TONG2 + .35) o.bun = 2;
-  // the bun: held out for Pip; back to her chest; knocked twice on the counter (tock, tock); held out for the second one
-  if (t >= TL.HAND) o.hand = lp(OFFER, HOLD, smooth(TL.HAND, TL.HAND + .45, t));
-  if (t >= TL.TAP - .3 && t < TL.TAP + .7) {
-    if (t < TL.TAP) { const q = clamp((t - TL.TAP + .3) / .3); o.hand = lp(HOLD, KNOCK, q * q); }
-    else if (t < TL.TAP + .28) o.hand = { x: KNOCK.x, y: KNOCK.y - 44 * Math.sin(Math.PI * (t - TL.TAP) / .28) };
-    else o.hand = lp(KNOCK, HOLD, smooth(TL.TAP + .28, TL.TAP + .7, t));
-    o.look = -.6; o.lookY = 1;
+function blob(g, t) {                                          // a purple jelly with the tower of containers mom packed
+  const x = atTable(t) ? BLOB.x : BLOB.q, h0 = V.L8.t + .9, hop = t >= h0 && t < h0 + .65 ? hopPose((t - h0) / .65, 26) : { dy: 0, sy: 1, sx: 1 };   // a happy hop at "thankful"
+  const sway = Math.sin(t * 3.1) * .04 + (hop.dy < 0 ? Math.sin(t * 12) * .05 : 0);
+  g.save(); g.translate(x, CT + hop.dy); g.scale(hop.sx, hop.sy);
+  const body = gg => { gg.moveTo(-46, 0); gg.bezierCurveTo(-52, -40, -34, -78, 0, -78); gg.bezierCurveTo(34, -78, 52, -40, 46, 0); gg.closePath(); };
+  tShape(g, '#b06cf0', body); tShade(g, body, '#8a4ad0', gg => gg.rect(22, -90, 40, 92)); tShape(g, null, body, 3.6);
+  const lookR = t >= V.L4.t ? 1 : 0;
+  for (const sx of [-1, 1]) { tEllipse(g, sx * 14, -52, 9, 11, '#fff', 2.6); g.fillStyle = TOON.ink; g.beginPath(); g.arc(sx * 14 + lookR * 3, -50, 4.5, 0, 6.2832); g.fill(); }
+  tCurve(g, -8, -32, 0, -26, 8, -32, 2.6);
+  // stubby arms up around the tower
+  tTube(g, [-40, -30, -52, -50, -36, -76], 12, '#b06cf0'); tTube(g, [40, -30, 52, -50, 36, -76], 12, '#b06cf0', '#8a4ad0');
+  tower(g, 0, -70, .9, sway);
+  tEllipse(g, -36, -78, 8, 7, '#b06cf0', 2.4); tEllipse(g, 36, -78, 8, 7, '#b06cf0', 2.4);
+  g.restore();
+}
+function puff(g, t) {                                          // a floating puff with a glowing casserole
+  const x = atTable(t) ? PUFF.x : PUFF.q, y = CT - 56 + Math.sin(t * 2.1) * 5;
+  g.save(); g.translate(x, y);
+  const body = gg => { gg.moveTo(-34, 18); gg.bezierCurveTo(-44, -30, -26, -64, 0, -64); gg.bezierCurveTo(26, -64, 44, -30, 34, 18); for (let i = 0; i < 4; i++) gg.quadraticCurveTo(34 - i * 17 - 8, 30, 34 - (i + 1) * 17, 18); gg.closePath(); };
+  tShape(g, '#e8fff4', body); tShade(g, body, '#bfeedd', gg => gg.rect(16, -70, 30, 100)); tShape(g, null, body, 3.4);
+  tEllipse(g, -11, -36, 5, 7, TOON.ink, 0); tEllipse(g, 11, -36, 5, 7, TOON.ink, 0);
+  tEllipse(g, 0, -20, 5, 4, '#4a1a20', 2);
+  tTube(g, [-30, -6, -40, 4, -34, 14], 10, '#e8fff4'); tTube(g, [30, -6, 40, 4, 34, 14], 10, '#e8fff4', '#bfeedd');
+  casserole(g, 0, 26, .62, 1);
+  tEllipse(g, -34, 14, 7, 6, '#e8fff4', 2.2); tEllipse(g, 34, 14, 7, 6, '#e8fff4', 2.2);
+  g.restore();
+}
+// Dennis (as in VM5 and VM9): stalks, moustache, cap; his arms carry the bowl or hang
+function drawDennis11(g, t, x, y, s, o = {}) {
+  const D = { body: '#8fd65a', bodyS: '#62ad38', belly: '#c6f29c', spot: '#6db33f', stache: '#7a4e2c', stacheS: '#5a3720', cap: '#e23b4a', capS: '#b52634', panel: '#fbf7ff' };
+  g.save(); g.translate(x, y); g.scale(s / 100, s / 100);
+  g.fillStyle = 'rgba(170,240,120,.6)'; g.beginPath(); g.ellipse(0, 4, 130, 12, 0, 0, 6.2832); g.fill();
+  const topY = -268, look = o.look ?? 0, eyes = [];
+  for (const side of [-1, 1]) {
+    const dr = o.droop || 0, a = side * dr * 2.25;
+    const rot = (px, py) => [side * 34 + Math.cos(a) * px - Math.sin(a) * py, topY + Math.sin(a) * px + Math.cos(a) * py];
+    const p1 = rot(side * 6, -32), p2 = rot(side * 18, -66), pe = rot(side * 20, -76);
+    tTube(g, [side * 34, topY, p1[0], p1[1], p2[0], p2[1]], 15, D.body, side > 0 ? D.bodyS : null);
+    eyes.push([pe[0], pe[1], side, dr]);
   }
-  if (t >= V.L7.t - .1) o.hand = lp(HOLD, OFFER, smooth(V.L7.t - .1, V.L7.t + .3, t));
-  if (t >= TL.TONG2 + .45) o.hand = lp(OFFER, HOLD, smooth(TL.TONG2 + .45, TL.TONG2 + .85, t));
-  o.two = t >= V.L7.t - .1 && t < TL.TONG2 + .2 ? smooth(V.L7.t - .1, V.L7.t + .2, t) * (1 - smooth(TL.TONG2 - .2, TL.TONG2 + .2, t)) : 0;
-  if (t >= V.L4.t && t < V.L7.t - .2) { o.look = -1.5; o.lookY = -.4; o.brow = speaking('RAE', t) ? .8 : .3; }   // looking at Rae
-  // the bite: the mouth opens and the bun comes up from "They need a break!", on the world's clock, so it crawls in the slow time;
-  // the drop of drool hangs and falls slowly; time comes back; the bite lands at BITE
-  const b0 = endOf('L9') - .3;
-  if (t >= b0) {
-    const dt = T0 - tau(b0);
-    o.gape = ease(clamp(dt / 1.6)); o.hand = lp(HOLD, READY, ease(clamp(dt / 2.2))); o.look = -.8; o.lookY = .9; o.sparkle = true; o.brow = .6;
-    const tD = tau(TL.DROOL);
-    if (t < TL.BITE && T0 > tD - .25) o.drool = { size: clamp((T0 - tD + .25) / .25), fall: T0 > tD ? .5 * 1800 * (T0 - tD) ** 2 : 0 };
-    if (t >= TL.BITE - .2 && t < TL.BITE) { const q = clamp((t - TL.BITE + .2) / .2); o.hand = lp(READY, { x: READY.x + 62, y: READY.y - 6 }, q * q); o.gape = 1 - .3 * q; }
+  const body = gg => { gg.moveTo(-118, 2); gg.bezierCurveTo(-122, -90, -100, -190, -70, -246); gg.bezierCurveTo(-50, -284, 50, -284, 70, -246); gg.bezierCurveTo(100, -190, 122, -90, 118, 2); gg.closePath(); };
+  tShape(g, D.body, body);
+  tShade(g, body, D.bodyS, gg => { gg.moveTo(60, -270); gg.bezierCurveTo(100, -190, 112, -90, 100, 10); gg.lineTo(140, 10); gg.lineTo(140, -270); gg.closePath(); });
+  tShade(g, body, D.belly, gg => gg.ellipse(-4, -70, 70, 110, 0, 0, 6.2832));
+  for (const [px, py, r] of [[-82, -150, 9], [-92, -110, 6], [76, -176, 7], [88, -128, 10], [-60, -222, 6], [54, -236, 5]]) { g.fillStyle = D.spot; g.beginPath(); g.ellipse(px, py, r * 1.2, r, .3, 0, 6.2832); g.fill(); }
+  tCurve(g, -96, -120, -92, -170, -68, -214, 4, 'rgba(255,255,255,.75)');
+  tShape(g, null, body);
+  const crown = gg => { gg.moveTo(-46, -252); gg.bezierCurveTo(-46, -300, 46, -300, 46, -252); gg.closePath(); };
+  tShape(g, D.cap, crown); tShade(g, crown, D.capS, gg => gg.rect(20, -300, 40, 60));
+  tShape(g, D.panel, gg => { gg.moveTo(-24, -253); gg.bezierCurveTo(-24, -290, 24, -290, 24, -253); gg.closePath(); }, 3);
+  tEllipse(g, 0, -269, 11, 11, TOON.orange, 3); tText(g, 'D', 0, -268, 15, TOON.white);
+  tShape(g, D.capS, gg => { gg.moveTo(-54, -252); gg.quadraticCurveTo(0, -236, 54, -252); gg.quadraticCurveTo(0, -246, -54, -252); gg.closePath(); }, 3.6);
+  const ma = o.mouth && o.mouth.a > .06 ? o.mouth.a : 0;
+  if (ma) tEllipse(g, 0, -176, 10 + ma * 6, 4 + ma * 12, '#3a1a20', 3.2);
+  else if (o.droop > .3) tCurve(g, -16, -172, 0, -180, 16, -172, 3.8);
+  else tCurve(g, -16, -180, 0, -170, 16, -180, 3.8);
+  const st = gg => { gg.moveTo(0, -206); gg.bezierCurveTo(-14, -220, -40, -214, -52, -196); gg.bezierCurveTo(-40, -200, -28, -196, -18, -190); gg.bezierCurveTo(-10, -186, -4, -190, 0, -194); gg.bezierCurveTo(4, -190, 10, -186, 18, -190); gg.bezierCurveTo(28, -196, 40, -200, 52, -196); gg.bezierCurveTo(40, -214, 14, -220, 0, -206); gg.closePath(); };
+  tShape(g, D.stache, st); tShade(g, st, D.stacheS, gg => gg.rect(-60, -200, 120, 14));
+  // stubby arms: to the bowl (local point o.bowl) or at his sides
+  if (o.bowl) {
+    const bx = o.bowl.x, by = o.bowl.y;
+    tTube(g, [-104, -60, (bx - 104) / 2 - 20, (by - 60) / 2 + 10, bx - 36, by - 6], 24, D.body);
+    tTube(g, [104, -60, (bx + 104) / 2 + 20, (by - 60) / 2 + 10, bx + 36, by - 6], 24, D.body, D.bodyS);
+    g.restore();
+    const k = s / 100;
+    cranBowl(g, x + bx * k, y + by * k, 1.05);
+    tEllipse(g, x + (bx - 40) * k, y + (by - 8) * k, 13 * k, 11 * k, D.body, 3); tEllipse(g, x + (bx + 40) * k, y + (by - 8) * k, 13 * k, 11 * k, D.body, 3);
+  } else {
+    tTube(g, [-104, -60, -112, -30, -104, -12], 24, D.body);
+    tTube(g, [104, -60, 112, -30, 104, -12], 24, D.body, D.bodyS);
+    g.restore();
   }
-  if (t >= TL.BITE) {
-    o.bite = true; o.gape = 0; o.drool = null; o.sparkle = false; o.look = 0; o.lookY = 0; o.brow = 0;
-    o.chew = Math.min(1, (t - TL.BITE) / .1);
-    o.hand = lp({ x: READY.x + 62, y: READY.y - 6 }, AFTER, smooth(TL.BITE + .05, TL.BITE + .5, t));
-    o.mouth = talkLevel('CUST', t);
-    o.blink = blinkAt(5, t + 1.1) || (t > V.L13.t - .3 && t < V.L13.t + .9);             // eyes shut, savouring: "...Consistent."
+  for (const [ex, ey, side, dr] of eyes) {
+    const k = s / 100, X = x + ex * k, Y = y + ey * k;
+    g.save(); g.translate(X, Y); g.scale(k, k);
+    tEllipse(g, 0, 0, 17, 18, TOON.white, 3.6);
+    const pdy = 6 + dr * 5;
+    g.fillStyle = TOON.ink; g.beginPath(); g.arc(look * 5 - side * 2, pdy, 7.5, 0, 6.2832); g.fill();
+    g.fillStyle = '#fff'; g.beginPath(); g.arc(look * 5 - side * 2 - 2.5, pdy - 3, 2.4, 0, 6.2832); g.fill();
+    if (dr > .3) tLine(g, [-side * 14, -12, side * 12, -20], 3.6); else tCurve(g, -13, -13, 0, -22, 13, -13, 3.6);
+    g.restore();
   }
-  return o;
+}
+function dennis(g, t) {
+  if (t < TL.DEN_IN) return;
+  const k = smooth(TL.DEN_IN, TL.DEN_IN + .7, t), out = smooth(TL.DEN_OUT, TL.DEN_OUT + 1.1, t);
+  if (out >= 1) return;
+  const x = lerp(1350, DEN.x, k) + out * 420, s = DEN.s / 100;
+  const o = { mouth: mouthFor('DENNIS', t), look: t >= TL.TAKE ? -1.2 : -.6, droop: smooth(TL.SPLAT + .25, TL.SPLAT + .6, t) };
+  if (t < TL.TAKE) {                                         // the bowl at his belly; lifted onto the counter at "The usual!"
+    const up = smooth(TL.LIFT, TL.LIFT + .3, t);
+    o.bowl = { x: lerp(0, (BOWL_UP.x - x) / s, up), y: lerp(-40, (BOWL_UP.y - DEN.y) / s, up) };
+  }
+  drawDennis11(g, t, x, DEN.y, DEN.s, o);
 }
 
 // ---------------------------------------------------------------- Pip
@@ -248,122 +328,133 @@ function pipArm(g, side, hx, hy, open, shade) {               // two bones of fi
   else {
     const a = (L1 * L1 - L2 * L2 + d * d) / (2 * d), h = Math.sqrt(Math.max(0, L1 * L1 - a * a)), bx = sx + dx * a / d, by = sy + dy * a / d;
     const p1 = [bx - dy / d * h, by + dx / d * h], p2 = [bx + dy / d * h, by - dx / d * h];
-    const score = q => q[1] + side * q[0] * .6;                  // lower and outward
+    const score = q => q[1] + side * q[0] * .6;
     [ex, ey] = score(p1) > score(p2) ? p1 : p2;
   }
-  const cx = 2 * ex - (sx + hx) / 2, cy = 2 * ey - (sy + hy) / 2;   // the curve passes through the elbow
+  const cx = 2 * ex - (sx + hx) / 2, cy = 2 * ey - (sy + hy) / 2;
   tTube(g, [sx, sy, cx, cy, hx, hy], 20, P.shirt, shade ? P.shirtS : null);
   tHand(g, hx, hy, 9, P.skin, P.skinS, open);
 }
-const pipBob = t => Math.sin(tau(t) * 2.1) * 2 + (speaking('PIP', t) ? Math.sin(t * 15) * 2.5 : 0);
-const REST_T = { x: 404, y: CT - 58 };                       // her right hand with the tongs, at rest by the roller
+const pipBob = t => Math.sin(t * 2.1) * 2 + (speaking('PIP', t) ? Math.sin(t * 15) * 2.5 : 0);
+const toPip = (p, bob) => ({ x: (p.x - PIP.x) / (PIP.s / 100), y: (p.y - CT - bob) / (PIP.s / 100) });
 function pipState(t) {
-  const st = { expr: 'grin', mode: null, hand: null, tongs: false, dog: false, grip: 1 };
-  if (t >= TL.TONG0 && t < TL.CRACK + .15) st.expr = 'worried';
-  if (t >= V.L4.t && t < V.L7.t) st.expr = 'gasp';
-  if (t >= V.L9.t) st.expr = 'sad';
-  if (t >= V.L11.t) st.expr = 'worried';
-  // the first hot dog: tongs from "Coming right up!", the tug, the crack, into the customer's bun
-  const d1 = { x: ROLL.x + DOGS[TAKE1][0], y: CT + DOGS[TAKE1][1] }, d2 = { x: ROLL.x + DOGS[TAKE2][0], y: CT + DOGS[TAKE2][1] };
-  const into = { x: OFFER.x, y: OFFER.y - 22 };
-  if (t >= V.L2.t && t < TL.HAND + .4) {
-    st.mode = 'tongs'; st.tongs = true;
-    let p = { x: REST_T.x + 86, y: REST_T.y }; st.grip = .6 + .4 * Math.abs(Math.sin(t * 9));
-    if (t >= TL.TONG0 - .25) { p = lp(p, d1, smooth(TL.TONG0 - .25, TL.TONG0, t)); st.grip = 1; }
-    if (t >= TL.TONG0 && t < TL.CRACK) p = { x: d1.x + Math.sin(t * 31) * 5, y: d1.y + Math.sin(t * 23) * 2.5 };
-    if (t >= TL.CRACK) { p = lp(d1, { x: d1.x + 40, y: d1.y - 50 }, smooth(TL.CRACK, TL.CRACK + .18, t)); st.dog = true; }
-    if (t >= TL.CRACK + .18) p = lp({ x: d1.x + 40, y: d1.y - 50 }, into, smooth(TL.CRACK + .18, TL.HAND - .1, t));
-    if (t >= TL.HAND - .1) { p = lp(into, { x: REST_T.x + 86, y: REST_T.y }, smooth(TL.HAND - .05, TL.HAND + .4, t)); st.dog = false; st.grip = .5; }
-    st.hand = { x: p.x - 86, y: p.y };
-  }
-  // the second: "Make it two!"
-  if (t >= V.L7.t + .2 && t < TL.TONG2 + .75) {
-    st.mode = 'tongs'; st.tongs = true; st.grip = 1;
-    let p = lp({ x: REST_T.x + 86, y: REST_T.y }, d2, smooth(V.L7.t + .2, TL.TONG2 - .25, t));
-    if (t >= TL.TONG2 - .25 && t < TL.TONG2) p = { x: d2.x + Math.sin(t * 31) * 4, y: d2.y };
-    if (t >= TL.TONG2) { p = lp(d2, into, smooth(TL.TONG2, TL.TONG2 + .33, t)); st.dog = true; }
-    if (t >= TL.TONG2 + .35) { p = lp(into, { x: REST_T.x + 86, y: REST_T.y }, smooth(TL.TONG2 + .38, TL.TONG2 + .75, t)); st.dog = false; st.grip = .5; }
-    st.hand = { x: p.x - 86, y: p.y };
-  }
-  // the switch, off; then in the slow time her hand lifts off it, very slowly, and stays in the air until she has asked
-  const sw = { x: (SW.x + 2 - PIP.x) / (PIP.s / 100), y: (SW.y - 4 - CT) / (PIP.s / 100) };
-  if (t >= TL.OFF - .35 && t < TL.OFF) { st.mode = 'arm'; st.handL = lp({ x: 18, y: -13 }, sw, smooth(TL.OFF - .35, TL.OFF - .04, t)); }
-  if (t >= TL.OFF && t < endOf('L11') + .3) {
-    st.mode = 'arm';
-    st.handL = lp(lp(sw, { x: 46, y: -84 }, ease(clamp((tau(t) - tau(TL.OFF)) / 1.0))), { x: 18, y: -13 }, smooth(endOf('L11') - .15, endOf('L11') + .25, t));
-    st.open = true;
-  }
-  if (t >= TL.OFF && t < TL.ON + .3) {                        // one long slow blink on the world's clock
-    const d = tau(t) - tau(TL.PIPBLINK); st.blink = d > 0 && d < .14;
-  } else st.blink = blinkAt(3, tau(t));
-  if (t >= V.L11.t + .2 && t < V.L11.t + .45) st.blink = true; // blinking hard: "Did time just..."
+  const st = { expr: 'grin', wave: false, mode: null };
+  if (t >= V.L1.t + 1.9) st.expr = 'sad';
+  if (t >= TL.CLOTH + .2) st.expr = 'grin';
+  if (t >= V.L4.t) st.expr = 'gasp';
+  if (t >= endOf('L4') + .3) st.expr = 'grin';
+  if (t >= TL.SPLAT) st.expr = 'gasp';
+  if (t >= V.L8.t) { st.expr = 'grin'; st.wave = t < endOf('L8') + .2; }
+  if (t >= V.L11.t) { st.wave = t < endOf('L11') + .2; }
+  if (t >= V.L12.t + .3) st.expr = 'worried';
+  if (t >= TL.DING) st.expr = 'gasp';
+  if (t >= V.L13.t + .2) st.expr = 'grin';
+  if (t >= TL.CLOTH && t < TL.CLOTH + .75) st.mode = 'cloth';
+  if (t >= TL.GRAVY - .45) st.mode = 'gravy';
+  st.blink = blinkAt(3, t);
   return st;
 }
 function drawPipBack(g, t) {
-  const st = pipState(t), bob = pipBob(t), o = { expr: st.expr, mouth: mouthFor('PIP', t), blink: st.blink, wave: false };
+  const st = pipState(t), bob = pipBob(t);
+  const o = { expr: st.expr, mouth: mouthFor('PIP', t), blink: st.blink, wave: st.wave, wavePhase: t * 9 };
   if (st.mode) o.arms = false;
   drawPip2(g, PIP.x, CT + bob, PIP.s, o);
-  if (st.mode) { g.save(); g.translate(PIP.x, CT + bob); g.scale(PIP.s / 100, PIP.s / 100); pipArm(g, -1, -18, -13, false, false); g.restore(); }
-}
-function drawPipFront(g, t) {                                // her right arm, in front of the roller
-  const st = pipState(t); if (!st.mode) return;
-  const bob = pipBob(t), s = PIP.s / 100;
-  g.save(); g.translate(PIP.x, CT + bob); g.scale(s, s);
-  if (st.mode === 'tongs') {
-    const hx = (st.hand.x - PIP.x) / s, hy = (st.hand.y - CT - bob) / s;
-    pipArm(g, 1, hx, hy, false, true); g.restore();
-    if (st.dog) hotDog(g, st.hand.x + 86, st.hand.y + 1, 80, .04, 0);
-    tongs(g, st.hand.x + 86, st.hand.y, st.grip);
-    tHand(g, st.hand.x + 2, st.hand.y, 9 * s, TOON.pip.skin, TOON.pip.skinS);    // her fingers over the handle
-    return;
+  if (st.mode === 'gravy') { g.save(); g.translate(PIP.x, CT + bob); g.scale(PIP.s / 100, PIP.s / 100); pipArm(g, -1, -18, -13, false, false); g.restore(); }
+  if (st.mode === 'cloth') {                                  // both hands up with the folded cloth at her chest, then a flick out to the sides
+    const u = (t - TL.CLOTH) / .75, up = smooth(0, .35, u), fl = smooth(.42, .6, u);
+    const hx = lerp(lerp(26, 34, up), 92, fl), hy = lerp(lerp(-20, -108, up), -30, fl);
+    g.save(); g.translate(PIP.x, CT + bob); g.scale(PIP.s / 100, PIP.s / 100);
+    if (fl < .98) { const top = hy - 2, drop = 46 + fl * 30;
+      tShape(g, '#fbf1dc', gg => { gg.moveTo(-hx, top); gg.lineTo(hx, top); gg.lineTo(hx + 4, top + drop); gg.quadraticCurveTo(0, top + drop + 10, -hx - 4, top + drop); gg.closePath(); }, 3);
+      g.fillStyle = 'rgba(255,122,26,.5)'; for (let x = -hx + 8; x < hx - 6; x += 22) g.fillRect(x, top + 2, 8, drop); }
+    for (const sd of [-1, 1]) { const ex = sd * lerp(74, 98, fl), ey = lerp(-62, -58, fl);
+      tTube(g, [sd * 52, -88, ex, ey, sd * hx, hy], 20, TOON.pip.shirt, sd > 0 ? TOON.pip.shirtS : null); tHand(g, sd * hx, hy, 9, TOON.pip.skin, TOON.pip.skinS); }
+    g.restore();
   }
-  pipArm(g, 1, st.handL.x, st.handL.y, !!st.open, true);
-  g.restore();
+}
+function drawPipFront(g, t) {                                 // her right arm with the gravy boat, in front of the counter-top things
+  const st = pipState(t); if (st.mode !== 'gravy') return;
+  const bob = pipBob(t), s = PIP.s / 100;
+  const k1 = smooth(TL.GRAVY - .45, TL.GRAVY - .15, t), k2 = smooth(TL.GRAVY, TL.GRAVY + .4, t);
+  const rest = { x: PIP.x + 18 * s, y: CT - 13 * s };
+  const p = lp(lp(rest, { x: GRAVY.x + 6, y: GRAVY.y - 22 }, k1), GRAVY_OUT, k2), L = toPip(p, bob);
+  g.save(); g.translate(PIP.x, CT + bob); g.scale(s, s); pipArm(g, 1, L.x, L.y, false, true); g.restore();
+  if (k1 >= 1) { gravyBoat(g, p.x + 6, p.y + 22); tHand(g, p.x, p.y, 9 * s, TOON.pip.skin, TOON.pip.skinS); }
 }
 
-// ---------------------------------------------------------------- Rae: real time, always her usual speed
-const RAE_Y = CT + 10;
-function raeLocalReach(t, x) {
-  const u = RAE.s / 100, k = smooth(TL.REACH, TL.ON - .03, t), back = smooth(TL.ON + .12, TL.ON + .5, t);
-  const sw = { x: (SW.x + 6 - x) / u, y: (SW.y - 6 - RAE_Y) / u };
-  return { x: lerp(lerp(-8, sw.x, k), -8, back), y: lerp(lerp(-23, sw.y, k), -23, back) };
+// ---------------------------------------------------------------- Rae: deadpan; her right arm does the microwave
+const toRae = p => ({ x: (p.x - RAE.x) / (RAE.s / 100), y: (p.y - CT) / (RAE.s / 100) });
+function raeArmR(g, hx, hy) {                                  // her right arm (screen right) to a local point, the same build as the rig's
+  const R = TOON.rae, sx = 58, sy = -122, L1 = 60, L2 = 62, dx = hx - sx, dy = hy - sy, d = Math.max(1, Math.hypot(dx, dy));
+  let ex, ey;
+  if (d >= L1 + L2) { ex = sx + dx * L1 / d; ey = sy + dy * L1 / d; }
+  else { const a = (L1 * L1 - L2 * L2 + d * d) / (2 * d), h = Math.sqrt(Math.max(0, L1 * L1 - a * a)), bx = sx + dx * a / d, by = sy + dy * a / d;
+    const p1 = [bx - dy / d * h, by + dx / d * h], p2 = [bx + dy / d * h, by - dx / d * h]; [ex, ey] = (p1[1] + p1[0] * .6) > (p2[1] + p2[0] * .6) ? p1 : p2; }
+  tTube(g, [sx, sy, 2 * ex - (sx + hx) / 2, 2 * ey - (sy + hy) / 2, hx, hy], 24, R.hood, R.hoodS);
+  tHand(g, hx, hy, 9.5, R.skin, R.skinS);
+}
+function raeHand(t) {                                          // world target of her right hand, or null (at rest, the rig's own arm)
+  const rest = { x: RAE.x + 22 * 1.9, y: CT - 19 * 1.9 }, inside = { x: INSIDE.x + 10, y: INSIDE.y - 18 }, startB = { x: PANEL.x, y: PANEL.start }, rel = { x: PANEL.x, y: PANEL.release };
+  const bowl = { x: BOWL_UP.x, y: BOWL_UP.y - 10 };
+  if (t >= TL.TAKE - .3 && t < TL.START + .45) {
+    let p = lp(rest, bowl, smooth(TL.TAKE - .3, TL.TAKE, t));
+    if (t >= TL.TAKE) p = lp(bowl, inside, smooth(TL.TAKE + .05, TL.IN, t));
+    if (t >= TL.IN) p = lp(inside, { x: DOOR.x0 + 30, y: CT - 70 }, smooth(TL.IN, TL.SHUT - .1, t));
+    if (t >= TL.SHUT - .1) p = lp({ x: DOOR.x0 + 30, y: CT - 70 }, startB, smooth(TL.SHUT - .1, TL.START - .02, t));
+    if (t >= TL.START) p = lp(startB, rest, smooth(TL.START + .1, TL.START + .45, t));
+    return { p, bowl: t >= TL.TAKE && t < TL.IN };
+  }
+  if (t >= TL.OPEN2 - .35) {
+    let p = lp(rest, rel, smooth(TL.OPEN2 - .35, TL.OPEN2, t));
+    if (t >= TL.OPEN2) p = lp(rel, inside, smooth(TL.OPEN2 + .1, TL.RAEOUT, t));
+    if (t >= TL.RAEOUT) p = lp(inside, HOLD_RAE, smooth(TL.RAEOUT + .05, TL.RAEOUT + .5, t));
+    return { p, tub: t >= TL.RAEOUT };
+  }
+  return null;
 }
 function raeState(t) {
-  const o = { expr: 'deadpan', look: 1.5, blink: blinkAt(1, t), mouth: mouthFor('RAE', t), scanner: t < TL.RAEW0 };
-  if (t >= TL.OFF) o.look = -1.2;
-  if (t >= TL.RAEW0) o.look = -1.6;
-  if (t >= TL.ON + .5) o.look = -1.2;
-  if (t >= endOf('L12') + .2) o.look = 1.4;                  // then she watches the customer
+  const o = { expr: 'deadpan', look: 1.5, blink: blinkAt(1, t), mouth: mouthFor('RAE', t) };
+  if (t >= V.L5.t && t < M0) o.look = -1.6;                   // "Nothing is free." to Pip
+  if (t >= TL.DEN_IN) o.look = 1.4;
+  if (t >= TL.TAKE - .3) o.look = -.4;
+  if (t >= V.L8.t) o.look = -1.4;
+  if (t >= V.L12.t) o.look = -1.6;
+  if (t >= TL.DING) o.look = -.2;
+  if (t >= V.L13.t) o.look = -1.6;
   return o;
 }
 function drawRaeBack(g, t) {
-  const o = raeState(t);
-  if (t >= TL.RAEW0) scannerAt(g, TL.RAE_X0);
-  const tr = travel(t, TL.RAEW0, TL.RAE_X0, TL.RAE_X1, TL.RAE_STEP, TL.RAE_SPS);
-  if (tr.moving) return drawTraveller(g, (gg, x, y, s, oo) => drawRae2(gg, x, y, s, oo), tr.x, RAE_Y, RAE.s, Object.assign({}, o, { scanner: false }), walkBob(tr.dist, TL.RAE_STEP, 10), -1);
-  const x = t < TL.RAEW0 ? TL.RAE_X0 : TL.RAE_X1;
-  if (t >= TL.REACH && t < TL.ON + .5) o.reachL = raeLocalReach(t, x);
-  drawRae2(g, x, RAE_Y + Math.sin(t * 1.7 + 1) * 1.5, RAE.s, o);
+  const o = raeState(t), h = raeHand(t);
+  if (h) o.arms = false;
+  drawRae2(g, RAE.x, CT + Math.sin(t * 1.7 + 1) * 1.5, RAE.s, o);
+  if (h) {                                                     // her left arm stays on the counter (the rig's), with the scanner
+    const R = TOON.rae;
+    g.save(); g.translate(RAE.x, CT + Math.sin(t * 1.7 + 1) * 1.5); g.scale(RAE.s / 100, RAE.s / 100);
+    tTube(g, [-58, -122, -76, -72, -72, -26, -44, -20, -12, -22], 24, R.hood); tHand(g, -8, -23, 9.5, R.skin, R.skinS);
+    g.restore();
+  }
 }
-function drawRaeFront(g, t) {                                // her left arm, reaching over the roller to the switch
-  if (!(t >= TL.REACH && t < TL.ON + .5)) return;
-  const x = TL.RAE_X1, R = TOON.rae, r = raeLocalReach(t, x);
-  g.save(); g.translate(x, RAE_Y + Math.sin(t * 1.7 + 1) * 1.5); g.scale(RAE.s / 100, RAE.s / 100);
-  const mx = (-84 + r.x) / 2 - 6, my = (-78 + r.y) / 2 + 10;
-  tTube(g, [-58, -122, -84, -78, mx, my, (mx + r.x) / 2, (my + r.y) / 2, r.x - 4, r.y + 2], 24, R.hood); tHand(g, r.x, r.y, 9.5, R.skin, R.skinS);
-  g.restore();
+function drawRaeFront(g, t) {
+  const h = raeHand(t); if (!h) return;
+  const y0 = CT + Math.sin(t * 1.7 + 1) * 1.5, L = toRae({ x: h.p.x, y: h.p.y - (y0 - CT) });
+  g.save(); g.translate(RAE.x, y0); g.scale(RAE.s / 100, RAE.s / 100); raeArmR(g, L.x, L.y); g.restore();
+  if (h.bowl) { cranBowl(g, h.p.x, h.p.y + 18, .95); tHand(g, h.p.x + 8, h.p.y + 8, 9.5 * 1.9, TOON.rae.skin, TOON.rae.skinS); }
+  if (h.tub) { raeTub(g, h.p.x, h.p.y + 30, 1.1, true); tHand(g, h.p.x + 34, h.p.y + 22, 9.5 * 1.9, TOON.rae.skin, TOON.rae.skinS); }
 }
 function drawMagsHere(g, t) { drawMags(g, MAGS.x, MAGS.y, MAGS.s, { talk: talkLevel('MAGS', t) }); }
 
 // ---------------------------------------------------------------- cameras
 const CAM = Object.assign({}, VMCAM, {
-  OPEN: [630, 990, 1.32, 1.35],                                // frame 1: the roller and its sign, the customer holding out a bun
-  PIP_MED: [385, 1060, 1.72, 1.78],                            // Pip, the roller and its switch above the subtitles
-  CUST_MED: [810, 1080, 2.0, 2.06],                           // the counter top above the subtitles: the knock is seen
-  RAE_CU: [637, 930, 2.8, 2.9],                                // Pip's hair and the customer's head both stay out
+  OPEN: [800, 1080, 2.0, 2.06],                                // frame 1: the robot's one pea first in the queue, the queue going on out of frame, Rae behind the microwave
+  PIP_MED: [385, 1030, 1.72, 1.78],
   MAGS_MED: [MAGS.x, 268, 2.1, 2.2],                           // the clerks' hair stays out of the bottom
-  SLOW_WIDE: [640, 975, 1.3, 1.34],                            // everyone; bottom of frame at 1713, her waist (1760) stays out
-  END_WIDE: [770, 872, 1.85, 1.92],                            // Rae and the customer; MAGS (and his photo) above the frame; faces under y 780 for the card
+  RAE_CU: [830, 990, 2.35, 2.5],                               // the BrightCap box on the shelf at the right; the robot's screen above the subtitles
+  MICRO_A: [790, 1217, 3.2, 3.32], MICRO_B: [790, 1217, 3.2, 3.32], MICRO_C: [790, 1217, 3.2, 3.32],   // the microwave window, three cuts (the robot's screen stays out)
+  WIDE: [590, 1000, 1.18, 1.22],
+  MICRO_RAE: [800, 1150, 2.2, 2.28],                           // Rae's face above, the microwave, Dennis's eyes at the right
+  ROBOT_CU: [610, 1270, 3.2, 3.3],                             // the robot's screen; the frame top stays under the clerks' chins
+  RAE_MED: [710, 1010, 2.0, 2.06],                             // Rae with her leftovers, Pip's arm with the gravy from the left
+  END_WIDE: [530, 865, 1.82, 1.85],                            // MAGS and his wall photo out of frame; faces under y 780 for the card
 });
 
 // ---------------------------------------------------------------- frame
@@ -373,44 +464,47 @@ function drawScene(t) {
   c.fillStyle = '#1e1044'; c.fillRect(0, 0, W, H);
   applyCam(c, CAM[n], sk, 0);
   c.drawImage(STATIC.store, 0, 0);
+  brightCapBox(c);
   drawBoardNumber(c, t, 1, 1, null);
-  drawClock(c, t);
+  drawGarland(c, t);
   drawMagsHere(c, t);
-  if (n === 'MAGS_MED') flavorBoard(c, t);
+  if (n === 'MAGS_MED') priceBoard(c, t);
   drawRaeBack(c, t);
   drawPipBack(c, t);
   c.drawImage(STATIC.front, 0, CT);
+  drawCloth(c, t);
   drawRegister(c, false);
-  drawRollerBack(c, t);
-  drawSteam(c, t);
-  drawRollerFront(c, t);
+  if (t >= TL.CLOTH + .55 && t < TL.GRAVY - .15) gravyBoat(c, GRAVY.x, GRAVY.y);
+  drawMicrowave(c, t);
+  puff(c, t);
+  blob(c, t);
+  robot(c, t);
+  dennis(c, t);
   drawPipFront(c, t);
   drawRaeFront(c, t);
-  customer(c, t, customerState(t));
   glassStreaks(c, .9);
-  const sl = slowness(t);                                      // slow time: the store goes a little blue (a tint over the frame)
-  if (sl > 0) { c.setTransform(1, 0, 0, 1, 0, 0); c.fillStyle = `rgba(70,140,255,${.14 * sl})`; c.fillRect(0, 0, W, H); }
 }
 function render(t) { t = clamp(t, 0, DUR - 1e-3); drawScene(t); composeFrame(OUT, SC, t); endCard(OUT, t, 'vm'); }
 window.render = render;
 
 // ---------------------------------------------------------------- sound cues (natural sound: what we see, in the store's room)
+const ms = [0, 1, 2].map(i => M0 + i * MONT);
 window.EV = [
-  { type: 'bed', fx: 'roller_hum', t: 0, t1: DUR + .5, g: -33, warp: true, fin: .05 },            // the roller: motor hum and sizzle (slowed with time)
-  { type: 'tug', t: TL.TONG0 - .02, pan: -.15, dur: TL.CRACK - TL.TONG0 },                           // tongs grinding on a welded hot dog
-  { type: 'crack', t: TL.CRACK, pan: -.15 },                                                       // it cracks free
-  { type: 'drop', t: TL.HAND - .1, pan: .2 },                                                      // into the bun: a stone in bread
-  { type: 'knock', t: TL.TAP, pan: .3 }, { type: 'knock', t: TL.TAP + .28, pan: .3, g: .8 },       // tock, tock on the counter
-  { type: 'tug', t: TL.TONG2 - .25, pan: .05, dur: .25 },                                          // the second one
-  { type: 'crack', t: TL.TONG2, pan: .05, g: .8 },
-  { type: 'drop', t: TL.TONG2 + .35, pan: .2, g: .8 },
-  { type: 'holo', t: V.L8.t + .9 },                                                                // the flavor board
-  { type: 'switch', t: TL.OFF, pan: -.2 },                                                         // off: time slows
-  ...footfalls(TL.RAEW0, TL.RAE_X0, TL.RAE_X1, TL.RAE_STEP, TL.RAE_SPS).map(x => ({ type: 'step', t: x, pan: .1 })),   // Rae, at her usual speed
-  { type: 'switch', t: TL.ON, pan: -.2 },                                                          // on: time comes back
-  { type: 'crunch', t: TL.BITE, pan: .3 },                                                         // the bite
-  { type: 'chew', t: TL.BITE + .35, pan: .3, dur: V.L13.t - TL.BITE - .5 },                        // chewing rock
-  { type: 'chew', t: endOf('L13') + .1, pan: .3, dur: 2.2, g: .7 },
+  { type: 'cloth', t: TL.CLOTH + .33, pan: -.25 },                                                 // the tablecloth flick
+  { type: 'paper', t: TL.CLOTH + .32, pan: -.35 },                                                 // the paper garland drops
+  ...ms.map(a => ({ type: 'hum', t: a, dur: MONT - .2, pan: .1 })),                                // three microwave runs (the montage)
+  ...ms.map(a => ({ type: 'ding', t: a + MONT - .18, pan: .1 })),
+  { type: 'rattle', t: ms[1] + .08, pan: .1 },                                                     // the tower scraping round
+  { type: 'slide', t: TL.DEN_IN, pan: .5 },                                                        // Dennis slides in
+  { type: 'open', t: TL.OPEN1, pan: .15 }, { type: 'bowl', t: TL.IN - .02, pan: .15 }, { type: 'shut', t: TL.SHUT, pan: .15 },
+  { type: 'beep', t: TL.START, pan: .2 },
+  { type: 'hum', t: TL.START + .05, dur: TL.SPLAT - TL.START - .05, pan: .15 },
+  { type: 'splat', t: TL.SPLAT, pan: .15 },                                                        // the cranberry sauce
+  { type: 'slide', t: TL.DEN_OUT, pan: .5, g: .6 },                                                // Dennis leaves, dripping
+  { type: 'blorp', t: V.L8.t + .9 + .6, pan: -.15 },                                               // the jelly's happy hop lands
+  { type: 'bed', fx: 'microwave_hum', t: V.L8.t, t1: TL.DING, g: -36, fin: .3, fout: .06 },        // Rae's leftovers in the microwave
+  { type: 'ding', t: TL.DING, pan: .15 },
+  { type: 'open', t: TL.OPEN2 + .05, pan: .15 },
 ];
 
 (async () => {

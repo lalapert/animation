@@ -45,7 +45,7 @@ assert 40 <= DUR <= 45, DUR                     # owner 11/16: 40-45 s with the 
 V = {v["id"]: v for v in VO}
 end = lambda k: V[k]["t"] + V[k]["dur"]
 # Pip's tablecloth, right after "Nobody eats alone on Thanksgiving!"
-T["CLOTH"] = round(end("L2") + 0.05, 3)
+T["CLOTH"] = round(end("L2") - 0.5, 3)                                                       # (she lifts it on "...Thanksgiving!")
 # MAGS's hologram prices, on his words
 T["FEE"] = round(V["L3"]["t"] + word("L3", "microwave")["t0"], 3); T["GRAT"] = round(V["L3"]["t"] + word("L3", "gratitude")["t0"], 3)
 # Dennis's bowl: he lifts it onto the counter at "The usual!"; Rae takes it, puts it in, shuts the door, presses start as she says the rule

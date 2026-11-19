@@ -14,7 +14,7 @@
 | 항목 | 점수 | 근거와 고칠 점 |
 |---|---|---|
 | 반복 금지와 움직임 | 4 | 결말 종류: 휴일은 안 챙긴다던 Rae가 사실은 자기 남은 음식을 데우고 있었다는 반전과 "...Pass the gravy."(끝까지 버티던 사람이 합류). 6화(사진), 7화(Rae의 손바닥), 8화(가방이 달이 됨), 9화(MAGS 한마디와 별 하나 팻말), 10화(손님이 Rae의 앞 대사를 되받음)와 다르다. 동물 없음(10화도 없었으니 써도 되지만, 이 편은 음식 개그가 더 웃기다). 움직임: Pip가 식탁보를 펄럭 펼친다, 젤리가 Tupperware 탑을 들고 콩콩 뛰어 줄을 당긴다, Dennis가 미끄러져 들어온다, Rae가 그릇을 받아 전자레인지에 넣는다. 약점: 장소는 계산대 하나(밖으로 나가는 편은 12화 *Restock*) |
-| 끝 버튼과 반복 재생 | 4 | "띵" 하고 문이 열리면 "RAE"라고 적힌 Tupperware. Rae가 꺼내 들고 "...Pass the gravy." 첫 장면의 줄과 전자레인지로 돌아간다(다시 보면 첫 장면부터 전자레인지 타이머가 돌아가고 있다). 끝 화면 질문 "LEFTOVERS: HOT OR COLD?" |
+| 끝 버튼과 반복 재생 | 4 | "띵" 하고 문이 열리면 "RAE"라고 적힌 Tupperware(뚜껑을 덮어서 크랜베리 범벅 속에서도 멀쩡하다). Rae가 꺼내 들고 "...Pass the gravy." 마지막은 모두가 둘러앉은 계산대, 첫 장면의 전자레인지 줄로 돌아간다. 끝 화면 질문 "LEFTOVERS: HOT OR COLD?" |
 | 첫 2초 그림 훅 | 5 | 첫 프레임: 계산대 위 전자레인지, 그 앞에 Tupperware를 든 이상한 손님 줄, 맨 앞 꼬마 로봇의 커다란 통 안에 완두콩 한 알. 0.3초에 "Table for one. Again." |
 | 설정이 한 줄로 이해되는가 | 5 | "추수감사절 밤, 혼자인 손님들이 남은 음식을 데우려고 편의점 전자레인지에 줄을 섰다." |
 | 공감 | 5 | 추수감사절 남은 음식, 엄마가 싸 준 Tupperware, 회사 전자레인지 줄, 뚜껑 안 덮고 돌려서 터진 음식, 프렌즈기빙. 영국도 전자레인지 줄과 남은 음식은 통한다 |
@@ -39,24 +39,24 @@
 
 | id | 누가 | 감정 지시 (오디오 태그) | 대사 (영어) | 행동 지시 (그림, 카메라, 소리) |
 |---|---|---|---|---|
-| — | | | | **0초.** 와이드: 계산대 위 전자레인지(타이머가 돌아가고 안에서 그릇이 돈다), 그 앞 계산대 위에 Tupperware를 든 꼬마 손님 줄: 맨 앞 외로운 꼬마 로봇(바퀴 하나, 화면 얼굴, 두 팔째로 커다란 통, 안에 완두콩 한 알), 엄마표 Tupperware 탑("MOM'S")을 든 보라 젤리, 초록빛이 새는 캐서롤을 든 유령 같은 손님. 뒤에 Pip와 Rae. 매장 룸톤, 전자레인지 웅웅 |
+| — | | | | **0초.** 계산대 위 전자레인지 뒤에 Rae(무표정), 전자레인지 오른쪽 계산대 위로 Tupperware를 든 꼬마 손님 줄이 화면 밖까지 이어진다: 맨 앞 외로운 꼬마 로봇(바퀴 하나, 화면 얼굴, 두 팔째로 커다란 통, 안에 완두콩 한 알), 그 뒤로 엄마표 Tupperware 탑("MOM'S")을 든 보라 젤리. 매장 룸톤, 외로운 비브라폰 화음 |
 | L1 | ROBOT | `[lonely sigh]` | Table for one. Again. | 로봇의 화면 눈이 축 처진다 |
-| L2 | PIP | `[gasps, heartbroken]` | Nobody eats alone / on Thanksgiving! | Pip 미디엄, 눈물 그렁. 계산대 밑에서 식탁보를 꺼내 두 팔째로 펄럭 펼친다(천 소리). 벽에 "FRIENDSGIVING" 깃발 줄 |
+| L2 | PIP | `[gasps, heartbroken]` | Nobody eats alone / on Thanksgiving! | Pip 미디엄, 눈물 그렁(음악 없이). "...Thanksgiving!"에서 식탁보를 두 팔째로 가슴 앞에 들고(얼굴 아래), 양옆으로 펄럭 펼친다(천 소리): 계산대 앞면에 주황 체크 식탁보, 벽에 "FRIENDSGIVING" 깃발 줄(종이 소리). 트리오가 밝게 들어온다. 손님들은 MAGS 샷 동안 전자레인지 왼쪽 "식탁"으로 옮겨 앉는다 |
 | — | | | | MAGS 미디엄. 글로켄슈필 징글 |
 | L3 | MAGS | `[bright, salesy]` | Microwave fee: five dollars! / Gratitude: three ninety-nine! | MAGS 아래 홀로그램: "MICROWAVE $5", "GRATITUDE $3.99"와 병 그림 |
 | L4 | PIP | `[outraged]` | Gratitude should be free! | Pip 미디엄 |
 | L5 | RAE | `[flatly]` | Nothing is free. | Rae 클로즈업. 뒤 진열대에 "FREE! BrightCap" 상자(이스터에그, 설명 없음). 음악 없이 |
-| — | | | | 전자레인지 문 창 클로즈업 세 컷(띵마다 컷): 완두콩 한 알이 돈다 / Tupperware 탑이 꽉 끼어 돈다(삐걱) / 초록빛 캐서롤에 창이 초록으로 번쩍. 띵, 띵, 띵 |
+| — | | | | 전자레인지 문 창 클로즈업 세 컷(띵마다 컷, 워킹 베이스): 완두콩 한 알이 돈다 / Tupperware 탑이 꽉 끼어 돈다(달그락) / 초록빛 캐서롤에 창이 초록으로 번쩍. 띵, 띵, 띵 |
 | — | | | | 와이드: Dennis가 오른쪽에서 미끄러져 들어온다(두 팔째로 뚜껑 없는 크랜베리 소스 그릇) |
 | L6 | DENNIS | `[booming, cheerful]` | Evening, Rae! / The usual! | (5화 녹음 재사용) Rae가 오른팔째로 그릇을 받아 전자레인지에 넣고 문을 닫고 버튼을 누른다(삑) |
 | L7 | RAE | `[deadpan]` | Rule nine: / always cover it. | 전자레인지 클로즈업, 뚜껑은 안 덮는다. 웅웅(음악 없이). 펑! 창 안쪽이 빨간 크랜베리로 범벅. Dennis의 눈자루가 축 |
-| L8 | PIP | `[delighted]` | Okay! What's everyone / thankful for? | 와이드: 식탁보 위 종이 접시, 손님들이 둘러앉았다 |
+| L8 | PIP | `[delighted]` | Okay! What's everyone / thankful for? | 와이드: 식탁보 앞에 손님들, Pip가 손을 흔든다(팔째로), 젤리가 기뻐서 콩 뛴다. 크랜베리 범벅 전자레인지 안에서 다른 통이 돈다(라벨은 안 보임). Dennis는 눈자루를 늘어뜨린 채 미끄러져 나간다 |
 | L9 | ROBOT | `[softly, touched]` | ...Company. | 로봇 클로즈업, 화면에 하트 |
 | L10 | MAGS | `[bright, greedy]` | Paying customers! | MAGS 클로즈업, 빨간 눈이 반짝 |
 | L11 | PIP | `[hopeful]` | Rae? Join us! | Pip 미디엄, 두 팔째로 손짓 |
 | L12 | RAE | `[flatly]` | I don't do holidays. | Rae 클로즈업 |
 | — | | | | 띵. 전자레인지 클로즈업: Rae가 오른팔째로 문을 연다. 안에서 나오는 Tupperware 뚜껑에 "RAE" |
-| L13 | RAE | `[deadpan]` | ...Pass the gravy. | 마지막 샷: Rae가 자기 Tupperware를 두 손(팔째로)에 들고, 옆에서 Pip가 그레이비 보트를 내민다. 버튼: 실로폰과 트리오의 마지막 화음. 엔드 카드 2.5초와 질문 "LEFTOVERS: HOT OR COLD?"(꼬리 1.25초, 얼굴과 Tupperware는 모두 y 780 아래) |
+| L13 | RAE | `[deadpan]` | ...Pass the gravy. | Rae 미디엄: 자기 Tupperware를 오른팔째로 가슴 앞에 들고 Pip 쪽을 본다. 왼쪽에서 Pip의 팔이 그레이비 보트를 내민다. 버튼(실로폰과 트리오의 마지막 화음)에 와이드로 컷: 모두가 둘러앉은 계산대. 엔드 카드 2.5초와 질문 "LEFTOVERS: HOT OR COLD?"(꼬리 1.25초, 얼굴과 Tupperware는 모두 y 780 아래, MAGS와 벽 사진은 화면 위 밖) |
 
 ## 3. 숨긴 장치와 줄기
 

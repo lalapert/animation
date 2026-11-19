@@ -124,12 +124,17 @@ function buildStore() {
   return S;
 }
 const STORE = buildStore();
-// the sale banner over the riser (its text changes for six frames)
+// the sale banner hanging over the riser, and the sale card standing on the riser's front edge (its number changes for six frames)
 function banner(S, t) {
-  const egg = t >= TL.EGG.t && t < TL.EGG.t + TL.EGG.dur, z = .45;
-  S.quad([[-.95, 2.22, z], [.95, 2.22, z], [.95, 2.62, z], [-.95, 2.62, z]], [176, 32, 36], { text: egg ? '10% OFF' : '50% OFF', textCol: [244, 238, 228] });
-  for (const x of [-.85, .85]) S.box(x - .005, 2.62, z - .005, x + .005, 3.0, z + .005, [180, 180, 180]);
-  for (let i = S.q.length - 3; i < S.q.length; i++) prep(S.q[i]);
+  const egg = t >= TL.EGG.t && t < TL.EGG.t + TL.EGG.dur, z = .45, n0 = S.q.length;
+  S.quad([[-1.05, 2.25, z], [1.05, 2.25, z], [1.05, 2.62, z], [-1.05, 2.62, z]], [176, 32, 36], { text: 'HOLIDAY SALE', textCol: [244, 238, 228] });
+  for (const x of [-.95, .95]) S.box(x - .005, 2.62, z - .005, x + .005, 3.0, z + .005, [180, 180, 180]);
+  const zc = RISER[0] + .12;
+  S.quad([[-.26, RISER[2] + .02, zc], [.26, RISER[2] + .02, zc], [.26, RISER[2] + .42, zc], [-.26, RISER[2] + .42, zc]], [236, 232, 222]);
+  S.quad([[-.23, RISER[2] + .17, zc - .002], [.23, RISER[2] + .17, zc - .002], [.23, RISER[2] + .27, zc - .002], [-.23, RISER[2] + .27, zc - .002]], [236, 232, 222], { text: egg ? '10% OFF' : '50% OFF', textCol: [190, 30, 34] });
+  S.quad([[-.2, RISER[2] + .3, zc - .002], [.2, RISER[2] + .3, zc - .002], [.2, RISER[2] + .37, zc - .002], [-.2, RISER[2] + .37, zc - .002]], [236, 232, 222], { text: 'TODAY', textCol: [40, 36, 36] });
+  S.box(-.02, RISER[2], zc + .01, .02, RISER[2] + .4, zc + .14, [60, 60, 60]);
+  for (let i = n0; i < S.q.length; i++) prep(S.q[i]);
 }
 // Lt: { amb, night (corridor lights), spots (display lights 0..1) }
 function storeLight(Lt) {
@@ -300,9 +305,6 @@ function drawMannequin(g, cam, Q, outfit, light, o = {}) {
       if (top) { const r = pxm * .05; g.save(); g.globalCompositeOperation = 'lighter'; const gr = g.createRadialGradient(top[0], top[1], 0, top[0], top[1], r); gr.addColorStop(0, `rgba(255,252,240,${.45 * k})`); gr.addColorStop(1, 'rgba(255,252,240,0)'); g.fillStyle = gr; g.fillRect(top[0] - r, top[1] - r, 2 * r, 2 * r); g.restore(); }
       if (facing > .15) {
         const a = clamp((facing - .15) / .35);
-        for (const ex of [-.032, .032]) { const e = P(toW([ex, 1.645, .1], part.ch)); if (e) { const r = pxm * .022; const gr = g.createRadialGradient(e[0], e[1], 0, e[0], e[1], r); gr.addColorStop(0, `rgba(60,50,44,${.32 * a})`); gr.addColorStop(1, 'rgba(60,50,44,0)'); g.fillStyle = gr; g.fillRect(e[0] - r, e[1] - r, 2 * r, 2 * r); } }
-        const nz = P(toW([0, 1.6, .118], part.ch)), nz2 = P(toW([0, 1.635, .112], part.ch));
-        if (nz && nz2) { g.strokeStyle = `rgba(90,80,70,${.25 * a})`; g.lineWidth = pxm * .006; g.beginPath(); g.moveTo(nz2[0], nz2[1]); g.lineTo(nz[0], nz[1]); g.stroke(); }
         if (outfit.name === 'red') {
           const C = [[-.06, 1.74, .07], [-.035, 1.705, .092], [-.01, 1.69, .099], [.008, 1.655, .105], [.03, 1.63, .1], [.04, 1.6, .094], [.065, 1.575, .07]].map(p => P(toW(p, part.ch)));
           if (C.every(Boolean)) { g.strokeStyle = `rgba(40,30,26,${.8 * a})`; g.lineWidth = Math.max(.8, pxm * .0035); g.beginPath(); C.forEach((q, i) => i ? g.lineTo(q[0], q[1]) : g.moveTo(q[0], q[1])); g.stroke(); }
@@ -328,7 +330,7 @@ function drawStand(g, cam, x, z, k, empty) {
 // where everything is: the red dress (index 2) on its stand, at the grille, or (frame 1) at the grille
 function onStand(i) { const s = STANDS[i]; return { p: [s[0], RISER[2], s[1]], yaw: PI + (i - 1.5) * .08, lean: 0, joints: POSES[i].joints }; }
 const AT_GRILLE = (x, tiltZ = .42, handUp = 1) => ({ p: [x, 0, .34], yaw: PI, lean: .09, joints: {
-  head: [.18, 0, tiltZ], shL: [-.95 * handUp, 0, .2], shR: [-.95 * handUp, 0, -.2], elL: [-.95 * handUp, 0, -.15], elR: [-.95 * handUp, 0, .15] } });
+  head: [.18, 0, tiltZ], shL: [-1.0 * handUp, 0, .38], shR: [-1.0 * handUp, 0, -.38], elL: [-2.0 * handUp, 0, -.25], elR: [-2.0 * handUp, 0, .25] } });
 // cctv1: frame 1 it is at the grille; one frame its head snaps over; then a time-lapse jump: back on its stand
 // cctv2: at the grille, face to his face; its hand comes up to the bar by his; its head tilts toward him
 // cam1, cam2: always on its stand; from STING (cam2) at the grille in front of his lens; cctv3: at the grille, its head follows him
@@ -341,9 +343,9 @@ function redAt(t, shot) {
     Q.joints.shR = [-.05, 0, -.08]; Q.joints.elR = [-.1, 0, 0];
     return Q;
   }
-  if (shot === 'cam2' && t >= TL.STING) return AT_GRILLE(LEON_X + .02, .5, 1);
+  if (shot === 'cam2' && t >= TL.STING) return AT_GRILLE(LEON_X - .06, .5, 1);
   if (shot === 'cctv3') {
-    const Q = AT_GRILLE(LEON_X + .02, .5, 1), k = ease(kOf(M.stutter(t, FPS_CCTV, 3), TL.BACKOUT));
+    const Q = AT_GRILLE(LEON_X - .06, .5, 1), k = ease(kOf(M.stutter(t, FPS_CCTV, 3), TL.BACKOUT));
     Q.joints.head = [.18 - .1 * k, -.5 * k, .5 - .2 * k];
     return Q;
   }
@@ -408,7 +410,7 @@ function leonBack(g, cam, x, z, k, o = {}) {
   if (u > 60) { g.save(); g.font = `${Math.round(.068 * u)}px "Special Elite"`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillStyle = C([30, 34, 52]); g.fillText('SECURITY', feet[0], feet[1] - 1.33 * u); g.restore(); }
   return { feet, u };
 }
-function leonZ(t) { return lerp(-.42, -3.6, ease(kOf(t, TL.BACKOUT))); }
+function leonZ(t) { return lerp(-.42, -1.35, ease(kOf(t, TL.BACKOUT))); }
 
 // ---------------------------------------------------------------- flashlights: the scene's albedo times a beam map, added on top
 function pool(g, cam, c, ax, ay, a, rgbS = '255,232,190') {
@@ -439,11 +441,12 @@ function storeView(g, t, shot, camSpec, Lt, T, o = {}) {
     const camPos = [cam.x, cam.y, cam.z], kf = p => PASS === 'lit' ? figLight(p, Lt) : 1;
     for (let i = 0; i < 4; i++) { const m = ms.find(m => m.i === i), empty = len3(sub3(m.Q.p, [STANDS[i][0], RISER[2], STANDS[i][1]])) > .2; drawStand(gg, cam, STANDS[i][0], STANDS[i][1], PASS === 'lit' ? clamp(figLight([STANDS[i][0], .5, STANDS[i][1]], Lt) + .1) : 1, empty); }
     const figs = ms.map(m => ({ d: len3(sub3(add3(m.Q.p, [0, 1, 0]), camPos)), draw: () => drawMannequin(gg, cam, m.Q, OUTFITS[m.i], kf(add3(m.Q.p, [0, 1.3, 0]))) }));
-    if (o.leon) { const z = leonZ(t), x = LEON_X - .9 * ease(kOf(t, TL.BACKOUT)); figs.push({ d: len3(sub3([x, 1, z], camPos)), draw: () => leonBack(gg, cam, x, z, PASS === 'lit' ? clamp(figLight([x, 1.3, z], Lt) + .1) : 1, { step: o.leonStep || 0 }) }); }
     figs.sort((a, b) => b.d - a.d).forEach(f => f.draw());
     if (!o.noGrille) drawGrille(gg, cam, PASS === 'lit' ? clamp(figLight([0, 1.4, -.1], Lt) * 1.15 + .05) : 1, { far: true });
     const red = ms.find(m => m.i === 2);
     if (red.Q.p[2] < .5 && !o.noGrille) drawMannequin(gg, cam, red.Q, OUTFITS[2], kf(add3(red.Q.p, [0, 1.3, 0])), { handsOnly: true });
+    // Leon is always on the corridor side of the grille
+    if (o.leon) { const z = leonZ(t), x = LEON_X - 3.2 * ease(kOf(t, TL.BACKOUT)); leonBack(gg, cam, x, z, PASS === 'lit' ? clamp(figLight([x, 1.3, z], Lt) + .1) : 1, { step: o.leonStep || 0 }); }
   };
   PASS = 'lit';
   const cam = TK.render(g, lit(S, storeLight(Lt)), camSpec, { ambient: 1, fog: .012, bg: [4, 4, 5], grid: false });
@@ -502,7 +505,7 @@ function handBeam(cc, cs, yawOff, pitchOff, figs) {
   const hit = beamHit(o, d, figs), p = project(cc, hit), dist = len3(sub3(hit, o));
   return { x: p ? p[0] : W / 2, y: p ? p[1] : H / 2, r: cc.f * .32, a: clamp(1.4 / (1 + Math.pow(dist / 3.4, 2)), .1, 1) };
 }
-const HEADS = STANDS.map(s => [s[0], RISER[2] + 1.5, s[1]]);
+const HEADS = STANDS.map(s => [s[0], RISER[2] + 1.64, s[1]]);
 // S2: he counts them with the flashlight from 1.7 m back, steps up to the grille, zooms on the red dress
 function poseCam1(t) {
   const walking = inR(t, [TL.STEP_IN[0], TL.STEP_IN[1] - .1]), h = handheld(t, TL.STEP_IN[0], 2, walking, .2 + .3 * kOf(t, [10, 13]));
@@ -547,8 +550,8 @@ function shotCam(g, fg, t, shot) {
 // S4: at the grille, on the red dress on its stand; it trembles; the creaks; at STING it is in front of the lens
 function poseCam2(t) {
   const nerve = t < TL.QUIET[0] ? .55 : t < TL.STING ? .2 : 1.2, h = handheld(t, 0, 0, false, nerve);
-  const tg = add3(HEADS[2], [0, -.3, 0]), cs = lookAt([LEON_X - .05, 1.55, -.22], tg, 50);
-  let yaw = cs.yaw, pitch = cs.pitch, z = -.22;
+  const tg = add3(HEADS[2], [0, -.12, 0]), cs = lookAt([LEON_X - .05, 1.55, -.55], tg, 50);
+  let yaw = cs.yaw, pitch = cs.pitch, z = -.55;
   if (t >= TL.STING) { const k = ease(kOf(t, [TL.STING, TL.STING + .12])); pitch += .12 * k; yaw -= .02 * k; }
   if (t >= TL.STUMBLE[0]) { const k = ease(kOf(t, TL.STUMBLE)); pitch -= .9 * k; yaw += .3 * k; z -= .5 * k; }
   if (t >= TL.STING && t < TL.STING + .08) { yaw += .03; pitch += .02; }
@@ -576,7 +579,7 @@ function stampAt(shot, tq) {
 let GRILLE31 = null, FACE31 = null;
 function shotCctv(shot, t) {
   const tq = qf(t), spots = shot === 'cctv3' && tq < TL.DARK ? 1 : 0;
-  const Lt = { amb: .2, night: 1.15, spots };
+  const Lt = { amb: .3, night: 1.35, spots, inside: 1.25 };                                  // 11/16: the opening reads on a phone
   const leon = shot !== 'cctv1', world = [];
   if (leon && shot === 'cctv2') { const o = [LEON_X + .25, 1.1, -.3], tg = [STANDS[2][0] - .2, .9, STANDS[2][1]]; world.push({ c: tg, ax: [.45, 0, 0], ay: [0, .6, 0], a: .7 }, { c: [o[0] + .1, RISER[2], RISER[0] + .3], ax: [.4, 0, 0], ay: [0, 0, .5], a: .4 }); }
   storeView(RG, tq, shot, CAM31, Lt, { world }, { leon, leonStep: shot === 'cctv3' ? Math.sin(tq * 9) : 0 });
@@ -585,7 +588,7 @@ function shotCctv(shot, t) {
   else if (shot === 'cctv2') { const k = ease(kOf(t, TL.PUSH2)); Z = { z: lerp(1, 2.3, k), f: [lerp(W / 2, FACE31[0], k), lerp(H / 2, FACE31[1], k)], k: .6 * k }; }
   else { const k = ease(kOf(t, TL.PUSH3)); Z = { z: lerp(1, 2.0, k), f: [lerp(W / 2, GRILLE31[0], k), lerp(H / 2, GRILLE31[1], k)], k: .6 * k }; }
   zoomInto(WK, RAW, Z.z, Z.f, Z.k);
-  TK.grade(WG, WORK, tq, 'cctv', { brightness: 1.32 });
+  TK.grade(WG, WORK, tq, 'cctv', { brightness: spots ? 1.2 : 1.45 });
   const gk = glitchAt(t); TK.vhs(WG, tq, gk ? 2.5 : 1, 5);
   if (shot === 'cctv1' && t >= TL.LAPSE && t < TL.LAPSE + .17) { tear(WG, t, .8); TK.statics(WG, t, .25); }   // the time-lapse jump
   if (gk) { tear(WG, t, Math.sin(gk[0] * PI)); TK.statics(WG, t, .4 * Math.sin(gk[0] * PI)); }
@@ -650,32 +653,32 @@ function buildEvents() {
   const EV = [], cq = x => +(Math.ceil(x * FPS_CCTV - 1e-6) / FPS_CCTV).toFixed(3);
   EV.push(
     // S1: CAM 31's own mic: the mall's air, the ventilation; the time-lapse jump
-    { type: 'bed', fx: 'hall_tone', space: 'shop', t: 0, t1: SH.cctv1[2], g: -36, fin: .01, fout: .01 },
+    { type: 'bed', fx: 'hall_tone', space: 'shop', t: 0, t1: SH.cctv1[2], g: -29, fin: .01, fout: .01 },
     { type: 'bed', fx: 'duct_hum', space: 'hall', t: 0, t1: SH.cctv1[2], g: -41, fin: .01, fout: .01 },
     { type: 'creak', t: cq(TL.SNAP1), g: .45 }, { type: 'glitch', t: TL.LAPSE, dur: .15 },
     // S2: his camcorder: the air, his breath, the flashlight's beat on each of them (his hand), two steps up to the grille
-    { type: 'bed', fx: 'hall_tone', space: 'shop', t: SH.cam1[1], t1: SH.cam1[2], g: -38, fin: .02, fout: .01 },
-    { type: 'bed', fx: 'breath_bed', space: 'close', t: SH.cam1[1] + .3, t1: SH.cam1[2], g: -34, fin: .5, fout: .02 },
+    { type: 'bed', fx: 'hall_tone', space: 'shop', t: SH.cam1[1], t1: SH.cam1[2], g: -32, fin: .02, fout: .01 },
+    { type: 'bed', fx: 'breath_bed', space: 'close', t: SH.cam1[1] + .3, t1: SH.cam1[2], g: -32, fin: .5, fout: .02 },
     { type: 'rustle', t: TL.COUNT[0] + .05, g: .4 },
     ...TL.STEPS.filter(x => x < SH.cam1[2]).map((t, i) => ({ type: 'step', t, g: .8, pan: i % 2 ? .1 : -.1 })),
     { type: 'rustle', t: TL.ZOOM[0] + .05, g: .3 },
     // S3: CAM 31 again
     { type: 'vcr', t: TL.ROLL2[0] },
-    { type: 'bed', fx: 'hall_tone', space: 'shop', t: SH.cctv2[1], t1: SH.cctv2[2], g: -36, fin: .01, fout: .01 },
+    { type: 'bed', fx: 'hall_tone', space: 'shop', t: SH.cctv2[1], t1: SH.cctv2[2], g: -29, fin: .01, fout: .01 },
     { type: 'bed', fx: 'duct_hum', space: 'hall', t: SH.cctv2[1], t1: SH.cctv2[2], g: -41, fin: .01, fout: .01 },
     { type: 'creak', t: cq(TL.HAND), g: .6 }, { type: 'creak', t: cq(TL.TILT), g: .4 },
     // S4: at the grille; it is on its stand on his tape, but the grille creaks under a weight right in front of him
-    { type: 'bed', fx: 'hall_tone', space: 'shop', t: SH.cam2[1], t1: TL.QUIET[0], g: -38, fin: .02, fout: .25 },
+    { type: 'bed', fx: 'hall_tone', space: 'shop', t: SH.cam2[1], t1: TL.QUIET[0], g: -32, fin: .02, fout: .25 },
     { type: 'bed', fx: 'near_breath', space: 'close', t: SH.cam2[1] + .1, t1: TL.QUIET[0], g: -31, fin: .3, fout: .2 },
-    ...TL.CREAKS.map((t, i) => ({ type: 'creak_close', t, g: [.55, .75, .9, 1][i] })),
+    ...TL.CREAKS.map((t, i) => ({ type: 'creak_close', t, g: [.55, .7, .8, .6][i] })),
     // the lights: the relay clunks, the spots buzz on; the grille is shaken right in front of the mic; his gasp; he stumbles
     { type: 'lights', t: TL.STING - .01 }, { type: 'rattle', t: TL.STING + .03 }, { type: 'hit', t: TL.STING + .05, g: .5 },
-    { type: 'gasp', t: TL.STING + .1 }, { type: 'rattle2', t: TL.STING + .38, g: .8 },
+    { type: 'gasp', t: TL.STING + .1 }, { type: 'rattle2', t: TL.STING + .2, g: 1 }, { type: 'rattle2', t: TL.STING + .42, g: .6 },
     { type: 'scuff', t: TL.STUMBLE[0] + .05, g: .9 }, { type: 'handling', t: TL.STUMBLE[0] + .1, g: .9 },
     ...TL.STEPS.filter(x => x >= SH.cam2[1]).map((t, i) => ({ type: 'step', t, g: .9, pan: i % 2 ? .1 : -.1 })),
     // S5: CAM 31: his steps going away, the spots' buzz, the relay again; then only the air
     { type: 'vcr', t: TL.ROLL3[0] },
-    { type: 'bed', fx: 'hall_tone', space: 'shop', t: SH.cctv3[1], t1: TL.END, g: -36, fin: .01, fout: .02 },
+    { type: 'bed', fx: 'hall_tone', space: 'shop', t: SH.cctv3[1], t1: TL.END, g: -29, fin: .01, fout: .02 },
     { type: 'bed', fx: 'spots_buzz', space: 'hall', t: SH.cctv3[1], t1: cq(TL.DARK), g: -38, fin: .01, fout: .005 },
     ...[0, 1, 2, 3].map(i => ({ type: 'step', t: cq(TL.BACKOUT[0] + .25 + i * .45), g: .7 - i * .1, pan: 0 })),
     { type: 'lights_off', t: cq(TL.DARK) },

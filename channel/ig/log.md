@@ -24,3 +24,4 @@
 | 11/24 10:00 | vl09-self-destruct | 2 Negative Command | Never give your assistant two red buttons | Two identical red buttons. Press one or walk away? Tell me. (11/16 two-choice) | no |
 | 11/25 10:00 | vm10-hot-dog-roller | 17 Head To Head | Gas station hot dogs vs. 13.8 billion years | A hot dog that has been rolling since the Big Bang: eat it or run? Tell me. (11/16 two-choice) | no |
 | 11/26 10:00 | vl10-the-reverse-oven | 1 Cost Confession | Her burnt turkey came out as $38.47 in cash | Burnt turkey into a reverse oven: dinner or cash? Tell me. | no |
+| 11/27 10:00 | vm11-leftovers | 3 Nobody Tells You | Nobody tells you the store microwave has a Thanksgiving line | Thanksgiving leftovers: hot or cold? Tell me. (11/16 two-choice) | no |

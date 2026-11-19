@@ -1,0 +1,205 @@
+{
+ "room_db": -58,
+ "voice_db": -1.0,
+ "duck_db": 14,
+ "duck_preroll": 0.12,
+ "music_db": -23,
+ "deck_hiss_db": -44,
+ "plr_db": 11.9,
+ "devices": {
+  "cctv1": "cctv",
+  "cam1": "cam",
+  "cctv2": "cctv",
+  "cam2": "cam",
+  "cctv3": "cctv"
+ },
+ "cam": {
+  "lo": 110,
+  "hi": 8500,
+  "noise_db": -50,
+  "noise_lp": 7000,
+  "target": -21,
+  "boost": 4,
+  "cut": 26,
+  "att": 0.22,
+  "rel": 1.1,
+  "pre": 0,
+  "ceil": -7,
+  "post_lp": 12000
+ },
+ "cctv": {
+  "lo": 250,
+  "hi": 3500,
+  "order": 4,
+  "noise_db": -44,
+  "noise_lp": 4500,
+  "target": -22.5,
+  "boost": 4,
+  "cut": 14,
+  "att": 0.03,
+  "rel": 0.5,
+  "pre": 0,
+  "ceil": -9,
+  "post_lp": 4200
+ },
+ "derived": {
+  "grille_close": {
+   "from": "grille_creak",
+   "hp": 120
+  },
+  "rattle_tail": {
+   "from": "grille_rattle",
+   "skip": 0.25
+  },
+  "spots_buzz": {
+   "from": "lights_on",
+   "skip": 0.45
+  },
+  "relay": {
+   "from": "lights_on",
+   "dur": 0.4
+  }
+ },
+ "foley": {
+  "step": {
+   "fx": "step",
+   "g": -21,
+   "space": "shop",
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.08,
+   "trim": 0.16
+  },
+  "camclick": {
+   "fx": "camclick",
+   "g": -24,
+   "space": "close",
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.08
+  },
+  "handling": {
+   "fx": "handling",
+   "g": -18,
+   "space": "close",
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.15
+  },
+  "rustle": {
+   "fx": "handling",
+   "g": -22,
+   "space": "close",
+   "fin": 0.02,
+   "fout": 0.2
+  },
+  "breath": {
+   "fx": "breath",
+   "g": -20,
+   "space": "close",
+   "fin": 0.02,
+   "fout": 0.3
+  },
+  "glitch": {
+   "fx": "glitch",
+   "g": -21,
+   "space": "tape",
+   "align": true,
+   "fin": 0.012,
+   "fout": 0.06
+  },
+  "static": {
+   "fx": "static",
+   "g": -14,
+   "space": "tape",
+   "fin": 0.004,
+   "fout": 0.03
+  },
+  "gasp": {
+   "fx": "gasp",
+   "g": -3,
+   "space": "close",
+   "align": true,
+   "fin": 0.001,
+   "fout": 0.15
+  },
+  "hit": {
+   "fx": "cam_hit",
+   "g": 6,
+   "space": "close",
+   "align": true,
+   "fin": 0.001,
+   "fout": 0.2
+  },
+  "vcr": {
+   "fx": "vcr_clunk",
+   "g": -24,
+   "space": "archive",
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.08
+  },
+  "scuff": {
+   "fx": "step",
+   "g": -17,
+   "space": "close",
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.06,
+   "trim": 0.12
+  },
+  "creak": {
+   "fx": "grille_creak",
+   "g": -27,
+   "space": "shop",
+   "align": true,
+   "fin": 0.005,
+   "fout": 0.2,
+   "dur": 0.9
+  },
+  "creak_close": {
+   "fx": "grille_close",
+   "g": -28,
+   "space": "close",
+   "align": true,
+   "fin": 0.005,
+   "fout": 0.25,
+   "dur": 1.1
+  },
+  "lights": {
+   "fx": "lights_on",
+   "g": -8,
+   "space": "shop",
+   "align": true,
+   "fin": 0.001,
+   "fout": 0.3
+  },
+  "lights_off": {
+   "fx": "relay",
+   "g": -9,
+   "space": "shop",
+   "align": true,
+   "fin": 0.001,
+   "fout": 0.08
+  },
+  "rattle": {
+   "fx": "grille_rattle",
+   "g": 5,
+   "space": "close",
+   "align": true,
+   "fin": 0.001,
+   "fout": 0.2
+  },
+  "rattle2": {
+   "fx": "rattle_tail",
+   "g": -6,
+   "space": "close",
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.2
+  }
+ },
+ "beds_db": 26.5,
+ "close_db": 6,
+ "voice_peak_db": -20
+}

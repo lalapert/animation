@@ -1,7 +1,6 @@
 {
- "room": {"src": "store_tone", "db": -55, "buzz_db": -70, "seed": 6},
+ "room": {"src": "store_tone", "db": -55, "buzz_db": -70, "seed": 7},
  "store_room": {"rt": 0.5, "mix": 0.22, "bright": 8000},
- "slow": {"audio_rate": 0.45, "room_gain_db": 3, "bed_gain_db": -2, "motor_db": -8, "tape_stop": 0.75},
  "music_db": -11,
  "duck_db": -10,
  "duck_pre": 0.15,
@@ -10,14 +9,17 @@
  "bed_duck_db": -4,
  "plr_db": 11.0,
  "foley": {
-  "tug":    {"fx": "tug", "g": -27, "fout": 0.12, "tail": 0.05},
-  "crack":  {"fx": "crack", "g": -23, "align": true, "cents": 60},
-  "drop":   {"takes": ["knock", [[0.0, 0.2]]], "g": -27, "align": true, "shift": -500, "cents": 40},
-  "knock":  {"takes": ["knock", [[0.0, 0.2], [0.23, 0.45]]], "g": -24, "align": true, "cents": 50, "gvar": 1},
-  "holo":   {"fx": "holo", "g": -31},
-  "switch": {"fx": "click", "g": -23, "align": true, "shift": -300, "cents": 30},
-  "step":   {"takes": ["steps", [[0.33, 0.7], [0.97, 1.35], [1.57, 1.95], [2.17, 2.55], [2.81, 3.2], [3.33, 3.75]]], "g": -29, "cents": 30, "gvar": 1},
-  "crunch": {"fx": "crunch", "g": -21, "offset": -0.29},
-  "chew":   {"fx": "munch", "g": -28, "shift": -500, "cents": 60, "offset": -0.3, "tail": 0.3}
+  "cloth":  {"fx": "sheet", "g": -27, "align": true, "cents": 40},
+  "paper":  {"fx": "page", "g": -33, "cents": 80},
+  "hum":    {"takes": ["microwave_hum", [[0.4, 7.6]]], "g": -31, "fin": 0.04, "fout": 0.06, "tail": 0.02},
+  "ding":   {"fx": "ding", "g": -27, "fout": 0.25, "tail": 0.6},
+  "rattle": {"fx": "rattle", "g": -36, "shift": 300, "fout": 0.2},
+  "slide":  {"fx": "slide", "g": -27, "fin": 0.05, "fout": 0.3},
+  "open":   {"takes": ["mw_door", [[0.05, 0.45]]], "g": -27, "align": true},
+  "shut":   {"takes": ["mw_door", [[0.62, 1.2]]], "g": -25, "align": true},
+  "bowl":   {"takes": ["bowl", [[0.25, 0.6]]], "g": -30, "align": true},
+  "beep":   {"fx": "beep", "g": -30, "align": true},
+  "splat":  {"fx": "splat", "g": -22, "align": true, "shift": -300},
+  "blorp":  {"takes": ["blorp", [[0.0, 0.2]]], "g": -32, "cents": 100}
  }
 }

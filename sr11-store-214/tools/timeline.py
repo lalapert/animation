@@ -16,7 +16,7 @@ cfg = json.load(open(os.path.join(HERE, "voice", "lines.json")))
 lines = {l["id"]: l for l in cfg["lines"]}
 durs = json.load(open(os.path.join(HERE, "voice", "out", "durations.json")))
 START = {"L1": 4.95, "L2": 9.75, "L3": 21.0, "L4": 24.5}
-GAIN = {"L3": -2.0, "L4": -2.0}                     # the whispers sit a little lower (still 8 dB over everything else)
+GAIN = {"L1": -1.5, "L2": -1.5, "L3": -3.0, "L4": -4.5}                     # the whispers sit a little lower (still 8 dB over everything else)
 VO = []
 for k in ["L1", "L2", "L3", "L4"]:
     VO.append({"id": k, "who": lines[k]["who"], "t": START[k], "dur": durs[k], "sub": lines[k].get("sub", lines[k]["text"]), "col": "#f2f2f2",
@@ -31,7 +31,7 @@ RECCUT = []
 SNAP1 = 1.667                # CAM 31, frame 1 on: it is at the grille, hands on the bars; one held frame later its head snaps over
 LAPSE = 3.0                  # a time-lapse jump (the stamp skips 27 s): it is back on its stand, as if it never left
 COUNT = [5.4, 9.2]           # S2: his flashlight counts the four, one by one
-EGG = {"t": 7.4, "dur": 0.1, "what": "the sale banner over the riser reads 10% OFF instead of 50% OFF for six frames"}
+EGG = {"t": 7.1, "dur": 0.1, "what": "the sale card on the riser reads 10% OFF instead of 50% OFF for six frames"}
 STEP_IN = [9.9, 11.0]        # he steps up to the grille
 ZOOM = [11.2, 12.7]          # the camcorder zooms on the one in the red dress: still, on its stand
 ROLL2 = [14.4, 14.7]         # tracking roll into the CAM 31 playback

@@ -1,13 +1,13 @@
-"""Score for Void Mart 10 "Hot Dog Roller" (natural-sound rules, 11/13): the house trio (tools/band.py), F major.
-  - frame 1: an easy two-feel under the order and "Coming right up!"; out before the tongs hit the welded hot dog, so the tug and
-    the crack play dry
-  - dry from the tongs to "Make it two!": "...Are they fresh?", "Those have been rolling since the Big Bang.", "...Are they good?",
-    "They're consistent." (both punchlines in silence, room tone only)
-  - "Make it two!": the trio comes back bright for the second hot dog; MAGS's glockenspiel jingle; a sales vamp under his line
-  - "Thirteen billion years? They need a break!": a soft mock-sad vibes chord (motor on) that Pip switches off with the roller:
-    tools/mix.py runs it down like a tape stopping at the switch (the score plays on to OFF + 0.9 s to feed the stop), then silence
-  - silence through the slow time ("Rule one: never turn off the roller."), "Did time just... slow down?", "It does that.", the bite
-    and "...Consistent."; the button (the only hit) after the last word, ringing into the held tail
+"""Score for Void Mart 11 "Leftovers" (natural-sound rules, 11/13): the house trio (tools/band.py), F major.
+  - frame 1: one lonely vibraphone chord (motor on) under the robot's "Table for one." that stops before "Again."
+  - Pip's tablecloth: the trio comes in bright, a festive two-feel under the garland; MAGS's glockenspiel jingle and a sales vamp
+    under his prices and Pip's "Gratitude should be free!"; out before Rae's "Nothing is free." (dry)
+  - the microwave montage and Dennis: a quick walk under the three dings (they are in the scene, on the beat of the cuts) and
+    "Evening, Rae! The usual!"; out before "Rule nine: always cover it." (dry: the hum and the splat play alone)
+  - "Okay! What's everyone thankful for?": a warm two-feel, the vibes' motor on for the robot's "...Company."; out before
+    MAGS's "Paying customers!"
+  - dry from there: "Rae? Join us!", "I don't do holidays.", the ding, "...Pass the gravy."; the button (the only hit) after the
+    last word, ringing into the held tail
 CC0 samples (VSCO 2 CE, VCSL, FreePats).
   .venv/bin/python tools/score.py            -> out/music.wav, out/score.json
 """
@@ -23,51 +23,54 @@ TL = json.load(open(os.path.join(HERE, "out", "timeline.json")))
 DUR = TL["DUR"]
 V = {v["id"]: v for v in TL["VO"]}
 end = lambda k: V[k]["t"] + V[k]["dur"]
-b = Band(DUR, seed=10, bpm=120)
+W = lambda k: json.load(open(os.path.join(HERE, "voice", "out", k + ".json")))["words"]
+b = Band(DUR, seed=11, bpm=120)
 
-# 1. frame 1: the order; out before the tongs bite on the welded hot dog
-s1, e1 = .05, TL["TONG0"] - .08
-b.chord_hit(s1, "F69", 2.2, .3, roll=.03, release=.5)
-b.set_motor(s1, s1 + 1.4, .14)
-b.prev_bass = 41
-b.two(.5, e1, ["F6", "Gm7 C7"], vel=.42, skip=.3)
-b.brushes(.5, e1, vel=.32, fade_in=.3, fade_out=.04)
-b.comp(.5, e1, ["F6", "Gm7 C7"], vel=.26, density=.6)
+# 1. frame 1: a lonely chord, out before "Again."
+again = V["L1"]["t"] + [w for w in W("L1") if w["w"].lower().startswith("again")][0]["t0"]
+s1, e1 = .05, again - .15
+b.chord_hit(s1, "Dm9", 5.0, .26, roll=.05, release=.5)
+b.bass_note(s1 + .02, "D2", 4.6, .38, release=.5)
+b.set_motor(s1, e1 + .2, .22)
 
-# 2. "Make it two!": bright two-feel for the second hot dog, MAGS's jingle, his sales vamp
-s2, e2 = V["L7"]["t"] - .08, V["L8"]["t"] - .55
+# 2. the tablecloth: festive two-feel; MAGS's jingle and vamp; out before "Nothing is free."
+s2, e2 = TL["CLOTH"] + .3, end("L4") + .05
 b.last_voicing = None; b.prev_bass = 41
-b.walk(s2, e2, ["F6", "Gm7 C7", "F6"], vel=.48, last="Fmaj7")
-b.brushes(s2, e2, vel=.38, fade_in=.1, fade_out=.06)
-b.comp(s2, e2, ["F6", "Gm7 C7", "F6"], vel=.28, density=.7)
-b.jingle(V["L8"]["t"] - .5)
-s3, e3 = V["L8"]["t"] + .05, end("L8") + .15
+b.chord_hit(s2, "F69", 1.4, .34, roll=.02, release=.3)
+b.two(s2, V["L3"]["t"] - .55, ["F6", "Bb6"], vel=.46, skip=.35)
+b.brushes(s2, V["L3"]["t"] - .55, vel=.36, fade_in=.05, fade_out=.06)
+b.comp(s2 + .5, V["L3"]["t"] - .55, ["F6", "Bb6"], vel=.28, density=.7)
+b.jingle(V["L3"]["t"] - .5)
+s2b = V["L3"]["t"] + .05
 b.last_voicing = None; b.prev_bass = 41
-b.two(s3, e3, ["Fmaj7", "Gm7 C7"], vel=.42, skip=.3)
-b.brushes(s3, e3, vel=.3, fade_in=.3, fade_out=.08)
-b.comp(s3, e3, ["Fmaj7", "Gm7 C7"], vel=.28, density=.8)
+b.two(s2b, e2, ["Fmaj7", "Gm7 C7", "Fmaj7", "Gm7 C7"], vel=.42, skip=.3)
+b.brushes(s2b, e2, vel=.3, fade_in=.3, fade_out=.04)
+b.comp(s2b, e2, ["Fmaj7", "Gm7 C7", "Fmaj7", "Gm7 C7"], vel=.28, density=.8)
 
-# 3. "They need a break!": a mock-sad chord pair with the vibes' motor on, held into the switch (mix.py stops it like a tape)
-s4 = V["L9"]["t"] - .1
-b.last_voicing = None
-b.chord_hit(s4, "Dm7", 3.2, .28, roll=.04, release=.5)
-b.bass_note(s4, "D2", 3.0, .42, release=.4)
-s5 = V["L9"]["t"] + 1.6
-b.chord_hit(s5, "Bbmaj7", 4.4, .28, roll=.04, release=.6)
-b.bass_note(s5, "Bb1", 4.2, .42, release=.5)
-b.set_motor(s4, TL["OFF"] + 1.0, .26)
-e5 = TL["OFF"] + .9                                   # the tape stop in mix.py reads at most ~0.35 s past OFF
+# 3. the microwave montage and Dennis: a quick walk; out before "Rule nine: always cover it."
+s3, e3 = TL["M0"] - .02, V["L7"]["t"] - .12
+b.last_voicing = None; b.prev_bass = 41
+b.walk(s3, e3, ["F6", "D7", "Gm7 C7", "F6", "D7", "Gm7 C7"], vel=.48, last="Gm7")
+b.brushes(s3, e3, vel=.38, fade_in=.05, fade_out=.04)
+b.comp(s3 + .2, e3, ["F6", "D7", "Gm7 C7", "F6", "D7", "Gm7 C7"], vel=.26, density=.6)
 
-# 4. the button, ringing into the tail
+# 4. "thankful": a warm two-feel, the motor on for "...Company."; out before "Paying customers!"
+s4, e4 = V["L8"]["t"] - .05, V["L10"]["t"] - .12
+b.last_voicing = None; b.prev_bass = 41
+b.two(s4, e4, ["Fmaj7", "Bbmaj7", "Am7", "Dm7"], vel=.4, skip=.2)
+b.brushes(s4, e4, vel=.28, slap=False, fade_in=.3, fade_out=.04)
+b.pad(s4 + .02, e4, ["Fmaj7", "Bbmaj7", "Am7", "Dm7"], vel=.26, motor=.2)
+
+# 5. the button, ringing into the tail
 en = TL["BUTTON"]
 b.button(en)
 
-TACET = [[e1, s2], [e3, s4 - .02], [e5, en - .02]]
+TACET = [[e1, s2], [e2, s3], [e3, s4], [e4, en - .02]]
 music, stems = b.render(json.load(open(os.path.join(HERE, "tools", "score_gain.json"))))
 env = np.ones(len(music), np.float32)
 for a, z in TACET:
     i, j = int(a * SR), int(z * SR)
-    kk = int(.03 * SR) if (a, z) == (e1, s2) else int(.09 * SR)          # the tongs: the band stops at once
+    kk = int(.03 * SR) if (a, z) in ([e2, s3], [e3, s4]) else int(.09 * SR)          # "Nothing is free." and "Rule nine": the band stops at once
     env[i:j] = 0
     env[max(0, i - kk):i] = np.minimum(env[max(0, i - kk):i], np.linspace(1, 0, i - max(0, i - kk)))
     env[j:j + int(.03 * SR)] = np.minimum(env[j:j + int(.03 * SR)], np.linspace(0, 1, len(env[j:j + int(.03 * SR)])))
@@ -77,7 +80,7 @@ music = music[:int(DUR * SR)]
 act = np.abs(music).max(1) > 1e-4
 music *= 10 ** (-24 / 20) / np.sqrt(np.mean(music[act] ** 2))
 sf.write(os.path.join(HERE, "out", "music.wav"), music.astype(np.float32), SR, subtype="FLOAT")
-json.dump({"tacet": TACET, "hits": [["button", en]], "tape_stop": TL["OFF"], "instruments": sorted(b.used), "fills": b.log},
+json.dump({"tacet": TACET, "hits": [["button", en]], "instruments": sorted(b.used), "fills": b.log},
           open(os.path.join(HERE, "out", "score.json"), "w"), indent=1)
 json.dump(sorted(b.used), open(os.path.join(HERE, "out", "instruments_used.json"), "w"))
 print("instruments:", ", ".join(sorted(b.used)))
