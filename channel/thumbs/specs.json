@@ -711,5 +711,20 @@
    1160
   ],
   "drawn": true
+ },
+ {
+  "folder": "sr12-lost-child",
+  "t": 6.1,
+  "series": "sr",
+  "tape": "TAPE 12",
+  "lines": [
+   "WHO USED",
+   "THE PA?"
+  ],
+  "focus": [
+   576,
+   1000
+  ],
+  "zoom": 1.3
  }
 ]

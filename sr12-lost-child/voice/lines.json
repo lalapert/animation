@@ -1,0 +1,63 @@
+{
+ "model_id": "eleven_v4",
+ "cast": {
+  "LEON": {
+   "voice_id": "Uy5Zv42tAoMnz16B9JZo",
+   "name": "HA Leon Marsh",
+   "settings": {
+    "stability": 0.55,
+    "similarity_boost": 0.8,
+    "style": 0.25,
+    "speed": 0.92
+   }
+  },
+  "PA": {
+   "voice_id": "ZPgDKQUoTzQKZTHhQYAM",
+   "name": "HA Mall PA",
+   "settings": {
+    "stability": 0.75,
+    "similarity_boost": 0.8,
+    "style": 0.1,
+    "speed": 0.9
+   }
+  }
+ },
+ "lines": [
+  {
+   "id": "P1",
+   "who": "PA",
+   "text": "Would the parent of a lost child please come to the information desk.",
+   "sub": "WOULD THE PARENT OF A LOST CHILD\nPLEASE COME TO THE INFORMATION DESK.",
+   "asr": "Would the parent of a lost child please come to the information desk"
+  },
+  {
+   "id": "L1",
+   "who": "LEON",
+   "text": "[tired, quiet] Night log. December seventh. Two-forty A.M.",
+   "sub": "NIGHT LOG. DECEMBER SEVENTH. 2:40 A.M.",
+   "asr": "Night log December seventh two forty AM"
+  },
+  {
+   "id": "L2",
+   "who": "LEON",
+   "text": "[low, uneasy] Nobody's at the desk. The mic is still on.",
+   "sub": "NOBODY'S AT THE DESK. THE MIC IS STILL ON.",
+   "asr": "Nobody's at the desk The mic is still on"
+  },
+  {
+   "id": "L3",
+   "who": "LEON",
+   "text": "[whispering, uneasy] Hello? Is somebody back there?",
+   "sub": "HELLO? IS SOMEBODY BACK THERE?",
+   "asr": "Hello Is somebody back there"
+  },
+  {
+   "id": "P2",
+   "who": "PA",
+   "text": "Thank you.",
+   "sub": "THANK YOU.",
+   "asr": "Thank you"
+  }
+ ],
+ "context": false
+}
