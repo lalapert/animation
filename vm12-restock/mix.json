@@ -1,6 +1,6 @@
 {
- "room": {"src": "store_tone", "db": -55, "buzz_db": -70, "seed": 7},
- "store_room": {"rt": 0.5, "mix": 0.22, "bright": 8000},
+ "room": {"src": "store_tone", "db": -55, "buzz_db": -70, "seed": 8},
+ "store_room": {"rt": 0.55, "mix": 0.24, "bright": 8000},
  "music_db": -11,
  "duck_db": -10,
  "duck_pre": 0.15,
@@ -9,17 +9,13 @@
  "bed_duck_db": -4,
  "plr_db": 11.0,
  "foley": {
-  "cloth":  {"fx": "sheet", "g": -27, "align": true, "cents": 40},
-  "paper":  {"fx": "page", "g": -33, "cents": 80},
-  "hum":    {"takes": ["microwave_hum", [[0.4, 7.6]]], "g": -31, "fin": 0.04, "fout": 0.06, "tail": 0.02},
-  "ding":   {"fx": "ding", "g": -27, "fout": 0.25, "tail": 0.6},
-  "rattle": {"fx": "rattle", "g": -36, "shift": 300, "fout": 0.2},
-  "slide":  {"fx": "slide", "g": -27, "fin": 0.05, "fout": 0.3},
-  "open":   {"takes": ["mw_door", [[0.05, 0.45]]], "g": -27, "align": true},
-  "shut":   {"takes": ["mw_door", [[0.62, 1.2]]], "g": -25, "align": true},
-  "bowl":   {"takes": ["bowl", [[0.25, 0.6]]], "g": -30, "align": true},
-  "beep":   {"fx": "beep", "g": -30, "align": true},
-  "splat":  {"fx": "splat", "g": -22, "align": true, "shift": -300},
-  "blorp":  {"takes": ["blorp", [[0.0, 0.2]]], "g": -32, "cents": 100}
+  "canroll": {"fx": "can_roll", "g": -31, "dur": 1.45, "fout": 0.25},
+  "can":     {"fx": "can", "g": -28, "align": true, "cents": 60},
+  "snore":   {"fx": "snore", "g": -32, "fin": 0.1, "fout": 0.3},
+  "tick":    {"fx": "tick", "g": -36, "fin": 0.08, "fout": 0.15, "shift": -400},
+  "sparkle": {"fx": "sparkle", "g": -31},
+  "hop":     {"fx": "hop", "g": -31, "align": true},
+  "step":    {"takes": ["steps", [[0.33, 0.7], [0.97, 1.35], [1.57, 1.95], [2.17, 2.55], [2.81, 3.2], [3.33, 3.75]]], "g": -30, "cents": 30, "gvar": 1},
+  "door":    {"fx": "stock_door", "g": -27, "dur": 1.1, "tail": 0.05, "fout": 0.05}
  }
 }

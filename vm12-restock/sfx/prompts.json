@@ -1,0 +1,11 @@
+{
+ "store_tone": [8.0, "quiet late-night convenience store ambience, fluorescent light hum and a soft refrigerator compressor drone, no people, no music", "copied from vm11-leftovers"],
+ "tick": [3.0, "a timer counting very fast, rapid digital ticking clicks accelerating", "copied from vl05-the-monologue (the wall clock racing to seven)"],
+ "sparkle": [1.0, "a tiny cartoon sparkle twinkle", "copied from vm01-first-shift (the restocked aisle gleams: a visual gag)"],
+ "hop": [0.5, "a small light cartoon hop landing, a soft springy bounce, short and cute", "copied from vm06-employee-of-the-month"],
+ "steps": [4.0, "one person walking slowly in soft sneakers on a hard vinyl floor in a small quiet shop at night, six separate unhurried footsteps, close, no music, no voices", "copied from vm08-lost-and-found"],
+ "can": [0.5, "a tin can set down on a metal store shelf, one small bright clink", "copied from vm06-employee-of-the-month"],
+ "can_roll": [1.8, "a dented tin can rolling slowly along a metal store shelf, then dropping off the edge and clanking once on a hard floor, close, quiet store, no music"],
+ "snore": [2.5, "a young woman snoring softly while asleep standing up: two slow gentle snores, close, cute, no words, no music"],
+ "stock_door": [2.0, "a light stockroom door slowly swinging shut by itself: a long thin hinge creak, then a soft latch click, quiet store, no music"]
+}

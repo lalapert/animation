@@ -665,5 +665,28 @@
    1160
   ],
   "drawn": true
+ },
+ {
+  "folder": "vm12-restock",
+  "t": 10.6,
+  "series": "vm",
+  "ep": 12,
+  "lines": [
+   "WHO",
+   "RESTOCKED IT?"
+  ],
+  "hl": [
+   "RESTOCKED IT?"
+  ],
+  "focus": [
+   540,
+   1000
+  ],
+  "zoom": 1.2,
+  "place": [
+   540,
+   1150
+  ],
+  "drawn": true
  }
 ]

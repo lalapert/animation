@@ -1,10 +1,9 @@
-Void Mart, episode 11: "Leftovers" (2026). Original characters, story, pictures and music.
+Void Mart, episode 12: "Restock" (2026). Original characters, story, pictures and music.
 
-Pictures: drawn in code (canvas 2D) with the Void Mart toon kit (channel/brand/toon.js, channel/brand/vmkit.js, channel/brand/travel.js). The store microwave, the food containers, the tablecloth and garland, the gravy boat, the little robot, the jelly with its tower of containers, the floating puff and Dennis's cranberry sauce are drawn in film.js.
+Pictures: drawn in code (canvas 2D) with the Void Mart toon kit (channel/brand/toon.js, channel/brand/vmkit.js, channel/brand/travel.js, channel/brand/sets.js). Aisle 3 stripped and restocked, the wall clock, the stockroom door, the can pyramid and the rolling can are drawn in film.js.
 Fonts: Bungee (The Bungee Project Authors) and Fredoka (The Fredoka Project Authors), SIL Open Font License 1.1.
 Voices: ElevenLabs text-to-speech, model eleven_v4.
   Pip: "Win2" (owner's own designed voice). Rae: "Kar2" (owner's own designed voice, pitched 1.5 semitones down).
-  MAGS: "VM MAGS" and Dennis: "VM Dennis" (ElevenLabs Voice Design, made for this show). Dennis's "Evening, Rae! The usual!" is the take from episode 5.
-  The robot: "River" (ElevenLabs default voice).
-Sound effects: generated with ElevenLabs Sound Effects (prompts in sfx/prompts.json; two new, the rest reused from earlier episodes as noted there).
+  MAGS: "VM MAGS" (ElevenLabs Voice Design, made for this show).
+Sound effects: generated with ElevenLabs Sound Effects (prompts in sfx/prompts.json; three new, the rest reused from earlier episodes as noted there).
 Music: original score for the house jazz trio (tools/band.py, tools/score.py) played with CC0 samples from VSCO 2 Community Edition, VCSL and FreePats.

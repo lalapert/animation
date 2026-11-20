@@ -79,4 +79,25 @@ Void Mart, episode 12.
 - 끝 화면 질문 `TL.ASK`: MAGIC OR PIP?
 - 첫 댓글: Magic or Pip?
 - 유튜브 제목: The only store that restocks itself after Black Friday | Void Mart Ep 12 #shorts
-- `channel/tools/postlint.sh` 결과: (제작 후 기록)
+- 유튜브 태그: animated sitcom, cartoon, animation, comedy, Black Friday, restock, convenience store, night shift, retail humor, mystery, Void Mart, shorts
+- `channel/tools/postlint.sh` 결과: VERDICT READY(첫 줄 59자로 잘리지 않음, 검색어 2/2, 해시태그 4개, 묻기 1개), humanizer 0개 고침, 제목 훅 점수 62.6
+
+## 5. Sound and music (11/13 자연음 규칙)
+
+- 음악: 하우스 트리오(`tools/band.py`). 첫 프레임의 털린 통로에 지친 투필과 부드러운 브러시가 "They took... everything." 밑에 깔리고, 캔이 진열대에서 떨어지기 직전에 뚝(캔 소리와 "We don't even have a sale."은 음악 없이). "Restock... after a nap."부터 낮잠과 시계 클로즈업까지 모터 켠 비브라폰의 자장가 화음, MAGS 글로켄슈필 징글이 가게의 7시 차임. 꽉 찬 통로가 나오면 밝은 화음과 즐거운 워킹이 "The shelves! They're full!", Pip의 점프, Rae의 걸음 밑으로 흐르다 "Every label... faces front." 전에 뚝. "Did you restock in your sleep?"은 음악 없이, "No... it was magic!"에 비브라폰 반짝임, "You're welcome!" 앞에 MAGS 징글, "You don't have hands."와 "...Details."는 음악 없이. "Thank you, whoever you are!"에 따뜻한 화음 하나, 창고 문은 룸톤만, "...They're shy." 뒤 버튼(실로폰과 어두운 Dm9 화음)이 꼬리로 울려 미스터리를 열어 둔다. 음악 히트는 버튼 하나. 대사 중 10 dB 내림.
+- 효과음: 매장 룸톤(냉장고 웅웅)이 모든 컷 밑에. 찌그러진 캔이 진열대를 구르다(새로) 떨어져 바닥에 텅(재사용 캔 소리), Pip 코 고는 소리(새로) 두 번, 시계가 빨리 도는 째깍(재사용, 낮춰서), 채워진 통로의 반짝(재사용, 시각 개그), Pip가 콩 내려앉는 소리, Rae 발소리 둘, 캔 집고 내려놓는 소리, 창고 문 끼익…딸깍(새로). 슬로 효과음이나 휙 소리는 없다.
+- 하반신 규칙: 통로 진열대가 둘의 허리 아래를 가린다. Pip는 머리만 진열대 위로 나오고, 점프(최대 200px)와 발끝 서기(150px)에서도 허리선은 진열대 위로 올라오지 않는다(6화와 같은 제한). Rae의 걸음은 진열대 뒤 허리 위 걸음. `render.cjs scan`으로 허리가 화면에 들어온 프레임 0.
+
+## 6. 제작 중 고친 것
+
+- 첫 와이드가 너무 넓어 냉장고만 보이고 둘의 얼굴이 작았다 → Pip, Rae, 창고 문을 서로 가깝게 두고 카메라를 1.3배로(털린 통로와 꽉 찬 통로가 같은 구도).
+- 시계가 통로 표지판 위에 겹쳤다 → 창고 문 위 벽으로 옮겼다(시계 클로즈업에 닫힌 문과 빛 없는 틈이 같이 보인다).
+- 창고 문 틈의 빨간 빛이 문 오른쪽 끝, 화면 오른쪽 버튼 줄 아래에 있었다 → 문이 오른쪽 경첩으로 열리게 바꿔 틈과 빛을 문 왼쪽으로.
+- 캔 클로즈업에 Pip의 머리가, Pip 미디엄에 Rae의 머리카락이 화면 끝에 걸렸다 → 캔 피라미드를 Rae 쪽으로 옮기고 두 카메라를 다시 잡았다.
+- 반짝임 별 하나가 Rae 이마와 조끼 위에 떴다 → 반짝임은 냉장고와 진열대 위에만.
+- 클로즈업에서 빨간 빛이 얼룩처럼 진했다 → 빛과 바닥 반사를 더 희미하게.
+- 마지막 말 "...They're shy."가 옆 대사 "Thank you."를 따라 읽었다 → 앞뒤 대사 문맥 없이, 태그를 `[softly, delighted]`로 바꿔 한 번 다시 뽑음.
+
+## 7. 최종 수치
+
+41.15초(엔드 카드 2.5초와 꼬리 1.25초 포함), -13.8 LUFS, 트루피크 -2.9 dBTP, loudnorm 2차 linear, 대사 여유 최소 10.3 dB(L1, K-가중 400 ms 창), 음성 인식으로 12줄 모두, blackdetect 없음, check_english 통과, 허리 0프레임. ElevenLabs: 대사 498자(12줄, 다시 뽑기 1: L12), 효과음 새로 3개 385자(6.3초), 나머지 6개 재사용.

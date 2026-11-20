@@ -18,12 +18,12 @@ const lp = (p, q, k) => ({ x: lerp(p.x, q.x, k), y: lerp(p.y, q.y, k) });
 const full = t => t >= TL.REVEAL;                            // the aisle is restocked from the cut after the clock
 
 // ---------------------------------------------------------------- layout (aisle world, 2160 wide)
-const PIPX = 760, PIPW = AISLE.top + 230, RAEW = AISLE.top + 40, S = 190;   // waist lines: only Pip's head clears the shelf (VM6)
+const PIPX = 820, PIPW = AISLE.top + 230, RAEW = AISLE.top + 40, S = 190;   // waist lines: only Pip's head clears the shelf (VM6)
 const HOP_MAX = PIPW - AISLE.top - 12;                       // her hem never rises above the shelf top
-const DOOR = { x0: 1490, x1: 1650, y0: 430, y1: AISLE.floor };   // the stockroom door, at the end of the aisle
-const MG = { x: 1860, y: 150, s: 150 };                      // MAGS, hanging from the ceiling past the door
-const CLK = { x: 840, y: 228, r: 58 };                       // the wall clock over the fridges
-const PYR = { x: 1040 };                                     // the can pyramid on the shelf top (restocked)
+const DOOR = { x0: 1330, x1: 1470, y0: 470, y1: AISLE.floor };   // the stockroom door, at the end of the aisle
+const MG = { x: 1700, y: 150, s: 150 };                      // MAGS, hanging from the ceiling past the door
+const CLK = { x: 1400, y: 382, r: 50 };                      // the wall clock over the stockroom door
+const PYR = { x: 1060 };                                     // the can pyramid on the shelf top (restocked)
 const CAN = { w: 38, h: 54 };
 
 // ---------------------------------------------------------------- the two aisles: stripped (night) and restocked (7:00)
@@ -46,7 +46,7 @@ function buildBack(fullUp) {
   for (let x = 60; x < AISLE.w; x += 420) { g.save(); g.shadowColor = '#e9e4ff'; g.shadowBlur = 30; tShape(g, '#f4f1ff', gg => gg.roundRect(x, 120, 300, 22, 10), 3); g.restore(); }
   for (let x = 40, i = 0; x < AISLE.w - 200; x += 260, i++) fridgeRow(g, x, i, fullUp);
   // the end of the aisle: a wall with the stockroom door
-  tShape(g, '#2c2160', gg => gg.rect(1440, 300, 260, AISLE.floor - 300), 4);
+  tShape(g, '#2c2160', gg => gg.rect(1290, 300, 230, AISLE.floor - 300), 4);
   tShape(g, '#4a3192', gg => gg.rect(DOOR.x0 - 10, DOOR.y0 - 10, DOOR.x1 - DOOR.x0 + 20, DOOR.y1 - DOOR.y0 + 10), 3);
   // the floor
   tShape(g, '#3b2c78', gg => gg.rect(-10, AISLE.floor, AISLE.w + 20, 1300), 4);
@@ -59,7 +59,7 @@ function buildBack(fullUp) {
       g.save(); g.translate(x, y); g.rotate(r); tShape(g, '#fbf7ff', gg => { gg.moveTo(-26, -8); gg.lineTo(22, -12); gg.lineTo(28, 6); gg.lineTo(-20, 12); gg.closePath(); }, 2.4);
       g.strokeStyle = 'rgba(26,16,48,.4)'; g.lineWidth = 2; for (let k = -1; k <= 1; k++) { g.beginPath(); g.moveTo(-14, k * 5); g.lineTo(14, k * 5 - 2); g.stroke(); } g.restore();
     }
-    g.save(); g.translate(940, 640); g.rotate(-.05);
+    g.save(); g.translate(930, 640); g.rotate(-.05);
     tShape(g, '#fffdf2', gg => gg.rect(-86, -46, 172, 92), 3); g.fillStyle = 'rgba(200,200,190,.6)'; g.fillRect(-30, -54, 60, 14);
     tText(g, 'SOLD', 0, -14, 34, '#e23b4a', '"Bungee"', 'center', 400); tText(g, 'OUT', 0, 24, 34, '#e23b4a', '"Bungee"', 'center', 400);
     g.restore();
@@ -114,7 +114,7 @@ function canAt(g, x, y, rot = 0, col = '#ff5f7e', label = true) {   // a soda ca
 }
 function rollingCan(g, t) {                                  // the stripped aisle: one dented can rolls along the shelf top and drops off
   if (full(t) || t > TL.CANFALL + .4) return;
-  const k = clamp((t - TL.CAN0) / (TL.CANFALL - TL.CAN0)), x = lerp(1010, 880, k), roll = (x - 1010) / (CAN.w / 2) * .5;
+  const k = clamp((t - TL.CAN0) / (TL.CANFALL - TL.CAN0)), x = lerp(1110, 960, k), roll = (x - 1110) / (CAN.w / 2) * .5;
   let y = AISLE.top + 2, rot = Math.PI / 2;
   if (t > TL.CANFALL) { const f = (t - TL.CANFALL) / .4; y += f * f * 140; }
   g.save(); g.translate(x, y - CAN.w / 2); g.rotate(rot + roll); canAt(g, 0, CAN.h / 2, 0, '#7ef0ff', true); g.restore();
@@ -126,22 +126,22 @@ function pyramid(g, t) {                                     // the restocked sh
   const lift = t >= TL.PICK + .25 && t < TL.PUT;
   PYRAMID.forEach(([dx, row], i) => { if (i === 5 && lift) return; canAt(g, PYR.x + dx, AISLE.top + 2 + row * (CAN.h + 2), 0, ['#ff5f7e', '#ffd23f', '#5fe3cc'][(i + 3) % 3]); });
 }
-function door(g, t) {                                        // the stockroom door: shut in the stripped aisle; a crack open after the restock (red glow), shut at the end
+function door(g, t) {                                        // the stockroom door (hinged on the right): shut in the stripped aisle; a crack open on its left edge after the restock (red glow), shut at the end
   const open = full(t) ? 1 - smooth(TL.DOOR0, TL.DOOR1, t) : 0;
-  const gap = 14 * open, x1 = DOOR.x1 - gap;
+  const gap = 14 * open, x0 = DOOR.x0 + gap;
   if (gap > .5) {                                            // the crack: dark inside, a faint red glow, and its reflection in the polished floor
-    g.fillStyle = '#100a24'; g.fillRect(x1, DOOR.y0, gap + 2, DOOR.y1 - DOOR.y0);
-    g.save(); g.globalAlpha = .55 * open; const gr = g.createRadialGradient(x1 + gap / 2, 880, 2, x1 + gap / 2, 880, 70); gr.addColorStop(0, 'rgba(255,42,58,.9)'); gr.addColorStop(1, 'rgba(255,42,58,0)');
-    g.fillStyle = gr; g.fillRect(x1 - 70, 800, 140 + gap, 160); g.restore();
-    g.save(); g.globalAlpha = .28 * open; g.fillStyle = '#ff2a3a'; g.beginPath(); g.ellipse(x1 + gap / 2, DOOR.y1 + 46, 10, 40, 0, 0, 6.2832); g.fill(); g.restore();
+    g.fillStyle = '#100a24'; g.fillRect(DOOR.x0 - 2, DOOR.y0, gap + 2, DOOR.y1 - DOOR.y0);
+    g.save(); g.globalAlpha = .42 * open; const gr = g.createRadialGradient(DOOR.x0 + gap / 2, 900, 2, DOOR.x0 + gap / 2, 900, 70); gr.addColorStop(0, 'rgba(255,42,58,.9)'); gr.addColorStop(1, 'rgba(255,42,58,0)');
+    g.fillStyle = gr; g.fillRect(DOOR.x0 - 70, 820, 140 + gap, 160); g.restore();
+    g.save(); g.globalAlpha = .22 * open; g.fillStyle = '#ff2a3a'; g.beginPath(); g.ellipse(DOOR.x0 + gap / 2, DOOR.y1 + 46, 10, 40, 0, 0, 6.2832); g.fill(); g.restore();
   }
-  tShape(g, '#5d4aa8', gg => gg.rect(DOOR.x0, DOOR.y0, x1 - DOOR.x0, DOOR.y1 - DOOR.y0), 3.4);
-  tShape(g, '#fbf7ff', gg => gg.rect(DOOR.x0 + 20, DOOR.y0 + 60, 120, 34), 2.4); tText(g, 'STOCKROOM', DOOR.x0 + 80, DOOR.y0 + 77, 16, TOON.ink, '"Bungee"', 'center', 400);
-  tShape(g, '#c9c3dc', gg => gg.roundRect(x1 - 26, 790, 12, 44, 5), 2.4);
+  tShape(g, '#5d4aa8', gg => gg.rect(x0, DOOR.y0, DOOR.x1 - x0, DOOR.y1 - DOOR.y0), 3.4);
+  tShape(g, '#fbf7ff', gg => gg.rect(DOOR.x0 + 12, DOOR.y0 + 70, 116, 34), 2.4); tText(g, 'STOCKROOM', DOOR.x0 + 70, DOOR.y0 + 87, 16, TOON.ink, '"Bungee"', 'center', 400);
+  tShape(g, '#c9c3dc', gg => gg.roundRect(x0 + 14, 810, 12, 44, 5), 2.4);
 }
 function sparkles(g, t) {                                    // the restock gleams (a visual gag, on the reveal)
   if (!full(t) || t > endOf('L4') + 1.5) return;
-  const P = [[700, 520], [1190, 760], [980, 1240], [1380, 980], [610, 1500], [1250, 1560], [880, 1130], [1530, 1220], [1120, 420]];
+  const P = [[720, 560], [1000, 420], [660, 840], [1100, 640], [700, 1500], [1250, 1560], [980, 1620], [1380, 1500], [560, 1080]];   // on the fridges and the shelf, clear of faces
   P.forEach(([x, y], i) => { const ph = (t - TL.REVEAL) * 2.2 + i * .37, a = Math.max(0, Math.sin(ph * 3.1416)); if (a > .05) drawStar(g, x, y, 10 + 14 * a, '#fff6c8', 2.4); });
 }
 
@@ -208,17 +208,17 @@ function drawMagsHere(g, t) { drawMags(g, MG.x, MG.y, MG.s, { talk: talkLevel('M
 
 // ---------------------------------------------------------------- cameras
 const CAM = Object.assign({}, VMCAM, {
-  OPEN: [1130, 1180, 1.0, 1.03],                               // frame 1: the stripped aisle (and the match for the reveal)
-  OPEN2: [1130, 1180, 1.03, 1.07],
-  RAE_CU: [1240, 1030, 2.5, 2.6],
-  CLOCK: [CLK.x, 300, 3.0, 3.25],
-  REVEAL: [1130, 1180, 1.0, 1.04],                             // the same frame, restocked
-  TWO: [1000, 1250, 1.6, 1.64],
-  CAN_CU: [1060, 1460, 3.0, 3.1],                              // the frame top stays under Rae's chin
-  PIP_MED: [PIPX, 1300, 2.0, 2.06],
+  OPEN: [1080, 1170, 1.3, 1.34],                               // frame 1: the stripped aisle (and the match for the reveal)
+  OPEN2: [1080, 1170, 1.34, 1.38],
+  RAE_CU: [1220, 1030, 2.5, 2.6],
+  CLOCK: [CLK.x, 440, 3.0, 3.25],                              // the clock over the stockroom door (shut, no light)
+  REVEAL: [1080, 1170, 1.3, 1.34],                             // the same frame, restocked
+  TWO: [1000, 1240, 1.7, 1.74],
+  CAN_CU: [1110, 1460, 3.0, 3.1],                              // the frame top stays under Rae's chin; Pip stays out at the left
+  PIP_MED: [770, 1300, 2.0, 2.06],                             // Rae's hair stays out at the right
   MAGS_CU: [MG.x, 300, 2.6, 2.7],
-  RAE_CU2: [1140, 1030, 2.5, 2.6],
-  END_WIDE: [1165, 1100, 1.08, 1.1],                           // Pip, Rae, the stockroom door; MAGS out of frame; faces under y 780 for the card
+  RAE_CU2: [1150, 1030, 2.5, 2.6],
+  END_WIDE: [1080, 1095, 1.15, 1.18],                           // Pip, Rae, the stockroom door; MAGS out of frame; faces under y 780 for the card
 });
 
 // ---------------------------------------------------------------- frame
@@ -244,7 +244,8 @@ window.render = render;
 
 // ---------------------------------------------------------------- sound cues (natural sound: what we see, in the store's room)
 window.EV = [
-  { type: 'canroll', t: TL.CAN0, pan: -.05 },                                                      // the can rolls and drops
+  { type: 'canroll', t: TL.CAN0, pan: -.05 },                                                      // the can rolls along the shelf
+  { type: 'can', t: TL.CANFALL + .38, pan: -.05, g: .8 },                                          // and lands on the floor behind the shelf
   { type: 'snore', t: TL.NAP + .5, pan: -.3 },                                                     // Pip, asleep on her feet
   { type: 'tick', t: TL.CLOCK0 + .15, dur: TL.REVEAL - TL.CLOCK0 - .35, pan: -.2 },                // the clock racing to seven
   { type: 'snore', t: TL.CLOCK0 + .6, pan: -.3, g: .7 },

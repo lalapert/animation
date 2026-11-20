@@ -17,7 +17,7 @@ durs = json.load(open(os.path.join(HERE, "voice", "out", "durations.json")))
 SUBCOL = {"PIP": "#5fe3cc", "RAE": "#ffb066", "MAGS": "#ff7d8c"}
 W = lambda k: json.load(open(os.path.join(HERE, "voice", "out", k + ".json")))["words"]
 word = lambda k, w: [x for x in W(k) if x["w"].lower().strip(".,:!?").startswith(w)][0]
-RAE_X0, RAE_X1, RAE_STEP, RAE_SPS = 1240, 1120, 60, 1.9       # Rae's walk along behind the shelf to the can pyramid
+RAE_X0, RAE_X1, RAE_STEP, RAE_SPS = 1220, 1130, 45, 1.9       # Rae's walk along behind the shelf to the can pyramid
 RAEWALK = (RAE_X0 - RAE_X1) / (RAE_STEP * RAE_SPS)
 CLOCK, REVEAL = 2.0, 2.0                                      # the clock close-up (4:58 -> 7:00), the first look at the full aisle
 # pause before each line (comic timing): L2 waits for the rolling can to fall; L4 for the nap, the clock and the reveal; L5 for
