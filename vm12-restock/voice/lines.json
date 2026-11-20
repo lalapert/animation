@@ -1,0 +1,124 @@
+{
+ "model_id": "eleven_v4",
+ "cast": {
+  "PIP": {
+   "voice_id": "BiP91t4ozM9IZajOdSu2",
+   "name": "Win2",
+   "settings": {
+    "stability": 0.3,
+    "similarity_boost": 0.8,
+    "style": 0.65,
+    "speed": 1.05
+   }
+  },
+  "RAE": {
+   "voice_id": "oy557F0mOsPZZqdz8oK6",
+   "name": "Kar2",
+   "settings": {
+    "stability": 0.6,
+    "similarity_boost": 0.8,
+    "style": 0.2,
+    "speed": 0.9
+   },
+   "pitch": -1.5
+  },
+  "MAGS": {
+   "voice_id": "WkUURyKtbzB9IM50qGdP",
+   "name": "VM MAGS",
+   "settings": {
+    "stability": 0.45,
+    "similarity_boost": 0.8,
+    "style": 0.5,
+    "speed": 1.0
+   }
+  }
+ },
+ "lines": [
+  {
+   "id": "L1",
+   "who": "PIP",
+   "text": "[exhausted, dazed] They took... everything.",
+   "plain": "They took... everything.",
+   "sub": "They took... everything."
+  },
+  {
+   "id": "L2",
+   "who": "RAE",
+   "text": "[flatly] We don't even have a sale.",
+   "plain": "We don't even have a sale.",
+   "sub": "We don't even have a sale.",
+   "asr": "We don't even have a sail"
+  },
+  {
+   "id": "L3",
+   "who": "PIP",
+   "text": "[yawning, sleepy] Restock... after a nap.",
+   "plain": "Restock... after a nap.",
+   "sub": "Restock... after a nap."
+  },
+  {
+   "id": "L4",
+   "who": "PIP",
+   "text": "[gasps, amazed] The shelves! They're full!",
+   "plain": "The shelves! They're full!",
+   "sub": "The shelves!\nThey're full!"
+  },
+  {
+   "id": "L5",
+   "who": "RAE",
+   "text": "[flatly, suspicious] Every label... faces front.",
+   "plain": "Every label... faces front.",
+   "sub": "Every label... faces front."
+  },
+  {
+   "id": "L6",
+   "who": "RAE",
+   "text": "[suspicious, flat] Pip. Did you restock in your sleep?",
+   "plain": "Pip. Did you restock in your sleep?",
+   "sub": "Pip. Did you restock\nin your sleep?"
+  },
+  {
+   "id": "L7",
+   "who": "PIP",
+   "text": "[awed whisper] No... it was magic!",
+   "plain": "No... it was magic!",
+   "sub": "No... it was magic!"
+  },
+  {
+   "id": "L8",
+   "who": "MAGS",
+   "text": "[smug, bright] You're welcome!",
+   "plain": "You're welcome!",
+   "sub": "You're welcome!"
+  },
+  {
+   "id": "L9",
+   "who": "RAE",
+   "text": "[deadpan] You don't have hands.",
+   "plain": "You don't have hands.",
+   "sub": "You don't have hands."
+  },
+  {
+   "id": "L10",
+   "who": "MAGS",
+   "text": "[airily] ...Details.",
+   "plain": "...Details.",
+   "sub": "...Details."
+  },
+  {
+   "id": "L11",
+   "who": "PIP",
+   "text": "[shouting happily] Thank you, whoever you are!",
+   "plain": "Thank you, whoever you are!",
+   "sub": "Thank you, whoever you are!"
+  },
+  {
+   "id": "L12",
+   "who": "PIP",
+   "text": "[softly, delighted] ...They're shy.",
+   "plain": "...They're shy.",
+   "sub": "...They're shy.",
+   "noctx": true
+  }
+ ]
+}
