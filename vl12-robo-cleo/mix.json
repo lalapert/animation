@@ -1,0 +1,137 @@
+{
+ "seed": 12,
+ "voice_db": 0,
+ "music_db": -9,
+ "duck_db": 12,
+ "tone_db": -50,
+ "hum_db": -61,
+ "plr_db": 11.0,
+ "min_margin_db": 8,
+ "pan": {
+  "VERA": -0.15,
+  "CLEO": 0.15,
+  "ROBO": 0.05
+ },
+ "voices": {
+  "L5": {
+   "robot": true,
+   "pan": 0.08
+  },
+  "L7": {
+   "robot": true,
+   "pan": -0.55
+  },
+  "L10": {
+   "robot": true,
+   "pan": 0.25
+  }
+ },
+ "dark": [
+  [
+   "SW1",
+   "SW2"
+  ],
+  [
+   "SW3",
+   "SW4"
+  ]
+ ],
+ "derived": {
+  "switch": {
+   "from": "lamp",
+   "skip": 0.38,
+   "len": 0.3
+  }
+ },
+ "grains": {
+  "cloth": {
+   "len": 0.45,
+   "merge": 0.3,
+   "thr": 0.3
+  },
+  "tin_step": {
+   "len": 0.22,
+   "merge": 0.1,
+   "thr": 0.3
+  }
+ },
+ "foley": {
+  "servo": {
+   "fx": "mags_servo",
+   "g": -25,
+   "space": "lab",
+   "fout": 0.1
+  },
+  "ding": {
+   "fx": "desk_bell",
+   "g": -21,
+   "space": "lab",
+   "fout": 0.03
+  },
+  "switch": {
+   "fx": "switch",
+   "g": -17,
+   "space": "lab",
+   "align": true
+  },
+  "rstep": {
+   "grain": "tin_step",
+   "g": -23,
+   "space": "lab",
+   "vary": 0.7
+  },
+  "clank": {
+   "fx": "clank",
+   "g": -22,
+   "space": "lab"
+  },
+  "toast": {
+   "fx": "toaster_pop",
+   "g": -17,
+   "space": "lab",
+   "align": true
+  },
+  "press": {
+   "fx": "click",
+   "g": -18,
+   "space": "close",
+   "align": true
+  },
+  "ice": {
+   "fx": "ice_dispense",
+   "g": -19,
+   "space": "lab",
+   "fout": 0.25,
+   "duck": 8
+  },
+  "cloth": {
+   "grain": "cloth",
+   "g": -21,
+   "space": "close",
+   "vary": 0.8
+  },
+  "powerdown": {
+   "fx": "powerdown",
+   "g": -17,
+   "space": "lab"
+  },
+  "thud": {
+   "fx": "thud",
+   "g": -15,
+   "space": "lab",
+   "align": true
+  },
+  "blip": {
+   "fx": "beep",
+   "g": -27,
+   "space": "close"
+  },
+  "chalk": {
+   "fx": "chalk",
+   "g": -17,
+   "space": "lab",
+   "fin": 0.02,
+   "fout": 0.15
+  }
+ }
+}

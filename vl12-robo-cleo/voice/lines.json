@@ -1,0 +1,142 @@
+{
+ "model_id": "eleven_v4",
+ "cast": {
+  "VERA": {
+   "voice_id": "buRySvQEB2e8Dcglym6i",
+   "name": "LAB Vera Volt",
+   "settings": {
+    "stability": 0.3,
+    "similarity_boost": 0.8,
+    "style": 0.7,
+    "speed": 1.0
+   }
+  },
+  "CLEO": {
+   "voice_id": "biUhGlVm4NoNe58piPit",
+   "name": "LAB Cleo",
+   "settings": {
+    "stability": 0.6,
+    "similarity_boost": 0.8,
+    "style": 0.25,
+    "speed": 0.92
+   }
+  },
+  "ROBO": {
+   "voice_id": "biUhGlVm4NoNe58piPit",
+   "name": "LAB Cleo, read flat as Robo-Cleo (robot filter in tools/mix.py)",
+   "settings": {
+    "stability": 0.85,
+    "similarity_boost": 0.8,
+    "style": 0.0,
+    "speed": 0.95
+   }
+  }
+ },
+ "lines": [
+  {
+   "id": "L1",
+   "who": "VERA",
+   "text": "[proud, grand] Meet Robo-Cleo. Faster. Cheaper. Obedient.",
+   "plain": "Meet Robo-Cleo. Faster. Cheaper. Obedient.",
+   "sub": "Meet Robo-Cleo.\nFaster. Cheaper. Obedient."
+  },
+  {
+   "id": "L2",
+   "who": "CLEO",
+   "text": "[deadpan] Cheaper than free?",
+   "plain": "Cheaper than free?",
+   "sub": "Cheaper than free?"
+  },
+  {
+   "id": "L3",
+   "who": "VERA",
+   "text": "[commanding] Robo-Cleo. Press.",
+   "plain": "Robo-Cleo. Press.",
+   "sub": "Robo-Cleo. Press."
+  },
+  {
+   "id": "L4",
+   "who": "VERA",
+   "text": "[stern, commanding] Now press nothing until I say so.",
+   "plain": "Now press nothing until I say so.",
+   "sub": "Now press nothing\nuntil I say so."
+  },
+  {
+   "id": "L5",
+   "who": "ROBO",
+   "text": "[flat, robotic] Pressing.",
+   "plain": "Pressing.",
+   "sub": "Pressing."
+  },
+  {
+   "id": "L6",
+   "who": "VERA",
+   "text": "[panicked] Stop! Stop pressing things!",
+   "plain": "Stop! Stop pressing things!",
+   "sub": "Stop! Stop pressing things!"
+  },
+  {
+   "id": "L7",
+   "who": "ROBO",
+   "text": "[flat, robotic] Pressing things.",
+   "plain": "Pressing things.",
+   "sub": "Pressing things."
+  },
+  {
+   "id": "L8",
+   "who": "VERA",
+   "text": "[desperate] Cleo, do something!",
+   "plain": "Cleo, do something!",
+   "sub": "Cleo, do something!"
+  },
+  {
+   "id": "L9",
+   "who": "CLEO",
+   "text": "[deadpan] Robo-Cleo. Do not press your off switch.",
+   "plain": "Robo-Cleo. Do not press your off switch.",
+   "sub": "Robo-Cleo.\nDo not press your off switch."
+  },
+  {
+   "id": "L10",
+   "who": "ROBO",
+   "text": "[flat, robotic] Pressing.",
+   "plain": "Pressing.",
+   "sub": "Pressing."
+  },
+  {
+   "id": "L11",
+   "who": "CLEO",
+   "text": "[deadpan] It's me. But faster.",
+   "plain": "It's me. But faster.",
+   "sub": "It's me.\nBut faster."
+  },
+  {
+   "id": "L12",
+   "who": "CLEO",
+   "text": "[deadpan] Double pay.",
+   "plain": "Double pay.",
+   "sub": "Double pay."
+  },
+  {
+   "id": "L13",
+   "who": "VERA",
+   "text": "[smug] Double zero is still zero.",
+   "plain": "Double zero is still zero.",
+   "sub": "Double zero is still zero."
+  },
+  {
+   "id": "L14",
+   "who": "VERA",
+   "text": "[panicked] Triple! Triple zero!",
+   "plain": "Triple! Triple zero!",
+   "sub": "Triple! Triple zero!"
+  },
+  {
+   "id": "L15",
+   "who": "CLEO",
+   "text": "[deadpan] Deal.",
+   "plain": "Deal.",
+   "sub": "Deal."
+  }
+ ]
+}

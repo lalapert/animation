@@ -688,5 +688,28 @@
    1150
   ],
   "drawn": true
+ },
+ {
+  "folder": "vl12-robo-cleo",
+  "t": 0.5,
+  "series": "vl",
+  "ep": 12,
+  "lines": [
+   "REPLACED",
+   "BY THIS?"
+  ],
+  "hl": [
+   "BY THIS?"
+  ],
+  "focus": [
+   540,
+   960
+  ],
+  "zoom": 1.2,
+  "place": [
+   540,
+   1160
+  ],
+  "drawn": true
  }
 ]

@@ -1,0 +1,74 @@
+{
+ "click": [
+  0.5,
+  "a single small plastic remote control button click, close",
+  "copied from vl01-day-one"
+ ],
+ "fridge_open": [
+  0.6,
+  "a small fridge door opening with a soft suction pop",
+  "copied from vl01-day-one"
+ ],
+ "mags_servo": [
+  1.0,
+  "a small ceiling-mounted robot camera turning on its mount: one short soft electric servo motor whir, close, quiet shop, no music",
+  "copied from vm05-dennis"
+ ],
+ "tin_step": [
+  0.5,
+  "one single step of a heavy tin wind-up toy robot on a hard stone floor: a hollow metallic clack with a tiny clockwork click, close, dry, no music",
+  "copied from sr04-toy-garden"
+ ],
+ "clank": [
+  0.6,
+  "a small tin toy robot stopping: a light metallic clank",
+  "copied from sr04-toy-garden"
+ ],
+ "powerdown": [
+  1.5,
+  "an electronic machine powering down: a falling whine and an old screen switching off, cartoon",
+  "copied from vm03-self-checkout"
+ ],
+ "thud": [
+  0.8,
+  "a heavy metal fire extinguisher slammed down on a lab bench, a solid clank",
+  "copied from vl03-help-wanted"
+ ],
+ "chalk": [
+  1.2,
+  "chalk drawing a big circle on a chalkboard, one continuous scrape",
+  "copied from vl01-day-one"
+ ],
+ "cloth": [
+  3.0,
+  "four separate quick rustles of a stiff cotton lab coat sleeve as arms are thrown up, close, dry, pauses between, no voice",
+  "copied from vl04-laser-pointer"
+ ],
+ "steps_lab": [
+  4.5,
+  "slow footsteps of one person in soft leather shoes on a bare concrete basement floor, eight separate steps with short gaps, dry, no music, no voices",
+  "copied from vl05-the-monologue"
+ ],
+ "beep": [
+  0.5,
+  "a microwave oven button beep, one short electronic beep",
+  "copied from vl05-the-monologue"
+ ],
+ "toaster_pop": [
+  1.0,
+  "a pop-up toaster springing up hard: a metallic spring twang and two slices of toast flying out, close, indoor, no music"
+ ],
+ "ice_dispense": [
+  2.0,
+  "a refrigerator door ice dispenser: a short motor grind, then ice cubes clattering out onto a hard countertop and skittering, close, indoor, no music"
+ ],
+ "desk_bell": [
+  1.2,
+  "a hotel reception desk bell struck once: one bright metallic ding ringing out, close, quiet room, no music"
+ ],
+ "lamp": [
+  0.8,
+  "a small table lamp switched on indoors, single soft click",
+  "copied from the-window-cat"
+ ]
+}
