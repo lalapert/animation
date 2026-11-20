@@ -728,7 +728,47 @@ function camcorder(s, t) {
   if (r.noise) gainNoise(WG, t, r.noise);
   const gk = glitchAt(t); TK.vhs(WG, t, gk ? 2.2 : .9, 6);
   if (gk) { tear(WG, t, Math.sin(gk[0] * Math.PI)); TK.statics(WG, t, .35 * Math.sin(gk[0] * Math.PI)); }
-  TK.osd(WG, 'camcorder', t, { time: camTime(t), date: 'DEC.03.1999', battery: 1 });
+  if (t >= OPEN.end) TK.osd(WG, 'camcorder', t, { time: camTime(t), date: 'DEC.03.1999', battery: 1 });   // (the opening draws it full-frame)
+}
+// ---------------------------------------------------------------- owner 11/20 test: a full-screen opening for Instagram.
+// The first 3 s fill the 9:16 frame: the tape picture scaled up to the full 1920 height, the sides cropped on the fire door
+// and its gap (window x 565 at the centre); the camcorder's REC, battery and time and the subtitle sit at the frame's corners.
+// Then the archive deck zooms out (0.6 s, x2.4 -> x1.0, a head-switch band rolling through) into the usual layout: the tape
+// label and the rule card are revealed round it. From 3.6 s on the tape is exactly as before.
+const OPEN = { full: 3.0, end: 3.6, cx: 565 }, OSC = 1920 / H, OSW = W / OSC;
+function osdBox(g, t, X, Y, Wb, Hb, s) {
+  g.save(); g.font = `${Math.round(46 * s)}px "VT323"`; g.textBaseline = 'top'; g.shadowColor = 'rgba(0,0,0,.8)'; g.shadowBlur = 0; g.shadowOffsetX = 2 * s; g.shadowOffsetY = 2 * s;
+  if (Math.floor(t * 1.6) % 2 === 0) { g.fillStyle = 'rgba(255,60,60,.95)'; g.beginPath(); g.arc(X + 52 * s, Y + 52 * s, 13 * s, 0, 6.2832); g.fill(); }
+  g.fillStyle = 'rgba(235,240,235,.92)'; g.textAlign = 'left'; g.fillText('REC', X + 76 * s, Y + 30 * s);
+  g.strokeStyle = 'rgba(235,240,235,.92)'; g.lineWidth = 3 * s; g.strokeRect(X + Wb - 120 * s, Y + 36 * s, 70 * s, 30 * s); g.fillRect(X + Wb - 50 * s, Y + 44 * s, 6 * s, 14 * s);
+  g.fillRect(X + Wb - 114 * s, Y + 42 * s, 16 * s, 18 * s);
+  g.textAlign = 'right'; g.fillText(camTime(t), X + Wb - 36 * s, Y + Hb - 128 * s); g.fillText('DEC.03.1999', X + Wb - 36 * s, Y + Hb - 82 * s);
+  g.restore();
+}
+function capAt(g, text, a, cy, s) {
+  if (!text || a <= 0) return;
+  g.save(); g.globalAlpha = a; g.font = `${Math.round(44 * s)}px "VT323"`; g.textAlign = 'center'; g.textBaseline = 'middle';
+  const w = g.measureText(text).width + 28 * s; g.fillStyle = 'rgba(0,0,0,.82)'; g.fillRect(540 - w / 2, cy - 25 * s, w, 48 * s); g.fillStyle = '#f2f2f2'; g.fillText(text, 540, cy);
+  g.restore();
+}
+function openingFrame(t) {
+  const k = ease(kOf(t, [OPEN.full, OPEN.end]));
+  if (t >= OPEN.full) TK.frame(OUT, WIN, { label: TL.LABEL, sub: TL.SUB, rule: TL.RULE, ruleAlpha: clamp((t - .8) / .6) });
+  else { OUT.setTransform(1, 0, 0, 1, 0, 0); OUT.fillStyle = '#000'; OUT.fillRect(0, 0, 1080, 1920); }
+  const sc = lerp(OSC, 1, k), x0 = lerp(-(OPEN.cx - OSW / 2) * OSC, 0, k), y0 = lerp(0, TK.WIN_Y, k);
+  OUT.save(); OUT.imageSmoothingQuality = 'high'; OUT.drawImage(WIN, x0, y0, W * sc, H * sc);
+  if (t >= OPEN.full) {                                                                         // the deck's zoom: a head-switch band rolls through
+    const a = Math.sin(Math.PI * k), by = y0 + (H * sc) * (.15 + .8 * k);
+    OUT.beginPath(); OUT.rect(x0, y0, W * sc, H * sc); OUT.clip();
+    TK.statics(NZG, t * 1.37 + 7, 1); OUT.globalAlpha = .55 * a; OUT.drawImage(NZ, 0, 0, W, 40, 0, by - 26 * sc, 1080, 52 * sc);
+    OUT.globalAlpha = .7 * a; OUT.fillStyle = 'rgba(235,235,230,1)'; OUT.fillRect(0, by + 28 * sc, 1080, 3);
+    OUT.globalAlpha = a; OUT.font = '38px "VT323"'; OUT.textAlign = 'center'; OUT.textBaseline = 'top'; OUT.fillStyle = 'rgba(235,240,235,.9)';
+    OUT.shadowColor = 'rgba(0,0,0,.8)'; OUT.shadowOffsetX = 2; OUT.shadowOffsetY = 2; OUT.fillText(`PLAYBACK  x${sc.toFixed(1)}`, 540, y0 + 32 + (1 - k) * 120);
+  }
+  OUT.restore();
+  // the camcorder's own text and the subtitle: at the corners of the frame, then of the window
+  osdBox(OUT, t, 0, lerp(150, TK.WIN_Y, k), 1080, lerp(1560, H, k), lerp(1.45, 1, k));
+  for (const v of TL.VO) if (t >= v.s0 && t <= v.s1) capAt(OUT, v.sub, clamp((t - v.s0) / .06) * clamp((v.s1 - t) / .06), lerp(330, TK.WIN_Y + 117, k), lerp(1.45, 1, k));
 }
 function render(t) {
   t = clamp(t, 0, DUR - 1e-3);
@@ -737,6 +777,7 @@ function render(t) {
   else if (recCut(t)) standby(WG, t);
   else if (s[0] === 'cctv') shotCctv(t);
   else camcorder(s, t);
+  if (t < OPEN.end && s && s[0] === 'office' && !inStatic && !recCut(t)) return openingFrame(t);
   if (!inStatic && !recCut(t)) for (const v of TL.VO) if (t >= v.s0 && t <= v.s1) (v.pos === 'top' ? capTop : TK.caption)(WG, v.sub, clamp((t - v.s0) / .06) * clamp((v.s1 - t) / .06));
   TK.frame(OUT, WIN, { label: TL.LABEL, sub: TL.SUB, rule: TL.RULE, ruleAlpha: clamp((t - .8) / .6) });
 }
