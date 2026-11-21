@@ -1,0 +1,148 @@
+{
+ "model_id": "eleven_v4",
+ "cast": {
+  "VERA": {
+   "voice_id": "buRySvQEB2e8Dcglym6i",
+   "name": "LAB Vera Volt",
+   "settings": {
+    "stability": 0.3,
+    "similarity_boost": 0.8,
+    "style": 0.7,
+    "speed": 1.0
+   }
+  },
+  "CLEO": {
+   "voice_id": "biUhGlVm4NoNe58piPit",
+   "name": "LAB Cleo",
+   "settings": {
+    "stability": 0.6,
+    "similarity_boost": 0.8,
+    "style": 0.25,
+    "speed": 0.92
+   }
+  },
+  "EVIL_VERA": {
+   "voice_id": "buRySvQEB2e8Dcglym6i",
+   "name": "LAB Vera Volt, read sweet and polite as Evil Vera (mirror filter in tools/mix.py)",
+   "settings": {
+    "stability": 0.5,
+    "similarity_boost": 0.8,
+    "style": 0.45,
+    "speed": 1.0
+   }
+  },
+  "BOTH": {
+   "voice_id": "biUhGlVm4NoNe58piPit",
+   "name": "LAB Cleo, doubled in tools/mix.py as Cleo and Evil Cleo in unison",
+   "settings": {
+    "stability": 0.6,
+    "similarity_boost": 0.8,
+    "style": 0.25,
+    "speed": 0.92
+   }
+  },
+  "EVIL_CLEO": {
+   "voice_id": "biUhGlVm4NoNe58piPit",
+   "name": "LAB Cleo as Evil Cleo (mirror filter in tools/mix.py)",
+   "settings": {
+    "stability": 0.6,
+    "similarity_boost": 0.8,
+    "style": 0.25,
+    "speed": 0.92
+   }
+  }
+ },
+ "lines": [
+  {
+   "id": "L1",
+   "who": "VERA",
+   "text": "[grand, scheming] The Evil Mirror. Look in, and your evil twin steps out.",
+   "plain": "The Evil Mirror. Look in, and your evil twin steps out.",
+   "sub": "The Evil Mirror.\nLook in, and your evil twin\nsteps out."
+  },
+  {
+   "id": "L2",
+   "who": "CLEO",
+   "text": "[deadpan] Why would you want that?",
+   "plain": "Why would you want that?",
+   "sub": "Why would you want that?"
+  },
+  {
+   "id": "L3",
+   "who": "VERA",
+   "text": "[delighted] Twice the genius. Twice the evil!",
+   "plain": "Twice the genius. Twice the evil!",
+   "sub": "Twice the genius.\nTwice the evil!"
+  },
+  {
+   "id": "L4",
+   "who": "EVIL_VERA",
+   "text": "[warm, sweetly polite] Good morning! I paid the rent. Early.",
+   "plain": "Good morning! I paid the rent. Early.",
+   "sub": "Good morning!\nI paid the rent. Early."
+  },
+  {
+   "id": "L5",
+   "who": "VERA",
+   "text": "[horrified] You did WHAT? Back in the mirror!",
+   "plain": "You did WHAT? Back in the mirror!",
+   "sub": "You did WHAT?\nBack in the mirror!"
+  },
+  {
+   "id": "L6",
+   "who": "EVIL_VERA",
+   "text": "[politely] Of course! I'll take the rent money back.",
+   "plain": "Of course! I'll take the rent money back.",
+   "sub": "Of course!\nI'll take the rent money back."
+  },
+  {
+   "id": "L7",
+   "who": "VERA",
+   "text": "[hopeful, commanding] Cleo, you look. Show me real evil.",
+   "plain": "Cleo, you look. Show me real evil.",
+   "sub": "Cleo, you look.\nShow me real evil."
+  },
+  {
+   "id": "L8",
+   "who": "BOTH",
+   "text": "[deadpan] No.",
+   "plain": "No.",
+   "sub": "No."
+  },
+  {
+   "id": "L9",
+   "who": "VERA",
+   "text": "[exasperated] That's exactly what Cleo would say!",
+   "plain": "That's exactly what Cleo would say!",
+   "sub": "That's exactly what\nCleo would say!"
+  },
+  {
+   "id": "L10",
+   "who": "BOTH",
+   "text": "[deadpan] We know.",
+   "plain": "We know.",
+   "sub": "We know."
+  },
+  {
+   "id": "L11",
+   "who": "VERA",
+   "text": "[fed up] One of you, back in the mirror.",
+   "plain": "One of you, back in the mirror.",
+   "sub": "One of you,\nback in the mirror."
+  },
+  {
+   "id": "L12",
+   "who": "VERA",
+   "text": "[relieved] Finally. Normal.",
+   "plain": "Finally. Normal.",
+   "sub": "Finally. Normal."
+  },
+  {
+   "id": "L13",
+   "who": "EVIL_CLEO",
+   "text": "[deadpan] Normal.",
+   "plain": "Normal.",
+   "sub": "Normal."
+  }
+ ]
+}

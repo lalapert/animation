@@ -1,0 +1,30 @@
+{
+ "chalk": [
+  1.2,
+  "chalk drawing a big circle on a chalkboard, one continuous scrape",
+  "copied from vl01-day-one"
+ ],
+ "cloth": [
+  3.0,
+  "four separate quick rustles of a stiff cotton lab coat sleeve as arms are thrown up, close, dry, pauses between, no voice",
+  "copied from vl04-laser-pointer"
+ ],
+ "steps_lab": [
+  4.5,
+  "slow footsteps of one person in soft leather shoes on a bare concrete basement floor, eight separate steps with short gaps, dry, no music, no voices",
+  "copied from vl05-the-monologue"
+ ],
+ "page": [
+  0.5,
+  "a single sheet of stiff paper picked up and held out: one crisp paper rustle, close, quiet room, no music",
+  "copied from vm08-lost-and-found"
+ ],
+ "glass_sing": [
+  4.0,
+  "a wet fingertip circling the rim of a large crystal glass: a steady pure singing glass tone, slowly swelling, close, quiet room, no music"
+ ],
+ "glass_ring": [
+  1.5,
+  "a large mirror pane gently tapped once: a bright clean glass ring that shimmers and fades, close, quiet room, no music"
+ ]
+}

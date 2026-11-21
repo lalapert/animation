@@ -1,0 +1,92 @@
+{
+ "seed": 13,
+ "voice_db": 0,
+ "music_db": -9,
+ "duck_db": 12,
+ "tone_db": -50,
+ "hum_db": -61,
+ "plr_db": 11.0,
+ "min_margin_db": 8,
+ "pan": {
+  "VERA": -0.15,
+  "CLEO": 0.2,
+  "EVIL_VERA": 0.05,
+  "BOTH": 0.2,
+  "EVIL_CLEO": 0.2
+ },
+ "voices": {
+  "L4": {
+   "mirror": true
+  },
+  "L6": {
+   "mirror": true
+  },
+  "L8": {
+   "double": true,
+   "pan": 0.32,
+   "double_pan": 0.02
+  },
+  "L10": {
+   "double": true,
+   "pan": 0.32,
+   "double_pan": 0.02
+  },
+  "L13": {
+   "mirror": true
+  }
+ },
+ "grains": {
+  "cloth": {
+   "len": 0.45,
+   "merge": 0.3,
+   "thr": 0.3
+  },
+  "steps_lab": {
+   "len": 0.3,
+   "merge": 0.2,
+   "thr": 0.3
+  }
+ },
+ "foley": {
+  "glass_hum": {
+   "fx": "glass_sing",
+   "g": -31,
+   "space": "lab",
+   "loop": true,
+   "fin": 0.3,
+   "fout": 0.4,
+   "duck": 8
+  },
+  "ring": {
+   "fx": "glass_ring",
+   "g": -21,
+   "space": "lab",
+   "align": true
+  },
+  "step": {
+   "grain": "steps_lab",
+   "g": -23,
+   "space": "lab",
+   "vary": 0.5
+  },
+  "page": {
+   "fx": "page",
+   "g": -21,
+   "space": "close",
+   "align": true
+  },
+  "cloth": {
+   "grain": "cloth",
+   "g": -21,
+   "space": "close",
+   "vary": 0.8
+  },
+  "chalk": {
+   "fx": "chalk",
+   "g": -17,
+   "space": "lab",
+   "fin": 0.02,
+   "fout": 0.15
+  }
+ }
+}
