@@ -1,0 +1,11 @@
+{
+ "store_tone": [8.0, "quiet late-night convenience store ambience, fluorescent light hum and a soft refrigerator compressor drone, no people, no music", "copied from vm12-restock"],
+ "beep": [0.5, "a microwave oven button beep, one short electronic beep", "copied from vl05-the-monologue (the card reader's keys; pitched down for its error)"],
+ "mags_blip": [0.8, "friendly electronic notification blip from a ceiling speaker, two soft rising tones", "copied from vm01-first-shift (WELCOME, MEMBER!)"],
+ "page": [0.5, "a single sheet of stiff paper picked up and held out: one crisp paper rustle, close, quiet room, no music", "copied from vm09-secret-shopper (Pip pulls up the receipt)"],
+ "holo": [0.8, "a futuristic hologram display popping up, a bright digital shimmer", "copied from vm09-secret-shopper"],
+ "pickup": [0.8, "a pay phone handset lifted off its metal hook: a plastic clack and a hook switch click", "copied from sr03-pay-phone (Rae lifts the card reader)"],
+ "tear": [0.6, "a strip of paper torn off a flyer, one quick rip", "copied from vl03-help-wanted (the receipt tears off)"],
+ "steps": [4.0, "one person walking slowly in soft sneakers on a hard vinyl floor in a small quiet shop at night, six separate unhurried footsteps, close, no music, no voices", "copied from vm08-lost-and-found"],
+ "receipt_printer": [6.0, "a small thermal receipt printer printing a very long receipt nonstop: a steady fast whirring buzz of paper feeding, close, no beeps, no music"]
+}

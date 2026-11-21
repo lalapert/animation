@@ -28,3 +28,4 @@
 | 11/28 10:00 | vl11-doorbuster | 2 Negative Command | Never take a rocket cart to a Black Friday sale | Black Friday: doorbuster or online? Tell me. | no |
 | 11/29 10:00 | vm12-restock | 26 The Superlative | The only store that restocks itself after Black Friday | Who restocked the shelves overnight: magic or Pip? Tell me. (11/16 two-choice) | no |
 | 11/30 10:00 | vl12-robo-cleo | 4 The Replacement | This robot replaced her unpaid assistant for 25 seconds | Your assistant: Cleo or Robo-Cleo? Tell me. | no |
+| 12/1 10:00 | vm13-rewards-program | 1 Cost Confession | Minus 4,000 points is what saying no thanks cost her | Do you have a rewards account? Join or no thanks? Tell me. (11/16 two-choice) | no |

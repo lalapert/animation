@@ -1,0 +1,9 @@
+Void Mart, episode 13: "Rewards Program" (2026). Original characters, story, pictures and music.
+
+Pictures: drawn in code (canvas 2D) with the Void Mart toon kit (channel/brand/toon.js, channel/brand/vmkit.js, channel/brand/travel.js, channel/brand/sets.js). The card reader and its screens, the customer and the customer's arm, the endless receipt, the leaderboard and sign-ups holograms are drawn in film.js.
+Fonts: Bungee (The Bungee Project Authors) and Fredoka (The Fredoka Project Authors), SIL Open Font License 1.1.
+Voices: ElevenLabs text-to-speech, model eleven_v4.
+  Pip: "Win2" (owner's own designed voice). Rae: "Kar2" (owner's own designed voice, pitched 1.5 semitones down).
+  MAGS: "VM MAGS" (ElevenLabs Voice Design, made for this show). The customer: "Brian" (ElevenLabs default voice).
+Sound effects: generated with ElevenLabs Sound Effects (prompts in sfx/prompts.json; one new, the rest reused from earlier episodes as noted there).
+Music: original score for the house jazz trio (tools/band.py, tools/score.py) played with CC0 samples from VSCO 2 Community Edition, VCSL and FreePats.

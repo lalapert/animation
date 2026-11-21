@@ -1,0 +1,135 @@
+{
+ "model_id": "eleven_v4",
+ "cast": {
+  "PIP": {
+   "voice_id": "BiP91t4ozM9IZajOdSu2",
+   "name": "Win2",
+   "settings": {
+    "stability": 0.3,
+    "similarity_boost": 0.8,
+    "style": 0.65,
+    "speed": 1.05
+   }
+  },
+  "RAE": {
+   "voice_id": "oy557F0mOsPZZqdz8oK6",
+   "name": "Kar2",
+   "settings": {
+    "stability": 0.6,
+    "similarity_boost": 0.8,
+    "style": 0.2,
+    "speed": 0.9
+   },
+   "pitch": -1.5
+  },
+  "MAGS": {
+   "voice_id": "WkUURyKtbzB9IM50qGdP",
+   "name": "VM MAGS",
+   "settings": {
+    "stability": 0.45,
+    "similarity_boost": 0.8,
+    "style": 0.5,
+    "speed": 1.0
+   }
+  },
+  "CUST": {
+   "voice_id": "nPczCjzI2devNBz1zQrb",
+   "name": "Brian (stock), tired customer",
+   "settings": {
+    "stability": 0.4,
+    "similarity_boost": 0.8,
+    "style": 0.5,
+    "speed": 1.0
+   }
+  }
+ },
+ "lines": [
+  {
+   "id": "L1",
+   "who": "MAGS",
+   "text": "[bright, salesy] Do you have a Void Rewards account?",
+   "plain": "Do you have a Void Rewards account?",
+   "sub": "Do you have a\nVoid Rewards account?"
+  },
+  {
+   "id": "L2",
+   "who": "CUST",
+   "text": "[tired, flat] No thanks.",
+   "plain": "No thanks.",
+   "sub": "No thanks."
+  },
+  {
+   "id": "L3",
+   "who": "MAGS",
+   "text": "[brightly, not listening] Great! Just enter your phone number.",
+   "plain": "Great! Just enter your phone number.",
+   "sub": "Great! Just enter\nyour phone number."
+  },
+  {
+   "id": "L4",
+   "who": "PIP",
+   "text": "[delighted] Ooh, points! What do they get you?",
+   "plain": "Ooh, points! What do they get you?",
+   "sub": "Ooh, points!\nWhat do they get you?"
+  },
+  {
+   "id": "L5",
+   "who": "MAGS",
+   "text": "[bright, salesy] Ten thousand points: one free receipt.",
+   "plain": "Ten thousand points: one free receipt.",
+   "sub": "Ten thousand points:\none free receipt.",
+   "asr": "10,000 points, one free receipt"
+  },
+  {
+   "id": "L6",
+   "who": "PIP",
+   "text": "[reading slowly] Points expire when the customer... ceases to exist?",
+   "plain": "Points expire when the customer... ceases to exist?",
+   "sub": "Points expire when the customer...\nceases to exist?"
+  },
+  {
+   "id": "L7",
+   "who": "MAGS",
+   "text": "[breezy] Standard terms.",
+   "plain": "Standard terms.",
+   "sub": "Standard terms."
+  },
+  {
+   "id": "L8",
+   "who": "PIP",
+   "text": "[gasps] Rae! You're at minus four thousand!",
+   "plain": "Rae! You're at minus four thousand!",
+   "sub": "Rae! You're at\nminus four thousand!",
+   "asr": "Ray, you're at minus 4,000"
+  },
+  {
+   "id": "L9",
+   "who": "RAE",
+   "text": "[deadpan] I say \"no thanks\" a lot.",
+   "plain": "I say \"no thanks\" a lot.",
+   "sub": "I say \"no thanks\"\na lot."
+  },
+  {
+   "id": "L10",
+   "who": "MAGS",
+   "text": "[smug, grand] Most sign-ups wins Employee of the Month!",
+   "plain": "Most sign-ups wins Employee of the Month!",
+   "sub": "Most sign-ups wins\nEmployee of the Month!",
+   "asr": "Most signups wins employee of the month"
+  },
+  {
+   "id": "L11",
+   "who": "RAE",
+   "text": "[deadpan] Do you have a Void Rewards account, MAGS?",
+   "plain": "Do you have a Void Rewards account, MAGS?",
+   "sub": "Do you have a Void Rewards\naccount, MAGS?"
+  },
+  {
+   "id": "L12",
+   "who": "MAGS",
+   "text": "[caught off guard] ...No thanks.",
+   "plain": "...No thanks.",
+   "sub": "...No thanks."
+  }
+ ]
+}
