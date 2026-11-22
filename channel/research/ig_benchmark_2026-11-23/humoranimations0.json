@@ -1,0 +1,1501 @@
+{
+  "handle": "humoranimations0",
+  "collected_at": "2026-11-22",
+  "method": "TinyFish fetch_content, logged out. Reel pages (/<handle>/reel/<code>/), embed pages (/p/<code>/embed/) for covers and exact like counts, reels/profile grid for views. Discovery beyond the 12-tile grid via web search and the archive.org URL index.",
+  "profile": {
+    "name": "Humor Animations",
+    "followers": "2.6M (reels page) / 3M (embed)",
+    "following": 133,
+    "posts": 1567,
+    "bio": "Bringing about everyday humor through animations (business email in bio)",
+    "source": "reels tab + embed pages fetched logged out 2026-11-22"
+  },
+  "field_notes": {
+    "date": "UTC timestamp from the page (published_date). date_og is the date in the og:description (US time), so it can be one day earlier.",
+    "likes": "Best available count. likes_page_display is what the page/grid shows; likes_exact_embed_or_og is the exact count from the embed page or og:description. For some humoranimations0 reels from 2025 the page shows noticeably more than the exact embed count (see notes).",
+    "views": "Only available from the reels grid tiles (first 12 reels). null elsewhere.",
+    "top_comments": "Up to 5 most-liked of the ~12 comments Instagram shows to logged-out viewers (not the global top comments). GIF/sticker-only comments skipped. No usernames.",
+    "comments_mention_ai": "True if any visible comment mentions AI (AI/ai/인공지능/ChatGPT...). ai_comments lists them; check context, some are about AI in the story rather than the animation.",
+    "cover_url": "Signed CDN URL that was downloaded; these expire after a few days. og:image from the reel page is cut at 500 characters by the fetcher and cannot be used."
+  },
+  "reel_count": 21,
+  "date_range": [
+    "2024-11-15",
+    "2026-11-22"
+  ],
+  "reels": [
+    {
+      "shortcode": "DgCBsVzxfgv",
+      "url": "https://www.instagram.com/humoranimations0/reel/DgCBsVzxfgv/",
+      "type": "reel",
+      "date": "2026-11-22T05:14:52Z",
+      "date_og": "November 21, 2026",
+      "caption": "Credits @ayria_rutledge How I be handling men in 2026🤣 #marriedlife #couples #husbandandwife #trendingreels #foryou",
+      "hashtags": [
+        "marriedlife",
+        "couples",
+        "husbandandwife",
+        "trendingreels",
+        "foryou"
+      ],
+      "likes": 2052,
+      "likes_source": "embed/og exact count (matches page)",
+      "likes_page_display": "2.1K",
+      "likes_exact_embed_or_og": 2052,
+      "comments": 93,
+      "views": 60400,
+      "views_display": "60.4K",
+      "pinned": false,
+      "pinned_main_grid": false,
+      "reels_grid_position": 2,
+      "discovered_via": "reels tab grid (first 12 tiles)",
+      "cover_url": "https://scontent-atl3-2.cdninstagram.com/v/t51.71878-15/916025894_2046475502840534_4358605820393068982_n.jpg?stp=dst-jpg_e35_s640x640_tt6&_nc_cat=1&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=F733zSKSHjwQ7kNvwES9n9P&_nc_oc=Adq08HOP_0ujIjT6xBU6EEx0cgEV_NzRiSXXTuTZ8vae4NKm7MJ9UqDaL4XFm5yIuKY&_nc_zt=23&_nc_ht=scontent-atl3-2.cdninstagram.com&_nc_gid=1rHWbaj09EqC3kk2BhT9Aw&_nc_ss=7ba8c&_nc_ct=RQosPBUKFQQAAAA&oh=00_AQTPEebKqKjuyyRu9fGjxaNz0xqltSw58pRzIoEB0qIE1g&oe=6B08C252",
+      "cover_file": "covers/humoranimations0/DgCBsVzxfgv.jpg",
+      "audio": "Original audio",
+      "audio_url": "https://www.instagram.com/reels/audio/40000956512886242/",
+      "credit_mentions": [
+        {
+          "label": "Credits",
+          "handles": [
+            "ayria_rutledge"
+          ]
+        }
+      ],
+      "caption_mentions": [
+        "ayria_rutledge"
+      ],
+      "collaborators": [],
+      "top_comments": [
+        {
+          "text": "When women start acting like women, that's when I think men should start acting like men due to the fact that feminism has told women that they can be men. And they treat men like they don't need them, and they kept saying to men. \"We don't need you, we don't need you.\" And when men started leaving them alone, that's when they started complaining that men aren't men anymore. Ma'am, you wanted them to leave you alone and now that they're leaving you alone, you're complaining that they're not acting like men and helping you? Don't make me laugh.",
+          "likes": 1
+        },
+        {
+          "text": "Yea and wait till the women found out that their dads learned the same way we are trying to learn, BY FUCKING WINGING IT😭 and if ur dad can do everything just go date and marry him then tf 💀",
+          "likes": 0
+        },
+        {
+          "text": "💯💯💯",
+          "likes": 0
+        },
+        {
+          "text": "“Y’all can’t even fix your sleep schedule” 😂😂😭😭😭",
+          "likes": 0
+        },
+        {
+          "text": "🤏🏽🤏🏽🤏🏽🤏🏽🤏🏽okurrrrrr",
+          "likes": 0
+        }
+      ],
+      "comments_visible_logged_out": 12,
+      "comments_mention_ai": false,
+      "ai_comments": []
+    },
+    {
+      "shortcode": "DgAOFr-KTVw",
+      "url": "https://www.instagram.com/humoranimations0/reel/DgAOFr-KTVw/",
+      "type": "reel",
+      "date": "2026-11-21T12:23:24Z",
+      "date_og": "November 21, 2026",
+      "caption": "You are eating with that one person🤣 #relatable #funny #comedy #foryou #trendingreels",
+      "hashtags": [
+        "relatable",
+        "funny",
+        "comedy",
+        "foryou",
+        "trendingreels"
+      ],
+      "likes": 2737,
+      "likes_source": "embed/og exact count (matches page)",
+      "likes_page_display": "2.7K",
+      "likes_exact_embed_or_og": 2737,
+      "comments": 153,
+      "views": 155000,
+      "views_display": "155K",
+      "pinned": false,
+      "pinned_main_grid": false,
+      "reels_grid_position": 3,
+      "discovered_via": "reels tab grid (first 12 tiles)",
+      "cover_url": "https://scontent-sjc6-1.cdninstagram.com/v/t51.71878-15/916778560_3748215678667157_5655351297504874699_n.jpg?stp=dst-jpg_e35_s640x640_tt6&_nc_cat=108&_nc_map=urlgen_bucketless&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=pJ8Th8d-LsgQ7kNvwHXv5Q4&_nc_oc=Ado_UJSPriWc3qagxf58rtLvvQfy9kW4k5yOK7AKb2tIYetPUFRF4uBmpJaZbw7ywl8&_nc_zt=23&_nc_ht=scontent-sjc6-1.cdninstagram.com&_nc_gid=Lnfu3ejiisR3mth4U_AoJA&_nc_ss=7b689&_nc_ct=RQosPBUKFQQAAAA&oh=00_AQTx_8Kj5eFRK9NElMNsh_szvdDlM2Zs1U0D7I4-G8IaHg&oe=6B08BFC2",
+      "cover_file": "covers/humoranimations0/DgAOFr-KTVw.jpg",
+      "audio": "Original audio",
+      "audio_url": "https://www.instagram.com/reels/audio/29549606498009074/",
+      "credit_mentions": [],
+      "caption_mentions": [],
+      "collaborators": [],
+      "top_comments": [
+        {
+          "text": "It's soooo annoying no adult should be eating like that",
+          "likes": 1
+        },
+        {
+          "text": "Muted this so quick 😂",
+          "likes": 0
+        },
+        {
+          "text": "What if u r eating with two persons of that kind😣😣😣",
+          "likes": 0
+        },
+        {
+          "text": "It’s her face!!😂",
+          "likes": 0
+        },
+        {
+          "text": "The way I was just triggered……😡 a throat punch is the only plausible response…..",
+          "likes": 0
+        }
+      ],
+      "comments_visible_logged_out": 12,
+      "comments_mention_ai": false,
+      "ai_comments": []
+    },
+    {
+      "shortcode": "Df-5mL6q61s",
+      "url": "https://www.instagram.com/humoranimations0/reel/Df-5mL6q61s/",
+      "type": "reel",
+      "date": "2026-11-21T00:14:03Z",
+      "date_og": "November 20, 2026",
+      "caption": "Credits @chantestory When your friend is feeling the music and starts speeding #relatable #comedyreels #humor #viral #feelingthemusic",
+      "hashtags": [
+        "relatable",
+        "comedyreels",
+        "humor",
+        "viral",
+        "feelingthemusic"
+      ],
+      "likes": 15500,
+      "likes_source": "reel page display",
+      "likes_page_display": "15.5K",
+      "likes_exact_embed_or_og": null,
+      "comments": 229,
+      "views": 232000,
+      "views_display": "232K",
+      "pinned": false,
+      "pinned_main_grid": false,
+      "reels_grid_position": 4,
+      "discovered_via": "reels tab grid (first 12 tiles)",
+      "cover_url": "https://scontent-sjc6-1.cdninstagram.com/v/t51.71878-15/915852885_3616301188547131_2599927863883826160_n.jpg?stp=dst-jpg_e35_s640x640_tt6&_nc_cat=102&_nc_map=urlgen_bucketless&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=aaW6Tt5xuwEQ7kNvwFY34ml&_nc_oc=AdrozfcHup8XvprBHSQePwa5CMycTP1xaK6ixe0OFowfYmbPShr5tlMV3uuMZsIjtls&_nc_zt=23&_nc_ht=scontent-sjc6-1.cdninstagram.com&_nc_gid=Lnfu3ejiisR3mth4U_AoJA&_nc_ss=7b689&_nc_ct=RQosPBUKFQQAAAA&oh=00_AQR5TaCIzSPPENdiBosWkMg2Vh8Y5R4EV0G7hA5YKNvCLg&oe=6B08D677",
+      "cover_file": "covers/humoranimations0/Df-5mL6q61s.jpg",
+      "audio": "Original audio",
+      "audio_url": "https://www.instagram.com/reels/audio/40007044882275259/",
+      "credit_mentions": [
+        {
+          "label": "Credits",
+          "handles": [
+            "chantestory"
+          ]
+        }
+      ],
+      "caption_mentions": [
+        "chantestory"
+      ],
+      "collaborators": [],
+      "top_comments": [
+        {
+          "text": "😂😂😂😂😂",
+          "likes": 0
+        },
+        {
+          "text": "You’ll think I’m a nascar driver",
+          "likes": 0
+        },
+        {
+          "text": "@jaythompson2864",
+          "likes": 0
+        },
+        {
+          "text": "😂😂",
+          "likes": 0
+        },
+        {
+          "text": "Me 😂😂😂 I’m the driver",
+          "likes": 0
+        }
+      ],
+      "comments_visible_logged_out": 12,
+      "comments_mention_ai": false,
+      "ai_comments": []
+    },
+    {
+      "shortcode": "Df9DeEVxGm2",
+      "url": "https://www.instagram.com/humoranimations0/reel/Df9DeEVxGm2/",
+      "type": "reel",
+      "date": "2026-11-20T06:54:24Z",
+      "date_og": "November 19, 2026",
+      "caption": "Credits @shawnfoxxtv If y'all were honest about y'all toxic relationships #relationships #relatable #funny #humor #trendingreels",
+      "hashtags": [
+        "relationships",
+        "relatable",
+        "funny",
+        "humor",
+        "trendingreels"
+      ],
+      "likes": 854,
+      "likes_source": "embed/og exact count (matches page)",
+      "likes_page_display": "854",
+      "likes_exact_embed_or_og": 854,
+      "comments": 25,
+      "views": 47200,
+      "views_display": "47.2K",
+      "pinned": false,
+      "pinned_main_grid": false,
+      "reels_grid_position": 5,
+      "discovered_via": "reels tab grid (first 12 tiles)",
+      "cover_url": "https://scontent-sjc6-1.cdninstagram.com/v/t51.71878-15/919858759_2709820886188489_170007708059013567_n.jpg?stp=dst-jpg_e35_s640x640_tt6&_nc_cat=106&_nc_map=urlgen_bucketless&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=gE1HmlfHUpIQ7kNvwGN3eI_&_nc_oc=AdodvIp7IDiKhtnokERGO6eeGdQf983rZ1F1KIB8jJ1KBnHq4yneHRhu4WKbdK-drYw&_nc_zt=23&_nc_ht=scontent-sjc6-1.cdninstagram.com&_nc_gid=Lnfu3ejiisR3mth4U_AoJA&_nc_ss=7b689&_nc_ct=RQosPBUKFQQAAAA&oh=00_AQRcs4ktJKB_lo4xUnDu_hZyMa0DdYSiHLVGnNH_gRD_Lg&oe=6B08E602",
+      "cover_file": "covers/humoranimations0/Df9DeEVxGm2.jpg",
+      "audio": "Original audio",
+      "audio_url": "https://www.instagram.com/reels/audio/28536652786009466/",
+      "credit_mentions": [
+        {
+          "label": "Credits",
+          "handles": [
+            "shawnfoxxtv"
+          ]
+        }
+      ],
+      "caption_mentions": [
+        "shawnfoxxtv"
+      ],
+      "collaborators": [],
+      "top_comments": [
+        {
+          "text": "The PTSD I'm feeling is insane 😩",
+          "likes": 5
+        },
+        {
+          "text": "Why is this normal",
+          "likes": 1
+        },
+        {
+          "text": "Wow that was WILD",
+          "likes": 1
+        },
+        {
+          "text": "😂😂😂😂😂😂",
+          "likes": 0
+        },
+        {
+          "text": "😂😂😂😂😂😂😂",
+          "likes": 0
+        }
+      ],
+      "comments_visible_logged_out": 12,
+      "comments_mention_ai": false,
+      "ai_comments": []
+    },
+    {
+      "shortcode": "Df6-zvoKkk8",
+      "url": "https://www.instagram.com/humoranimations0/reel/Df6-zvoKkk8/",
+      "type": "reel",
+      "date": "2026-11-19T11:33:40Z",
+      "date_og": "November 19, 2026",
+      "caption": "Credits @samwitdajuice Your girlfriend calls while you are having a rough day but she is just a girl🤣 #relationships #relatable #fyp #dating #viral",
+      "hashtags": [
+        "relationships",
+        "relatable",
+        "fyp",
+        "dating",
+        "viral"
+      ],
+      "likes": 5538,
+      "likes_source": "embed/og exact count (matches page)",
+      "likes_page_display": "5.5K",
+      "likes_exact_embed_or_og": 5538,
+      "comments": 49,
+      "views": 284000,
+      "views_display": "284K",
+      "pinned": false,
+      "pinned_main_grid": false,
+      "reels_grid_position": 6,
+      "discovered_via": "reels tab grid (first 12 tiles)",
+      "cover_url": "https://scontent-sjc6-1.cdninstagram.com/v/t51.71878-15/907416468_1494007419270879_4455361214783939306_n.jpg?stp=dst-jpg_e35_s640x640_tt6&_nc_cat=102&_nc_map=urlgen_bucketless&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=ELzc0xRj4LIQ7kNvwEYy6G6&_nc_oc=AdoM94NwuiGwQ6CEBHPUFR-Q79DtYh4tQggvI0kH5dC4zlLMnFgdQ2vp66dvpA9jo9Y&_nc_zt=23&_nc_ht=scontent-sjc6-1.cdninstagram.com&_nc_gid=Lnfu3ejiisR3mth4U_AoJA&_nc_ss=7b689&_nc_ct=RQosPBUKFQQAAAA&oh=00_AQQQOAOCdfQQEX74lGFa8APZKBQdcPGxK70QSeJFrPLCIQ&oe=6B08ECC4",
+      "cover_file": "covers/humoranimations0/Df6-zvoKkk8.jpg",
+      "audio": "AMLYLY•Dark Flame and Nameless Ocean shorts",
+      "audio_url": "https://www.instagram.com/reels/audio/2367279473679158/",
+      "credit_mentions": [
+        {
+          "label": "Credits",
+          "handles": [
+            "samwitdajuice"
+          ]
+        }
+      ],
+      "caption_mentions": [
+        "samwitdajuice"
+      ],
+      "collaborators": [],
+      "top_comments": [
+        {
+          "text": "Type of call you get minutes after HR let you know it’s your last week of work 🤣",
+          "likes": 4,
+          "verified_commenter": true
+        },
+        {
+          "text": "@dt_thivya17",
+          "likes": 1
+        },
+        {
+          "text": "😂😂😂",
+          "likes": 0
+        },
+        {
+          "text": "The broken blue car, the open bonnet, and that one call turning a rough day around — this one is so sweet and relatable!",
+          "likes": 0
+        },
+        {
+          "text": "This is so meeeeeee @miroljubivi_rattnik 😅😂🤣🤣",
+          "likes": 0
+        }
+      ],
+      "comments_visible_logged_out": 12,
+      "comments_mention_ai": false,
+      "ai_comments": []
+    },
+    {
+      "shortcode": "Df4911cqDMg",
+      "url": "https://www.instagram.com/humoranimations0/reel/Df4911cqDMg/",
+      "type": "reel",
+      "date": "2026-11-18T16:59:14Z",
+      "date_og": "November 18, 2026",
+      "caption": "Credits @jaelen_kim One of the best skills you can develop in life is the ability to reset quick #relatable #fyp #viral #foryou #trendingreels",
+      "hashtags": [
+        "relatable",
+        "fyp",
+        "viral",
+        "foryou",
+        "trendingreels"
+      ],
+      "likes": 608,
+      "likes_source": "embed/og exact count (matches page)",
+      "likes_page_display": "608",
+      "likes_exact_embed_or_og": 608,
+      "comments": 11,
+      "views": 23500,
+      "views_display": "23.5K",
+      "pinned": false,
+      "pinned_main_grid": false,
+      "reels_grid_position": 7,
+      "discovered_via": "reels tab grid (first 12 tiles)",
+      "cover_url": "https://scontent-sjc6-1.cdninstagram.com/v/t51.71878-15/911709151_1148687477752862_4697276464115134920_n.jpg?stp=dst-jpg_e35_s640x640_tt6&_nc_cat=105&_nc_map=urlgen_bucketless&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=gYEKsZodMoAQ7kNvwEOiwJS&_nc_oc=AdrClARehEkwjVar9RDq5X_5Ou1RpMQz6ZWd6arNmLWWacrkUMlBxFsHTEs1okM-Ksg&_nc_zt=23&_nc_ht=scontent-sjc6-1.cdninstagram.com&_nc_gid=Lnfu3ejiisR3mth4U_AoJA&_nc_ss=7b689&_nc_ct=RQosPBUKFQQAAAA&oh=00_AQRth7aL5JaENQcw8DmOJlMM7LD1e44ONe9szsDE9c7nTQ&oe=6B08E795",
+      "cover_file": "covers/humoranimations0/Df4911cqDMg.jpg",
+      "audio": "Original audio",
+      "audio_url": "https://www.instagram.com/reels/audio/29030491529975723/",
+      "credit_mentions": [
+        {
+          "label": "Credits",
+          "handles": [
+            "jaelen_kim"
+          ]
+        }
+      ],
+      "caption_mentions": [
+        "jaelen_kim"
+      ],
+      "collaborators": [],
+      "top_comments": [
+        {
+          "text": "What’s on the menu tho?",
+          "likes": 1,
+          "verified_commenter": true
+        },
+        {
+          "text": "🔥🔥",
+          "likes": 1
+        },
+        {
+          "text": "I thought you wanna go into some joke. Silly s***, but you didn't, this was good",
+          "likes": 0
+        },
+        {
+          "text": "The Retro Cafe setting with the stickman perched on the bar stool is so charming — 'reset quick' is genuinely good advice, and the conversation vibe made it land even better.",
+          "likes": 0
+        },
+        {
+          "text": "😍🔥💯‼️💫",
+          "likes": 0
+        }
+      ],
+      "comments_visible_logged_out": 11,
+      "comments_mention_ai": false,
+      "ai_comments": []
+    },
+    {
+      "shortcode": "Df3qq2zKwZj",
+      "url": "https://www.instagram.com/humoranimations0/reel/Df3qq2zKwZj/",
+      "type": "reel",
+      "date": "2026-11-18T04:41:35Z",
+      "date_og": "November 17, 2026",
+      "caption": "Credits @thebrok If introverts were honest🤣 #introvert #relatable #trendingreels #foryou #viral",
+      "hashtags": [
+        "introvert",
+        "relatable",
+        "trendingreels",
+        "foryou",
+        "viral"
+      ],
+      "likes": 1323,
+      "likes_source": "embed/og exact count (matches page)",
+      "likes_page_display": "1.3K",
+      "likes_exact_embed_or_og": 1323,
+      "comments": 10,
+      "views": 58500,
+      "views_display": "58.5K",
+      "pinned": false,
+      "pinned_main_grid": false,
+      "reels_grid_position": 8,
+      "discovered_via": "reels tab grid (first 12 tiles)",
+      "cover_url": "https://scontent-sjc3-1.cdninstagram.com/v/t51.71878-15/915225072_3053160221695882_4059495121732685164_n.jpg?stp=dst-jpg_e35_s640x640_tt6&_nc_cat=111&_nc_map=urlgen_bucketless&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=bdq-1lygqPIQ7kNvwFXKEpM&_nc_oc=AdpTh55pzxOp3LxeB-iV-_ItQ6-I8AokixVJrW4ZTmXmBNhHERHrjUoLVjy66Fumn60&_nc_zt=23&_nc_ht=scontent-sjc3-1.cdninstagram.com&_nc_gid=Lnfu3ejiisR3mth4U_AoJA&_nc_ss=7b689&_nc_ct=RQosPBUKFQQAAAA&oh=00_AQRBna2no76_vWQ0kZnJOdMV0TifbdVJ0Hwf0j_ymddM3A&oe=6B08DA0C",
+      "cover_file": "covers/humoranimations0/Df3qq2zKwZj.jpg",
+      "audio": "Original audio",
+      "audio_url": "https://www.instagram.com/reels/audio/28904484005901319/",
+      "credit_mentions": [
+        {
+          "label": "Credits",
+          "handles": [
+            "thebrok"
+          ]
+        }
+      ],
+      "caption_mentions": [
+        "thebrok"
+      ],
+      "collaborators": [],
+      "top_comments": [
+        {
+          "text": "Someone said to me: “ I haven’t seen you in a long time!” I said: “Cause I don’t wanna be seen!”😄",
+          "likes": 4
+        },
+        {
+          "text": "😂😂😂😂😂😂😂😂😂😂",
+          "likes": 3
+        },
+        {
+          "text": "That”Ew!” TMTFO😂😂😂😂",
+          "likes": 1
+        },
+        {
+          "text": "😂",
+          "likes": 1
+        },
+        {
+          "text": "😂😂😂😂",
+          "likes": 0
+        }
+      ],
+      "comments_visible_logged_out": 9,
+      "comments_mention_ai": false,
+      "ai_comments": []
+    },
+    {
+      "shortcode": "Df3bz7eKTqb",
+      "url": "https://www.instagram.com/humoranimations0/reel/Df3bz7eKTqb/",
+      "type": "reel",
+      "date": "2026-11-18T02:33:03Z",
+      "date_og": "November 17, 2026",
+      "caption": "Credits @eva.pepaj My husband with zero understanding of social cues... #marriedlife #husbandandwife #couples #foryou #trendingreels",
+      "hashtags": [
+        "marriedlife",
+        "husbandandwife",
+        "couples",
+        "foryou",
+        "trendingreels"
+      ],
+      "likes": 950,
+      "likes_source": "embed/og exact count (matches page)",
+      "likes_page_display": "950",
+      "likes_exact_embed_or_og": 950,
+      "comments": 38,
+      "views": 82300,
+      "views_display": "82.3K",
+      "pinned": false,
+      "pinned_main_grid": false,
+      "reels_grid_position": 9,
+      "discovered_via": "reels tab grid (first 12 tiles)",
+      "cover_url": "https://scontent-sjc6-1.cdninstagram.com/v/t51.71878-15/912200664_1011492388659155_1144515893536138999_n.jpg?stp=dst-jpg_e35_s640x640_tt6&_nc_cat=107&_nc_map=urlgen_bucketless&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=dT69sOY03yMQ7kNvwGjSkjF&_nc_oc=AdqGJJWFwmOQk4PNts9f42APi2oQC52gel2wQNhgbF75c-mSjFzElUZnNw6Szquc2xc&_nc_zt=23&_nc_ht=scontent-sjc6-1.cdninstagram.com&_nc_gid=Lnfu3ejiisR3mth4U_AoJA&_nc_ss=7b689&_nc_ct=RQosPBUKFQQAAAA&oh=00_AQSeCJTHEwLSZKPaaVCpdXErml-Se_TPtqYwG6GJ-CxddA&oe=6B08CEEC",
+      "cover_file": "covers/humoranimations0/Df3bz7eKTqb.jpg",
+      "audio": "Original audio",
+      "audio_url": "https://www.instagram.com/reels/audio/28102315306110900/",
+      "credit_mentions": [
+        {
+          "label": "Credits",
+          "handles": [
+            "eva.pepaj"
+          ]
+        }
+      ],
+      "caption_mentions": [
+        "eva.pepaj"
+      ],
+      "collaborators": [],
+      "top_comments": [
+        {
+          "text": "I think her husband drank too much 😂",
+          "likes": 4
+        },
+        {
+          "text": "She saw the sign before she settled for him but she love him daft behind closed doors not public though 😂😂😂😂 but daft can’t be contained they let loose unexpectedly 😢",
+          "likes": 1
+        },
+        {
+          "text": "😂😂😂😂",
+          "likes": 0
+        },
+        {
+          "text": "😂😂😂😂😂😂😂😂",
+          "likes": 0
+        },
+        {
+          "text": "😆😂🤣",
+          "likes": 0
+        }
+      ],
+      "comments_visible_logged_out": 12,
+      "comments_mention_ai": false,
+      "ai_comments": []
+    },
+    {
+      "shortcode": "Df2kpEzK7it",
+      "url": "https://www.instagram.com/humoranimations0/reel/Df2kpEzK7it/",
+      "type": "reel",
+      "date": "2026-11-17T18:32:11Z",
+      "date_og": "November 17, 2026",
+      "caption": "IB @0nly_x4vi3r She cooks a meal one time🤣 #relatable #funny #foryou #dating #relationships",
+      "hashtags": [
+        "relatable",
+        "funny",
+        "foryou",
+        "dating",
+        "relationships"
+      ],
+      "likes": 276,
+      "likes_source": "embed/og exact count (matches page)",
+      "likes_page_display": "276",
+      "likes_exact_embed_or_og": 276,
+      "comments": 3,
+      "views": 29500,
+      "views_display": "29.5K",
+      "pinned": false,
+      "pinned_main_grid": false,
+      "reels_grid_position": 10,
+      "discovered_via": "reels tab grid (first 12 tiles)",
+      "cover_url": "https://scontent-sjc6-1.cdninstagram.com/v/t51.71878-15/902586549_1180118327858656_6124542940729587436_n.jpg?stp=dst-jpg_e35_s640x640_tt6&_nc_cat=100&_nc_map=urlgen_bucketless&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=0Y_cWZkL0F8Q7kNvwF32WcT&_nc_oc=Adq9BKmFuVImHvgkOSB4MxUjL6wqs88jfPQ1nPbsssSeCVNp2D75KkxIvJWb3cA83ms&_nc_zt=23&_nc_ht=scontent-sjc6-1.cdninstagram.com&_nc_gid=Lnfu3ejiisR3mth4U_AoJA&_nc_ss=7b689&_nc_ct=RQosPBUKFQQAAAA&oh=00_AQRqhlHYl1WCjrRCZldoUwiOi-kONfaEipcK5we41J_9iw&oe=6B08E51E",
+      "cover_file": "covers/humoranimations0/Df2kpEzK7it.jpg",
+      "audio": "Original audio",
+      "audio_url": "https://www.instagram.com/reels/audio/29753148600938314/",
+      "credit_mentions": [
+        {
+          "label": "IB",
+          "handles": [
+            "0nly_x4vi3r"
+          ]
+        }
+      ],
+      "caption_mentions": [
+        "0nly_x4vi3r"
+      ],
+      "collaborators": [],
+      "top_comments": [
+        {
+          "text": "oh well HELLO",
+          "likes": 1
+        },
+        {
+          "text": "😂😂😂😂😂😂😂😂😂😂😂😂😂",
+          "likes": 0
+        },
+        {
+          "text": "😂😂😂😂😂😂😂😂😂😂",
+          "likes": 0
+        }
+      ],
+      "comments_visible_logged_out": 3,
+      "comments_mention_ai": false,
+      "ai_comments": []
+    },
+    {
+      "shortcode": "Df1x8dVKnmk",
+      "url": "https://www.instagram.com/humoranimations0/reel/Df1x8dVKnmk/",
+      "type": "reel",
+      "date": "2026-11-17T11:05:10Z",
+      "date_og": "November 17, 2026",
+      "caption": "Credits @meghanandjack When he can't compliment you without sounding angry🤣 #couples #marriedlife #husbandandwife #relatable #foryou",
+      "hashtags": [
+        "couples",
+        "marriedlife",
+        "husbandandwife",
+        "relatable",
+        "foryou"
+      ],
+      "likes": 580,
+      "likes_source": "embed/og exact count (matches page)",
+      "likes_page_display": "580",
+      "likes_exact_embed_or_og": 580,
+      "comments": 9,
+      "views": 39600,
+      "views_display": "39.6K",
+      "pinned": false,
+      "pinned_main_grid": false,
+      "reels_grid_position": 11,
+      "discovered_via": "reels tab grid (first 12 tiles)",
+      "cover_url": null,
+      "cover_file": "covers/humoranimations0/Df1x8dVKnmk.jpg",
+      "audio": "Original audio",
+      "audio_url": "https://www.instagram.com/reels/audio/29082180921450340/",
+      "credit_mentions": [
+        {
+          "label": "Credits",
+          "handles": [
+            "meghanandjack"
+          ]
+        }
+      ],
+      "caption_mentions": [
+        "meghanandjack"
+      ],
+      "collaborators": [],
+      "top_comments": [
+        {
+          "text": "Aggressively nice, literally",
+          "likes": 5
+        },
+        {
+          "text": "❤️😍😂",
+          "likes": 3
+        },
+        {
+          "text": "😂😂",
+          "likes": 2
+        },
+        {
+          "text": "😂😂😂😂😂😂😂😂😂😂😂",
+          "likes": 1
+        },
+        {
+          "text": "😂😂😂😂😂",
+          "likes": 1
+        }
+      ],
+      "comments_visible_logged_out": 9,
+      "comments_mention_ai": false,
+      "ai_comments": [],
+      "notes": [
+        "Cover is the video poster frame shown on its own page (not a grid thumbnail)."
+      ]
+    },
+    {
+      "shortcode": "Df0KPPkKS-k",
+      "url": "https://www.instagram.com/humoranimations0/reel/Df0KPPkKS-k/",
+      "type": "reel",
+      "date": "2026-11-16T20:06:31Z",
+      "date_og": "November 16, 2026",
+      "caption": "Credits @eduardlovesig Dating advice 101 #dating #relationships #foryou #trendingreels #relatable",
+      "hashtags": [
+        "dating",
+        "relationships",
+        "foryou",
+        "trendingreels",
+        "relatable"
+      ],
+      "likes": 1670,
+      "likes_source": "embed/og exact count (matches page)",
+      "likes_page_display": "1.7K",
+      "likes_exact_embed_or_og": 1670,
+      "comments": 19,
+      "views": 83200,
+      "views_display": "83.2K",
+      "pinned": false,
+      "pinned_main_grid": false,
+      "reels_grid_position": 12,
+      "discovered_via": "reels tab grid (first 12 tiles)",
+      "cover_url": "https://scontent-sjc6-1.cdninstagram.com/v/t51.71878-15/915460145_1077575685316248_1991992725517763490_n.jpg?stp=dst-jpg_e15_p320x320_tt6&_nc_cat=110&_nc_map=urlgen_bucketless&ig_cache_key=NDAzMTg5MjU5NDM3MzUwNDkzMg%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNMSVBTLnhwaWRzLjY0MC5zZHIudmlkZW9fZmlyc3RfZnJhbWVfdGh1bWJuYWlsLkMzIn0%3D&_nc_ohc=7bMWDZ40x6gQ7kNvwHP1B3b&_nc_oc=Adr7cgEbS9raYcIX7Nrue9OdNm6bJWfD3tNW1mLvv4gVjhvPmf1RzLW0lp0HKapeOl8&_nc_zt=23&_nc_ht=scontent-sjc6-1.cdninstagram.com&_nc_gid=TuXucUYfjPrzmjJy4t4Hnw&_nc_ss=7b689&_nc_ct=RQosPBUIFQolBAAAAA&oh=00_AQTtewqgVDwXbkiQ_EXz6_XRFETejjyBLuzF_RbxnwzMqw&oe=6B08DD86",
+      "cover_file": "covers/humoranimations0/Df0KPPkKS-k.jpg",
+      "audio": "Original audio",
+      "audio_url": "https://www.instagram.com/reels/audio/29133559712968805/",
+      "credit_mentions": [
+        {
+          "label": "Credits",
+          "handles": [
+            "eduardlovesig"
+          ]
+        }
+      ],
+      "caption_mentions": [
+        "eduardlovesig"
+      ],
+      "collaborators": [],
+      "top_comments": [
+        {
+          "text": "Lol I am 5\"4 1/2 but look like I'm 5\"7 in heels 5\"9 I guess IAm too tall",
+          "likes": 1
+        },
+        {
+          "text": "That’s right🤣",
+          "likes": 1
+        },
+        {
+          "text": "Real",
+          "likes": 0
+        },
+        {
+          "text": "Bro, do not tell secrets of a baby yoda😂😂😂 jedi has to keep knowledge he does",
+          "likes": 0
+        },
+        {
+          "text": "🤭🤭❤️",
+          "likes": 0
+        }
+      ],
+      "comments_visible_logged_out": 12,
+      "comments_mention_ai": false,
+      "ai_comments": []
+    },
+    {
+      "shortcode": "DcdJKhfKo0w",
+      "url": "https://www.instagram.com/humoranimations0/reel/DcdJKhfKo0w/",
+      "type": "reel",
+      "date": "2026-08-25T07:57:08Z",
+      "date_og": "August 25, 2026",
+      "caption": "I just need to survive another shift🤣 #workhumor #worklife #funnyreels #relatable #worklife",
+      "hashtags": [
+        "workhumor",
+        "worklife",
+        "funnyreels",
+        "relatable",
+        "worklife"
+      ],
+      "likes": 50218,
+      "likes_source": "embed/og exact count (matches page)",
+      "likes_page_display": "50.2K",
+      "likes_exact_embed_or_og": 50218,
+      "comments": 601,
+      "views": null,
+      "views_display": null,
+      "pinned": false,
+      "pinned_main_grid": false,
+      "reels_grid_position": null,
+      "discovered_via": "archive.org URL index",
+      "cover_url": "https://scontent-sjc6-1.cdninstagram.com/v/t51.71878-15/785601999_1414258433947755_3008351937550621077_n.jpg?stp=dst-jpg_e15_tt6&_nc_cat=107&_nc_map=urlgen_bucketless&ig_cache_key=Mzk3MTM3MDc1MTk4MDM3NTM0NDEzOTkxNjEyODE1NDY5NjM%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNMSVBTLnhwaWRzLjY0MC5zZHIudmlkZW9fdXNlcl9zZWxlY3RlZF90aHVtYm5haWwuQzMifQ%3D%3D&_nc_ohc=BxztyLT1ngcQ7kNvwH_ys1M&_nc_oc=AdoewrNpVa6pC6cX8HAE2BOGNMYdAynBljd0JrZLigbK1lyD1RW2ohm1LUqPizytVHM&_nc_zt=23&_nc_ht=scontent-sjc6-1.cdninstagram.com&_nc_gid=aeRpzCyWJNxjgnasUx0gow&_nc_ss=7b689&_nc_ct=RQosPBUIFQ4lBAAAAA&oh=00_AQQ0iu7GSIVIoF6nV_e9wDy2FytaosLWMa1Ifqb5IydS6g&oe=6B08D293",
+      "cover_file": "covers/humoranimations0/DcdJKhfKo0w.jpg",
+      "audio": "Original audio",
+      "audio_url": "https://www.instagram.com/reels/audio/27886549931014061/",
+      "credit_mentions": [],
+      "caption_mentions": [],
+      "collaborators": [],
+      "top_comments": [
+        {
+          "text": "😂😂😂",
+          "likes": 0
+        },
+        {
+          "text": "@01ya_ne @1x.beckyy",
+          "likes": 0
+        },
+        {
+          "text": "😂😂😂😂😂😂😂",
+          "likes": 0
+        },
+        {
+          "text": "What’s the name of that song",
+          "likes": 0
+        },
+        {
+          "text": "😂😂",
+          "likes": 0
+        }
+      ],
+      "comments_visible_logged_out": 11,
+      "comments_mention_ai": false,
+      "ai_comments": []
+    },
+    {
+      "shortcode": "DP0YMHSjT09",
+      "url": "https://www.instagram.com/humoranimations0/reel/DP0YMHSjT09/",
+      "type": "reel",
+      "date": "2025-10-15T05:40:47Z",
+      "date_og": null,
+      "caption": "Each time my girlfriend is mad at me #blockblast #hungrystudio #dating #relationships #humor #foryou #viral #trending #trendingreels #fypシ❤️💞❤️",
+      "hashtags": [
+        "blockblast",
+        "hungrystudio",
+        "dating",
+        "relationships",
+        "humor",
+        "foryou",
+        "viral",
+        "trending",
+        "trendingreels",
+        "fypシ❤️💞❤️"
+      ],
+      "likes": 41200,
+      "likes_source": "reel page display",
+      "likes_page_display": "41.2K",
+      "likes_exact_embed_or_og": 31235,
+      "comments": 1343,
+      "views": null,
+      "views_display": null,
+      "pinned": false,
+      "pinned_main_grid": false,
+      "reels_grid_position": null,
+      "discovered_via": "Brave web search",
+      "cover_url": "https://scontent-sjc6-1.cdninstagram.com/v/t51.71878-15/564432973_819686890437073_5459992431214961682_n.jpg?stp=dst-jpg_e15_tt6&_nc_cat=101&_nc_map=urlgen_bucketless&ig_cache_key=Mzc0MzcyMzU3NTgyOTE1MTAzNw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNMSVBTLnhwaWRzLjY0MC5zZHIudmlkZW9fZGVmYXVsdF9jb3Zlcl9mcmFtZS5DMyJ9&_nc_ohc=2D7fOFCX7PMQ7kNvwFKIYCT&_nc_oc=AdryVUVk2kFW9AysNefwSSN8HqV0bcfOAGCTZzYvLGufsHxaVYP3YksSRrRAUaXUzoM&_nc_zt=23&_nc_ht=scontent-sjc6-1.cdninstagram.com&_nc_gid=O8h9v6myFzlhDI-y5ntDQw&_nc_ss=7b689&_nc_ct=RQosPBUIFQQlBAAAAA&oh=00_AQT5D1bEK5xYyr9nJdp40KEjxWiIlGw6eVLLOnnw-Vwdww&oe=6B08E2C4",
+      "cover_file": "covers/humoranimations0/DP0YMHSjT09.jpg",
+      "audio": "Original audio",
+      "audio_url": "https://www.instagram.com/reels/audio/1459440632025489/",
+      "credit_mentions": [],
+      "caption_mentions": [],
+      "collaborators": [],
+      "top_comments": [
+        {
+          "text": "😂😂😂😂😂😂🤦♀️",
+          "likes": 0
+        },
+        {
+          "text": "😂😂",
+          "likes": 0
+        },
+        {
+          "text": "😂😂😂😂😂😂😂",
+          "likes": 0
+        },
+        {
+          "text": "Sorry I'm not single 🫣😉🤭💕🌹❤️🫶🙏💪😆",
+          "likes": 0
+        },
+        {
+          "text": "😂😂😂😂😂😂",
+          "likes": 0
+        }
+      ],
+      "comments_visible_logged_out": 11,
+      "comments_mention_ai": false,
+      "ai_comments": [],
+      "notes": [
+        "Page/grid shows 41.2K likes but embed/og exact count is 31,235."
+      ]
+    },
+    {
+      "shortcode": "DIoasejubUm",
+      "url": "https://www.instagram.com/humoranimations0/reel/DIoasejubUm/",
+      "type": "reel",
+      "date": "2025-04-19T14:30:17Z",
+      "date_og": "April 19, 2025",
+      "caption": "Audio credits @therealveronika_ Calling in sick these days be like #corporatelife #worklife #manager #sick #trending #trendingreels #relatable #foryou #reels #instareels #viral #foryou #foryoupage❤️😍 #workplace",
+      "hashtags": [
+        "corporatelife",
+        "worklife",
+        "manager",
+        "sick",
+        "trending",
+        "trendingreels",
+        "relatable",
+        "foryou",
+        "reels",
+        "instareels",
+        "viral",
+        "foryou",
+        "foryoupage❤️😍",
+        "workplace"
+      ],
+      "likes": 106500,
+      "likes_source": "reel page display",
+      "likes_page_display": "106.5K",
+      "likes_exact_embed_or_og": 96519,
+      "comments": 1578,
+      "views": null,
+      "views_display": null,
+      "pinned": false,
+      "pinned_main_grid": false,
+      "reels_grid_position": null,
+      "discovered_via": "Brave web search",
+      "cover_url": "https://scontent-sjc6-1.cdninstagram.com/v/t51.75761-15/491443391_17905866489134426_3220640948181222390_n.jpg?stp=dst-jpg_e15_tt6&_nc_cat=107&_nc_map=urlgen_bucketless&ig_cache_key=MzYxNDI1NjEwNjY0MjcxNTk0Mg%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNMSVBTLnhwaWRzLjU0MC5zZHIudmlkZW9fZGVmYXVsdF9jb3Zlcl9mcmFtZS5DMyJ9&_nc_ohc=Da0Ew5_NShYQ7kNvwF4ICHc&_nc_oc=AdrwEqDvVmZzxwDo8hejzXhx6nX5RdZhh_AaLHFIAxF3gNxRalQ7BwbRi7Qx-fPvRjk&_nc_zt=23&_nc_ht=scontent-sjc6-1.cdninstagram.com&_nc_gid=jX4sKt-Qawk2bWfI6ZIvxQ&_nc_ss=7b689&_nc_ct=RQosPBUIFQQlBAAAAA&oh=00_AQSVx0OxaWyl7VCDn6oTfBF7bTYMK-v8vbNr0Qk_DjysbA&oe=6B08DD5F",
+      "cover_file": "covers/humoranimations0/DIoasejubUm.jpg",
+      "audio": "Original audio",
+      "audio_url": "https://www.instagram.com/reels/audio/1851008475743047/",
+      "credit_mentions": [
+        {
+          "label": "Audio credits",
+          "handles": [
+            "therealveronika_"
+          ]
+        }
+      ],
+      "caption_mentions": [
+        "therealveronika_"
+      ],
+      "collaborators": [],
+      "top_comments": [
+        {
+          "text": "😂",
+          "likes": 1
+        },
+        {
+          "text": "@annaza2013 @skyelii they LITERALLY nailed it! 💀",
+          "likes": 1
+        },
+        {
+          "text": "Veronica is a legend😂😂😂😂",
+          "likes": 0
+        },
+        {
+          "text": "😂😂😂😂😂😂",
+          "likes": 0
+        },
+        {
+          "text": "Don't just use your PTO and sick leave... DO NOT FEEL GUILTY ABOUT IT. The co-workers who get your workload while you're gone... just write them a handwritten THANK YOU note. 📝 They'll feel appreciated, and you can take days off with a grateful heart 💜",
+          "likes": 0
+        }
+      ],
+      "comments_visible_logged_out": 11,
+      "comments_mention_ai": false,
+      "ai_comments": [],
+      "notes": [
+        "Page/grid shows 106.5K likes but embed/og exact count is 96,519."
+      ]
+    },
+    {
+      "shortcode": "DImEPUfOB6h",
+      "url": "https://www.instagram.com/humoranimations0/reel/DImEPUfOB6h/",
+      "type": "reel",
+      "date": "2025-04-18T16:39:50Z",
+      "date_og": null,
+      "caption": "Audio credits @wilsonandtania How to get your girl to decide where to eat immediately #blockblast #trending #trendingreels #relatable #viral #foryou #couples #couplesofinstagram #married #marriedlife #relatable #instareels #funnyvideos #fypシ❤️💞❤️",
+      "hashtags": [
+        "blockblast",
+        "trending",
+        "trendingreels",
+        "relatable",
+        "viral",
+        "foryou",
+        "couples",
+        "couplesofinstagram",
+        "married",
+        "marriedlife",
+        "relatable",
+        "instareels",
+        "funnyvideos",
+        "fypシ❤️💞❤️"
+      ],
+      "likes": 19400,
+      "likes_source": "reel page display",
+      "likes_page_display": "19.4K",
+      "likes_exact_embed_or_og": 9396,
+      "comments": 303,
+      "views": null,
+      "views_display": null,
+      "pinned": false,
+      "pinned_main_grid": false,
+      "reels_grid_position": null,
+      "discovered_via": "Brave web search",
+      "cover_url": "https://scontent-sjc6-1.cdninstagram.com/v/t51.75761-15/491758055_17905769175134426_1991953380794436342_n.jpg?stp=dst-jpg_e15_tt6&_nc_cat=109&_nc_map=urlgen_bucketless&ig_cache_key=MzYxMzU5NDM5NTk4ODIwNTIxNw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNMSVBTLnhwaWRzLjU0MC5zZHIudmlkZW9fZGVmYXVsdF9jb3Zlcl9mcmFtZS5DMyJ9&_nc_ohc=oARV6yjxADsQ7kNvwFDLeqB&_nc_oc=AdoaooLiRkh7x_9pyDTMfA20oJ0mErKVREeV2tGp7wlFh5gejaREmhkTtohh5X_tBI0&_nc_zt=23&_nc_ht=scontent-sjc6-1.cdninstagram.com&_nc_gid=cG1zHBaT9EkKP7Rwohp3Qg&_nc_ss=7b689&_nc_ct=RQosPBUIFQQlBAAAAA&oh=00_AQToNkGK7gW5X6ynoeGXHW5oXzfZfhHoX8LhyROwNtwK3w&oe=6B08E496",
+      "cover_file": "covers/humoranimations0/DImEPUfOB6h.jpg",
+      "audio": "Original audio",
+      "audio_url": "https://www.instagram.com/reels/audio/997622499125388/",
+      "credit_mentions": [
+        {
+          "label": "Audio credits",
+          "handles": [
+            "wilsonandtania"
+          ]
+        }
+      ],
+      "caption_mentions": [
+        "wilsonandtania"
+      ],
+      "collaborators": [],
+      "top_comments": [
+        {
+          "text": "😂😂",
+          "likes": 0
+        },
+        {
+          "text": "Wait this whole effin time?! 😲",
+          "likes": 0
+        },
+        {
+          "text": "Slick on his part.",
+          "likes": 0
+        },
+        {
+          "text": "IQ unlock 🔓😮😂👏",
+          "likes": 0
+        },
+        {
+          "text": "That’s actually genius 😂😂😂",
+          "likes": 0
+        }
+      ],
+      "comments_visible_logged_out": 11,
+      "comments_mention_ai": false,
+      "ai_comments": [],
+      "notes": [
+        "Page/grid shows 19.4K likes but embed/og exact count is 9,396."
+      ]
+    },
+    {
+      "shortcode": "DIeNx5DuJj3",
+      "url": "https://www.instagram.com/humoranimations0/reel/DIeNx5DuJj3/",
+      "type": "reel",
+      "date": "2025-04-15T15:24:20Z",
+      "date_og": "April 15, 2025",
+      "caption": "When she is used to dating broke guys😀 #blockblast #dating #relationships #trending #trendingreels #relatable #viral #instareels",
+      "hashtags": [
+        "blockblast",
+        "dating",
+        "relationships",
+        "trending",
+        "trendingreels",
+        "relatable",
+        "viral",
+        "instareels"
+      ],
+      "likes": 252400,
+      "likes_source": "reel page display",
+      "likes_page_display": "252.4K",
+      "likes_exact_embed_or_og": 223519,
+      "comments": 2118,
+      "views": null,
+      "views_display": null,
+      "pinned": false,
+      "pinned_main_grid": false,
+      "reels_grid_position": null,
+      "discovered_via": "Brave web search",
+      "cover_url": "https://scontent-sjc6-1.cdninstagram.com/v/t51.75761-15/491444672_17905452285134426_7160639201502027522_n.jpg?stp=dst-jpg_e15_tt6&_nc_cat=110&_nc_map=urlgen_bucketless&ig_cache_key=MzYxMTM4NDU1NDMyMjQzNDI5NQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNMSVBTLnhwaWRzLjU0MC5zZHIudmlkZW9fZGVmYXVsdF9jb3Zlcl9mcmFtZS5DMyJ9&_nc_ohc=y9tz7n5-Z98Q7kNvwFnr8WC&_nc_oc=AdpNPm7vHikZmO92U3m9YTX5lowfLMmdgRfNPqZi-MWFjnXjTmRnI-7HHUf269IpHqQ&_nc_zt=23&_nc_ht=scontent-sjc6-1.cdninstagram.com&_nc_gid=V2b9tPlFM99A2PAEZQpMdQ&_nc_ss=7b689&_nc_ct=RQosPBUIFQQlBAAAAA&oh=00_AQTtvEeBHlDX4z0S3uRt8ykHG8LOCx7cXnDbCJMKSuJTdA&oe=6B08E297",
+      "cover_file": "covers/humoranimations0/DIeNx5DuJj3.jpg",
+      "audio": "Original audio",
+      "audio_url": "https://www.instagram.com/reels/audio/1033839398635569/",
+      "credit_mentions": [],
+      "caption_mentions": [],
+      "collaborators": [],
+      "top_comments": [
+        {
+          "text": "Nahhhh this crazy",
+          "likes": 0
+        },
+        {
+          "text": "😂😂😂",
+          "likes": 0
+        },
+        {
+          "text": "😂😂😂👏👏👏",
+          "likes": 0
+        },
+        {
+          "text": "😂😂😂",
+          "likes": 0
+        },
+        {
+          "text": "Unless you broke to why are you with a guy with no money 😂",
+          "likes": 0
+        }
+      ],
+      "comments_visible_logged_out": 12,
+      "comments_mention_ai": false,
+      "ai_comments": [],
+      "notes": [
+        "Page/grid shows 252.4K likes but embed/og exact count is 223,519."
+      ]
+    },
+    {
+      "shortcode": "DIdF06Wu6J0",
+      "url": "https://www.instagram.com/humoranimations0/reel/DIdF06Wu6J0/",
+      "type": "reel",
+      "date": "2025-04-15T04:57:25Z",
+      "date_og": "April 14, 2025",
+      "caption": "That one coworker who always comes through #workplace #coworker #trending #trendingreels #relatable #reels #instareels #fyp #manager #foryou #viral #notta #aitool #aitoolsyouneed",
+      "hashtags": [
+        "workplace",
+        "coworker",
+        "trending",
+        "trendingreels",
+        "relatable",
+        "reels",
+        "instareels",
+        "fyp",
+        "manager",
+        "foryou",
+        "viral",
+        "notta",
+        "aitool",
+        "aitoolsyouneed"
+      ],
+      "likes": 895,
+      "likes_source": "reel page display",
+      "likes_page_display": "895",
+      "likes_exact_embed_or_og": 780,
+      "comments": 5,
+      "views": null,
+      "views_display": null,
+      "pinned": false,
+      "pinned_main_grid": false,
+      "reels_grid_position": null,
+      "discovered_via": "Brave web search",
+      "cover_url": "https://scontent-sjc6-1.cdninstagram.com/v/t51.75761-15/491517121_17905401711134426_5153041356633064329_n.jpg?stp=dst-jpg_e15_tt6&_nc_cat=100&_nc_map=urlgen_bucketless&ig_cache_key=MzYxMTA2ODEwMjUyNDc3Mjk4MA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNMSVBTLnhwaWRzLjU0MC5zZHIudmlkZW9fZGVmYXVsdF9jb3Zlcl9mcmFtZS5DMyJ9&_nc_ohc=LU--L7MltB0Q7kNvwHfBNnV&_nc_oc=AdquErFeYalN44Mjf45pxchVMSmePbn6ehHR7dtRNl6Uboi7bEWqCUr8BzlT4cjqM1M&_nc_zt=23&_nc_ht=scontent-sjc6-1.cdninstagram.com&_nc_gid=U2SbEOtkvhjefC6wuNbzcg&_nc_ss=7b689&_nc_ct=RQosPBUIFQQlBAAAAA&oh=00_AQQ3u3LbI-BU7paJjoOJnmVf0hAgfRF4AltyYNg-ocA6gA&oe=6B08DFB0",
+      "cover_file": "covers/humoranimations0/DIdF06Wu6J0.jpg",
+      "audio": "Original audio",
+      "audio_url": "https://www.instagram.com/reels/audio/550846677639633/",
+      "credit_mentions": [],
+      "caption_mentions": [],
+      "collaborators": [],
+      "top_comments": [
+        {
+          "text": "Man I was hoping it was drugs.",
+          "likes": 2
+        },
+        {
+          "text": "AI is for people who lack real intelligence",
+          "likes": 1
+        },
+        {
+          "text": "🔥",
+          "likes": 0
+        }
+      ],
+      "comments_visible_logged_out": 3,
+      "comments_mention_ai": true,
+      "ai_comments": [
+        "AI is for people who lack real intelligence"
+      ],
+      "notes": [
+        "Page/grid shows 895 likes but embed/og exact count is 780."
+      ]
+    },
+    {
+      "shortcode": "DIMitiZOeOC",
+      "url": "https://www.instagram.com/humoranimations0/reel/DIMitiZOeOC/",
+      "type": "reel",
+      "date": "2025-04-08T18:41:29Z",
+      "date_og": "April 8, 2025",
+      "caption": "Audio credits @_leproo When you try to make a nonchalant guy jealous #blockblast #dating #relationships #fyp #girlfriend #boyfriend #humor #viral #trending #trendingreels #relatable #instareels #foryou #funny #explore",
+      "hashtags": [
+        "blockblast",
+        "dating",
+        "relationships",
+        "fyp",
+        "girlfriend",
+        "boyfriend",
+        "humor",
+        "viral",
+        "trending",
+        "trendingreels",
+        "relatable",
+        "instareels",
+        "foryou",
+        "funny",
+        "explore"
+      ],
+      "likes": 7000,
+      "likes_source": "reel page display",
+      "likes_page_display": "7K",
+      "likes_exact_embed_or_og": 5847,
+      "comments": 145,
+      "views": null,
+      "views_display": null,
+      "pinned": false,
+      "pinned_main_grid": false,
+      "reels_grid_position": null,
+      "discovered_via": "Brave web search",
+      "cover_url": "https://scontent-sjc3-1.cdninstagram.com/v/t51.71878-15/502810642_538547485857752_4400646181493820251_n.jpg?stp=dst-jpg_e15_tt6&_nc_cat=103&_nc_map=urlgen_bucketless&ig_cache_key=MzYwNjQxMDA2NDUwNTIwMTUzODUzODU0NzQ3OTE5MTA4Ng%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNMSVBTLnhwaWRzLjY0MC5zZHIudmlkZW9fZGVmYXVsdF9jb3Zlcl9mcmFtZS5DMyJ9&_nc_ohc=-ok3JOH6TW0Q7kNvwEQv0fe&_nc_oc=Adp1kUzCly9k1kuAb0bCpYyjnZ6xTdhGPG3HZBF6v9jwc1Huv0Kcn7j3TUWwxeRz8_M&_nc_zt=23&_nc_ht=scontent-sjc3-1.cdninstagram.com&_nc_gid=oAXBRA0z5I9hLSka7LKdzw&_nc_ss=7b689&_nc_ct=RQosPBUIFQQlBAAAAA&oh=00_AQSRG5ndfrCOLD90vqJnu9pEqy0KwpAAJxYyb6QT7ek7hg&oe=6B08C4BB",
+      "cover_file": "covers/humoranimations0/DIMitiZOeOC.jpg",
+      "audio": "Original audio",
+      "audio_url": "https://www.instagram.com/reels/audio/1641581783388618/",
+      "credit_mentions": [
+        {
+          "label": "Audio credits",
+          "handles": [
+            "_leproo"
+          ]
+        }
+      ],
+      "caption_mentions": [
+        "_leproo"
+      ],
+      "collaborators": [],
+      "top_comments": [
+        {
+          "text": "😂😂",
+          "likes": 0
+        },
+        {
+          "text": "😂😂😂",
+          "likes": 0
+        },
+        {
+          "text": "Man just kick that red flag out",
+          "likes": 0
+        },
+        {
+          "text": "Yeah, I’m broke… there’s nothing I can do about that. 😂😭😂😭😂😭",
+          "likes": 0
+        },
+        {
+          "text": "😂like who cares",
+          "likes": 0
+        }
+      ],
+      "comments_visible_logged_out": 10,
+      "comments_mention_ai": false,
+      "ai_comments": [],
+      "notes": [
+        "Page/grid shows 7K likes but embed/og exact count is 5,847."
+      ]
+    },
+    {
+      "shortcode": "DIKAF0YObqw",
+      "url": "https://www.instagram.com/humoranimations0/reel/DIKAF0YObqw/",
+      "type": "reel",
+      "date": "2025-04-07T19:01:33Z",
+      "date_og": "April 7, 2025",
+      "caption": "When your boyfriend tells you everything😀 #blockblast #trending #trendingreels #relatable #viral #foryou #reels #instareels #funny #fyp #dating #relationships #husbandandwife #couplesofinstagram",
+      "hashtags": [
+        "blockblast",
+        "trending",
+        "trendingreels",
+        "relatable",
+        "viral",
+        "foryou",
+        "reels",
+        "instareels",
+        "funny",
+        "fyp",
+        "dating",
+        "relationships",
+        "husbandandwife",
+        "couplesofinstagram"
+      ],
+      "likes": 266100,
+      "likes_source": "reel page display",
+      "likes_page_display": "266.1K",
+      "likes_exact_embed_or_og": 256085,
+      "comments": 3857,
+      "views": null,
+      "views_display": null,
+      "pinned": false,
+      "pinned_main_grid": false,
+      "reels_grid_position": null,
+      "discovered_via": "Brave web search",
+      "cover_url": "https://scontent-sjc3-1.cdninstagram.com/v/t51.71878-15/503028706_1092860876079837_337083245940432628_n.jpg?stp=dst-jpg_e15_tt6&_nc_cat=106&_nc_map=urlgen_bucketless&ig_cache_key=MzYwNTY5NDg1MTUwMTg5ODQxNjEwOTI4NjA4NjYwNzk4Mzg%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNMSVBTLnhwaWRzLjY0MC5zZHIudmlkZW9fZGVmYXVsdF9jb3Zlcl9mcmFtZS5DMyJ9&_nc_ohc=ab3iTc8-HQAQ7kNvwGZNf3R&_nc_oc=AdoFrHtfPTL3xJzH4vEdUx52qn9Mx99YJecvoEqPIdzjI66zDlrv8c1BI46608AupRI&_nc_zt=23&_nc_ht=scontent-sjc3-1.cdninstagram.com&_nc_gid=51VOGLfvnoke9Epw00lgVg&_nc_ss=7b689&_nc_ct=RQosPBUIFQQlBAAAAA&oh=00_AQSLIT-WSAkuoqpRyvxx6WnDmtykL3yrvIe2-5KhUTnXoA&oe=6B08C930",
+      "cover_file": "covers/humoranimations0/DIKAF0YObqw.jpg",
+      "audio": "Original audio",
+      "audio_url": "https://www.instagram.com/reels/audio/1178562813762305/",
+      "credit_mentions": [],
+      "caption_mentions": [],
+      "collaborators": [],
+      "top_comments": [
+        {
+          "text": "Best friend behavior 😂😂❤️❤️",
+          "likes": 1
+        },
+        {
+          "text": "😂😂😂😂😂😂",
+          "likes": 0
+        },
+        {
+          "text": "😂",
+          "likes": 0
+        },
+        {
+          "text": "😂😂😂😂😂😂😂",
+          "likes": 0
+        },
+        {
+          "text": "😂😂😂😂",
+          "likes": 0
+        }
+      ],
+      "comments_visible_logged_out": 10,
+      "comments_mention_ai": false,
+      "ai_comments": [],
+      "notes": [
+        "Page/grid shows 266.1K likes but embed/og exact count is 256,085."
+      ]
+    },
+    {
+      "shortcode": "C_9wBjju0MZ",
+      "url": "https://www.instagram.com/humoranimations0/reel/C_9wBjju0MZ/",
+      "type": "reel",
+      "date": "2024-12-03T23:30:29Z",
+      "date_og": "September 15, 2024",
+      "caption": "Audio credits @kostikharju @emmakihlander Married life be like😀 #married #marriedlife #couples #wifeandhusband #wife #trending #trendingreels #instareels #reels #viral #relatable",
+      "hashtags": [
+        "married",
+        "marriedlife",
+        "couples",
+        "wifeandhusband",
+        "wife",
+        "trending",
+        "trendingreels",
+        "instareels",
+        "reels",
+        "viral",
+        "relatable"
+      ],
+      "likes": 172300,
+      "likes_source": "reel page display",
+      "likes_page_display": "172.3K",
+      "likes_exact_embed_or_og": null,
+      "comments": 2919,
+      "views": 4300000,
+      "views_display": "4.3M",
+      "pinned": true,
+      "pinned_main_grid": true,
+      "reels_grid_position": 1,
+      "discovered_via": "reels tab grid (first 12 tiles)",
+      "cover_url": "https://scontent-sjc6-1.cdninstagram.com/v/t51.71878-15/504448167_1495925978047030_2991661522201477721_n.jpg?stp=dst-jpg_e35_s640x640_tt6&_nc_cat=106&_nc_map=urlgen_bucketless&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=6H22LvvQuT8Q7kNvwHFMtwx&_nc_oc=Ado-0lsnW_oSjJUunzEN-UIF2N0zzWH9Wfyp48GS_J1_dxaOJ2lHVrkz6H6B39F_jYU&_nc_zt=23&_nc_ht=scontent-sjc6-1.cdninstagram.com&_nc_gid=Lnfu3ejiisR3mth4U_AoJA&_nc_ss=7b689&_nc_ct=RQosPBUKFQQAAAA&oh=00_AQTRtO2hqTsbxZDgRZot48IJHkdiwXlPrKRNbmnfMWqJ0A&oe=6B08D6B7",
+      "cover_file": "covers/humoranimations0/C_9wBjju0MZ.jpg",
+      "audio": "Original audio",
+      "audio_url": "https://www.instagram.com/reels/audio/440838851711980/",
+      "credit_mentions": [
+        {
+          "label": "Audio credits",
+          "handles": [
+            "kostikharju",
+            "emmakihlander"
+          ]
+        }
+      ],
+      "caption_mentions": [
+        "emmakihlander",
+        "kostikharju"
+      ],
+      "collaborators": [],
+      "top_comments": [
+        {
+          "text": "Oh wow!!!🤣🤣🤣 So this is how you trick me @cctvss",
+          "likes": 6,
+          "verified_commenter": true
+        },
+        {
+          "text": "Best ..😂👏👏",
+          "likes": 4
+        },
+        {
+          "text": "Nice try, bro. Im not falling for that trap! 😏",
+          "likes": 3
+        },
+        {
+          "text": "😂😂😂😂",
+          "likes": 3
+        },
+        {
+          "text": "😂😂😂",
+          "likes": 3
+        }
+      ],
+      "comments_visible_logged_out": 12,
+      "comments_mention_ai": false,
+      "ai_comments": [],
+      "notes": [
+        "Caption marked \"Edited\"."
+      ]
+    },
+    {
+      "shortcode": "DCZLZurOhMc",
+      "url": "https://www.instagram.com/humoranimations0/reel/DCZLZurOhMc/",
+      "type": "reel",
+      "date": "2024-11-15T13:20:09Z",
+      "date_og": null,
+      "caption": "When you finally meet your sweet online boyfriend in person #dating #relationships #boyfriend #girlfriend #relatable #fyp #fypシ #trending #trendingreels #foryou #viral #reels #instareels #lovestory",
+      "hashtags": [
+        "dating",
+        "relationships",
+        "boyfriend",
+        "girlfriend",
+        "relatable",
+        "fyp",
+        "fypシ",
+        "trending",
+        "trendingreels",
+        "foryou",
+        "viral",
+        "reels",
+        "instareels",
+        "lovestory"
+      ],
+      "likes": 5700,
+      "likes_source": "reel page display",
+      "likes_page_display": "5.7K",
+      "likes_exact_embed_or_og": 4185,
+      "comments": 113,
+      "views": null,
+      "views_display": null,
+      "pinned": false,
+      "pinned_main_grid": false,
+      "reels_grid_position": null,
+      "discovered_via": "archive.org URL index",
+      "cover_url": "https://scontent-sjc6-1.cdninstagram.com/v/t51.71878-15/466980493_914046113610329_1577089365365259206_n.jpg?stp=dst-jpg_e15_tt6&_nc_cat=103&_nc_map=urlgen_bucketless&ig_cache_key=MzUwMTg4MDMzMTg3MzE2MjAxMg%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNMSVBTLnhwaWRzLjY0MC5zZHIudmlkZW9fZGVmYXVsdF9jb3Zlcl9mcmFtZS5DMyJ9&_nc_ohc=IW7cCIgcpTcQ7kNvwFYTCyy&_nc_oc=AdqOxkBs556LttiAYs8A447ul_2mQPYBL-ZxqFFiTXGZvEGGVrGQeVZDAs7xFCVk3fA&_nc_zt=23&_nc_ht=scontent-sjc6-1.cdninstagram.com&_nc_gid=W1184gQUgkIIu0gwwWyDKQ&_nc_ss=7b689&_nc_ct=RQosPBUIFQQlBAAAAA&oh=00_AQT8yP8KrUWWdUdCL4i_pxug5Hxta-zqEcIHHGskvfkIcQ&oe=6B08F3BB",
+      "cover_file": "covers/humoranimations0/DCZLZurOhMc.jpg",
+      "audio": "Original audio",
+      "audio_url": "https://www.instagram.com/reels/audio/1113915626970875/",
+      "credit_mentions": [],
+      "caption_mentions": [],
+      "collaborators": [],
+      "top_comments": [
+        {
+          "text": "And that's what happens when you finally meet your online love in person that didn't go well at all. He's the kind of guy that would invite his ex-girlfriends to the wedding or work wife to the wedding messy. Or to a funeral",
+          "likes": 0
+        },
+        {
+          "text": "My boyfriend is a chronic interrupter",
+          "likes": 0
+        },
+        {
+          "text": "Am I the only one that agrees with him that she will not let him finish a sentence, and then cries when he asked her to stop",
+          "likes": 0
+        },
+        {
+          "text": "True",
+          "likes": 0
+        },
+        {
+          "text": "..dodged a bullet!",
+          "likes": 0
+        }
+      ],
+      "comments_visible_logged_out": 12,
+      "comments_mention_ai": true,
+      "ai_comments": [
+        "This is obviously AI. You can tell the lips don't match the speak. Wake up people."
+      ],
+      "notes": [
+        "Page/grid shows 5.7K likes but embed/og exact count is 4,185."
+      ]
+    }
+  ],
+  "posts_not_reels": [
+    {
+      "shortcode": "DCdmB6autNu",
+      "url": "https://www.instagram.com/humoranimations0/p/DCdmB6autNu/",
+      "type": "post",
+      "fetched": false,
+      "note": "Listed in archive.org URL index (Nov 2024); not fetched."
+    },
+    {
+      "shortcode": "DCgL_xluft8",
+      "url": "https://www.instagram.com/humoranimations0/p/DCgL_xluft8/",
+      "type": "post",
+      "fetched": false,
+      "note": "Listed in archive.org URL index (Nov 2024); not fetched."
+    },
+    {
+      "shortcode": "DMIX25GuC9-",
+      "url": "https://www.instagram.com/humoranimations0/p/DMIX25GuC9-/",
+      "type": "photo",
+      "fetched": false,
+      "note": "Brave search: \"Photo by Humor Animations\"; not fetched."
+    }
+  ],
+  "excluded_candidates": [
+    {
+      "shortcode": "DFCOmrHsw3P",
+      "reason": "Owned by @rattlersunited (caption \"Animation by @humoranimations0\"); a client/repost, not on this account."
+    },
+    {
+      "shortcode": "C5gp7lLt1Gc",
+      "reason": "Brave result \"Married life be like Credit: humoranimations0\" - looks like a repost by another account; not fetched."
+    },
+    {
+      "shortcode": "C9-TMk6uYbl C9GFrTKuG1h C9u1dUFu3Pf DCa18byNEDE DCb-Ta3ucpM DCeXCz3uz79 DCfbHLoOp8l DCXNTrNyvRJ",
+      "reason": "Older 2024 reels listed in archive.org index; not fetched (enough reels already)."
+    }
+  ]
+}

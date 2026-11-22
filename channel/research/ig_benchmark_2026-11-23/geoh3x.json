@@ -1,0 +1,1306 @@
+{
+  "handle": "geoh3x",
+  "collected_at": "2026-11-22",
+  "method": "TinyFish fetch_content, logged out. Reel pages (/<handle>/reel/<code>/), embed pages (/p/<code>/embed/) for covers and exact like counts, reels/profile grid for views. Discovery beyond the 12-tile grid via web search and the archive.org URL index.",
+  "profile": {
+    "name": "Creature",
+    "followers": "102K",
+    "following": 543,
+    "posts": 90,
+    "bio": "Just a dude making 3D animations (Makeship Salem plush petition + 2 more links)",
+    "source": "main profile grid (12 posts) + embed pages, logged out 2026-11-22; reels tab is login_required"
+  },
+  "field_notes": {
+    "date": "UTC timestamp from the page (published_date). date_og is the date in the og:description (US time), so it can be one day earlier.",
+    "likes": "Best available count. likes_page_display is what the page/grid shows; likes_exact_embed_or_og is the exact count from the embed page or og:description. For some humoranimations0 reels from 2025 the page shows noticeably more than the exact embed count (see notes).",
+    "views": "Only available from the reels grid tiles (first 12 reels). null elsewhere.",
+    "top_comments": "Up to 5 most-liked of the ~12 comments Instagram shows to logged-out viewers (not the global top comments). GIF/sticker-only comments skipped. No usernames.",
+    "comments_mention_ai": "True if any visible comment mentions AI (AI/ai/인공지능/ChatGPT...). ai_comments lists them; check context, some are about AI in the story rather than the animation.",
+    "cover_url": "Signed CDN URL that was downloaded; these expire after a few days. og:image from the reel page is cut at 500 characters by the fetcher and cannot be used."
+  },
+  "reel_count": 18,
+  "date_range": [
+    "2023-03-25",
+    "2026-10-02"
+  ],
+  "reels": [
+    {
+      "shortcode": "DeAF_cWx5l7",
+      "url": "https://www.instagram.com/geoh3x/reel/DeAF_cWx5l7/",
+      "type": "reel",
+      "date": "2026-10-02T19:14:38Z",
+      "date_og": "October 2, 2026",
+      "caption": "Something Is Coming…….\n.\nWant a Salem plush of your own? Go to the link in my bio to pre-order and petition to get it made!\n.\nShout out to @nectartplasm for the plush concept\n.\nThanks to @makeship for making this possible:)\n.\nVoiced by Voided Caster\n.\n.\n.\n#lowpoly #3d #3danimation #liminalspace #videogames",
+      "hashtags": [
+        "lowpoly",
+        "3d",
+        "3danimation",
+        "liminalspace",
+        "videogames"
+      ],
+      "likes": 33800,
+      "likes_source": "reel page display",
+      "likes_page_display": "33.8K",
+      "likes_exact_embed_or_og": null,
+      "comments": 127,
+      "views": null,
+      "views_display": null,
+      "pinned": false,
+      "pinned_main_grid": false,
+      "reels_grid_position": null,
+      "discovered_via": "main profile grid (12 posts)",
+      "cover_url": "https://scontent-sjc6-1.cdninstagram.com/v/t51.82787-15/833889621_18122219009514270_8658736066187583903_n.jpg?stp=dst-jpg_e35_s640x640_tt6&_nc_cat=101&_nc_map=urlgen_bucketless&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=8gKqgH0V9PcQ7kNvwGMoBac&_nc_oc=AdqrogmxGLgaHZ3UkxhOGYrYnc4o1a1vseKq-h1DQFphSwDgnJQ0qutlzl_0fkjdUm4&_nc_zt=23&_nc_ht=scontent-sjc6-1.cdninstagram.com&_nc_gid=pn3xV6SJKiuW8t48xI_1qQ&_nc_ss=7b689&_nc_ct=RQosPBUKFQQAAAA&oh=00_AQS4cBtqimxWTOJ7tvKuoUfqalzrc1uoESwCvvFtWt19eg&oe=6B08CAF9",
+      "cover_file": "covers/geoh3x/DeAF_cWx5l7.jpg",
+      "audio": "Original audio",
+      "audio_url": "https://www.instagram.com/reels/audio/28595631313408935/",
+      "credit_mentions": [
+        {
+          "label": "Shout out to",
+          "handles": [
+            "nectartplasm"
+          ]
+        }
+      ],
+      "caption_mentions": [
+        "makeship",
+        "nectartplasm"
+      ],
+      "collaborators": [],
+      "top_comments": [
+        {
+          "text": "ts is ai aint it",
+          "likes": 0
+        },
+        {
+          "text": "Would",
+          "likes": 0
+        },
+        {
+          "text": "Song name",
+          "likes": 0
+        },
+        {
+          "text": "Where are her pants?",
+          "likes": 0
+        },
+        {
+          "text": "Are you making theese in blender",
+          "likes": 0
+        }
+      ],
+      "comments_visible_logged_out": 11,
+      "comments_mention_ai": true,
+      "ai_comments": [
+        "ts is ai aint it"
+      ],
+      "notes": [
+        "Caption marked \"Edited\"."
+      ]
+    },
+    {
+      "shortcode": "DcwRu4IRzea",
+      "url": "https://www.instagram.com/geoh3x/reel/DcwRu4IRzea/",
+      "type": "reel",
+      "date": "2026-09-01",
+      "date_og": "September 1, 2026",
+      "caption": "Dream of Rigor Mørtis - Animated Short Film. Please check out my YouTube for the full animation!! Link in bio!!\n.\n.\n.\n.\n.\n#lowpoly #3d #3danimation #liminalspace #goth",
+      "hashtags": [
+        "lowpoly",
+        "3d",
+        "3danimation",
+        "liminalspace",
+        "goth"
+      ],
+      "likes": 19000,
+      "likes_source": "og:description",
+      "likes_page_display": null,
+      "likes_exact_embed_or_og": null,
+      "comments": 263,
+      "views": null,
+      "views_display": null,
+      "pinned": false,
+      "pinned_main_grid": false,
+      "reels_grid_position": null,
+      "discovered_via": "Yahoo web search",
+      "cover_url": null,
+      "cover_file": null,
+      "audio": null,
+      "audio_url": null,
+      "credit_mentions": [],
+      "caption_mentions": [],
+      "collaborators": [],
+      "top_comments": [],
+      "comments_visible_logged_out": 0,
+      "comments_mention_ai": false,
+      "ai_comments": [],
+      "notes": [
+        "Age-restricted for logged-out viewers: page showed only a login wall, so no comments, audio or cover. Not in the logged-out profile grid. Caption/likes/comments from og metadata."
+      ]
+    },
+    {
+      "shortcode": "DZNrWNFRYiB",
+      "url": "https://www.instagram.com/geoh3x/reel/DZNrWNFRYiB/",
+      "type": "reel",
+      "date": "2026-06-05T18:14:20Z",
+      "date_og": "June 5, 2026",
+      "caption": "Morning Cup of Spite…  if you wanna check out the animation on YouTube, Link in bio!!\n.\n.\n.\n.\n.\n#gothgirls #3d #3danimation #liminalspace #videogames",
+      "hashtags": [
+        "gothgirls",
+        "3d",
+        "3danimation",
+        "liminalspace",
+        "videogames"
+      ],
+      "likes": 43000,
+      "likes_source": "reel page display",
+      "likes_page_display": "43K",
+      "likes_exact_embed_or_og": null,
+      "comments": 192,
+      "views": null,
+      "views_display": null,
+      "pinned": false,
+      "pinned_main_grid": false,
+      "reels_grid_position": null,
+      "discovered_via": "main profile grid (12 posts)",
+      "cover_url": "https://scontent.cdninstagram.com/v/t51.71878-15/717006498_1648198286471762_1263935322822159276_n.jpg?stp=dst-jpg_e35_s640x640_tt6&_nc_cat=101&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=m776GtAIw6wQ7kNvwHm1Y7a&_nc_oc=Ador-3xMRNaVf5R-f7EMEeJlQ-fxWPYrt_Mn9flB0HA1slKLwKouxqhG24DXdzZ5Q1g&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&_nc_gid=CsLtJbGzXxIcVJo32NGcVw&_nc_ss=7ba8c&_nc_ct=RQosPBUKFQgAAAA&oh=00_AQTpLmLJVYd3U7Fk1e8ZYGv2q4Fp393JrFmXubJZK3afrg&oe=6B08CE0B",
+      "cover_file": "covers/geoh3x/DZNrWNFRYiB.jpg",
+      "audio": "Original audio",
+      "audio_url": "https://www.instagram.com/reels/audio/26939811822357474/",
+      "credit_mentions": [],
+      "caption_mentions": [],
+      "collaborators": [],
+      "top_comments": [
+        {
+          "text": "Apagar vídeo da minha prima Ludmilla",
+          "likes": 2
+        },
+        {
+          "text": "i-is this salad fingers audio?",
+          "likes": 0
+        },
+        {
+          "text": "\"I like rusty spoons... The feeling of rust is just... ORGASMIC, ahahaha...\"",
+          "likes": 0
+        },
+        {
+          "text": "BGM name?",
+          "likes": 0
+        },
+        {
+          "text": "At least it didn't give you the salad finger.",
+          "likes": 0
+        }
+      ],
+      "comments_visible_logged_out": 12,
+      "comments_mention_ai": false,
+      "ai_comments": []
+    },
+    {
+      "shortcode": "DXzlK9Ux2qC",
+      "url": "https://www.instagram.com/geoh3x/reel/DXzlK9Ux2qC/",
+      "type": "reel",
+      "date": "2026-05-01T18:27:08Z",
+      "date_og": "May 1, 2026",
+      "caption": "Hey you, Come here! Please check out my YouTube for the full animation!! Link in bio!!\n.\n.\n.\n.\n.\n#lowpoly #3d #3danimation #liminalspace #videogames",
+      "hashtags": [
+        "lowpoly",
+        "3d",
+        "3danimation",
+        "liminalspace",
+        "videogames"
+      ],
+      "likes": 53100,
+      "likes_source": "reel page display",
+      "likes_page_display": "53.1K",
+      "likes_exact_embed_or_og": null,
+      "comments": 332,
+      "views": null,
+      "views_display": null,
+      "pinned": false,
+      "pinned_main_grid": false,
+      "reels_grid_position": null,
+      "discovered_via": "main profile grid (12 posts)",
+      "cover_url": "https://scontent-dfw5-2.cdninstagram.com/v/t51.71878-15/684153424_1263679255919976_878743009065854444_n.jpg?stp=dst-jpg_e35_s640x640_tt6&_nc_cat=110&_nc_map=urlgen_bucketless&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=7TXMgoVfmFEQ7kNvwHE6TXy&_nc_oc=AdqiDeimPijBljZi0ASRXudzNOhy_v4I7kBdn3G1pBk818RwB4caOwrGQBuBvtxnf_4&_nc_zt=23&_nc_ht=scontent-dfw5-2.cdninstagram.com&_nc_gid=q4ZgPsuVVbdI8afA07eFEw&_nc_ss=7ba8c&_nc_ct=RQosPBUKFQgAAAA&oh=00_AQTeq5o6KJ7DI6eFdWqUfX7hOo8Pjxozrq6kpCgSmx6F_w&oe=6B08C4B0",
+      "cover_file": "covers/geoh3x/DXzlK9Ux2qC.jpg",
+      "audio": "Original audio",
+      "audio_url": "https://www.instagram.com/reels/audio/35902829695974711/",
+      "credit_mentions": [],
+      "caption_mentions": [],
+      "collaborators": [],
+      "top_comments": [
+        {
+          "text": "po up drank headshot drank sit down drank stand up drank pass out drank wake up drank faded faded",
+          "likes": 2
+        },
+        {
+          "text": "i wanna make more bad decisions",
+          "likes": 0
+        },
+        {
+          "text": "Me be like. But im alone and it's almost 2 am in the morning on the side of the road",
+          "likes": 0
+        },
+        {
+          "text": "\"That was 10,000 hits of acid you just took\"",
+          "likes": 0
+        },
+        {
+          "text": "Im glad im not single, girls like that have destroyed me in the past",
+          "likes": 0
+        }
+      ],
+      "comments_visible_logged_out": 12,
+      "comments_mention_ai": false,
+      "ai_comments": []
+    },
+    {
+      "shortcode": "DS3HeAQEX7P",
+      "url": "https://www.instagram.com/geoh3x/reel/DS3HeAQEX7P/",
+      "type": "reel",
+      "date": "2025-12-29T20:49:18Z",
+      "date_og": "December 29, 2025",
+      "caption": "Clown Job, Please check out my YouTube for the full video!! Link in bio!!\n.\n.\n.\n.\n.\n#lowpoly #goth #clown #liminalspace #videogames squid clowngirl",
+      "hashtags": [
+        "lowpoly",
+        "goth",
+        "clown",
+        "liminalspace",
+        "videogames"
+      ],
+      "likes": 55600,
+      "likes_source": "reel page display",
+      "likes_page_display": "55.6K",
+      "likes_exact_embed_or_og": null,
+      "comments": 219,
+      "views": null,
+      "views_display": null,
+      "pinned": false,
+      "pinned_main_grid": false,
+      "reels_grid_position": null,
+      "discovered_via": "main profile grid (12 posts)",
+      "cover_url": "https://scontent-dfw6-2.cdninstagram.com/v/t51.71878-15/587796373_1554597732426517_6901104846003348898_n.jpg?stp=dst-jpg_e35_s640x640_tt6&_nc_cat=103&_nc_map=urlgen_bucketless&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=0CPR17LF4S8Q7kNvwG6eTZ5&_nc_oc=Adp5PhhfbZ5ySTs3tF3zav2BU8uftSJRhS3AFwpX0YgK2M62uqbnOznquK_3ctKMI8E&_nc_zt=23&_nc_ht=scontent-dfw6-2.cdninstagram.com&_nc_gid=lAfylTnCJTafzegaSbdegg&_nc_ss=7ba8c&_nc_ct=RQosPBUKFQQAAAA&oh=00_AQSXYaD4ZJKuAmrR2MS0RnJl_Rhml4n-cUz36_8VuORP3g&oe=6B08DADD",
+      "cover_file": "covers/geoh3x/DS3HeAQEX7P.jpg",
+      "audio": "Original audio",
+      "audio_url": "https://www.instagram.com/reels/audio/33132512259726623/",
+      "credit_mentions": [],
+      "caption_mentions": [],
+      "collaborators": [],
+      "top_comments": [
+        {
+          "text": "🍻",
+          "likes": 0
+        },
+        {
+          "text": "Achei a animação uma graça tio 🖤 Se manja muito dos low poly",
+          "likes": 0
+        },
+        {
+          "text": "Real funny business here",
+          "likes": 0
+        },
+        {
+          "text": "Her date is hot whoa",
+          "likes": 0
+        },
+        {
+          "text": "MILK OUTSIDE A BAG OF MILK OUTSIDE A BAG OF MILK AMBIENCE???",
+          "likes": 0
+        }
+      ],
+      "comments_visible_logged_out": 12,
+      "comments_mention_ai": false,
+      "ai_comments": []
+    },
+    {
+      "shortcode": "DOodVcZEfki",
+      "url": "https://www.instagram.com/geoh3x/reel/DOodVcZEfki/",
+      "type": "reel",
+      "date": "2025-09-15T18:02:06Z",
+      "date_og": "September 15, 2025",
+      "caption": "Does Paper Cut Deep?, Please check out my YouTube for the full video!! Link in bio!!\n.\n.\n.\n.\n.\n#lowpolly #goth #gothgirl #liminalspace #videogames #paper #computer",
+      "hashtags": [
+        "lowpolly",
+        "goth",
+        "gothgirl",
+        "liminalspace",
+        "videogames",
+        "paper",
+        "computer"
+      ],
+      "likes": 73100,
+      "likes_source": "reel page display",
+      "likes_page_display": "73.1K",
+      "likes_exact_embed_or_og": null,
+      "comments": 184,
+      "views": null,
+      "views_display": null,
+      "pinned": false,
+      "pinned_main_grid": false,
+      "reels_grid_position": null,
+      "discovered_via": "main profile grid (12 posts)",
+      "cover_url": "https://scontent-sjc6-1.cdninstagram.com/v/t51.71878-15/548626632_1335743804611167_475683840977740078_n.jpg?stp=dst-jpg_e35_s640x640_tt6&_nc_cat=107&_nc_map=urlgen_bucketless&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=1q5RZyJsVVgQ7kNvwERN_a7&_nc_oc=AdrRxGoxwbxcrelLjNG3OFVIC7oqmk8TDI3p9Rlv4pPRdbtCAhJqxlp8WKIGmSLG-08&_nc_zt=23&_nc_ht=scontent-sjc6-1.cdninstagram.com&_nc_gid=cZupnDV3dmrbNzYzqFMEVw&_nc_ss=7b689&_nc_ct=RQosPBUKFQgAAAA&oh=00_AQSC6xN0Ka7u2vVPM20y3xViACJsJkaPh5Ez3opNTnDGtg&oe=6B08E704",
+      "cover_file": "covers/geoh3x/DOodVcZEfki.jpg",
+      "audio": "Original audio",
+      "audio_url": "https://www.instagram.com/reels/audio/1506412234041198/",
+      "credit_mentions": [],
+      "caption_mentions": [],
+      "collaborators": [],
+      "top_comments": [
+        {
+          "text": "she is just too cute.",
+          "likes": 21
+        },
+        {
+          "text": "MY GOD I HAD HEADPHONES ON I GOT SPOOKED 😭",
+          "likes": 19
+        },
+        {
+          "text": "This is so good",
+          "likes": 4
+        },
+        {
+          "text": "Yop",
+          "likes": 2
+        },
+        {
+          "text": "I thought the knock was real..",
+          "likes": 2
+        }
+      ],
+      "comments_visible_logged_out": 12,
+      "comments_mention_ai": false,
+      "ai_comments": []
+    },
+    {
+      "shortcode": "DMYYZbXvzCP",
+      "url": "https://www.instagram.com/geoh3x/reel/DMYYZbXvzCP/",
+      "type": "reel",
+      "date": "2025-07-21T19:11:30Z",
+      "date_og": "July 21, 2025",
+      "caption": "Fish channel, Please check out my YouTube for the full video!! Link in bio!!\n.\n.\n.\n.\n.\n#lowpolly #goth #gothgirl #liminalspace #videogames #squid #fish",
+      "hashtags": [
+        "lowpolly",
+        "goth",
+        "gothgirl",
+        "liminalspace",
+        "videogames",
+        "squid",
+        "fish"
+      ],
+      "likes": 205500,
+      "likes_source": "reel page display",
+      "likes_page_display": "205.5K",
+      "likes_exact_embed_or_og": null,
+      "comments": 949,
+      "views": null,
+      "views_display": null,
+      "pinned": false,
+      "pinned_main_grid": false,
+      "reels_grid_position": null,
+      "discovered_via": "main profile grid (12 posts)",
+      "cover_url": "https://scontent-xxc1-1.cdninstagram.com/v/t51.71878-15/519616609_740221032127650_2635365675367896653_n.jpg?stp=dst-jpg_e35_s640x640_tt6&_nc_cat=107&_nc_map=urlgen_bucketless&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=mOso-PzsJiQQ7kNvwF0pFVe&_nc_oc=AdojU07dDk-VDxREPECrmAfxnZ4U1NsbWstUcNGVmByjHKlBETfq9LazGTFLpAFeGnU&_nc_zt=23&_nc_ht=scontent-xxc1-1.cdninstagram.com&_nc_gid=bJzWAWvueKGHowHElwTBtg&_nc_ss=7ba8c&_nc_ct=RQosPBUKFQgAAAA&oh=00_AQS_mFy1QLyfmbhbo7ih0j-P2tyE0iIyq47sUIUg8D6G7A&oe=6B08EA34",
+      "cover_file": "covers/geoh3x/DMYYZbXvzCP.jpg",
+      "audio": "Original audio",
+      "audio_url": "https://www.instagram.com/reels/audio/756499283518166/",
+      "credit_mentions": [],
+      "caption_mentions": [],
+      "collaborators": [],
+      "top_comments": [
+        {
+          "text": "I thought i was going crazy with the shadow behind the tv",
+          "likes": 5
+        },
+        {
+          "text": "The vibe of this is emaculate",
+          "likes": 5
+        },
+        {
+          "text": "your videos are always a blessing on my feed❤️ would you pretty please tell me what programs you use to make your videos? the style lowkey reminds me of postal 2 and i think that would be some good inspo to start 3d animation.",
+          "likes": 4
+        },
+        {
+          "text": "W",
+          "likes": 2
+        },
+        {
+          "text": "Lowpolly retro troonslop",
+          "likes": 0
+        }
+      ],
+      "comments_visible_logged_out": 12,
+      "comments_mention_ai": false,
+      "ai_comments": []
+    },
+    {
+      "shortcode": "DK2d5RhvH05",
+      "url": "https://www.instagram.com/geoh3x/reel/DK2d5RhvH05/",
+      "type": "reel",
+      "date": "2025-06-13T18:31:30Z",
+      "date_og": "June 13, 2025",
+      "caption": "Playing on the computer \n.\n.\n.\n.\n.\n.\n#lowpoly #goth #gothgirl #liminalspace #videogames #computer #nocturne",
+      "hashtags": [
+        "lowpoly",
+        "goth",
+        "gothgirl",
+        "liminalspace",
+        "videogames",
+        "computer",
+        "nocturne"
+      ],
+      "likes": 91600,
+      "likes_source": "reel page display",
+      "likes_page_display": "91.6K",
+      "likes_exact_embed_or_og": null,
+      "comments": 482,
+      "views": null,
+      "views_display": null,
+      "pinned": false,
+      "pinned_main_grid": false,
+      "reels_grid_position": null,
+      "discovered_via": "main profile grid (12 posts)",
+      "cover_url": "https://scontent-dfw5-2.cdninstagram.com/v/t51.71878-15/503835255_1716818945623918_9150396833329358590_n.jpg?stp=dst-jpg_e35_s640x640_tt6&_nc_cat=110&_nc_map=urlgen_bucketless&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=aj1zX1nAzHEQ7kNvwGY0AyJ&_nc_oc=Adr5tgEOrRrwh5t4sLcU9btt6WmAMJtSEz_aB3KdQDa_cVd8Y1vcEp1HXCc1aYkcCPM&_nc_zt=23&_nc_ht=scontent-dfw5-2.cdninstagram.com&_nc_gid=q4ZgPsuVVbdI8afA07eFEw&_nc_ss=7ba8c&_nc_ct=RQosPBUKFQgAAAA&oh=00_AQTNyog3jOsQneA7D8Ieh8akWS_rnhbFpaKEWoD6WZY-7w&oe=6B08E6B6",
+      "cover_file": "covers/geoh3x/DK2d5RhvH05.jpg",
+      "audio": "Original audio",
+      "audio_url": "https://www.instagram.com/reels/audio/1908939293252282/",
+      "credit_mentions": [],
+      "caption_mentions": [],
+      "collaborators": [],
+      "top_comments": [
+        {
+          "text": "It’s so cool how the coat has real physics. Haha",
+          "likes": 14
+        },
+        {
+          "text": "Does Salem like dmc?",
+          "likes": 10
+        },
+        {
+          "text": "yo xD",
+          "likes": 3
+        },
+        {
+          "text": "Wife",
+          "likes": 2
+        },
+        {
+          "text": "Wife",
+          "likes": 1
+        }
+      ],
+      "comments_visible_logged_out": 12,
+      "comments_mention_ai": false,
+      "ai_comments": []
+    },
+    {
+      "shortcode": "DJkCtyVvyUP",
+      "url": "https://www.instagram.com/geoh3x/reel/DJkCtyVvyUP/",
+      "type": "reel",
+      "date": "2025-05-12T18:14:22Z",
+      "date_og": "May 12, 2025",
+      "caption": "Clown PSA…. “I’m on Patreon”\n\nGonna be posting a lot stuff on there like exclusive art, behind the scenes/tutorial videos on my process and more!\n\nLink in bio\n.\n#lowpoly #goth #gothgirl #liminalspace #videogames #horror #clown",
+      "hashtags": [
+        "lowpoly",
+        "goth",
+        "gothgirl",
+        "liminalspace",
+        "videogames",
+        "horror",
+        "clown"
+      ],
+      "likes": 21800,
+      "likes_source": "reel page display",
+      "likes_page_display": "21.8K",
+      "likes_exact_embed_or_og": null,
+      "comments": 97,
+      "views": null,
+      "views_display": null,
+      "pinned": false,
+      "pinned_main_grid": false,
+      "reels_grid_position": null,
+      "discovered_via": "main profile grid (12 posts)",
+      "cover_url": "https://scontent-atl3-2.cdninstagram.com/v/t51.71878-15/497347662_699955659192775_2470471989815631600_n.jpg?stp=dst-jpg_e35_s640x640_tt6&_nc_cat=106&_nc_map=urlgen_bucketless&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=o3nvgEWxH4YQ7kNvwGaT8ny&_nc_oc=Adqi8qmsdJ9IJf0ZjkC_kBgDV2u8NL-ylAoby8RgLGM-CFSTIvIvvri-q4Ret038cvg&_nc_zt=23&_nc_ht=scontent-atl3-2.cdninstagram.com&_nc_gid=DGrhPOLLL81ACl5E-XFfYw&_nc_ss=7ba8c&_nc_ct=RQosPBUKFQgAAAA&oh=00_AQTuyMxA0O2HQAC9ZQ6c00gesxqiaorABkG7sCzrMwx29g&oe=6B08EBE9",
+      "cover_file": "covers/geoh3x/DJkCtyVvyUP.jpg",
+      "audio": "Original audio",
+      "audio_url": "https://www.instagram.com/reels/audio/559870053824285/",
+      "credit_mentions": [],
+      "caption_mentions": [],
+      "collaborators": [],
+      "top_comments": [
+        {
+          "text": "Sounds like the caretaker😞",
+          "likes": 9
+        },
+        {
+          "text": "Oh god, that infamous psa from the UK. I don't know if I should be proud of understanding the reference or not.",
+          "likes": 7
+        },
+        {
+          "text": "hi im actually obsessed w ur art style and desperately need to cosplay salem I NEED HER EXACT BLACK TEE 🔥🔥",
+          "likes": 3
+        },
+        {
+          "text": "This situation happened in real life. This feels.",
+          "likes": 2
+        },
+        {
+          "text": "So cutee",
+          "likes": 0
+        }
+      ],
+      "comments_visible_logged_out": 11,
+      "comments_mention_ai": false,
+      "ai_comments": []
+    },
+    {
+      "shortcode": "DHT5m7dviu3",
+      "url": "https://www.instagram.com/geoh3x/reel/DHT5m7dviu3/",
+      "type": "reel",
+      "date": "2025-03-17T18:47:30Z",
+      "date_og": "March 17, 2025",
+      "caption": "Cats will do this sometimes \n.\n.\n.\n.\n.\n.\n#lowpoly #goth #gothgirl #liminalspace #videogames #cat #horror",
+      "hashtags": [
+        "lowpoly",
+        "goth",
+        "gothgirl",
+        "liminalspace",
+        "videogames",
+        "cat",
+        "horror"
+      ],
+      "likes": 78700,
+      "likes_source": "reel page display",
+      "likes_page_display": "78.7K",
+      "likes_exact_embed_or_og": null,
+      "comments": 330,
+      "views": null,
+      "views_display": null,
+      "pinned": false,
+      "pinned_main_grid": false,
+      "reels_grid_position": null,
+      "discovered_via": "main profile grid (12 posts)",
+      "cover_url": "https://scontent.cdninstagram.com/v/t51.75761-15/484749056_18055676315514270_2007886002129441542_n.jpg?stp=dst-jpg_e35_s640x640_tt6&_nc_cat=100&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=CGFjQrGMDNIQ7kNvwEFl1wb&_nc_oc=Adq_NuNZHY84yKP20csTIaMvVkE-yZpnmw4MNOcz7j1RyLiDGonXC8CoOzWXgrClGwE&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&_nc_gid=vBD4mXf3hUV5sYKqTORY2A&_nc_ss=7ba8c&_nc_ct=RQosPBUKFQQAAAA&oh=00_AQTBmdL5LK8OdfMr7CEq8i26_TcL6lSvKommiWHdWfC2AQ&oe=6B08F64B",
+      "cover_file": "covers/geoh3x/DHT5m7dviu3.jpg",
+      "audio": "Original audio",
+      "audio_url": "https://www.instagram.com/reels/audio/661645132948465/",
+      "credit_mentions": [],
+      "caption_mentions": [],
+      "collaborators": [],
+      "top_comments": [
+        {
+          "text": "I need to get into animation",
+          "likes": 6
+        },
+        {
+          "text": "Dose your fridge ever stair back",
+          "likes": 3
+        },
+        {
+          "text": "@notslprr",
+          "likes": 1
+        },
+        {
+          "text": "Song name?",
+          "likes": 1
+        },
+        {
+          "text": "I love these animations so much",
+          "likes": 1
+        }
+      ],
+      "comments_visible_logged_out": 12,
+      "comments_mention_ai": false,
+      "ai_comments": []
+    },
+    {
+      "shortcode": "DF538v8Pa-1",
+      "url": "https://www.instagram.com/geoh3x/reel/DF538v8Pa-1/",
+      "type": "reel",
+      "date": "2025-02-10T19:43:20Z",
+      "date_og": "February 10, 2025",
+      "caption": "Yesterday’s Nosebleed\n.\n.\n.\n.\n.\n.\n#lowpoly #goth #gothgirl #liminalspace #videogames #statue #horror",
+      "hashtags": [
+        "lowpoly",
+        "goth",
+        "gothgirl",
+        "liminalspace",
+        "videogames",
+        "statue",
+        "horror"
+      ],
+      "likes": 116900,
+      "likes_source": "reel page display",
+      "likes_page_display": "116.9K",
+      "likes_exact_embed_or_og": null,
+      "comments": 515,
+      "views": null,
+      "views_display": null,
+      "pinned": false,
+      "pinned_main_grid": false,
+      "reels_grid_position": null,
+      "discovered_via": "main profile grid (12 posts)",
+      "cover_url": "https://scontent-xxc1-1.cdninstagram.com/v/t51.75761-15/476892289_18051541586514270_3097419637456781373_n.jpg?stp=dst-jpg_e35_s640x640_tt6&_nc_cat=105&_nc_map=urlgen_bucketless&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=GKLs4W6cvIQQ7kNvwF7F23u&_nc_oc=Adrv2iWE9WSjUaArbJhIERnNP4CVZoLFoITvjH6gn-6VmCVPD98vjqvGCGqhhrkIKeU&_nc_zt=23&_nc_ht=scontent-xxc1-1.cdninstagram.com&_nc_gid=bJzWAWvueKGHowHElwTBtg&_nc_ss=7ba8c&_nc_ct=RQosPBUKFQQAAAA&oh=00_AQRtNJmLxqB1Zo7zJ1Ik1rpJao5vuwqg077RiyLbtOzuGg&oe=6B08E615",
+      "cover_file": "covers/geoh3x/DF538v8Pa-1.jpg",
+      "audio": "Original audio",
+      "audio_url": "https://www.instagram.com/reels/audio/1995700300929095/",
+      "credit_mentions": [],
+      "caption_mentions": [],
+      "collaborators": [],
+      "top_comments": [
+        {
+          "text": "She got the Roshi nose bleed from excitement",
+          "likes": 19
+        },
+        {
+          "text": "Freaky ahhhh statue",
+          "likes": 17
+        },
+        {
+          "text": "Whos the song artist you used for this video !? 🔥",
+          "likes": 3
+        },
+        {
+          "text": "Molly",
+          "likes": 2
+        },
+        {
+          "text": "and im on some coca",
+          "likes": 1
+        }
+      ],
+      "comments_visible_logged_out": 12,
+      "comments_mention_ai": false,
+      "ai_comments": []
+    },
+    {
+      "shortcode": "DENvxrZPA-k",
+      "url": "https://www.instagram.com/geoh3x/reel/DENvxrZPA-k/",
+      "type": "reel",
+      "date": "2024-12-30T19:49:54Z",
+      "date_og": "December 30, 2024",
+      "caption": "I guess the show must go on\n.\n.\n.\n.\n.\n.\n#lowpoly #clown #cat #goth  #liminalspace #videogames #gothgirl",
+      "hashtags": [
+        "lowpoly",
+        "clown",
+        "cat",
+        "goth",
+        "liminalspace",
+        "videogames",
+        "gothgirl"
+      ],
+      "likes": 58400,
+      "likes_source": "reel page display",
+      "likes_page_display": "58.4K",
+      "likes_exact_embed_or_og": null,
+      "comments": 194,
+      "views": null,
+      "views_display": null,
+      "pinned": false,
+      "pinned_main_grid": false,
+      "reels_grid_position": null,
+      "discovered_via": "main profile grid (12 posts)",
+      "cover_url": "https://scontent-xxc1-1.cdninstagram.com/v/t51.71878-15/503196993_1256091389208870_4136830129245603960_n.jpg?stp=dst-jpg_e35_s640x640_tt6&_nc_cat=109&_nc_map=urlgen_bucketless&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=FmMohHN4RtkQ7kNvwHZ1TJu&_nc_oc=AdonyC6PARzD0Mti7_b3h_9xFiv718hOcD8RRLjeA1SJphgF-nZ9wx3IG95azURfBjc&_nc_zt=23&_nc_ht=scontent-xxc1-1.cdninstagram.com&_nc_gid=bJzWAWvueKGHowHElwTBtg&_nc_ss=7ba8c&_nc_ct=RQosPBUKFQQAAAA&oh=00_AQQO0bIZb5Qbkr9_XqE-9xAz_AgJazmZtkFuDEElq7ztQw&oe=6B08D3B2",
+      "cover_file": "covers/geoh3x/DENvxrZPA-k.jpg",
+      "audio": "Original audio",
+      "audio_url": "https://www.instagram.com/reels/audio/1156126696125686/",
+      "credit_mentions": [],
+      "caption_mentions": [],
+      "collaborators": [],
+      "top_comments": [
+        {
+          "text": "I love this 🖤✨🖤",
+          "likes": 5
+        },
+        {
+          "text": "Something about this reminded me of a friend I had a couple years ago that died of cancer. I haven’t really been the same since I was wondering in worrying about my friends, and also I find it really hard to talk to people in general and contrast to as I used to be before she died…uuhh sorry for the trauma dump. I also really like the art so I’m going to follow you👍",
+          "likes": 4
+        },
+        {
+          "text": "Cute art",
+          "likes": 1
+        },
+        {
+          "text": "Ur dope bro",
+          "likes": 1
+        },
+        {
+          "text": "I don't know what I just saw, but I loved it. 🔥",
+          "likes": 1
+        }
+      ],
+      "comments_visible_logged_out": 12,
+      "comments_mention_ai": false,
+      "ai_comments": []
+    },
+    {
+      "shortcode": "DBwbNXCotUv",
+      "url": "https://www.instagram.com/geoh3x/reel/DBwbNXCotUv/",
+      "type": "reel",
+      "date": "2024-10-30T17:27:38Z",
+      "date_og": "October 30, 2024",
+      "caption": "Blood rave or something like that\n\nThrowing you this mixed media post of @geoh3x and @sainttufa as vampire hunters for Halloween! enjoy this collab of the century! \n.\n.\n.\n.\n.\n.\n#blade #halloween #y2k #vampire",
+      "hashtags": [
+        "blade",
+        "halloween",
+        "y2k",
+        "vampire"
+      ],
+      "likes": 3925,
+      "likes_source": "embed/og exact count (matches page)",
+      "likes_page_display": "3.9K",
+      "likes_exact_embed_or_og": 3925,
+      "comments": 26,
+      "views": null,
+      "views_display": null,
+      "pinned": false,
+      "pinned_main_grid": false,
+      "reels_grid_position": null,
+      "discovered_via": "Yahoo web search",
+      "cover_url": "https://scontent-sjc3-1.cdninstagram.com/v/t51.71878-15/503500558_3646006245703469_299401567612693309_n.jpg?stp=dst-jpg_e15_tt6&_nc_cat=103&_nc_map=urlgen_bucketless&ig_cache_key=MzQ5MDQwOTM3NjU2MTQxOTU2Nw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNMSVBTLnhwaWRzLjEwODAuc2RyLnZpZGVvX2RlZmF1bHRfY292ZXJfZnJhbWUuQzMifQ%3D%3D&_nc_ohc=WXizsSZBr_cQ7kNvwF7yUdA&_nc_oc=AdpChnoiICmvTptG-Y145RKjtqUiFivmzR3LZkQz7vqyE_vzHB6XAup4MldbtD_jdwk&_nc_zt=23&_nc_ht=scontent-sjc3-1.cdninstagram.com&_nc_gid=ojFwWzp8qsXf9WDOUoSKuQ&_nc_ss=7b689&_nc_ct=RQosPBUIFQQlBAAAAA&oh=00_AQRBiHHBi3icUzCvnMCGCblQn9MsycWruX5r7-56TbuAcA&oe=6B08F602",
+      "cover_file": "covers/geoh3x/DBwbNXCotUv.jpg",
+      "audio": "Original audio",
+      "audio_url": "https://www.instagram.com/reels/audio/578649451508040/",
+      "credit_mentions": [],
+      "caption_mentions": [
+        "geoh3x",
+        "sainttufa"
+      ],
+      "collaborators": [
+        "sainttufa"
+      ],
+      "top_comments": [
+        {
+          "text": "I wouldn’t wanna come across them in such a dilapidated hallway…. 🙏",
+          "likes": 18
+        },
+        {
+          "text": "Comi e n deixei migalhas",
+          "likes": 6
+        },
+        {
+          "text": "BLADE THEME SPOTTED, WHAT THE FUCK IS A BAD SUPERHERO THEME SONG??!!",
+          "likes": 5
+        },
+        {
+          "text": "AMOOO🙌🔥🔥",
+          "likes": 5
+        },
+        {
+          "text": "BROOO, COZINHAS-TE, ENTREGASTE TUDO",
+          "likes": 5
+        }
+      ],
+      "comments_visible_logged_out": 12,
+      "comments_mention_ai": false,
+      "ai_comments": [],
+      "notes": [
+        "Collab post: header shows \"geoh3x and sainttufa\"."
+      ]
+    },
+    {
+      "shortcode": "C-dZAUAv0yG",
+      "url": "https://www.instagram.com/geoh3x/reel/C-dZAUAv0yG/",
+      "type": "reel",
+      "date": "2024-08-09T18:29:33Z",
+      "date_og": "August 9, 2024",
+      "caption": "Look At Me\n•\n•\n•\n#lowpoly #clown #animation #y2k #goth #anime #liminal",
+      "hashtags": [
+        "lowpoly",
+        "clown",
+        "animation",
+        "y2k",
+        "goth",
+        "anime",
+        "liminal"
+      ],
+      "likes": 2788,
+      "likes_source": "embed/og exact count (matches page)",
+      "likes_page_display": "2.8K",
+      "likes_exact_embed_or_og": 2788,
+      "comments": 29,
+      "views": null,
+      "views_display": null,
+      "pinned": false,
+      "pinned_main_grid": false,
+      "reels_grid_position": null,
+      "discovered_via": "Yahoo web search",
+      "cover_url": "https://scontent-sjc6-1.cdninstagram.com/v/t51.71878-15/503752930_1226511945807402_6271944878120513599_n.jpg?stp=dst-jpg_e15_tt6&_nc_cat=104&_nc_map=urlgen_bucketless&ig_cache_key=MzQzMTAwODQ2Mzc3NjMzNzAzMA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNMSVBTLnhwaWRzLjcyMC5zZHIudmlkZW9fZGVmYXVsdF9jb3Zlcl9mcmFtZS5DMyJ9&_nc_ohc=nLHyRQ2vdd0Q7kNvwGsJxD4&_nc_oc=AdpjITEtq0PU9F5CIPd6XAYBpR5n_UfwQSThxXxrC0NDCStcoJ0w3H8Z1pvHsAsv1dc&_nc_zt=23&_nc_ht=scontent-sjc6-1.cdninstagram.com&_nc_gid=X92L8ff0vnK7Vqc__Z4ohg&_nc_ss=7b689&_nc_ct=RQosPBUIFQQlBAAAAA&oh=00_AQQUyuWpfZ5wpgDG_Og1rYLmUyMlQseaW_H0urDa6lZwDg&oe=6B08E84A",
+      "cover_file": "covers/geoh3x/C-dZAUAv0yG.jpg",
+      "audio": "Original audio",
+      "audio_url": "https://www.instagram.com/reels/audio/406184308654002/",
+      "credit_mentions": [],
+      "caption_mentions": [],
+      "collaborators": [],
+      "top_comments": [
+        {
+          "text": "Last chance to look at me Hector",
+          "likes": 38
+        },
+        {
+          "text": "its kindda...sexy? jajaj",
+          "likes": 14
+        },
+        {
+          "text": "Holy shit",
+          "likes": 11
+        },
+        {
+          "text": "When will the game be?",
+          "likes": 7
+        },
+        {
+          "text": "IT SHOULD HAVE BEEN MEEE",
+          "likes": 5
+        }
+      ],
+      "comments_visible_logged_out": 12,
+      "comments_mention_ai": false,
+      "ai_comments": []
+    },
+    {
+      "shortcode": "C5q-H9lvs3d",
+      "url": "https://www.instagram.com/geoh3x/reel/C5q-H9lvs3d/",
+      "type": "reel",
+      "date": "2024-04-12T18:27:43Z",
+      "date_og": "April 12, 2024",
+      "caption": "Bloopers\n•\n•\n•\n#3d #ps2 #3dmodel #ps1 #lowpoly #lowpolyart #psx #art #3dart #animation #anime #vaporwave #nostalgiacore #early2000s #90s #weirdcore #nostalgia #surreal #y2k #segadreamcast #grandmahouse #statue #90s #grandma #liminalspaces #windowsxp #windows95 #vhs #n64 #videogames",
+      "hashtags": [
+        "3d",
+        "ps2",
+        "3dmodel",
+        "ps1",
+        "lowpoly",
+        "lowpolyart",
+        "psx",
+        "art",
+        "3dart",
+        "animation",
+        "anime",
+        "vaporwave",
+        "nostalgiacore",
+        "early2000s",
+        "90s",
+        "weirdcore",
+        "nostalgia",
+        "surreal",
+        "y2k",
+        "segadreamcast",
+        "grandmahouse",
+        "statue",
+        "90s",
+        "grandma",
+        "liminalspaces",
+        "windowsxp",
+        "windows95",
+        "vhs",
+        "n64",
+        "videogames"
+      ],
+      "likes": 1734,
+      "likes_source": "embed/og exact count (matches page)",
+      "likes_page_display": "1.7K",
+      "likes_exact_embed_or_og": 1734,
+      "comments": 13,
+      "views": null,
+      "views_display": null,
+      "pinned": false,
+      "pinned_main_grid": false,
+      "reels_grid_position": null,
+      "discovered_via": "Yahoo web search",
+      "cover_url": "https://scontent-sjc6-1.cdninstagram.com/v/t51.71878-15/502960891_716528260875055_2739287636442382078_n.jpg?stp=dst-jpg_e15_tt6&_nc_cat=104&_nc_map=urlgen_bucketless&ig_cache_key=MzM0NDc1ODg5OTMyNzU1Mjk4OQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNMSVBTLnhwaWRzLjczNi5zZHIudmlkZW9fZGVmYXVsdF9jb3Zlcl9mcmFtZS5DMyJ9&_nc_ohc=EgbsClQ2QTAQ7kNvwH5wFlX&_nc_oc=Adrj77yvF8xOfN64D1svebPfNebmQpkZMWnHSzoL9PB--SUPeYeNHhnEnJK4-aqo0EQ&_nc_zt=23&_nc_ht=scontent-sjc6-1.cdninstagram.com&_nc_gid=xJTI2Mu720dFYU64uZbPXg&_nc_ss=7b689&_nc_ct=RQosPBUIFQQlBAAAAA&oh=00_AQQvJbvKthqLmSm_zchBFHG2S5x5i6h74qtR2Gg_pMX_Xw&oe=6B08C322",
+      "cover_file": "covers/geoh3x/C5q-H9lvs3d.jpg",
+      "audio": "Original audio",
+      "audio_url": "https://www.instagram.com/reels/audio/315211901583612/",
+      "credit_mentions": [],
+      "caption_mentions": [],
+      "collaborators": [],
+      "top_comments": [
+        {
+          "text": "mfw when the corporeal manifestations in my cranium become MATERIALIZED 😂😂😂😭🗣",
+          "likes": 11
+        },
+        {
+          "text": "in a sea of content vying for the spotlight, your work consistently shines through, even if just a blooper",
+          "likes": 7
+        },
+        {
+          "text": "These aesthetics sheesh",
+          "likes": 5
+        },
+        {
+          "text": "Brooo what's the song on this one?",
+          "likes": 4
+        },
+        {
+          "text": "i’m so honored to match waist tats with squissy",
+          "likes": 4
+        }
+      ],
+      "comments_visible_logged_out": 11,
+      "comments_mention_ai": false,
+      "ai_comments": []
+    },
+    {
+      "shortcode": "CyMAbeOuRze",
+      "url": "https://www.instagram.com/geoh3x/reel/CyMAbeOuRze/",
+      "type": "reel",
+      "date": "2023-10-09T18:13:26Z",
+      "date_og": "October 9, 2023",
+      "caption": "Static Haze\n•\n•\n•\n#3d #3dmodeling #3dmodel #ps1 #lowpoly #lowpolyart #psx #art #3dart #animation #anime #vaporwave #nostalgiacore #early2000s #squid #weirdcore #nostalgia #lsd #y2k #segadreamcast #trance #oldcgi #trippy #crt #liminalspaces #windowsxp #oldweb #vhs #n64 #videogames",
+      "hashtags": [
+        "3d",
+        "3dmodeling",
+        "3dmodel",
+        "ps1",
+        "lowpoly",
+        "lowpolyart",
+        "psx",
+        "art",
+        "3dart",
+        "animation",
+        "anime",
+        "vaporwave",
+        "nostalgiacore",
+        "early2000s",
+        "squid",
+        "weirdcore",
+        "nostalgia",
+        "lsd",
+        "y2k",
+        "segadreamcast",
+        "trance",
+        "oldcgi",
+        "trippy",
+        "crt",
+        "liminalspaces",
+        "windowsxp",
+        "oldweb",
+        "vhs",
+        "n64",
+        "videogames"
+      ],
+      "likes": 3154,
+      "likes_source": "embed/og exact count (matches page)",
+      "likes_page_display": "3.2K",
+      "likes_exact_embed_or_og": 3154,
+      "comments": 69,
+      "views": null,
+      "views_display": null,
+      "pinned": false,
+      "pinned_main_grid": false,
+      "reels_grid_position": null,
+      "discovered_via": "Yahoo web search",
+      "cover_url": "https://scontent-sjc3-1.cdninstagram.com/v/t51.71878-15/500806530_692223803722006_2058024506899848570_n.jpg?stp=dst-jpg_e15_tt6&_nc_cat=102&_nc_map=urlgen_bucketless&ig_cache_key=MzIwOTk0MjUyMjI5MzQ2MDE5MA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNMSVBTLnhwaWRzLjcyMC5zZHIudmlkZW9fZGVmYXVsdF9jb3Zlcl9mcmFtZS5DMyJ9&_nc_ohc=1atPIjzsZ3MQ7kNvwFCQisr&_nc_oc=Adqr9xHkamKFBWNNb6y3kDuJe81oZ5mgNLSR4t5-iq1a64jxL9mkw7Aa30NdQ317D_0&_nc_zt=23&_nc_ht=scontent-sjc3-1.cdninstagram.com&_nc_gid=3btPpBXgmdwPnEpg9aszSg&_nc_ss=7b689&_nc_ct=RQosPBUIFQQlBAAAAA&oh=00_AQShZDygzXG1_JUqOgrFCY0nauKlxKtgrL697JyzzBnI9Q&oe=6B08E5DA",
+      "cover_file": "covers/geoh3x/CyMAbeOuRze.jpg",
+      "audio": "Original audio",
+      "audio_url": "https://www.instagram.com/reels/audio/343117468093365/",
+      "credit_mentions": [],
+      "caption_mentions": [],
+      "collaborators": [],
+      "top_comments": [
+        {
+          "text": "Yeah that just happens when you watch Twin Peaks while falling asleep",
+          "likes": 9
+        },
+        {
+          "text": "Song name?",
+          "likes": 7
+        },
+        {
+          "text": "Amazing. Do you have the song up anywhere?",
+          "likes": 6
+        },
+        {
+          "text": "this is what happens if sex before marriage",
+          "likes": 6
+        },
+        {
+          "text": "They fell asleep and george lopez wasnt on when she woke up you know she had a terrible nap lol",
+          "likes": 5
+        }
+      ],
+      "comments_visible_logged_out": 12,
+      "comments_mention_ai": false,
+      "ai_comments": []
+    },
+    {
+      "shortcode": "Cvfj8kmvPd9",
+      "url": "https://www.instagram.com/geoh3x/reel/Cvfj8kmvPd9/",
+      "type": "reel",
+      "date": "2023-08-03T18:59:51Z",
+      "date_og": "August 3, 2023",
+      "caption": "Journey through the reminisce\n|\n|\n|\n|\n|\n|\n#3d #3dmodeling #3dmodel #ps1 #lowpoly #lowpolyart #psx #art #3dart #animation #anime #vaporwave #scary #rpg #wizard #magic #sage #lsd #y2k #segadreamcast #trance #oldvideogames #trippy #liminalspace #liminalspaces #windowsxp #oldweb #vibes #n64 #videogames",
+      "hashtags": [
+        "3d",
+        "3dmodeling",
+        "3dmodel",
+        "ps1",
+        "lowpoly",
+        "lowpolyart",
+        "psx",
+        "art",
+        "3dart",
+        "animation",
+        "anime",
+        "vaporwave",
+        "scary",
+        "rpg",
+        "wizard",
+        "magic",
+        "sage",
+        "lsd",
+        "y2k",
+        "segadreamcast",
+        "trance",
+        "oldvideogames",
+        "trippy",
+        "liminalspace",
+        "liminalspaces",
+        "windowsxp",
+        "oldweb",
+        "vibes",
+        "n64",
+        "videogames"
+      ],
+      "likes": 1426,
+      "likes_source": "embed/og exact count (matches page)",
+      "likes_page_display": "1.4K",
+      "likes_exact_embed_or_og": 1426,
+      "comments": 53,
+      "views": null,
+      "views_display": null,
+      "pinned": false,
+      "pinned_main_grid": false,
+      "reels_grid_position": null,
+      "discovered_via": "Yahoo web search",
+      "cover_url": "https://scontent-sjc6-1.cdninstagram.com/v/t51.71878-15/501647531_1105655231373710_7513803465275053269_n.jpg?stp=dst-jpg_e15_tt6&_nc_cat=107&_nc_map=urlgen_bucketless&ig_cache_key=MzE2MTQwMzU1NzUzODQ5NDMzMw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNMSVBTLnhwaWRzLjcyMC5zZHIudmlkZW9fZGVmYXVsdF9jb3Zlcl9mcmFtZS5DMyJ9&_nc_ohc=qxi4IdpXJGIQ7kNvwETEpJr&_nc_oc=AdoLbMGtxvsoXFfPfvgL5uM21h00lIr8_a73-OFuonIpxzg4dhjYoEhooDRc9ArH40o&_nc_zt=23&_nc_ht=scontent-sjc6-1.cdninstagram.com&_nc_gid=JBOjJOetPIAYLGMtUeB37g&_nc_ss=7b689&_nc_ct=RQosPBUIFQQlBAAAAA&oh=00_AQTlfYI3FQmZIswnTIqe6djfCzWnsOOo7X8d_xdSYEudJA&oe=6B08D9CC",
+      "cover_file": "covers/geoh3x/Cvfj8kmvPd9.jpg",
+      "audio": "Original audio",
+      "audio_url": "https://www.instagram.com/reels/audio/810017490830142/",
+      "credit_mentions": [],
+      "caption_mentions": [],
+      "collaborators": [],
+      "top_comments": [
+        {
+          "text": "If this was a game I’d play it. If this was a series I’d watch it. Keep up the amazing work 🔥🔥🔥",
+          "likes": 3
+        },
+        {
+          "text": "Song name?",
+          "likes": 1
+        },
+        {
+          "text": "Totally sick dude!",
+          "likes": 1
+        },
+        {
+          "text": "I’m the ghoul",
+          "likes": 1
+        },
+        {
+          "text": "This is so dope bruh you mad creative w your stuff much love",
+          "likes": 1
+        }
+      ],
+      "comments_visible_logged_out": 12,
+      "comments_mention_ai": false,
+      "ai_comments": []
+    },
+    {
+      "shortcode": "CqOG0dyLIpF",
+      "url": "https://www.instagram.com/geoh3x/reel/CqOG0dyLIpF/",
+      "type": "reel",
+      "date": "2023-03-25T17:46:00Z",
+      "date_og": "March 25, 2023",
+      "caption": "You’ve received a pop up notifying you of the geoh3x online store release! Tomorrow at 1pm EST is when the drop will take place! Thank You - GeoH3x \n|\n|\n|\n|\n#3d #3dmodeling #3dmodel #ps1 #lowpoly #lowpolyart #psx #art #3dart #animation #anime #oldwebcore #cute #kawaii #stickers #rave #squid #yabujin #y2k #segadreamcast #trance #hardcore #techno #animegirl #liminalspaces #hardstyle #trippy #vibes #nightcore #videogames",
+      "hashtags": [
+        "3d",
+        "3dmodeling",
+        "3dmodel",
+        "ps1",
+        "lowpoly",
+        "lowpolyart",
+        "psx",
+        "art",
+        "3dart",
+        "animation",
+        "anime",
+        "oldwebcore",
+        "cute",
+        "kawaii",
+        "stickers",
+        "rave",
+        "squid",
+        "yabujin",
+        "y2k",
+        "segadreamcast",
+        "trance",
+        "hardcore",
+        "techno",
+        "animegirl",
+        "liminalspaces",
+        "hardstyle",
+        "trippy",
+        "vibes",
+        "nightcore",
+        "videogames"
+      ],
+      "likes": 1239,
+      "likes_source": "embed/og exact count (matches page)",
+      "likes_page_display": "1.2K",
+      "likes_exact_embed_or_og": 1239,
+      "comments": 25,
+      "views": null,
+      "views_display": null,
+      "pinned": false,
+      "pinned_main_grid": false,
+      "reels_grid_position": null,
+      "discovered_via": "Yahoo web search",
+      "cover_url": "https://scontent-sjc3-1.cdninstagram.com/v/t51.71878-15/496993399_1006364514812994_3374153097989149100_n.jpg?stp=dst-jpg_e15_tt6&_nc_cat=105&_nc_map=urlgen_bucketless&ig_cache_key=MzA2NjQxODM4OTk1ODAzNjAzNw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNMSVBTLnhwaWRzLjcyMC5zZHIudmlkZW9fZGVmYXVsdF9jb3Zlcl9mcmFtZS5DMyJ9&_nc_ohc=F8vqczU8vnIQ7kNvwE_TSxP&_nc_oc=AdqRdfwnu7a4E_bPPE01ORXMPix3vvEtjkfe0wDP71CFPh9GwlQHNKXVbzdK1z4Wizc&_nc_zt=23&_nc_ht=scontent-sjc3-1.cdninstagram.com&_nc_gid=zBLM6B0I057X7o72qgLIqw&_nc_ss=7b689&_nc_ct=RQosPBUIFQQlBAAAAA&oh=00_AQQmv8A62ugVLM88RhVTpATHummzUWwUaH5KJC_DdRbIDw&oe=6B08CA0C",
+      "cover_file": "covers/geoh3x/CqOG0dyLIpF.jpg",
+      "audio": "Original audio",
+      "audio_url": "https://www.instagram.com/reels/audio/944598093557704/",
+      "credit_mentions": [],
+      "caption_mentions": [],
+      "collaborators": [],
+      "top_comments": [
+        {
+          "text": "After all this time I have found the original song it’s Валерия - Часики however this specific remix is still out there somewhere",
+          "likes": 5
+        },
+        {
+          "text": "It’s crazy to me to think people have never experienced the internet like this",
+          "likes": 5
+        },
+        {
+          "text": "Pls dont hack me",
+          "likes": 2
+        },
+        {
+          "text": "B a. S. E. ......... V v. D",
+          "likes": 1
+        },
+        {
+          "text": "YEAHHHH",
+          "likes": 1
+        }
+      ],
+      "comments_visible_logged_out": 12,
+      "comments_mention_ai": false,
+      "ai_comments": []
+    }
+  ],
+  "posts_not_reels": [
+    {
+      "shortcode": "DeSUEZ7mO3L",
+      "url": "https://www.instagram.com/geoh3x/p/DeSUEZ7mO3L/",
+      "type": "carousel",
+      "fetched": true,
+      "date": "2026-10-09T19:58:15Z",
+      "caption": "Two days left to pre-order the Salem plush get it while you can. (Link in Bio)Thank you so much for all the support you’ve given me on this I can’t thank you enough! I can’t wait for you guys to get the plush in your own hands!\n.\nThank you @salted.pearls for the second image\n.\nand thank you to @makeship for making this happen\n.\n.\n#plush #clown #3dart #goth #makeship",
+      "hashtags": [
+        "plush",
+        "clown",
+        "3dart",
+        "goth",
+        "makeship"
+      ],
+      "likes": 5516,
+      "comments": 20,
+      "top_comments": [
+        {
+          "text": "Getting paid the day after it’s over 🫩🫩🫩🫩",
+          "likes": 5
+        },
+        {
+          "text": "Found salem in a narmak animation",
+          "likes": 0
+        },
+        {
+          "text": "Sup gamèr?",
+          "likes": 0
+        },
+        {
+          "text": "i already ordered 2",
+          "likes": 0
+        },
+        {
+          "text": "Of course I see this on the 18TH!",
+          "likes": 0
+        }
+      ],
+      "cover_file": "covers/geoh3x_posts/DeSUEZ7mO3L.jpg",
+      "cover_url": "https://scontent-sjc6-1.cdninstagram.com/v/t51.82787-15/839707871_18123165203514270_667234226997604187_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=100&_nc_map=urlgen_bucketless&ig_cache_key=NDAwNDM0ODI4MzU3MDAyMDcxOQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuNzIwLnNkci5yZWd1bGFyX3Bob3RvLkMzIn0%3D&_nc_ohc=hj6qtzAa4QcQ7kNvwHj_ocz&_nc_oc=AdpcU4XuL95qZJ2RlYm1gI-sJX-jTK5o7KFSEuObGUhcIzQdj3ONCkhHaTUpjBIXyqg&_nc_zt=23&_nc_ht=scontent-sjc6-1.cdninstagram.com&_nc_gid=mGeBK1GeFaAvvKY08DYayg&_nc_ss=7b689&_nc_ct=RQosPBUIFQIlBAAAAA&oh=00_AQSgRlQUV3WA4KJes2L0_hiy3mQjC36NWHr7cHYTlIUjVw&oe=6B08DBB6"
+    },
+    {
+      "shortcode": "C7FI-c5vx5t",
+      "url": "https://www.instagram.com/geoh3x/p/C7FI-c5vx5t/",
+      "type": "photo",
+      "fetched": true,
+      "date": "2024-05-17T18:52:22Z",
+      "caption": "Closeup of Salem’s shirt \n•\n•\n•\n#3d #ps2 #3dmodel #ps1 #lowpoly #lowpolyart #pizza #art #3dart #animation #anime #vaporwave #nostalgiacore #early2000s #clown #weirdcore #nostalgia #surreal #y2k #segadreamcast #fashion #shirt #90s #clowngirl #liminalspaces #windowsxp #windows95 #vhs #n64 #videogame",
+      "hashtags": [
+        "3d",
+        "ps2",
+        "3dmodel",
+        "ps1",
+        "lowpoly",
+        "lowpolyart",
+        "pizza",
+        "art",
+        "3dart",
+        "animation",
+        "anime",
+        "vaporwave",
+        "nostalgiacore",
+        "early2000s",
+        "clown",
+        "weirdcore",
+        "nostalgia",
+        "surreal",
+        "y2k",
+        "segadreamcast",
+        "fashion",
+        "shirt",
+        "90s",
+        "clowngirl",
+        "liminalspaces",
+        "windowsxp",
+        "windows95",
+        "vhs",
+        "n64",
+        "videogame"
+      ],
+      "likes": 1067,
+      "comments": 12,
+      "top_comments": [
+        {
+          "text": "MY WIFE IS SO COOL",
+          "likes": 3
+        }
+      ],
+      "cover_file": "covers/geoh3x_posts/C7FI-c5vx5t.jpg",
+      "cover_url": "https://scontent-sjc3-1.cdninstagram.com/v/t51.82787-15/624766323_18118849243586709_2645049745432998992_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=105&_nc_map=urlgen_bucketless&ig_cache_key=MzM3MDEzOTM3MjE2OTkyODMwMQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuNzE5LnNkci5yZWd1bGFyX3Bob3RvLkMzIn0%3D&_nc_ohc=y2vvfponW-0Q7kNvwEwBoCm&_nc_oc=AdrAIE36WfERxcTyXz6_1MuLzmVw3dNmmEUbY0GoZNqdY_v--3sroRK3gJYaSBAWYTQ&_nc_zt=23&_nc_ht=scontent-sjc3-1.cdninstagram.com&_nc_gid=ug7cKhcwJ4IkluHtWxBmLA&_nc_ss=7b689&_nc_ct=RQosPBUIFQIlBAAAAA&oh=00_AQSLzlZUlCyrDVtru6P42Q9FFP1ZMTvx6TDTuNCATzKK1Q&oe=6B08C376"
+    },
+    {
+      "shortcode": "CpgPzWePi_C",
+      "url": "https://www.instagram.com/geoh3x/p/CpgPzWePi_C/",
+      "type": "post",
+      "fetched": false,
+      "note": "Brave search: \"New Salem model! She will throw fire balls at ...\"; not fetched."
+    }
+  ],
+  "excluded_candidates": [
+    {
+      "shortcode": "DGBBuJsxbLP",
+      "reason": "Owned by @babytapeworm (caption \"@geoh3x\")."
+    },
+    {
+      "shortcode": "DURAfbpkdxl DTD0dP9gTEx",
+      "reason": "Fan art by @samrillust."
+    },
+    {
+      "shortcode": "DNj5op7xWvS",
+      "reason": "Redirects to @ai.manipulator."
+    }
+  ]
+}
