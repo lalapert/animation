@@ -2,6 +2,8 @@
 
 Read this whole file before you start. Report progress and the result in Korean. Owner: 연 (call them 작가님).
 
+> **HOLD (owner, 11/23 00:40 KST): no new episodes through Wednesday 11/25.** Scheduled runs skip making an episode until the owner says to resume (ask in the 15:41 report on 11/25). Everything else still runs: the 15:41 performance check, the day-before check of tomorrow's posts (posts keep airing), the Monday weekly report (11/23, with the Odd Shift checklist). The owner is also weighing a pause of Volt Labs and having Gemini draw the art; do not change Volt Labs posts, kits or plans until they decide (every Volt Labs file is in git on this branch).
+
 Each run makes **one** episode, the unmade one that airs soonest (§1), and schedules it on its date. Goal (owner, 11/7 night: keep stacking the bank): **every series keeps 5 finished episodes waiting beyond its next post** (except at the end of a season). Below that, never skip a run.
 
 ## Quality bar (owner, 11/13: "too many weaknesses, it looks sloppy; reduce the weaknesses, add strengths, use fitting and natural sound effects and music")
