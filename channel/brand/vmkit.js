@@ -25,7 +25,8 @@
 //     lintShots() warns (console + window.SHOT_WARN) when more than two cuts in a row share a framing; run
 //     node channel/tools/shotlint.cjs <episode dir> before rendering.
 //  4. Light and depth (automatic, K2.LIGHT.vm / .vl): one cel tone on each figure's side away from the key light (key, shade,
-//     band), cyan and pink rims in the store (lime and blue in the lab), an ambient tint and a top-to-bottom falloff on the cast,
+//     band), one thin directional rim per figure from the set's light on its side (store: sign side pink, fridge side cyan; lab:
+//     the window), only on edges facing that light and fading down the figure, an ambient tint and a top-to-bottom falloff on the cast,
 //     soft contact shadows where the cast meets the counter/bench and under the register, a light vignette, and the back set
 //     hazed a little (haze) so the cast has more contrast than the set. Tune per episode by editing K2.LIGHT.vm/.vl fields in film.js.
 //     Before/after: node channel/tools/look2_sample.cjs <episode dir> t0 t1 <out prefix> [--inject staging.js] [--stills ...]
@@ -44,9 +45,16 @@ const K2 = {
   on: !!((window.TL && TL.LOOK === 2) || (typeof location !== 'undefined' && /[?&]look=2(&|$)/.test(location.search))),
   t: 0, ticked: false, busy: 0, contacts: [], layers: new Map(), shotFx: {}, angle: 0, set: null,
   act: 1,                                        // acting strength: 0 = still (Look 1 poses), 1 = default, up to ~1.5 for broad scenes
-  LIGHT: {                                       // per show: key light direction (toward the light), cel tone, rims [dir, colour, alpha, width units]
-    vm: { key: [-.55, -.83], shade: '#c4b6ea', band: 8, fall: .13, amb: ['#5a2ca0', .045], rim: [[[1, -.15], '#6ff3ff', .5, 4.5], [[-1, -.25], '#ff6fb8', .34, 4]], vig: .34, contact: .42, haze: ['#2a1858', .2], pop: 'saturate(1.1) contrast(1.05)' },
-    vl: { key: [-.55, -.83], shade: '#c3cbdb', band: 8, fall: .12, amb: ['#2c5a3a', .04], rim: [[[1, -.2], '#c8ff6a', .38, 4.5], [[-1, -.25], '#8fd3ff', .3, 4]], vig: .3, contact: .4, haze: ['#12302a', .18], pop: 'saturate(1.08) contrast(1.05)' },
+  // per show: key light direction (toward the light), cel tone (shade, band units), falloff, ambient tint; rims = one directional
+  // rim per figure, picked by which side of the set it stands on ([direction toward the light, colour, alpha]); rimW = rim width
+  // in rig units, clamped to 2-4 screen px, drawn just inside the outline (ink units); contact shadow alpha; haze on the back set
+  LIGHT: {
+    vm: { key: [-.55, -.83], shade: '#c4b6ea', band: 8, fall: .13, amb: ['#5a2ca0', .045], ink: 4.2, rimW: .8,
+      rims: { left: [[-.85, -.5], '#ff86c8', .34], right: [[.85, -.5], '#86f2ff', .4] },          // sign side pink, fridge side cyan
+      vig: .34, contact: .42, haze: ['#2a1858', .2], pop: 'saturate(1.1) contrast(1.05)' },
+    vl: { key: [-.55, -.83], shade: '#c3cbdb', band: 8, fall: .12, amb: ['#2c5a3a', .04], ink: 4.2, rimW: .8,
+      rims: { left: [[.7, -.72], '#e4f2ff', .3], right: [[.7, -.72], '#e4f2ff', .3] },               // the window (upper right), daylight
+      vig: .3, contact: .4, haze: ['#12302a', .18], pop: 'saturate(1.08) contrast(1.05)' },
   },
 };
 // Look 2: lower the back set's contrast a little (a haze of the set's own dark), so the cast reads in front of it
@@ -300,10 +308,10 @@ function k2Body(C, t) {
   for (const v of k2Lines(C.who)) {                                             // talking: a lean toward the listener, a head angle per line,
     const u = t - v.t; if (u < -.4 || u > v.dur + 1.4) continue;                // a pop on the first word, accents on seeded beats, nods
     const r = k2Rand(S, v.i), env = k2Hold(u + .05, v.dur + .35);
-    B.lean += C.face * (.03 + .025 * r) * env;
-    B.tilt += (r - .5) * .1 * env;
-    const p = k2Pop(u); B.sy += .03 * p; B.sx -= .016 * p; B.hy -= 3 * k2Pop(u - .05);
-    for (let k = 1; k < 4; k++) { const tb = .55 + k * (.9 + .6 * k2Rand(S + k, v.i)); if (tb > v.dur - .15) break; const q = k2Pop(u - tb); B.sy += .016 * q; B.hy -= 2.5 * q; B.tilt += (k2Rand(S + 7 * k, v.i) - .5) * .06 * k2Hold(u - tb, .5); }
+    B.lean += C.face * (.042 + .035 * r) * env;
+    B.tilt += (r - .5) * .13 * env;
+    const p = k2Pop(u); B.sy += .042 * p; B.sx -= .022 * p; B.hy -= 4.2 * k2Pop(u - .05);
+    for (let k = 1; k < 4; k++) { const tb = .55 + k * (.9 + .6 * k2Rand(S + k, v.i)); if (tb > v.dur - .15) break; const q = k2Pop(u - tb); B.sy += .022 * q; B.hy -= 3.5 * q; B.tilt += (k2Rand(S + 7 * k, v.i) - .5) * .06 * k2Hold(u - tb, .5); }
   }
   for (const a of (window.TL && TL.ACT) || []) {                               // cues: [who, t, kind, amount = 1, hold = .8]
     if (a[0] !== C.who) continue;
@@ -343,9 +351,10 @@ function k2Layer(canvas, i) {
   return L;
 }
 function k2Light() { return K2.LIGHT[K2.set || (K2.set = typeof buildLab === 'function' ? 'vl' : 'vm')]; }
-// one cel tone on the side away from the key light, rim lights from the set, an ambient tint and a top-to-bottom falloff,
-// all inside the character's own silhouette (screen space, rect rx, ry, rw, rh; u = screen px per rig unit)
-function k2Shade(L, rx, ry, rw, rh, u) {
+// one cel tone on the side away from the key light, one directional rim from the set's light on this figure's side, an ambient
+// tint and a top-to-bottom falloff, all inside the character's own silhouette (screen space, rect rx, ry, rw, rh; u = screen px
+// per rig unit; side = 'left' | 'right' of the set)
+function k2Shade(L, rx, ry, rw, rh, u, side) {
   const Lt = k2Light(), lc = L.getContext('2d'), M = k2Layer(L, 1), mc = M.getContext('2d');
   const band = (dx, dy, col, alpha, op) => {
     mc.setTransform(1, 0, 0, 1, 0, 0); mc.globalAlpha = 1; mc.globalCompositeOperation = 'source-over'; mc.clearRect(rx, ry, rw, rh);
@@ -360,7 +369,18 @@ function k2Shade(L, rx, ry, rw, rh, u) {
   lc.globalAlpha = Lt.amb[1]; lc.fillStyle = Lt.amb[0]; lc.fillRect(rx, ry, rw, rh);
   lc.restore();
   const d = Lt.band * u; band(Lt.key[0] * d, Lt.key[1] * d, Lt.shade, 1, 'multiply');                   // the cel tone
-  for (const [dir, col, a, w] of Lt.rim) band(-dir[0] * w * u, -dir[1] * w * u, col, a, 'screen');      // rims
+  // the rim: a thin line of the set's light just inside the outline, only on edges that face the light (depth d1..d2 measured
+  // toward it), strongest at head and shoulder height and fading down the figure; nothing on the far side, no halo
+  const [dir, col, alpha] = Lt.rims[side], n = Math.hypot(dir[0], dir[1]), Rx = dir[0] / n, Ry = dir[1] / n;
+  const d1 = Lt.ink * u + .5, d2 = d1 + clamp(Lt.rimW * u, 2, 4);
+  mc.setTransform(1, 0, 0, 1, 0, 0); mc.globalAlpha = 1; mc.globalCompositeOperation = 'source-over'; mc.clearRect(rx, ry, rw, rh);
+  mc.drawImage(L, rx, ry, rw, rh, rx, ry, rw, rh);
+  mc.globalCompositeOperation = 'source-in'; mc.fillStyle = col; mc.fillRect(rx, ry, rw, rh);
+  mc.globalCompositeOperation = 'destination-out'; mc.drawImage(L, rx, ry, rw, rh, rx - Rx * d2, ry - Ry * d2, rw, rh);
+  mc.globalCompositeOperation = 'destination-in'; mc.drawImage(L, rx, ry, rw, rh, rx - Rx * d1, ry - Ry * d1, rw, rh);
+  const fo = mc.createLinearGradient(0, ry, 0, ry + rh); fo.addColorStop(0, 'rgba(0,0,0,.5)'); fo.addColorStop(.2, 'rgba(0,0,0,1)'); fo.addColorStop(.45, 'rgba(0,0,0,.65)'); fo.addColorStop(.8, 'rgba(0,0,0,0)');
+  mc.fillStyle = fo; mc.fillRect(rx, ry, rw, rh);
+  lc.save(); lc.setTransform(1, 0, 0, 1, 0, 0); lc.globalAlpha = alpha; lc.globalCompositeOperation = 'screen'; lc.drawImage(M, rx, ry, rw, rh, rx, ry, rw, rh); lc.restore();
 }
 function k2Contact(g, x, y, w, h, a) {                     // a soft contact shadow (current transform), multiply
   g.save(); g.translate(x, y); g.scale(1, h / w);
@@ -383,7 +403,8 @@ function k2Character(C, orig, c, x, y, s, o) {
   const who = o.who || C.who, t = K2.t, u = s / 100;
   const st = { who, seed: k2Hash(who + ':' + (C.seedTag || '')), face: x < 540 ? 1 : -1 };
   const busyArms = o.hold || o.reachL || o.reachR || o.reach || o.mug != null || o.clipboard || o.point || o.press;
-  const kb = busyArms ? .35 : 1;                                                // hands on props: the torso moves less
+  const kb = busyArms ? (o.reachL || o.reachR ? .35 : .25) : 1;                 // hands on props: the torso moves less (reach targets are also
+                                                                                // corrected below; held props drawn by the episode are not)
   const B = k2Body(st, t), B1 = k2Body(st, t - .07), B2 = k2Body(st, t - .15);
   let lean = B.lean * kb, sx = B.sx * kb, sy = B.sy * (busyArms ? .5 : 1);
   const o2 = { ...o };
@@ -414,7 +435,7 @@ function k2Character(C, orig, c, x, y, s, o) {
   else { lc.translate(x, y); lc.rotate(lean); lc.scale(1 + sx, 1 + sy); lc.translate(-x, -y); }
   orig(lc, x, y, s, o2);
   lc.restore();
-  k2Shade(L, rx, ry, rw, rh, z * u);
+  k2Shade(L, rx, ry, rw, rh, z * u, x < 540 ? 'left' : 'right');
   c.save(); c.setTransform(1, 0, 0, 1, 0, 0); if (k2Light().pop) c.filter = k2Light().pop; c.drawImage(L, rx, ry, rw, rh, rx, ry, rw, rh); c.restore();
   if (!C.hang) K2.contacts.push({ c, x, y, w: 78 * u, z });
   k2HookCtx(c);
