@@ -90,6 +90,7 @@ function buildLab() {
   const Wn = LWIN;
   tShape(g, '#2b2f3e', gg => gg.rect(Wn.x - Wn.w / 2 - 16, Wn.y - Wn.h / 2 - 16, Wn.w + 32, Wn.h + 32), 4);
   tShape(g, '#c8c2b4', gg => gg.rect(Wn.x - Wn.w / 2 - 22, Wn.y + Wn.h / 2 + 10, Wn.w + 44, 18), 3.4);   // sill
+  if (typeof k2Haze === 'function') k2Haze(b);   // Look 2 only (vmkit.js)
   LAB_STATIC.lab = b;
   // bench front (everything below the bench top)
   const f = document.createElement('canvas'); f.width = W0; f.height = H0 - LCT + 40; const h = f.getContext('2d');

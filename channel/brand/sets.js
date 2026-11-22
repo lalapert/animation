@@ -27,6 +27,7 @@ function buildAisle() {
   // hanging aisle sign
   tLine(g, [700, 0, 700, 200], 3); tLine(g, [1100, 0, 1100, 200], 3);
   tShape(g, TOON.orange, gg => gg.roundRect(640, 190, 520, 90, 14), 4); tText(g, 'AISLE 3  SNACKS', 900, 236, 44, '#fff', '"Bungee"', 'center', 400);
+  if (typeof k2Haze === 'function') k2Haze(b);   // Look 2 only (vmkit.js)
   AISLE.back = b;
   // the shelf unit in front (drawn after the characters)
   const f = document.createElement('canvas'); f.width = AISLE.w; f.height = 2400 - AISLE.top + 60; const h = f.getContext('2d');

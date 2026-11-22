@@ -458,14 +458,23 @@ function closedEye(c, ex, ey, w, happy) {
   else tCurve(c, ex - w, ey - 3, ex, ey + 3, ex + w, ey - 3, 4.6);
 }
 
+// ---------- Look 2 hooks (vmkit.js K2; off unless the episode sets TL.LOOK = 2) ----------
+// o.l2 = {hx, hy, tilt, hair, hem, dart}: the head group moves and tilts on the neck (pivot py, local units), hair tips and
+// strings swing, the eyes dart. Without o.l2 (Look 1) nothing here draws or moves anything.
+function l2Head(c, o, py) { const L = o.l2; if (!L) return false; c.save(); c.translate(L.hx || 0, (L.hy || 0) + py); c.rotate(L.tilt || 0); c.translate(0, -py); return true; }
+function l2End(c, on) { if (on) c.restore(); }
+const l2v = (o, k) => (o.l2 && o.l2[k]) || 0;
+
 // ======================= v2: Void Mart cast in the shared anime-flat look (same silhouettes, colours and outfits) =======================
 function drawRae2(c, x, y, s, o = {}) {
   const R = TOON.rae, expr = o.expr || 'deadpan', IR = { iris: '#a27a4e', irisD: '#3e2716' };
   c.save(); c.translate(x, y); c.scale(s / 100, s / 100);
+  const hw = l2v(o, 'hair'), hm = l2v(o, 'hem'), h0 = l2Head(c, o, -178);
   // low messy bun + back hair
-  tEllipse(c, 50, -194, 19, 17, R.hair); tCurve(c, 40, -200, 52, -212, 64, -198, 2.6, R.hairL);
+  tEllipse(c, 50 + hw * .3, -194, 19, 17, R.hair); tCurve(c, 40, -200, 52, -212, 64, -198, 2.6, R.hairL);
   tCurve(c, 60, -184, 70, -178, 72, -168, 3.2);
   tShape(c, R.hairS, g => { g.moveTo(-46, -182); g.quadraticCurveTo(-60, -232, -48, -262); g.quadraticCurveTo(-34, -298, 2, -298); g.quadraticCurveTo(38, -298, 50, -262); g.quadraticCurveTo(60, -232, 46, -182); g.lineTo(38, -192); g.lineTo(-38, -192); g.closePath(); });
+  l2End(c, h0);
   // hood, hoodie, vest (as v1)
   tShape(c, R.hood, g => { g.moveTo(-42, -150); g.bezierCurveTo(-46, -176, 46, -176, 42, -150); g.closePath(); });
   const torso = g => { g.moveTo(-60, 2); g.lineTo(-64, -106); g.bezierCurveTo(-64, -138, -44, -150, -16, -158); g.lineTo(16, -158); g.bezierCurveTo(44, -150, 64, -138, 64, -106); g.lineTo(60, 2); g.closePath(); };
@@ -473,11 +482,12 @@ function drawRae2(c, x, y, s, o = {}) {
   const vl = g => { g.moveTo(-54, 2); g.lineTo(-57, -102); g.bezierCurveTo(-56, -132, -42, -142, -28, -148); g.lineTo(-12, -104); g.lineTo(-14, 2); g.closePath(); };
   const vr = g => { g.moveTo(54, 2); g.lineTo(57, -102); g.bezierCurveTo(56, -132, 42, -142, 28, -148); g.lineTo(12, -104); g.lineTo(14, 2); g.closePath(); };
   tShape(c, TOON.orange, vl); tShape(c, TOON.orange, vr); tShade(c, vr, TOON.orangeS, g => g.rect(38, -160, 30, 170));
-  tLine(c, [-6, -150, -8, -114], 2.6); tLine(c, [6, -150, 8, -112], 2.6);
-  tEllipse(c, -8, -112, 2.6, 4, TOON.white, 2); tEllipse(c, 8, -110, 2.6, 4, TOON.white, 2);
+  tLine(c, [-6, -150, -8 + hm, -114], 2.6); tLine(c, [6, -150, 8 + hm, -112], 2.6);
+  tEllipse(c, -8 + hm, -112, 2.6, 4, TOON.white, 2); tEllipse(c, 8 + hm, -110, 2.6, 4, TOON.white, 2);
   nameTag(c, -35, -88, 27, 12, 'RAE');
   const neck = g => g.rect(-11, -184, 22, 30);
   tShape(c, R.skin, neck); tShade(c, neck, R.skinS, g => g.rect(-11, -184, 22, 12));
+  const h1 = l2Head(c, o, -178);
   tEllipse(c, -38, -222, 6.5, 10.5, R.skin); tEllipse(c, 38, -222, 6.5, 10.5, R.skin);
   // face
   const face = g => { g.moveTo(0, -272); g.bezierCurveTo(27, -272, 39, -256, 39, -232); g.bezierCurveTo(39, -210, 27, -188, 0, -175); g.bezierCurveTo(-27, -188, -39, -210, -39, -232); g.bezierCurveTo(-39, -256, -27, -272, 0, -272); g.closePath(); };
@@ -490,7 +500,7 @@ function drawRae2(c, x, y, s, o = {}) {
     const ex = sx * 16, ey = -222;
     if (expr === 'sigh') tCurve(c, ex - 10, ey - 4, ex, ey + 1, ex + 10, ey - 4, 4.4);
     else if (o.blink) closedEye(c, ex, ey - 3, 11);
-    else animeEye(c, ex, ey, sx, { ...IR, skin: R.skin, w: 12, h: 12.5, lid, look: o.look ?? 1.5 });
+    else animeEye(c, ex, ey, sx, { ...IR, skin: R.skin, w: 12, h: 12.5, lid, look: (o.look ?? 1.5) + l2v(o, 'dart') });
     if (expr === 'shocked') { c.fillStyle = '#fff'; c.beginPath(); c.arc(ex, ey - 4, 5.5, 0, 6.2832); c.fill(); c.fillStyle = TOON.ink; c.beginPath(); c.arc(ex, ey - 4, 2.6, 0, 6.2832); c.fill(); }
     if (expr !== 'shocked') tCurve(c, ex - 8, ey + 11, ex, ey + 13, ex + 8, ey + 10, 1.8, R.skinS);   // tired bags
     const bi = ex - sx * 11, bo = ex + sx * 11;
@@ -511,11 +521,12 @@ function drawRae2(c, x, y, s, o = {}) {
   c.restore();
   // front hair: middle part, long curtains in clumps, two antenna strands
   for (const sx of [-1, 1]) tShape(c, R.hair, g => {
-    g.moveTo(sx * 2, -292); g.quadraticCurveTo(sx * 32, -290, sx * 45, -254); g.quadraticCurveTo(sx * 49, -224, sx * 46, -194);
-    g.lineTo(sx * 40, -210); g.lineTo(sx * 37, -196); g.quadraticCurveTo(sx * 34, -228, sx * 24, -246);
+    g.moveTo(sx * 2, -292); g.quadraticCurveTo(sx * 32, -290, sx * 45, -254); g.quadraticCurveTo(sx * 49, -224, sx * 46 + hw, -194);
+    g.lineTo(sx * 40 + hw * .8, -210); g.lineTo(sx * 37 + hw * .7, -196); g.quadraticCurveTo(sx * 34, -228, sx * 24, -246);
     g.lineTo(sx * 17, -236); g.quadraticCurveTo(sx * 10, -258, sx * 2, -266); g.closePath(); });
   tCurve(c, -10, -284, -30, -276, -38, -250, 2.6, R.hairL);
-  tCurve(c, 2, -291, 6, -308, 16, -312, 3.2); tCurve(c, -4, -291, -12, -306, -6, -316, 3.2);
+  tCurve(c, 2, -291, 6 + hw * .5, -308, 16 + hw, -312, 3.2); tCurve(c, -4, -291, -12 + hw * .5, -306, -6 + hw, -316, 3.2);
+  l2End(c, h1);
   // coffee mug: o.mug 0 = on the counter, 1 = at the mouth. Lifted, it is held by her right hand, and that arm goes up with it.
   const mk = o.mug != null ? Math.min(1, Math.max(0, o.mug)) : 0, me = mk * mk * (3 - 2 * mk), lifted = o.mug != null && mk > .05;
   const mx = 40 + (6 - 40) * me, my = -16 + (-176 + 16) * me;
@@ -545,7 +556,9 @@ function drawRae2(c, x, y, s, o = {}) {
 function drawPip2(c, x, y, s, o = {}) {
   const P = TOON.pip, expr = o.expr || 'grin', IR = { iris: '#ffb347', irisD: '#a0521a' };
   c.save(); c.translate(x, y); c.scale(s / 100, s / 100);
+  const hw = l2v(o, 'hair'), h0 = l2Head(c, o, -128);
   tShape(c, P.hairS, g => { g.moveTo(-54, -148); g.quadraticCurveTo(-66, -214, -44, -234); g.quadraticCurveTo(-24, -246, 0, -246); g.quadraticCurveTo(24, -246, 44, -234); g.quadraticCurveTo(66, -214, 54, -148); g.lineTo(44, -156); g.lineTo(40, -142); g.lineTo(30, -152); g.lineTo(-30, -152); g.lineTo(-40, -142); g.lineTo(-44, -156); g.closePath(); });
+  l2End(c, h0);
   const torso = g => { g.moveTo(-50, 2); g.lineTo(-53, -76); g.bezierCurveTo(-53, -98, -38, -106, -20, -110); g.lineTo(20, -110); g.bezierCurveTo(38, -106, 53, -98, 53, -76); g.lineTo(50, 2); g.closePath(); };
   tShape(c, P.shirt, torso); tShade(c, torso, P.shirtS, g => g.rect(24, -120, 40, 130));
   const vl = g => { g.moveTo(-62, 2); g.lineTo(-66, -76); g.bezierCurveTo(-66, -100, -50, -110, -30, -114); g.lineTo(-9, -78); g.lineTo(-11, 2); g.closePath(); };
@@ -556,6 +569,7 @@ function drawPip2(c, x, y, s, o = {}) {
   tShape(c, P.shirt, g => { g.moveTo(-20, -112); g.quadraticCurveTo(0, -96, 20, -112); g.quadraticCurveTo(0, -104, -20, -112); g.closePath(); }, 3);
   const neck = g => g.rect(-10, -136, 20, 26);
   tShape(c, P.skin, neck); tShade(c, neck, P.skinS, g => g.rect(-10, -136, 20, 10));
+  const h1 = l2Head(c, o, -128);
   tEllipse(c, -44, -174, 6.5, 10, P.skin); tEllipse(c, 44, -174, 6.5, 10, P.skin);
   // face: round, small chin
   const face = g => { g.moveTo(0, -222); g.bezierCurveTo(30, -222, 45, -204, 45, -180); g.bezierCurveTo(45, -158, 30, -138, 0, -131); g.bezierCurveTo(-30, -138, -45, -158, -45, -180); g.bezierCurveTo(-45, -204, -30, -222, 0, -222); g.closePath(); };
@@ -571,7 +585,7 @@ function drawPip2(c, x, y, s, o = {}) {
     if (expr === 'sheepish') { tCurve(c, ex - 10, ey - 2, ex, ey - 12, ex + 10, ey - 2, 4.6); continue; }
     if (o.blink) { closedEye(c, ex, ey - 2, 11, expr === 'grin'); continue; }
     const big = expr === 'gasp' ? 1.12 : 1;
-    animeEye(c, ex, ey + 2, sx, { ...IR, skin: P.skin, w: 12.5 * big, h: 19 * big, lid: expr === 'sad' ? .12 : 0, look: expr === 'worried' ? -sx * 1.5 : 0, tilt: -.1, round: true, flick: false });
+    animeEye(c, ex, ey + 2, sx, { ...IR, skin: P.skin, w: 12.5 * big, h: 19 * big, lid: expr === 'sad' ? .12 : 0, look: (expr === 'worried' ? -sx * 1.5 : 0) + l2v(o, 'dart'), tilt: -.1, round: true, flick: false });
     c.fillStyle = '#fff'; c.beginPath(); c.arc(ex + 3, ey - 2, 1.8, 0, 6.2832); c.fill();
     if (expr === 'sad') { c.fillStyle = 'rgba(126,220,255,.8)'; c.beginPath(); c.ellipse(ex, ey + 6, 11, 4, 0, 0, 6.2832); c.fill(); tShape(c, '#9fe6ff', g => { g.moveTo(ex + sx * 6, ey + 8); g.quadraticCurveTo(ex + sx * 12, ey + 20, ex + sx * 7, ey + 24); g.quadraticCurveTo(ex + sx * 1, ey + 20, ex + sx * 6, ey + 8); g.closePath(); }, 2.4); }
   }
@@ -595,7 +609,7 @@ function drawPip2(c, x, y, s, o = {}) {
   c.restore();
   // front hair: blunt bangs in clumps, side locks curling in, star clip
   tShape(c, P.hair, g => { g.moveTo(50, -168); g.quadraticCurveTo(58, -238, 0, -240); g.quadraticCurveTo(-58, -238, -50, -168); clumps(g, [[-50, -168], [-45, -178], [-40, -198], [-32, -186], [-24, -202], [-14, -188], [-6, -204], [4, -188], [12, -204], [22, -188], [30, -202], [38, -186], [44, -198], [50, -168]]); g.closePath(); });
-  for (const sx of [-1, 1]) tShape(c, P.hair, g => { g.moveTo(sx * 48, -186); g.quadraticCurveTo(sx * 60, -158, sx * 50, -138); g.quadraticCurveTo(sx * 44, -132, sx * 38, -138); g.quadraticCurveTo(sx * 46, -146, sx * 44, -158); g.quadraticCurveTo(sx * 42, -172, sx * 42, -184); g.closePath(); });
+  for (const sx of [-1, 1]) tShape(c, P.hair, g => { g.moveTo(sx * 48, -186); g.quadraticCurveTo(sx * 60 + hw * .5, -158, sx * 50 + hw, -138); g.quadraticCurveTo(sx * 44 + hw, -132, sx * 38 + hw, -138); g.quadraticCurveTo(sx * 46, -146, sx * 44, -158); g.quadraticCurveTo(sx * 42, -172, sx * 42, -184); g.closePath(); });
   tCurve(c, -30, -228, -10, -236, 10, -234, 3.2, P.hairL);
   drawStar(c, 34, -216, 11, P.clip, 3.2);
   // brows over the bangs (thin)
@@ -606,6 +620,7 @@ function drawPip2(c, x, y, s, o = {}) {
     else tCurve(c, bi, by, ex, by - 5, bo, by, 2.8);
   }
   if (expr === 'worried' || expr === 'sheepish' || o.sweat) tShape(c, '#9fe6ff', g => { g.moveTo(54, -210); g.quadraticCurveTo(62, -196, 58, -190); g.quadraticCurveTo(52, -186, 49, -194); g.quadraticCurveTo(48, -200, 54, -210); g.closePath(); }, 2.6);
+  l2End(c, h1);
   if (o.armsDown) { hangingArms(c, o, 52, -88, o.handY || 96, 21, P.shirt, P.shirtS, P.skin, P.skinS); c.restore(); return; }
   if (o.arms !== false) {
     if (o.hold) tTube(c, [-52, -88, -60, -60, -40, -86, -30, -100, -16, -104], 20, P.shirt);

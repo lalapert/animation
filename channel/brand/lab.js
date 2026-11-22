@@ -353,9 +353,11 @@ const LAB2 = {
 function drawVera2(c, x, y, s, o = {}) {
   const V = LAB2.vera, expr = o.expr || 'cool';
   c.save(); c.translate(x, y); c.scale(s / 100, s / 100);
+  const hw = l2v(o, 'hair'), h0 = l2Head(c, o, -176);
   // back hair: sleek long bob, jagged ends at the shoulders
   const back = g => { g.moveTo(-52, -154); g.quadraticCurveTo(-62, -200, -54, -238); g.quadraticCurveTo(-46, -290, 0, -292); g.quadraticCurveTo(46, -290, 54, -238); g.quadraticCurveTo(62, -200, 54, -152); g.lineTo(44, -164); g.lineTo(38, -148); g.lineTo(30, -168); g.lineTo(-30, -168); g.lineTo(-38, -150); g.lineTo(-44, -166); g.closePath(); };
   tShape(c, V.hairS, back);
+  l2End(c, h0);
   // lab coat + dark high-neck top
   const torso = g => { g.moveTo(-64, 2); g.lineTo(-68, -104); g.bezierCurveTo(-68, -136, -46, -146, -18, -152); g.lineTo(18, -152); g.bezierCurveTo(46, -146, 68, -136, 68, -104); g.lineTo(64, 2); g.closePath(); };
   tShape(c, V.top, torso);
@@ -373,6 +375,7 @@ function drawVera2(c, x, y, s, o = {}) {
   tShape(c, V.skin, neck); tShade(c, neck, V.skinS, g => g.rect(-10, -182, 20, 12));
   tShape(c, V.top, g => g.roundRect(-16, -164, 32, 16, 4), 3.4);
   // ear (left, hair tucked) + lightning-bolt earring
+  const h1 = l2Head(c, o, -176);
   tEllipse(c, -40, -218, 6.5, 10, V.skin);
   tShape(c, LAB.glow, g => { g.moveTo(-42, -207); g.lineTo(-46, -196); g.lineTo(-41, -197); g.lineTo(-44, -186); g.lineTo(-37, -199); g.lineTo(-41, -198); g.closePath(); }, 2.2);
   // face
@@ -387,7 +390,7 @@ function drawVera2(c, x, y, s, o = {}) {
     if (expr === 'laugh') { tCurve(c, ex - 10, ey - 2, ex, ey - 11, ex + 10, ey - 2, 5); continue; }
     if (o.blink) { closedEye(c, ex, ey - 2, 11, false); continue; }
     if (expr === 'scheme') { animeEye(c, ex, ey, sx, { ...E, h: 13, w: 12 }); c.fillStyle = '#fff'; continue; }
-    animeEye(c, ex, ey, sx, { ...E, lid: expr === 'cool' ? .26 : 0, look: expr === 'fluster' ? -2 : 1 });
+    animeEye(c, ex, ey, sx, { ...E, lid: expr === 'cool' ? .26 : 0, look: (expr === 'fluster' ? -2 : 1) + l2v(o, 'dart') });
   }
   if (expr === 'scheme' && !o.blink) for (const sx of [-1, 1]) { c.fillStyle = '#fff'; c.beginPath(); c.arc(sx * 17, -226, 5.5, 0, 6.2832); c.fill(); c.fillStyle = TOON.ink; c.beginPath(); c.arc(sx * 17, -226, 2.6, 0, 6.2832); c.fill(); }  // tiny manic pupils
   // brows: thin, sharp
@@ -421,7 +424,7 @@ function drawVera2(c, x, y, s, o = {}) {
   c.restore();
   // front hair: side part, swept bangs, one long lock on the right
   tShape(c, V.hair, g => { g.moveTo(44, -272); g.quadraticCurveTo(30, -294, -10, -292); g.quadraticCurveTo(-42, -286, -48, -250); clumps(g, [[-48, -250], [-44, -226], [-36, -250], [-27, -232], [-18, -254], [-2, -234], [6, -256], [26, -222], [30, -246], [46, -206]]); g.quadraticCurveTo(54, -244, 44, -272); g.closePath(); });
-  tShape(c, V.hair, g => { g.moveTo(42, -250); g.quadraticCurveTo(54, -212, 46, -170); g.lineTo(40, -184); g.lineTo(36, -172); g.quadraticCurveTo(34, -210, 34, -238); g.closePath(); });
+  tShape(c, V.hair, g => { g.moveTo(42, -250); g.quadraticCurveTo(54, -212, 46 + hw, -170); g.lineTo(40 + hw * .8, -184); g.lineTo(36 + hw * .7, -172); g.quadraticCurveTo(34, -210, 34, -238); g.closePath(); });
   tCurve(c, -30, -276, -10, -284, 14, -280, 3.4, V.hairL); tCurve(c, 38, -260, 44, -240, 44, -220, 2.6, V.hairL);
   // lime bar hairpin on the left
   tShape(c, LAB.glow, g => { g.save(); g.translate(-38, -258); g.rotate(-.5); g.roundRect(-12, -3, 24, 6, 3); g.restore(); }, 2.6);
@@ -431,6 +434,7 @@ function drawVera2(c, x, y, s, o = {}) {
     for (const sx of [-1, 1]) { tShape(c, 'rgba(190,255,120,.55)', g => g.ellipse(sx * 18, -222, 17, 14, 0, 0, 6.2832), 4.4); c.fillStyle = 'rgba(255,255,255,.7)'; c.beginPath(); c.ellipse(sx * 18 - 6, -227, 5, 3, -.4, 0, 6.2832); c.fill(); }
     tLine(c, [-2, -222, 2, -222], 5);
   }
+  l2End(c, h1);
   // arms: one hand in the coat pocket; the other holds a glowing test tube (default), points (o.point: 0..1), rests (o.tube false),
   // holds a clipboard (o.clipboard), reaches to a local point (o.reachR = {x, y}); o.cheer raises both arms
   if (o.cheer) {
@@ -468,10 +472,12 @@ function drawVera2(c, x, y, s, o = {}) {
 function drawCleo2(c, x, y, s, o = {}) {
   const K = LAB2.cleo, expr = o.expr || 'deadpan';
   c.save(); c.translate(x, y); c.scale(s / 100, s / 100);
+  const hw = l2v(o, 'hair'), h0 = l2Head(c, o, -150);
   c.save(); c.translate(0, 22);
   const back = g => { g.moveTo(-50, -176); g.quadraticCurveTo(-60, -220, -50, -250); g.quadraticCurveTo(-40, -286, 0, -288); g.quadraticCurveTo(40, -286, 50, -250); g.quadraticCurveTo(60, -220, 50, -176); g.lineTo(42, -186); g.lineTo(38, -172); g.lineTo(30, -188); g.lineTo(-30, -188); g.lineTo(-38, -172); g.lineTo(-42, -186); g.closePath(); };
   tShape(c, K.hairS, back);
   c.restore();
+  l2End(c, h0);
   // tee + dark lab apron
   const torso = g => { g.moveTo(-54, 2); g.lineTo(-57, -100); g.bezierCurveTo(-57, -128, -38, -140, -16, -146); g.lineTo(16, -146); g.bezierCurveTo(38, -140, 57, -128, 57, -100); g.lineTo(54, 2); g.closePath(); };
   tShape(c, K.tee, torso); tShade(c, torso, '#dcd4ee', g => g.rect(28, -150, 30, 160));
@@ -485,6 +491,7 @@ function drawCleo2(c, x, y, s, o = {}) {
   const neck = g => g.rect(-10, -168, 20, 26);
   tShape(c, K.skin, neck); tShade(c, neck, K.skinS, g => g.rect(-10, -168, 20, 10));
   tCurve(c, -16, -146, 0, -138, 16, -146, 3.4);
+  const h1 = l2Head(c, o, -150);
   c.save(); c.translate(0, 22);
   // face: rounder, younger
   const face = g => { g.moveTo(0, -268); g.bezierCurveTo(30, -268, 42, -250, 41, -228); g.bezierCurveTo(40, -206, 26, -184, 0, -176); g.bezierCurveTo(-26, -184, -40, -206, -41, -228); g.bezierCurveTo(-42, -250, -30, -268, 0, -268); g.closePath(); };
@@ -494,7 +501,7 @@ function drawCleo2(c, x, y, s, o = {}) {
   c.save(); c.translate((o.turn || 0) * 12, 0); c.scale(1 - Math.abs(o.turn || 0) * .1, 1);   // 3/4 turn (bodies.js): the features slide toward where she faces
   // eyes: half-lidded
   const lid = { deadpan: .42, sleepy: .7, surprised: 0, smug: .5 }[expr] ?? .42;
-  for (const sx of [-1, 1]) { if (o.blink) closedEye(c, sx * 17, -222, 11, false); else animeEye(c, sx * 17, -220, sx, { skin: K.skin, iris: K.iris, irisD: K.irisD, w: 12.5, h: 14, lid, look: o.look ?? (expr === 'smug' ? 2 * sx * -1 : 0) }); }
+  for (const sx of [-1, 1]) { if (o.blink) closedEye(c, sx * 17, -222, 11, false); else animeEye(c, sx * 17, -220, sx, { skin: K.skin, iris: K.iris, irisD: K.irisD, w: 12.5, h: 14, lid, look: (o.look ?? (expr === 'smug' ? 2 * sx * -1 : 0)) + l2v(o, 'dart') }); }
   // nose + mouth
   tLine(c, [2, -204, 0, -200], 2.4);
   if (o.mouth && o.mouth.a > .06) talkMouth(c, 0, -190, o.mouth.a * .75, o.mouth.shape, .75);   // she never opens her mouth much
@@ -504,14 +511,15 @@ function drawCleo2(c, x, y, s, o = {}) {
   c.restore();
   // front hair: choppy blunt bangs, jaw-length side locks, one cowlick
   tShape(c, K.hair, g => { g.moveTo(47, -236); g.quadraticCurveTo(52, -284, 0, -286); g.quadraticCurveTo(-52, -284, -47, -236); clumps(g, [[-47, -236], [-42, -226], [-34, -250], [-26, -230], [-16, -252], [-6, -232], [2, -254], [12, -230], [20, -252], [30, -232], [38, -250], [47, -228]]); g.closePath(); });
-  for (const sx of [-1, 1]) tShape(c, K.hair, g => { g.moveTo(sx * 42, -248); g.quadraticCurveTo(sx * 54, -214, sx * 48, -178); g.lineTo(sx * 42, -190); g.lineTo(sx * 39, -176); g.quadraticCurveTo(sx * 35, -206, sx * 35, -236); g.closePath(); });
-  tShape(c, K.hair, g => { g.moveTo(-2, -285); g.quadraticCurveTo(4, -312, 22, -306); g.quadraticCurveTo(8, -302, 5, -285); g.closePath(); });
+  for (const sx of [-1, 1]) tShape(c, K.hair, g => { g.moveTo(sx * 42, -248); g.quadraticCurveTo(sx * 54, -214, sx * 48 + hw, -178); g.lineTo(sx * 42 + hw * .8, -190); g.lineTo(sx * 39 + hw * .7, -176); g.quadraticCurveTo(sx * 35, -206, sx * 35, -236); g.closePath(); });
+  tShape(c, K.hair, g => { g.moveTo(-2, -285); g.quadraticCurveTo(4 + hw * .5, -312, 22 + hw, -306); g.quadraticCurveTo(8, -302, 5, -285); g.closePath(); });
   tCurve(c, -28, -272, -8, -280, 14, -276, 3.2, K.hairL);
   // test-tube hair clip on the right
   c.save(); c.translate(38, -240); c.rotate(.5);
   tShape(c, '#fbf7ff', g => g.roundRect(-5, -14, 10, 28, 5), 2.6); tShade(c, g => g.roundRect(-5, -14, 10, 28, 5), LAB.glow, g => g.rect(-6, 0, 12, 16)); tShape(c, null, g => g.roundRect(-5, -14, 10, 28, 5), 2.6);
   c.restore();
   c.restore();
+  l2End(c, h1);
   // arms: lime gloves, a remote with a big red button
   if (o.armsDown) { hangingArms(c, o, 53, -118, 102, 19, K.tee, '#dcd4ee', K.glove, LAB.glowS); c.restore(); return; }
   if (o.reachL) { const r = o.reachL, mx = (-76 + r.x) / 2 - 4, my = (-76 + r.y) / 2 + 6; tTube(c, [-53, -118, -76, -76, mx, my, (mx + r.x) / 2, (my + r.y) / 2, r.x - 2, r.y - 4], 18, K.tee); }
