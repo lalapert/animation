@@ -1,0 +1,76 @@
+{
+ "summary": {
+  "episode": "vm12-restock",
+  "act": 1.5,
+  "step": 2,
+  "frames": 1238,
+  "rigFrames": 2911,
+  "perRig": {
+   "drawMags:MAGS": 773,
+   "drawRae2:RAE": 1069,
+   "drawPip2:PIP": 1069
+  },
+  "cues": 141,
+  "limits": {
+   "armRoot": 1.5,
+   "hand": 3,
+   "pupilOut": 0,
+   "eyeHead": 0.5,
+   "stretch": 0.08,
+   "neckOpen": 0,
+   "epArm": 1.5,
+   "epHand": 3
+  },
+  "worst": {
+   "armRoot": {
+    "v": 0,
+    "t": 41.1333,
+    "rig": "drawPip2:PIP"
+   },
+   "hand": {
+    "v": 0.931,
+    "t": 27.6333,
+    "rig": "drawRae2:RAE"
+   },
+   "pupilOut": {
+    "v": 0,
+    "t": 0,
+    "rig": "drawMags:MAGS"
+   },
+   "eyeHead": {
+    "v": 0,
+    "t": 0,
+    "rig": "drawMags:MAGS"
+   },
+   "stretch": {
+    "v": 0.044,
+    "t": 0.9,
+    "rig": "drawPip2:PIP"
+   },
+   "neckOpen": {
+    "v": 0,
+    "t": 0,
+    "rig": "drawMags:MAGS"
+   },
+   "joint": {
+    "v": 44.313,
+    "t": 16.5333,
+    "rig": "drawRae2:RAE"
+   },
+   "epArm": {
+    "v": 0,
+    "t": 16.6,
+    "rig": "episode"
+   },
+   "epHand": {
+    "v": 0,
+    "t": 19.2333,
+    "rig": "episode"
+   }
+  },
+  "failures": 0,
+  "byKind": {},
+  "seconds": 62
+ },
+ "fails": []
+}

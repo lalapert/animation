@@ -1,0 +1,65 @@
+{
+ "summary": {
+  "episode": "vl08-invisible",
+  "act": 1,
+  "step": 2,
+  "frames": 1273,
+  "rigFrames": 395,
+  "perRig": {
+   "drawCleo2:CLEO": 240,
+   "drawVera2:VERA": 155
+  },
+  "cues": 146,
+  "limits": {
+   "armRoot": 1.5,
+   "hand": 3,
+   "pupilOut": 0,
+   "eyeHead": 0.5,
+   "stretch": 0.08,
+   "neckOpen": 0,
+   "epArm": 1.5,
+   "epHand": 3
+  },
+  "worst": {
+   "armRoot": {
+    "v": 0,
+    "t": 38.1667,
+    "rig": "drawCleo2:CLEO"
+   },
+   "hand": {
+    "v": 0,
+    "t": 7.2,
+    "rig": "drawCleo2:CLEO"
+   },
+   "pupilOut": {
+    "v": 0,
+    "t": 7.2,
+    "rig": "drawCleo2:CLEO"
+   },
+   "eyeHead": {
+    "v": 0,
+    "t": 7.2,
+    "rig": "drawCleo2:CLEO"
+   },
+   "stretch": {
+    "v": 0.041,
+    "t": 32.3,
+    "rig": "drawVera2:VERA"
+   },
+   "neckOpen": {
+    "v": 0,
+    "t": 7.2,
+    "rig": "drawCleo2:CLEO"
+   },
+   "joint": {
+    "v": 23.704,
+    "t": 32.2667,
+    "rig": "drawVera2:VERA"
+   }
+  },
+  "failures": 0,
+  "byKind": {},
+  "seconds": 87
+ },
+ "fails": []
+}

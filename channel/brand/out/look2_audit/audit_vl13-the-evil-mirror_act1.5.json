@@ -1,0 +1,75 @@
+{
+ "summary": {
+  "episode": "vl13-the-evil-mirror",
+  "act": 1.5,
+  "step": 2,
+  "frames": 1219,
+  "rigFrames": 3153,
+  "perRig": {
+   "drawVera2:VERA": 1794,
+   "drawCleo2:CLEO": 1359
+  },
+  "cues": 139,
+  "limits": {
+   "armRoot": 1.5,
+   "hand": 3,
+   "pupilOut": 0,
+   "eyeHead": 0.5,
+   "stretch": 0.08,
+   "neckOpen": 0,
+   "epArm": 1.5,
+   "epHand": 3
+  },
+  "worst": {
+   "armRoot": {
+    "v": 0,
+    "t": 38,
+    "rig": "drawCleo2:CLEO"
+   },
+   "hand": {
+    "v": 0,
+    "t": 38,
+    "rig": "drawCleo2:CLEO"
+   },
+   "pupilOut": {
+    "v": 0,
+    "t": 0,
+    "rig": "drawVera2:VERA"
+   },
+   "eyeHead": {
+    "v": 0,
+    "t": 0,
+    "rig": "drawVera2:VERA"
+   },
+   "stretch": {
+    "v": 0.053,
+    "t": 7.5,
+    "rig": "drawVera2:VERA"
+   },
+   "neckOpen": {
+    "v": 0,
+    "t": 0,
+    "rig": "drawVera2:VERA"
+   },
+   "joint": {
+    "v": 41.893,
+    "t": 28.0333,
+    "rig": "drawCleo2:CLEO"
+   },
+   "epArm": {
+    "v": 0,
+    "t": 12,
+    "rig": "episode"
+   },
+   "epHand": {
+    "v": 0,
+    "t": 21.5333,
+    "rig": "episode"
+   }
+  },
+  "failures": 0,
+  "byKind": {},
+  "seconds": 90
+ },
+ "fails": []
+}
