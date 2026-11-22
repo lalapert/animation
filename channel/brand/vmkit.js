@@ -30,6 +30,14 @@
 //     soft contact shadows where the cast meets the counter/bench and under the register, a light vignette, and the back set
 //     hazed a little (haze) so the cast has more contrast than the set. Tune per episode by editing K2.LIGHT.vm/.vl fields in film.js.
 //     Before/after: node channel/tools/look2_sample.cjs <episode dir> t0 t1 <out prefix> [--inject staging.js] [--stills ...]
+//  5. Safety (owner 11/22: no loose arms, no misplaced eyes, ever). Hard limits in K2LIM: the lean is a shear about the resting
+//     hands' height (K2CAST.handY), so hands on the counter cannot slide; no sideways squash; lean <= .09, head tilt <= .14 rad,
+//     squash/stretch <= 7%, head shift <= 3 units sideways and only as far up as the chin still covers the neck (in Look 2 the neck
+//     rect also runs 10 units up behind the face), 3/4 turn from cues <= .6; hands on props the episode or counter holds (hold,
+//     reach, mug, clipboard, point, press) freeze the torso; reach targets are corrected exactly and the torso leans less if the arm
+//     would stretch over 4%; pupils (look + dart) are clamped to .42 of the eye width (l2Look in toon.js).
+//     Before rendering a Look 2 episode run the machine check, which must exit 0:
+//       node channel/tools/look2_audit.cjs <episode dir> [--act 1.5] [--step 2] [--inject cues.js] [--sheets]
 'use strict';
 const W = 1080, H = 1920;
 const CT = 1290;                                  // counter top (world y)
@@ -45,6 +53,7 @@ const K2 = {
   on: !!((window.TL && TL.LOOK === 2) || (typeof location !== 'undefined' && /[?&]look=2(&|$)/.test(location.search))),
   t: 0, ticked: false, busy: 0, contacts: [], layers: new Map(), shotFx: {}, angle: 0, set: null,
   act: 1,                                        // acting strength: 0 = still (Look 1 poses), 1 = default, up to ~1.5 for broad scenes
+  audit: false, auditLog: [], auditRigs: [], auditEp: null,
   // per show: key light direction (toward the light), cel tone (shade, band units), falloff, ambient tint; rims = one directional
   // rim per figure, picked by which side of the set it stands on ([direction toward the light, colour, alpha]); rimW = rim width
   // in rig units, clamped to 2-4 screen px, drawn just inside the outline (ink units); contact shadow alpha; haze on the back set
@@ -59,6 +68,10 @@ const K2 = {
 };
 // Look 2: lower the back set's contrast a little (a haze of the set's own dark), so the cast reads in front of it
 function k2Haze(canvas, h = null) { if (!K2.on || !canvas) return; const Lt = K2.LIGHT[K2.set || (typeof buildLab === 'function' ? 'vl' : 'vm')], [col, a] = h || Lt.haze, g = canvas.getContext('2d'); g.save(); g.setTransform(1, 0, 0, 1, 0, 0); g.globalAlpha = a; g.fillStyle = col; g.fillRect(0, 0, canvas.width, canvas.height); g.restore(); }
+if (K2.on && typeof location !== 'undefined') {    // test switches: ?look=2&audit=1 (measure, see look2_audit.cjs), &act=1.5
+  K2.audit = /[?&]audit=1(&|$)/.test(location.search);
+  const ma = location.search.match(/[?&]act=([0-9.]+)/); if (ma) K2.act = +ma[1];
+}
 // Look 2 episodes that do not call shotAt(t) each frame call this first in render(t)
 function look2Frame(t) { if (K2.on) k2Tick(t); }
 
@@ -281,14 +294,24 @@ function endCard(g, t, show) {
 
 // ================================================================ LOOK 2 (opt-in, from Void Mart 14 and Volt Labs 14 on) ================
 // See the how-to at the top of this file. Everything below is inert unless K2.on (TL.LOOK === 2, or ?look=2 in the page URL).
-const K2CAST = {   // who (TL.VO speaker id), neck pivot (local units), drawing box (local units: x0, y0, x1, y1; y1 covers armsDown hands)
-  drawPip2: { who: 'PIP', pivot: -128, box: [-125, -265, 125, 140] },
-  drawRae2: { who: 'RAE', pivot: -178, box: [-125, -335, 125, 140] },
-  drawVera2: { who: 'VERA', pivot: -176, box: [-130, -330, 135, 140] },
-  drawCleo2: { who: 'CLEO', pivot: -150, box: [-125, -330, 125, 140] },
-  drawDennis: { who: 'DENNIS', pivot: -200, box: [-160, -385, 160, 30] },
+// who (TL.VO speaker id); pivot = neck pivot of the head group (local units); handY = resting-hand height (lean/squash pivot); box = drawing box (x0, y0, x1, y1; y1 covers armsDown
+// hands); neck = [top y, half width] of the neck rect and chin = lowest face y (the head may rise only while the chin still overlaps
+// the neck); face = the face outline (for the audit's neck-cover test); shoulders = arm roots (for episode-drawn arms)
+const K2CAST = {
+  drawPip2: { who: 'PIP', pivot: -128, handY: -13, box: [-125, -265, 125, 140], neck: [-136, 10], chin: -131, shoulders: [[-52, -88], [52, -88], [50, -92]],
+    face: [0, -222, 30, -222, 45, -204, 45, -180, 45, -158, 30, -138, 0, -131, -30, -138, -45, -158, -45, -180, -45, -204, -30, -222, 0, -222] },
+  drawRae2: { who: 'RAE', pivot: -178, handY: -21, box: [-125, -335, 125, 140], neck: [-184, 11], chin: -175, shoulders: [[-58, -122], [58, -122]],
+    face: [0, -272, 27, -272, 39, -256, 39, -232, 39, -210, 27, -188, 0, -175, -27, -188, -39, -210, -39, -232, -39, -256, -27, -272, 0, -272] },
+  drawVera2: { who: 'VERA', pivot: -176, handY: -10, box: [-130, -330, 135, 140], neck: [-182, 10], chin: -174, shoulders: [[-64, -120], [64, -120]],
+    face: [0, -272, 28, -272, 40, -256, 40, -232, 40, -212, 28, -190, 0, -174, -28, -190, -40, -212, -40, -232, -40, -256, -28, -272, 0, -272] },
+  drawCleo2: { who: 'CLEO', pivot: -150, handY: -40, box: [-125, -330, 125, 140], neck: [-168, 10], chin: -154, featDy: 22, shoulders: [[-53, -118], [53, -118]],
+    face: [0, -246, 30, -246, 42, -228, 41, -206, 40, -184, 26, -162, 0, -154, -26, -162, -40, -184, -41, -206, -42, -228, -30, -246, 0, -246] },
+  drawDennis: { who: 'DENNIS', pivot: -200, handY: -18, box: [-160, -385, 160, 30], shoulders: [[-104, -60], [104, -60]] },
   drawMags: { who: 'MAGS', hang: true, box: [-80, -30, 80, 110] },
 };
+// hard limits on the acting (radians / fractions / rig units): the rig can never be pushed past these, whatever K2.act or the cues say
+// lean is a shear about pivotY (forearm height on the counter), so hands resting there cannot move; there is no sideways squash
+const K2LIM = { lean: .09, tilt: .14, sy: .07, hx: 3, hyDown: 4, turn: .6, pivotY: -18, reachStretch: 1.04, neckUp: 10 };
 const k2Hash = s => { let h = 2166136261; for (const ch of String(s)) h = Math.imul(h ^ ch.charCodeAt(0), 16777619); return h >>> 0; };
 const k2Rand = (seed, i) => mulberry32((seed ^ Math.imul(i + 1, 0x9E3779B1)) >>> 0)();
 // a reaction beat: anticipation (down), the hit (up) with overshoot, a small rebound, settled by 1.2 s; 0 outside
@@ -344,7 +367,19 @@ function k2Blink(seed, t) {
   }
   return false;
 }
-function k2Tick(t) { if (!K2.ticked || t !== K2.t) { K2.t = t; K2.ticked = true; K2.contacts.length = 0; } }
+function k2Tick(t) {
+  if (!K2.ticked || t !== K2.t) {
+    K2.t = t; K2.ticked = true; K2.contacts.length = 0;
+    if (K2.audit) { K2.auditRigs = []; if (K2.auditEp) K2.auditEp.stop(); K2.auditEp = k2RecordFrame(); }
+  }
+}
+function k2RecordFrame() {                           // records tubes and hands drawn outside the rigs during the frame (audit only)
+  const rec = { tube: [], hand: [] }, keep = { tTube: window.tTube, tHand: window.tHand };
+  window.tTube = function (cc, ...a) { if (!K2.busy) rec.tube.push({ pts: a[0].slice(), w: a[1], m: cc.getTransform() }); return keep.tTube.call(this, cc, ...a); };
+  window.tHand = function (cc, ...a) { if (!K2.busy) rec.hand.push({ x: a[0], y: a[1], r: a[2], m: cc.getTransform() }); return keep.tHand.call(this, cc, ...a); };
+  rec.stop = () => { if (window.tTube !== keep.tTube) { window.tTube = keep.tTube; window.tHand = keep.tHand; } };
+  return rec;
+}
 function k2Layer(canvas, i) {
   const key = i + ':' + canvas.width + 'x' + canvas.height;
   let L = K2.layers.get(key); if (!L) { L = document.createElement('canvas'); L.width = canvas.width; L.height = canvas.height; K2.layers.set(key, L); }
@@ -400,25 +435,37 @@ function k2HookCtx(c) {
   };
 }
 function k2Character(C, orig, c, x, y, s, o) {
-  const who = o.who || C.who, t = K2.t, u = s / 100;
+  const who = o.who || C.who, t = K2.t, u = s / 100, Lm = K2LIM;
   const st = { who, seed: k2Hash(who + ':' + (C.seedTag || '')), face: x < 540 ? 1 : -1 };
-  const busyArms = o.hold || o.reachL || o.reachR || o.reach || o.mug != null || o.clipboard || o.point || o.press;
-  const kb = busyArms ? (o.reachL || o.reachR ? .35 : .25) : 1;                 // hands on props: the torso moves less (reach targets are also
-                                                                                // corrected below; held props drawn by the episode are not)
+  // hands on something the episode or the counter holds still: the torso does not lean or squash at all (only the head acts);
+  // a reach (reachL/R) may lean a little because its target is corrected below so the hand lands exactly where the episode put it
+  const held = o.hold || o.reach || o.mug != null || o.clipboard || o.point || o.press, reach = o.reachL || o.reachR;
+  const kb = held ? 0 : reach ? .35 : 1;
   const B = k2Body(st, t), B1 = k2Body(st, t - .07), B2 = k2Body(st, t - .15);
-  let lean = B.lean * kb, sx = B.sx * kb, sy = B.sy * (busyArms ? .5 : 1);
+  let lean = clamp(B.lean * kb, -Lm.lean, Lm.lean), sy = clamp(B.sy * kb, -Lm.sy, Lm.sy), sx = 0;
+  const py = C.handY ?? Lm.pivotY;                          // lean and squash pivot at the resting hands' height: they stay put
   const o2 = { ...o };
   if (!C.hang) {
     const piv = -C.pivot;                                                        // the head lags the torso, the hair lags the head
+    const up = C.chin != null ? -(C.chin - C.neck[0] - 2) : -6;                   // how far the head may rise and still cover the neck
     o2.l2 = {
-      tilt: B1.tilt + (B1.lean - B.lean) * 1.3,
-      hx: clamp((B1.lean - B.lean) * piv * .9 + (B.turn || 0) * 2, -5, 5), hy: clamp(B1.hy + (B1.sy - B.sy) * piv * .7, -6, 6),
+      tilt: clamp(B1.tilt + (B1.lean - B.lean) * 1.3 + lean * .5, -Lm.tilt, Lm.tilt),
+      hx: clamp((B1.lean - B.lean) * piv * .9 + (B.turn || 0) * 2, -Lm.hx, Lm.hx), hy: clamp(B1.hy + (B1.sy - B.sy) * piv * .7, up, Lm.hyDown),
       hair: clamp(((B2.lean + B2.tilt) - (B.lean + B.tilt)) * 150 + 1.2 * Math.sin(t * 2.1 + st.seed % 7), -9, 9),
       hem: clamp((B2.lean - B.lean) * 110 + .8 * Math.sin(t * 1.7 + st.seed % 5), -5, 5),
-      dart: k2Dart(st, t),
+      dart: k2Dart(st, t), neck: Lm.neckUp,
     };
-    if (B.turn) o2.turn = clamp((o.turn || 0) + B.turn, -1, 1);
-    const inv = r => { const cs = Math.cos(-lean), sn = Math.sin(-lean); return { ...r, x: (r.x * cs - r.y * sn) / (1 + sx), y: (r.x * sn + r.y * cs) / (1 + sy) }; };
+    if (B.turn) o2.turn = clamp((o.turn || 0) + clamp(B.turn, -Lm.turn, Lm.turn), -1, 1);
+    // reach IK: the hand stays on the episode's target; if leaning would stretch the arm past rest (shoulder further from the target
+    // than in Look 1 by more than reachStretch), the torso leans less instead
+    for (const [k, sh] of [['reachL', C.shoulders && C.shoulders[0]], ['reachR', C.shoulders && C.shoulders[1]]]) {
+      if (!o[k] || !sh) continue;
+      for (let i = 0; i < 6; i++) {
+        const S2 = k2Warp(sh[0], sh[1], lean, sx, sy, py), d1 = Math.hypot(o[k].x - sh[0], o[k].y - sh[1]), d2 = Math.hypot(o[k].x - S2[0], o[k].y - S2[1]);
+        if (d2 <= d1 * Lm.reachStretch) break; lean *= .5; sx *= .5; sy *= .5;
+      }
+    }
+    const inv = r => { const q = k2Unwarp(r.x, r.y, lean, sx, sy, py); return { ...r, x: q[0], y: q[1] }; };
     if (o.reachL) o2.reachL = inv(o.reachL); if (o.reachR) o2.reachR = inv(o.reachR);
   }
   const m = c.getTransform(), z = Math.sqrt(Math.abs(m.a * m.d - m.b * m.c)), bx = C.box;
@@ -431,14 +478,121 @@ function k2Character(C, orig, c, x, y, s, o) {
   lc.setTransform(1, 0, 0, 1, 0, 0); lc.globalAlpha = 1; lc.globalCompositeOperation = 'source-over'; lc.filter = 'none'; lc.shadowBlur = 0; lc.shadowColor = 'rgba(0,0,0,0)';
   lc.clearRect(rx, ry, rw, rh);
   lc.save(); lc.beginPath(); lc.rect(rx, ry, rw, rh); lc.clip(); lc.setTransform(m);
-  if (C.hang) { lc.translate(x, y); lc.rotate((B1.lean * 1.6 + B.tilt * .4) * K2.act); lc.translate(-x, -y); }          // MAGS swings on his mount
-  else { lc.translate(x, y); lc.rotate(lean); lc.scale(1 + sx, 1 + sy); lc.translate(-x, -y); }
-  orig(lc, x, y, s, o2);
+  const swing = clamp((B1.lean * 1.6 + B.tilt * .4) * K2.act, -.12, .12);
+  if (C.hang) { lc.translate(x, y); lc.rotate(swing); lc.translate(-x, -y); }          // MAGS swings on his mount
+  else { lc.translate(x, y + py * u); lc.transform(1, 0, -lean, 1, 0, 0); lc.scale(1 + sx, 1 + sy); lc.translate(-x, -(y + py * u)); }
+  if (K2.audit) k2AuditRig(C, orig, lc, m, x, y, s, o, o2, { lean, sx, sy, py, swing });
+  else orig(lc, x, y, s, o2);
   lc.restore();
   k2Shade(L, rx, ry, rw, rh, z * u, x < 540 ? 'left' : 'right');
   c.save(); c.setTransform(1, 0, 0, 1, 0, 0); if (k2Light().pop) c.filter = k2Light().pop; c.drawImage(L, rx, ry, rw, rh, rx, ry, rw, rh); c.restore();
   if (!C.hang) K2.contacts.push({ c, x, y, w: 78 * u, z });
   k2HookCtx(c);
+}
+// the torso warp in rig-local units: lean and squash about (0, py)
+function k2Warp(px, py0, lean, sx, sy, py) { const a = px * (1 + sx), b = (py0 - py) * (1 + sy); return [a - lean * b, py + b]; }
+function k2Unwarp(qx, qy, lean, sx, sy, py) { const b = qy - py, a = qx + lean * b; return [a / (1 + sx), py + b / (1 + sy)]; }
+const k2Shear = lean => new DOMMatrix([1, 0, -lean, 1, 0, 0]);     // x' = x - lean * y: positive lean moves the top to the right
+
+// ---------------------------------------------------------------- Look 2 audit (?look=2&audit=1): measures, never draws differently
+// Per frame and rig: arm roots vs the (leaned/squashed) torso's shoulder joints, arm length vs Look 1 (stretch), hands on props vs
+// where Look 1 puts them, pupils inside their whites, eyes on the head group's transform, the neck still covered by the face, and
+// arms/hands the episode draws itself for a rig (matched to its Look 1 shoulders/hands). channel/tools/look2_audit.cjs reads K2.auditLog.
+const k2P = (M, x, y) => [M.a * x + M.c * y + M.e, M.b * x + M.d * y + M.f];
+const k2D = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1]);
+function k2Record(ctx, fn) {                          // runs fn with the drawing helpers patched to record what is drawn on ctx
+  const rec = { tube: [], hand: [], eye: [], head: [] }, keep = {};
+  const patch = (n, f2) => { keep[n] = window[n]; window[n] = function (cc, ...a) { if (cc === ctx) f2(cc, a); return keep[n].call(this, cc, ...a); }; };
+  patch('tTube', (cc, a) => rec.tube.push({ pts: a[0].slice(), w: a[1], m: cc.getTransform() }));
+  patch('tHand', (cc, a) => rec.hand.push({ x: a[0], y: a[1], r: a[2], m: cc.getTransform() }));
+  patch('animeEye', (cc, a) => rec.eye.push({ ex: a[0], ey: a[1], sx: a[2], o: a[3], m: cc.getTransform() }));
+  keep.l2Head = window.l2Head;
+  window.l2Head = function (cc, o, py) { const r = keep.l2Head.call(this, cc, o, py); if (r && cc === ctx) rec.head.push({ m: cc.getTransform() }); return r; };
+  try { fn(); } finally { for (const n of Object.keys(keep)) window[n] = keep[n]; }
+  return rec;
+}
+function k2TubeLen(M, p) {                            // screen length of a tTube centre line (quadratic segments, as tTube draws them)
+  let L = 0, q = k2P(M, p[0], p[1]);
+  for (let i = 2; i + 3 < p.length; i += 4) for (let k = 1; k <= 8; k++) { const s = k / 8, a = (1 - s) * (1 - s), b = 2 * (1 - s) * s, c = s * s; const r = k2P(M, a * p[i - 2] + b * p[i] + c * p[i + 2], a * p[i - 1] + b * p[i + 1] + c * p[i + 3]); L += k2D(q, r); q = r; }
+  return L;
+}
+function k2EyeWhite(ex, ey, sx, o) {                 // the white of animeEye as a Path2D (eye-local units)
+  const w = o.w || 12, h = o.h || 12, tilt = o.tilt ?? .3, ixx = ex - sx * w, oxx = ex + sx * w, iyy = ey - h * .1, oyy = ey - h * .1 - tilt * h * .3, P = new Path2D();
+  P.moveTo(ixx, iyy);
+  if (o.round) P.bezierCurveTo(ixx + sx * 1, ey - h * 1.02, oxx - sx * 2, ey - h * 1.02, oxx, oyy); else P.quadraticCurveTo(ex - sx * 1, ey - h * 1.35, oxx, oyy);
+  P.quadraticCurveTo(ex, ey + h * .6, ixx, iyy); P.closePath(); return P;
+}
+function k2FacePath(f) { const P = new Path2D(); P.moveTo(f[0], f[1]); for (let i = 2; i < f.length; i += 6) P.bezierCurveTo(f[i], f[i + 1], f[i + 2], f[i + 3], f[i + 4], f[i + 5]); P.closePath(); return P; }
+function k2Inside(M, path, X, Y) { const g = K2.auditG || (K2.auditG = document.createElement('canvas').getContext('2d')); g.setTransform(M); return g.isPointInPath(path, X, Y); }
+function k2AuditRig(C, orig, lc, m, x, y, s, o, o2, P) {
+  const u = s / 100, rig = Object.keys(K2CAST).find(k => K2CAST[k] === C), who = o.who || C.who;
+  const r2 = k2Record(lc, () => orig(lc, x, y, s, o2));
+  const g1 = K2.auditCtx || (K2.auditCtx = (() => { const cv = document.createElement('canvas'); cv.width = cv.height = 4; return cv.getContext('2d'); })());
+  g1.setTransform(m); const r1 = k2Record(g1, () => orig(g1, x, y, s, o));        // the same call in Look 1 (rest pose), off screen
+  const T1 = new DOMMatrix(m).translate(x, y).scale(u);
+  const T2 = C.hang ? new DOMMatrix(m).translate(x, y).rotate(P.swing * 57.29578).translate(-x, -y).translate(x, y).scale(u)
+    : new DOMMatrix(m).translate(x, y + P.py * u).multiply(k2Shear(P.lean)).scale(1 + P.sx, 1 + P.sy).translate(-x, -(y + P.py * u)).translate(x, y).scale(u);
+  const hc = k2P(T2, 0, C.hang ? 50 : (C.chin ?? -200) - 45), zs = u * Math.sqrt(Math.abs(m.a * m.d - m.b * m.c));
+  const R = { t: +K2.t.toFixed(4), rig, who, scale: +zs.toFixed(2), headIn: hc[0] > 80 && hc[0] < 1000 && hc[1] > 120 && hc[1] < 1500 ? 1 : 0, armRoot: 0, stretch: 0, hand: 0, pupilOut: 0, eyeHead: 0, neckOpen: 0, joint: 0, n: { arms: 0, hands: 0, eyes: 0 } };
+  // arms: tubes at least 15 units wide (sleeves); the root must sit on the torso's shoulder joint; the length must not grow
+  r2.tube.forEach((tb, i) => {
+    if (tb.w < 15 || C.hang) return; R.n.arms++;
+    R.armRoot = Math.max(R.armRoot, k2D(k2P(tb.m, tb.pts[0], tb.pts[1]), k2P(T2, tb.pts[0], tb.pts[1])));
+    const t1 = r1.tube[i]; if (t1) R.stretch = Math.max(R.stretch, k2TubeLen(tb.m, tb.pts) / Math.max(1e-6, k2TubeLen(t1.m, t1.pts)) - 1);
+  });
+  // hands on props: everything but free gestures (Pip's wave, Vera's point/cheer, hanging arms) and props the rig itself carries
+  // (Vera's tube and clipboard, Cleo's remote, Rae's lifted mug) must stay where Look 1 puts them
+  const bound = [], hands = [];
+  r1.hand.forEach((h1, i) => {
+    const local = [h1.x, h1.y];
+    let b = !o.armsDown && !o.cheer;
+    if (rig === 'drawPip2') b = b && !(h1.y < -150);                                                    // the wave hand is free
+    if (rig === 'drawRae2') b = b && !(o.mug != null && i === r1.hand.length - 1 && o.mug > .05);         // the hand on the lifted mug
+    if (rig === 'drawVera2' || rig === 'drawCleo2') { const rr = o.reachR || o.reachL; b = b && !!rr && Math.abs(rr.x - local[0]) < .01 && Math.abs(rr.y - local[1]) < .01; }
+    const h2 = r2.hand[i]; if (!h2) return;
+    const p1 = k2P(h1.m, h1.x, h1.y), p2 = k2P(h2.m, h2.x, h2.y);
+    hands.push({ p1, p2, r: h2.r * Math.sqrt(Math.abs(h2.m.a * h2.m.d - h2.m.b * h2.m.c)) });
+    if (b) { R.n.hands++; R.hand = Math.max(R.hand, k2D(p1, p2)); bound.push({ p1, p2, r: h2.r * Math.sqrt(Math.abs(h2.m.a * h2.m.d - h2.m.b * h2.m.c)) }); }
+  });
+  // eyes: the pupil (centre +- its half width + .6 unit) inside the white; the eye on the head group's transform (with the 3/4 turn)
+  const H2 = r2.head.length ? r2.head[r2.head.length - 1].m : T2, turn = o2.turn || 0;
+  for (const e of r2.eye) {
+    R.n.eyes++;
+    const w = e.o.w || 12, h = e.o.h || 12, look = e.o.look || 0, cx = e.ex + look, cy = e.ey - h * .3 + h * .82 * .05, pr = w * .224 + .6, wp = k2EyeWhite(e.ex, e.ey, e.sx, e.o);
+    const pts = [[cx, cy], [cx - pr, cy], [cx + pr, cy], [cx, cy - pr * .8], [cx, cy + pr * .8]];
+    const sc = Math.sqrt(Math.abs(e.m.a * e.m.d - e.m.b * e.m.c));
+    for (const [px, py] of pts) { const S = k2P(e.m, px, py); if (!k2Inside(e.m, wp, S[0], S[1])) R.pupilOut = Math.max(R.pupilOut, 1); }
+    if (!C.hang) { const E = new DOMMatrix(H2).translate(0, C.featDy || 0).translate(turn * 12, 0).scale(1 - Math.abs(turn) * .1, 1); R.eyeHead = Math.max(R.eyeHead, k2D(k2P(e.m, e.ex, e.ey), k2P(E, e.ex, e.ey))); }
+    void sc;
+  }
+  // the neck: its top corners stay inside the face whenever they are in Look 1; how far the head moved off the neck at the joint
+  if (C.face && C.neck) {
+    const fp = k2FacePath(C.face), [nt, nh] = C.neck;
+    for (const sxn of [-1, 1]) {
+      const p1 = [sxn * (nh - 1.5), nt + 1.5], p2 = [p1[0], nt - (o2.l2 ? o2.l2.neck || 0 : 0) + 1.5], S1 = k2P(T1, p1[0], p1[1]), S2 = k2P(T2, p2[0], p2[1]);
+      if (k2Inside(T1, fp, S1[0], S1[1]) && !k2Inside(H2, fp, S2[0], S2[1])) R.neckOpen = 1;
+    }
+    R.joint = k2D(k2P(H2, 0, nt), k2P(T2, 0, nt));
+  }
+  K2.auditRigs.push({ R, T1, T2, C, bound, hands, u: u * Math.sqrt(Math.abs(m.a * m.d - m.b * m.c)) });
+}
+// arms and hands the episode draws itself (outside the rigs) for a rig, matched to that rig's Look 1 shoulders / hands: the episode
+// draws them where Look 1 has the rig, so the gap that opens is how far that shoulder / hand moved in Look 2
+function k2AuditEpisode(rec) {
+  const out = { epArm: 0, epHand: 0, epN: 0 };
+  for (const A of K2.auditRigs) {
+    if (!A.C.shoulders || A.C.hang) continue;
+    for (const tb of rec.tube) {
+      if (tb.w * Math.sqrt(Math.abs(tb.m.a * tb.m.d - tb.m.b * tb.m.c)) < 12 * A.u) continue;
+      const R0 = k2P(tb.m, tb.pts[0], tb.pts[1]);
+      for (const sh of A.C.shoulders) { const S1 = k2P(A.T1, sh[0], sh[1]); if (k2D(R0, S1) < 4 * A.u) { out.epN++; out.epArm = Math.max(out.epArm, k2D(S1, k2P(A.T2, sh[0], sh[1]))); } }
+    }
+    for (const hd of rec.hand) {
+      const H0 = k2P(hd.m, hd.x, hd.y);
+      for (const b of A.hands) if (k2D(H0, b.p1) < Math.max(4, b.r * 1.5)) { out.epN++; out.epHand = Math.max(out.epHand, k2D(b.p1, b.p2)); }
+    }
+  }
+  return out;
 }
 function k2Wrap(name, orig) {
   const C = K2CAST[name];
@@ -450,6 +604,10 @@ function k2Wrap(name, orig) {
 }
 // screen-space finishing for the current shot: foreground (over-the-shoulder, blurred props), then the vignette
 function k2Post(g, t) {
+  if (K2.audit && K2.auditEp) {
+    K2.auditEp.stop(); const ep = k2AuditEpisode(K2.auditEp); K2.auditEp = null;
+    K2.auditLog.push({ t: +t.toFixed(4), rigs: K2.auditRigs.map(a => a.R), ...ep });
+  }
   const sh = typeof shotAt === 'function' && window.TL && TL.SHOTS ? shotAt(t) : null, fx = sh && K2.shotFx[sh[0]];
   g.save(); g.setTransform(1, 0, 0, 1, 0, 0);
   if (fx && fx.ots) otsShoulder(g, fx.ots.who, fx.ots.x, fx.ots.y, fx.ots.s, fx.ots.blur ?? 10);

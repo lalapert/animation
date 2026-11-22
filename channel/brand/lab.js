@@ -371,7 +371,7 @@ function drawVera2(c, x, y, s, o = {}) {
   tShape(c, LAB.glow, g => { g.moveTo(-50, -112); g.lineTo(-44, -100); g.lineTo(-38, -112); g.lineTo(-41, -112); g.lineTo(-44, -106); g.lineTo(-47, -112); g.closePath(); }, 2.4);
   tLine(c, [44, -96, 44, -114], 4); tLine(c, [50, -96, 51, -112], 4);
   // neck + high collar
-  const neck = g => g.rect(-10, -182, 20, 32);
+  const neck = g => g.rect(-10, -182 - l2v(o, 'neck'), 20, 32 + l2v(o, 'neck'));      // Look 2: the neck runs up behind the face
   tShape(c, V.skin, neck); tShade(c, neck, V.skinS, g => g.rect(-10, -182, 20, 12));
   tShape(c, V.top, g => g.roundRect(-16, -164, 32, 16, 4), 3.4);
   // ear (left, hair tucked) + lightning-bolt earring
@@ -390,7 +390,7 @@ function drawVera2(c, x, y, s, o = {}) {
     if (expr === 'laugh') { tCurve(c, ex - 10, ey - 2, ex, ey - 11, ex + 10, ey - 2, 5); continue; }
     if (o.blink) { closedEye(c, ex, ey - 2, 11, false); continue; }
     if (expr === 'scheme') { animeEye(c, ex, ey, sx, { ...E, h: 13, w: 12 }); c.fillStyle = '#fff'; continue; }
-    animeEye(c, ex, ey, sx, { ...E, lid: expr === 'cool' ? .26 : 0, look: (expr === 'fluster' ? -2 : 1) + l2v(o, 'dart') });
+    animeEye(c, ex, ey, sx, { ...E, lid: expr === 'cool' ? .26 : 0, look: l2Look(o, expr === 'fluster' ? -2 : 1, 12.5) });
   }
   if (expr === 'scheme' && !o.blink) for (const sx of [-1, 1]) { c.fillStyle = '#fff'; c.beginPath(); c.arc(sx * 17, -226, 5.5, 0, 6.2832); c.fill(); c.fillStyle = TOON.ink; c.beginPath(); c.arc(sx * 17, -226, 2.6, 0, 6.2832); c.fill(); }  // tiny manic pupils
   // brows: thin, sharp
@@ -488,7 +488,7 @@ function drawCleo2(c, x, y, s, o = {}) {
   tLine(c, [-12, -72, -10, -90], 4); tShape(c, '#e23b4a', g => g.rect(-14, -96, 7, 10), 2.4);   // screwdriver
   tLine(c, [8, -72, 10, -86], 3.4);
   // neck
-  const neck = g => g.rect(-10, -168, 20, 26);
+  const neck = g => g.rect(-10, -168 - l2v(o, 'neck'), 20, 26 + l2v(o, 'neck'));      // Look 2: the neck runs up behind the face
   tShape(c, K.skin, neck); tShade(c, neck, K.skinS, g => g.rect(-10, -168, 20, 10));
   tCurve(c, -16, -146, 0, -138, 16, -146, 3.4);
   const h1 = l2Head(c, o, -150);
@@ -501,7 +501,7 @@ function drawCleo2(c, x, y, s, o = {}) {
   c.save(); c.translate((o.turn || 0) * 12, 0); c.scale(1 - Math.abs(o.turn || 0) * .1, 1);   // 3/4 turn (bodies.js): the features slide toward where she faces
   // eyes: half-lidded
   const lid = { deadpan: .42, sleepy: .7, surprised: 0, smug: .5 }[expr] ?? .42;
-  for (const sx of [-1, 1]) { if (o.blink) closedEye(c, sx * 17, -222, 11, false); else animeEye(c, sx * 17, -220, sx, { skin: K.skin, iris: K.iris, irisD: K.irisD, w: 12.5, h: 14, lid, look: (o.look ?? (expr === 'smug' ? 2 * sx * -1 : 0)) + l2v(o, 'dart') }); }
+  for (const sx of [-1, 1]) { if (o.blink) closedEye(c, sx * 17, -222, 11, false); else animeEye(c, sx * 17, -220, sx, { skin: K.skin, iris: K.iris, irisD: K.irisD, w: 12.5, h: 14, lid, look: l2Look(o, o.look ?? (expr === 'smug' ? 2 * sx * -1 : 0), 12.5) }); }
   // nose + mouth
   tLine(c, [2, -204, 0, -200], 2.4);
   if (o.mouth && o.mouth.a > .06) talkMouth(c, 0, -190, o.mouth.a * .75, o.mouth.shape, .75);   // she never opens her mouth much
