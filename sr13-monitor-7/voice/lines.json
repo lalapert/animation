@@ -1,0 +1,39 @@
+{
+ "model_id": "eleven_v4",
+ "cast": {
+  "LEON": {
+   "voice_id": "Uy5Zv42tAoMnz16B9JZo",
+   "name": "HA Leon Marsh",
+   "settings": {
+    "stability": 0.55,
+    "similarity_boost": 0.8,
+    "style": 0.25,
+    "speed": 0.92
+   }
+  }
+ },
+ "lines": [
+  {
+   "id": "L1",
+   "who": "LEON",
+   "text": "[tired, quiet] Night log. December eighth. One-twelve A.M.",
+   "sub": "NIGHT LOG. DECEMBER EIGHTH. 1:12 A.M.",
+   "asr": "Night log December eighth one twelve AM"
+  },
+  {
+   "id": "L2",
+   "who": "LEON",
+   "text": "[low, uneasy] Monitor seven. That room isn't on the plan.",
+   "sub": "MONITOR SEVEN. THAT ROOM ISN'T ON THE PLAN.",
+   "asr": "Monitor seven That room isn't on the plan"
+  },
+  {
+   "id": "L3",
+   "who": "LEON",
+   "text": "[whispering, uneasy] It should be right here.",
+   "sub": "IT SHOULD BE RIGHT HERE.",
+   "asr": "It should be right here"
+  }
+ ],
+ "context": false
+}
