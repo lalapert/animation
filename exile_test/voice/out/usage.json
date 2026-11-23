@@ -1,0 +1,30 @@
+{
+ "requests": [
+  {
+   "id": "L1",
+   "chars_sent": 23,
+   "billed_header": null
+  },
+  {
+   "id": "L2",
+   "chars_sent": 29,
+   "billed_header": null
+  },
+  {
+   "id": "L3",
+   "chars_sent": 32,
+   "billed_header": null
+  },
+  {
+   "id": "L4",
+   "chars_sent": 28,
+   "billed_header": null
+  },
+  {
+   "id": "L5",
+   "chars_sent": 38,
+   "billed_header": null
+  }
+ ],
+ "total_chars_sent": 150
+}

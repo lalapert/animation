@@ -1,0 +1,11 @@
+.venv/
+out/video.mp4
+out/*.wav
+out/stems/
+out/final_check.mp3
+out/seg_*
+out/segs.txt
+out/.n*
+__pycache__/
+tools/__pycache__/
+review/dev/

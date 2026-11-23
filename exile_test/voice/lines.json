@@ -1,0 +1,82 @@
+{
+ "model_id": "eleven_v3",
+ "language_code": "ko",
+ "cast": {
+  "SERA": {
+   "voice_id": "DGDjWy2CQ8Ishu0meQte",
+   "name": "Chaemong",
+   "public_owner_id": "0319518147cf4b617eeffc4103c52c87de40c1cfc4951145d30c50e49c1dbffb",
+   "why": "shared library, ko, young female, 'Young and sassy' (characters_animation): confident and haughty",
+   "settings": {
+    "stability": 0.5,
+    "similarity_boost": 0.75,
+    "style": 0.0,
+    "use_speaker_boost": true
+   },
+   "col": "#ff8fb0"
+  },
+  "MINSU": {
+   "voice_id": "Ir7oQcBXWiq4oFGROCfj",
+   "name": "Taemin - Melancholic, Clear and Steady",
+   "public_owner_id": "f1572a8b71b8134998daaa09cb03712d3137605d1ac722ea8264791b924f303d",
+   "why": "shared library, ko, young male in his 20s, melancholic and steady: flat, monotone",
+   "settings": {
+    "stability": 1.0,
+    "similarity_boost": 0.75,
+    "style": 0.0,
+    "use_speaker_boost": true
+   },
+   "col": "#7fe3e0"
+  },
+  "PARK": {
+   "voice_id": "2gbExjiWDnG1DMGr81Bx",
+   "name": "Kyungduk Ko - Condescending and Clear",
+   "public_owner_id": "b86258f763ee571adb7f2f9ccdc20efc436ff4e5223644a3d6cc40e4b0b93c6f",
+   "why": "shared library, ko, middle-aged male, condescending, authoritative and weighty: pompous",
+   "settings": {
+    "stability": 0.5,
+    "similarity_boost": 0.75,
+    "style": 0.0,
+    "use_speaker_boost": true
+   },
+   "col": "#ffd36b"
+  }
+ },
+ "lines": [
+  {
+   "id": "L1",
+   "who": "SERA",
+   "text": "나? 마계에서 실적 1등만 찍던 엘리트야.",
+   "tts": "나? 마계에서 실적 일등만 찍던 엘리트야.",
+   "en": "Me? I was the top demon in hell."
+  },
+  {
+   "id": "L2",
+   "who": "MINSU",
+   "text": "그래서 보증금 500에 월세 50은 언제 주실 건가요?",
+   "tts": "그래서 보증금 오백에 월세 오십은 언제 주실 건가요?",
+   "en": "So when's the deposit and rent coming?"
+  },
+  {
+   "id": "L3",
+   "who": "SERA",
+   "text": "어휴... 인간계 화폐가 너무 원시적이라 환전이 늦어지네.",
+   "tts": "어휴... 인간계 화폐가 너무 원시적이라 환전이 늦어지네.",
+   "en": "Ugh... human money is so primitive. Exchange takes time."
+  },
+  {
+   "id": "L4",
+   "who": "PARK",
+   "text": "거짓말 마세요. 어제 치킨 두 마리 시켜 먹던데요.",
+   "tts": "거짓말 마세요. 어제 치킨 두 마리 시켜 먹던데요.",
+   "en": "Lies. She ordered two whole chickens yesterday."
+  },
+  {
+   "id": "L5",
+   "who": "SERA",
+   "text": "야 이 비둘기야!! 넌 다리 두 개나 뜯었잖아!!",
+   "tts": "[shouting] 야 이 비둘기야!! 넌 다리 두 개나 뜯었잖아!!",
+   "en": "YOU PIGEON!! YOU ATE TWO DRUMSTICKS!!"
+  }
+ ]
+}
