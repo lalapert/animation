@@ -162,6 +162,14 @@ def sera():
         m = np.isin(lab, [i + 1 for i, s in enumerate(sizes) if s > 15])
         m = cv2.dilate(m.astype(np.uint8), np.ones((grow, grow), np.uint8)).astype(np.float32)
         return blur(m, grow / 4)
+    # talking = the neutral bust with the talking bust's (registered) mouth region: nothing else changes while she talks
+    mouth_t = diff_region("neutral", "talk", 140, 218, 11) * ((xx > 78) & (xx < 145))
+    m = mouth_t[..., None]; nb, tb = busts["neutral"], busts["talk"]
+    pm = nb[..., :3] * nb[..., 3:] * (1 - m) + tb[..., :3] * tb[..., 3:] * m
+    al = nb[..., 3:] * (1 - m) + tb[..., 3:] * m
+    busts["talk"] = np.concatenate([pm / np.maximum(al, 1e-4), al], -1)
+    ys_, xs_ = np.nonzero(mouth_t > 0.5)
+    print("  talking mouth region", [int(xs_.min()), int(ys_.min()), int(xs_.max()), int(ys_.max())])
     # face geometry from the bust: eyes are the reddest dark blobs, the mouth the reddest light-red region
     eyes = diff_region("neutral", "blink", 95, 140, 9) * ((xx > 40) & (xx < 185))
     mouth_a = diff_region("neutral", "angry", 150, 215, 7)
@@ -293,6 +301,14 @@ def minsu():
         inner = ndi.distance_transform_edt(b[..., 3] > 0.5)
         low = blur(((yy > chin_y + 8)).astype(np.float32), 2)
         b[..., 3] = b[..., 3] * (1 - low) + b[..., 3] * np.clip((inner - 1) / 7.0, 0, 1) * low
+    # talking = the neutral bust with the talking bust's mouth region (eyes and hair stay exactly as they are)
+    d = np.abs(C.lum(busts["neutral"][..., :3]) * busts["neutral"][..., 3] - C.lum(busts["talk"][..., :3]) * busts["talk"][..., 3])
+    mt = ((d > 0.2) & (yy > 215) & (yy < 268) & (xx > 280) & (xx < 360)).astype(np.uint8)
+    mt = blur(cv2.dilate(mt, np.ones((11, 11), np.uint8)).astype(np.float32), 2.5)[..., None]
+    nb, tb = busts["neutral"], busts["talk"]
+    pm = nb[..., :3] * nb[..., 3:] * (1 - mt) + tb[..., :3] * tb[..., 3:] * mt
+    al = nb[..., 3:] * (1 - mt) + tb[..., 3:] * mt
+    busts["talk"] = np.concatenate([pm / np.maximum(al, 1e-4), al], -1)
     # the duo figure's own head goes: everything above its hood line, and anything of it the bust would not cover there
     bodyc = body.copy()
     head_zone = (yy < 236)

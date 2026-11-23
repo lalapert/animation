@@ -86,7 +86,7 @@ def arm_stills():
     for nm, t in [("rest_before_point", L3["t"] - 0.05), ("point_peak", L3["t"] + 0.55), ("flick", L3["t"] + 2.25), ("settled", L3["t"] + 3.6)]:
         fr, _ = R.render(t)
         im = label(to8(fr), f"{nm}  t={t:.2f}s", 40)
-        cv2.imwrite(os.path.join(RV, "arm", f"arm_{nm}.png"), cv2.cvtColor(im, cv2.COLOR_RGB2BGR))
+        cv2.imwrite(os.path.join(RV, "arm", f"arm_{nm}.jpg"), cv2.cvtColor(im, cv2.COLOR_RGB2BGR), [cv2.IMWRITE_JPEG_QUALITY, 93])
         crop = to8(fr[760:1500, 0:820])
         cv2.imwrite(os.path.join(RV, "arm", f"arm_{nm}_crop.png"), cv2.cvtColor(crop, cv2.COLOR_RGB2BGR))
 

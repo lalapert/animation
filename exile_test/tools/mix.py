@@ -9,7 +9,7 @@ Every effect is reused from the episode folders (sfx/sources.json lists the file
   coo        vl01-day-one coo
   whoosh     vm01-first-shift whoosh;  slam: vm02-exact-change thud
 Voices: high-passed, each line levelled to the same speech level (the shout 2 dB hotter), a small room around them.
-Music: -15 dB under the voices' level, ducked a further 8 dB from 0.15 s before each line to 0.3 s after it.
+Music: -17 dB under the voices' level, ducked a further 8 dB from 0.15 s before each line to 0.3 s after it.
 Master: gain to about -14.5 LUFS (ffmpeg ebur128), then a 4x-oversampled look-ahead peak limiter at -2.2 dBFS so the
 loudnorm pass in tools/mux.sh stays linear.
   python tools/mix.py
@@ -130,12 +130,12 @@ def main():
         pos += seg; k += 1
     # foley
     cues = {c["fx"]: c["t"] for c in TL["CUES"]}
-    put(foley, sfx("ice_clink"), cues["ice_clink"], db(-6))
-    put(foley, sfx("ice_rattle"), cues["ice_clink"] + 0.03, db(-14))
-    put(foley, sfx("spotlight_thunk"), cues["spotlight_thunk"] - 0.04, db(-2))
-    put(foley, sfx("pigeon_coo"), cues["pigeon_coo"], db(-9))
-    put(foley, sfx("whoosh"), cues["whoosh"] - 0.18, db(-6))
-    put(foley, sfx("slam"), cues["slam"] - 0.09, db(+1))
+    put(foley, sfx("ice_clink"), cues["ice_clink"], db(-13))
+    put(foley, sfx("ice_rattle"), cues["ice_clink"] + 0.03, db(-21))
+    put(foley, sfx("spotlight_thunk"), cues["spotlight_thunk"] - 0.06, db(-4))
+    put(foley, sfx("pigeon_coo"), cues["pigeon_coo"], db(-13))
+    put(foley, sfx("whoosh"), cues["whoosh"], db(-6))
+    put(foley, sfx("slam"), cues["slam"], db(+1))                     # on the white flash, after Park has finished
     foley = small_room(foley, rt=.4, mix=.15, seed=9, bright=7000)
     # music, ducked under the lines
     m = load(os.path.join(HERE, "out", "music.wav"))[:N]
@@ -145,7 +145,7 @@ def main():
         i0, i1 = int((v["t"] - .15) * SR), int((v["t"] + v["dur"] + .3) * SR)
         duck[max(0, i0):i1] = db(-8)
     duck = signal.filtfilt(*signal.butter(1, 4 / (SR / 2)), duck).astype(np.float32)
-    music[:] = m * db(-34 - (-24)) * duck[:, None]                   # music.wav is at -24 dBFS RMS: bed at -34, voices at -19
+    music[:] = m * db(-36 - (-24)) * duck[:, None]                   # music.wav is at -24 dBFS RMS: bed at -36, voices at -19
     stems = {"voice": voice, "music": music, "foley": foley, "room": room}
     mix = voice + music + foley + room
     L = lufs(mix)

@@ -1,9 +1,51 @@
 {
- "room":            {"file": "sr08-fire-door/sfx/out/duct_hum.wav",        "why": "low steady ventilation hum and faint buzz: a basement room at night"},
- "ice_clink":       {"file": "vm07-tip-jar/sfx/out/jar.wav", "cut": [0.02, 0.5], "semitones": 2, "why": "a clear glass clink and a little rattle, raised a little toward ice in a plastic cup"},
- "ice_rattle":      {"file": "vl12-robo-cleo/sfx/out/ice_dispense.wav", "cut": [0.86, 1.12], "why": "a short sliver of real ice cubes knocking (the dispenser's motor is cut out)"},
- "spotlight_thunk": {"file": "sr11-store-214/sfx/out/lights_on.wav", "cut": [0.0, 0.9], "why": "a heavy contactor clunk and the first of the spotlights' buzz"},
- "pigeon_coo":      {"file": "vl01-day-one/sfx/out/coo.wav",          "why": "one pigeon cooing, close"},
- "whoosh":          {"file": "vm01-first-shift/sfx/out/whoosh.wav",   "why": "a quick soft whoosh into the rage zoom"},
- "slam":            {"file": "vm02-exact-change/sfx/out/thud.wav", "cut": [0.08, 1.2], "why": "a deep slam with a rattle: the white flash and snap zoom"}
+ "room": {
+  "file": "sr08-fire-door/sfx/out/duct_hum.wav",
+  "why": "low steady ventilation hum and faint buzz: a basement room at night"
+ },
+ "ice_clink": {
+  "file": "vm07-tip-jar/sfx/out/jar.wav",
+  "cut": [
+   0.02,
+   0.5
+  ],
+  "semitones": 2,
+  "why": "a clear glass clink and a little rattle, raised a little toward ice in a plastic cup"
+ },
+ "ice_rattle": {
+  "file": "vl12-robo-cleo/sfx/out/ice_dispense.wav",
+  "cut": [
+   0.86,
+   1.12
+  ],
+  "why": "a short sliver of real ice cubes knocking (the dispenser's motor is cut out)"
+ },
+ "spotlight_thunk": {
+  "file": "sr11-store-214/sfx/out/lights_on.wav",
+  "cut": [
+   0.0,
+   0.34
+  ],
+  "why": "a heavy contactor clunk and the start of the spotlights' buzz (cut short: it ends before Park speaks)"
+ },
+ "pigeon_coo": {
+  "file": "vl01-day-one/sfx/out/coo.wav",
+  "why": "one pigeon cooing, close (its loudest 0.37 s, to sit in Park's pause)",
+  "cut": [
+   0.18,
+   0.55
+  ]
+ },
+ "whoosh": {
+  "file": "vm01-first-shift/sfx/out/whoosh.wav",
+  "why": "a quick soft whoosh into the rage zoom"
+ },
+ "slam": {
+  "file": "vm02-exact-change/sfx/out/thud.wav",
+  "cut": [
+   0.08,
+   1.2
+  ],
+  "why": "a deep slam with a rattle: the white flash and snap zoom"
+ }
 }

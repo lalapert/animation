@@ -402,8 +402,8 @@ def minsu_layers(kw):
 
 
 def cup_angle(t, shot):
-    """the lift: about the elbow, up 13 degrees early in the shot (the ice clinks at the top), a little settle, held"""
-    u = t - shot["t0"]
+    """the lift: about the elbow, up 13 degrees in his pause after '오백에' (the ice clinks at the top), a little settle, held"""
+    u = t - (LINES["L2"]["t"] + 1.08)
     return -math.radians(13.0) * (ease(u / 0.42) - 0.08 * math.sin(math.pi * clamp((u - 0.42) / 0.3))) - math.radians(0.6) * math.sin(2 * math.pi * t / 2.9)
 
 
@@ -676,7 +676,7 @@ def run_armcheck():
             crop = frame[y0:y0 + 600, x0:x0 + 520]
             big = cv2.resize(crop, (crop.shape[1] * 2, crop.shape[0] * 2), interpolation=cv2.INTER_LANCZOS4)
             cv2.imwrite(os.path.join(rv, f"joint_{crops_at[f]}_t{f / FPS:05.2f}.png"), cv2.cvtColor((np.clip(big, 0, 1) * 255).astype(np.uint8), cv2.COLOR_RGB2BGR))
-            cv2.imwrite(os.path.join(rv, f"frame_{crops_at[f]}_t{f / FPS:05.2f}.png"), cv2.cvtColor((frame * 255).astype(np.uint8), cv2.COLOR_RGB2BGR))
+            cv2.imwrite(os.path.join(rv, f"frame_{crops_at[f]}_t{f / FPS:05.2f}.jpg"), cv2.cvtColor((frame * 255).astype(np.uint8), cv2.COLOR_RGB2BGR), [cv2.IMWRITE_JPEG_QUALITY, 93])
     summary = {"frames": len(res), "all_ok": all(r["ok"] for r in res),
                "root_on_bust_min": min(r["root_on_bust"] for r in res), "shoulder_end_on_bust_min": min(r["shoulder_end_on_bust"] for r in res),
                "head_clash_px_max": max(r["head_clash_px"] for r in res),

@@ -55,7 +55,7 @@ def hold(states, min_run=2):
 def main():
     durs = json.load(open(os.path.join(VO, "durations.json")))
     L = {l["id"]: dict(l) for l in CFG["lines"]}
-    gaps = {"L1": 0.30, "L2": 0.18, "L3": 0.15, "L4": 0.25, "L5": -0.05}   # before each line (L1: lead-in from the first frame)
+    gaps = {"L1": 0.30, "L2": 0.18, "L3": 0.15, "L4": 0.25, "L5": 0.02}   # before each line (L1: lead-in from the first frame)
     t = 0.0
     order = ["L1", "L2", "L3", "L4", "L5"]
     for k in order:
@@ -100,17 +100,19 @@ def main():
             bt.append(round(tb, 3)); tb += rng.uniform(2.0, 5.0)
         blinks[who] = bt
     cues = [
-        {"t": round(L["L2"]["t"] - 0.08 + 0.42, 3), "fx": "ice_clink", "note": "Minsu's cup arrives at the top of the lift"},
-        {"t": key_in, "fx": "spotlight_thunk", "note": "the evidence key cut lights up"},
-        {"t": round(cut_pigeon + 0.04, 3), "fx": "pigeon_coo", "note": "cut to Pigeon Park"},
-        {"t": round(L["L5"]["t"] - 0.14, 3), "fx": "whoosh", "note": "into the rage zoom"},
+        {"t": round(L["L2"]["t"] + 1.48, 3), "fx": "ice_clink", "note": "Minsu lifts the cup in his pause after '오백에'; the ice clinks at the top"},
+        {"t": key_in, "fx": "spotlight_thunk", "note": "the evidence key cut lights up (before Park's first word)"},
+        {"t": round(L["L4"]["t"] + dot[2] + 0.08, 3), "fx": "pigeon_coo", "note": "a short coo in Park's pause, over the cut to his bust"},
+        {"t": round(L["L5"]["t"] - 0.10, 3), "fx": "whoosh", "note": "into the rage zoom (after Park's last syllable, in the shout's lead-in)"},
         {"t": L["L5"]["t"], "fx": "slam", "note": "white flash, snap zoom"},
     ]
     subs = []
+    first_cut = {s["line"]: s["t0"] for s in reversed(shots)}               # the first shot that carries each line
     for i, k in enumerate(order):
-        s0 = L[k]["t"] - 0.06
+        s0 = max(L[k]["t"] - 0.06, first_cut[k])                          # never on the previous speaker's shot
         s1 = L[k]["t"] + L[k]["dur"] + 0.12
         if i + 1 < len(order): s1 = min(s1, L[order[i + 1]]["t"] - 0.10)   # gone before the next shot's cut
+        s1 = min(s1, max(s["t1"] for s in shots if s["line"] == k) - 0.02)
         subs.append({"id": k, "who": L[k]["who"], "s0": round(s0, 3), "s1": round(s1, 3), "ko": L[k]["text"], "en": L[k]["en"],
                      "col": CFG["cast"][L[k]["who"]]["col"]})
     gaps_out = {order[i + 1]: round(L[order[i + 1]]["t"] - (L[order[i]]["t"] + L[order[i]]["dur"]), 3) for i in range(len(order) - 1)}
