@@ -122,7 +122,7 @@ Read the style text only (`curl -sS https://raw.githubusercontent.com/lemomo-ai/
 
 1. Commit the folder and push (retry with backoff on network errors).
 2. Media URL: `https://raw.githubusercontent.com/lalapert/animation/<commit sha>/<folder>/<folder>.mp4`; check it returns 200 and the full size.
-3. Metricool brand **7923229** for Void Mart and Volt Labs (YouTube @thevoidmart + Instagram voidmartshow + TikTok "Void Mart", TikTok from 11/9); **7927149** for the horror tapes (§2.6: YouTube + TikTok + Instagram). Never any other brand.
+3. Metricool brand **7923229** for Void Mart and Volt Labs (channel name Odd Shift: YouTube @theoddshiftch (seen 11/26; was @thevoidmart) + Instagram voidmartshow + TikTok "Void Mart" (Instagram and TikTok handles after the rename: unknown, ask the owner), TikTok from 11/9); **7927149** for the horror tapes (§2.6: YouTube + TikTok + Instagram). Never any other brand.
 4. `createScheduledPost`: the series slot (`Asia/Seoul`), `autoPublish: true`, `draft: false`, providers youtube + instagram + tiktok (horror too, from 11/12; horror instagramData REEL, isAiGenerated true).
    - text (the Instagram caption and the YouTube description; the video carries the hook, the caption asks and gets found), saved as `channel/ig/posts/<folder>.txt`:
      ```
