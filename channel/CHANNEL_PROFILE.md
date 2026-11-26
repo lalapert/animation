@@ -7,7 +7,7 @@
 | | 유튜브 | 인스타그램 |
 |---|---|---|
 | 이름 | Void Mart (변경 완료) | Void Mart \| animated sitcom |
-| 핸들 / 사용자 이름 | **@thevoidmart** (확인함, 채널 ID `UCNfzxg6zPc5YhZQgGq-3OSA`) | **voidmartshow** (확인함, Metricool 브랜드 7923229에 연결, 11/6) |
+| 핸들 / 사용자 이름 | **@theoddshiftch** (11/26 작가님 스크린샷으로 확인, 옛 핸들 @thevoidmart, 채널 ID `UCNfzxg6zPc5YhZQgGq-3OSA`) | **voidmartshow** (확인함, Metricool 브랜드 7923229에 연결, 11/6) |
 
 - 철자를 두 플랫폼에서 똑같이 맞춘다. 인스타 사용자 이름이 다르면 알려 주세요. 문서와 영상 끝 화면에 적는다.
 - 나중에 다른 그림체 시리즈(SERIES.md 6절)를 시작하면 이 이름과 맞지 않는다. 그때는 채널을 따로 연다. 장르가 다른 영상을 섞으면 구독자가 기대한 것과 달라 이탈이 생긴다.
@@ -159,5 +159,7 @@ New episode daily ↓
 - 유튜브 설명: 2절의 설명에서 첫 줄만 `Odd Shift: animated sitcoms about very strange jobs. A new episode every day.`로 바꾸고 나머지(VOID MART, VOLT LABS 문단)는 그대로 둔다.
 
 **그림:** 프로필 사진(1080, 800)과 유튜브 배너(2560×1440)는 `channel/brand/oddshift_profile.html`, `channel/brand/oddshift_banner.html`, 출력은 `channel/brand/out/oddshift_*`. 11/16 완성(c07bd5e). 프로필은 A안(타임카드 위 "ODD SHIFT", O는 3시 시계) 추천: 110px에서 이름이 읽히는 유일한 안. B안(Pip·Cleo 얼굴)은 110px에서 배지가 안 읽혀 나중에 계절판·인스타 대안. 배너는 가운데 안전 영역에 로고판과 두 작품 인물, 바깥은 가게·실험실 세트.
+
+**확정된 핸들 (11/26):** 유튜브 **@theoddshiftch** (작가님 스크린샷으로 확인; 위 후보표의 @oddshiftshow가 아니다). 인스타·틱톡 새 핸들은 모른다(작가님 확인 필요, 그때까지 voidmartshow / void.mart로 적는다). 유튜브 설명 첫 줄을 위 문구로 바꿨는지는 모른다(채널 설정이라 여기서 바꾸지 않는다).
 
 **11/23 순서 (작가님 손으로):** 1) 세 곳 핸들 확인 → 2) 이름·핸들 변경 → 3) 프로필 사진·배너 → 4) 소개글 → 5) 바뀐 핸들을 알려 주시면 문서와 Metricool 쪽 표기를 맞춘다. Metricool 브랜드 연결은 계정 ID 기준이라 그대로 유지될 것으로 본다(추측, 바꾼 뒤 첫 게시로 확인).

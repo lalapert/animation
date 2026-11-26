@@ -6,7 +6,7 @@ Setup each fresh container: `mkdir -p ~/.claude/instagram && cp channel/ig/voice
 ## Who we are
 
 - **Name:** Void Mart (Instagram name field: `Void Mart | animated sitcoms`)
-- **Handles:** YouTube @thevoidmart, Instagram voidmartshow
+- **Handles:** YouTube @theoddshiftch (channel renamed Odd Shift, 11/26; was @thevoidmart), Instagram voidmartshow (new Instagram handle unknown)
 - **What we make, in one sentence:** Two short animated sitcoms in one universe: Void Mart (the night shift at the last convenience store before the edge of space) and Volt Labs (a broke mad scientist and her deadpan assistant).
 - **Who we are talking to:** English-speaking adults 18–34, mostly US, who have worked retail, food service or a bad first job, and who watch adult-friendly cartoons on their phone (but our content is PG, no swearing).
 - **What we sell:** nothing yet. The goal is follows and binge-watching the series.
