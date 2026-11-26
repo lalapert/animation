@@ -1,0 +1,46 @@
+{
+ "model_id": "eleven_v4",
+ "cast": {
+  "LEON": {
+   "voice_id": "Uy5Zv42tAoMnz16B9JZo",
+   "name": "HA Leon Marsh",
+   "settings": {
+    "stability": 0.55,
+    "similarity_boost": 0.8,
+    "style": 0.25,
+    "speed": 0.92
+   }
+  }
+ },
+ "lines": [
+  {
+   "id": "L1",
+   "who": "LEON",
+   "text": "[tired, quiet] Night log. December ninth. Two-ten A.M.",
+   "sub": "NIGHT LOG. DECEMBER NINTH. 2:10 A.M.",
+   "asr": "Night log December ninth two ten AM"
+  },
+  {
+   "id": "L2",
+   "who": "LEON",
+   "text": "[low, uneasy] That's my handwriting.",
+   "sub": "THAT'S MY HANDWRITING.",
+   "asr": "That's my handwriting"
+  },
+  {
+   "id": "L3",
+   "who": "LEON",
+   "text": "[whispering, shaken] I never wrote a rule nine.",
+   "sub": "I NEVER WROTE A RULE NINE.",
+   "asr": "I never wrote a rule nine"
+  },
+  {
+   "id": "L4",
+   "who": "LEON",
+   "text": "[panicked whisper] Stop. Stop.",
+   "sub": "STOP. STOP.",
+   "asr": "Stop Stop"
+  }
+ ],
+ "context": false
+}

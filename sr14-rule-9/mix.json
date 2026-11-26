@@ -1,0 +1,184 @@
+{
+ "room_db": -58,
+ "voice_db": -3.0,
+ "duck_db": 14,
+ "duck_preroll": 0.12,
+ "music_db": -23,
+ "deck_hiss_db": -44,
+ "plr_db": 11.9,
+ "devices": {
+  "cam1": "cam",
+  "cctv1": "cctv",
+  "cam2": "cam",
+  "cctv2": "cctv"
+ },
+ "cam": {
+  "lo": 110,
+  "hi": 8500,
+  "noise_db": -50,
+  "noise_lp": 7000,
+  "target": -21,
+  "boost": 4,
+  "cut": 26,
+  "att": 0.22,
+  "rel": 1.1,
+  "pre": 0,
+  "ceil": -7,
+  "post_lp": 12000
+ },
+ "cctv": {
+  "lo": 250,
+  "hi": 3500,
+  "order": 4,
+  "noise_db": -44,
+  "noise_lp": 4500,
+  "target": -22.5,
+  "boost": 4,
+  "cut": 14,
+  "att": 0.03,
+  "rel": 0.5,
+  "pre": 0,
+  "ceil": -9,
+  "post_lp": 4200
+ },
+ "derived": {
+  "knuckle": {
+   "from": "step",
+   "rate": 1.3,
+   "hp": 300
+  }
+ },
+ "foley": {
+  "step": {
+   "fx": "step",
+   "g": -21,
+   "space": "shop",
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.08,
+   "trim": 0.16
+  },
+  "scuff": {
+   "fx": "step",
+   "g": -17,
+   "space": "close",
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.06,
+   "trim": 0.12
+  },
+  "handling": {
+   "fx": "handling",
+   "g": -18,
+   "space": "close",
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.15
+  },
+  "rustle": {
+   "fx": "handling",
+   "g": -22,
+   "space": "close",
+   "fin": 0.02,
+   "fout": 0.2
+  },
+  "breath": {
+   "fx": "breath",
+   "g": -20,
+   "space": "close",
+   "fin": 0.02,
+   "fout": 0.3
+  },
+  "glitch": {
+   "fx": "glitch",
+   "g": -21,
+   "space": "tape",
+   "align": true,
+   "fin": 0.03,
+   "fout": 0.06
+  },
+  "static": {
+   "fx": "static",
+   "g": -14,
+   "space": "tape",
+   "fin": 0.004,
+   "fout": 0.03
+  },
+  "gasp": {
+   "fx": "gasp",
+   "g": -1,
+   "space": "close",
+   "align": true,
+   "fin": 0.001,
+   "fout": 0.15
+  },
+  "vcr": {
+   "fx": "vcr_clunk",
+   "g": -24,
+   "space": "archive",
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.08
+  },
+  "thump": {
+   "fx": "cam_hit",
+   "g": 4,
+   "space": "close",
+   "align": true,
+   "fin": 0.001,
+   "fout": 0.2
+  },
+  "paper": {
+   "fx": "paper",
+   "g": -20,
+   "space": "close",
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.2
+  },
+  "creak": {
+   "fx": "wood_creak",
+   "g": -17,
+   "space": "shop",
+   "align": true,
+   "fin": 0.003,
+   "fout": 0.25
+  },
+  "knock": {
+   "fx": "knuckle",
+   "g": -20,
+   "space": "close",
+   "align": true,
+   "fin": 0.001,
+   "fout": 0.06,
+   "trim": 0.1
+  },
+  "crash": {
+   "fx": "ceiling_crash",
+   "g": 2,
+   "space": "shop",
+   "align": true,
+   "fin": 0.001,
+   "fout": 0.3
+  },
+  "rip": {
+   "fx": "page_rip",
+   "g": -8,
+   "space": "close",
+   "align": true,
+   "fin": 0.001,
+   "fout": 0.15
+  },
+  "chair": {
+   "fx": "chair_creak",
+   "g": -20,
+   "space": "close",
+   "align": true,
+   "fin": 0.002,
+   "fout": 0.15
+  }
+ },
+ "beds_db": 29,
+ "close_db": 6,
+ "voice_peak_db": -20
+}

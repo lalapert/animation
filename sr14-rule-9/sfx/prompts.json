@@ -1,0 +1,20 @@
+{
+ "breath_bed": [8.0, "a frightened man breathing shakily and quietly right next to a camcorder microphone, uneven breaths, trying to stay quiet, loopable"],
+ "near_breath": [8.0, "slow, deep, calm breathing of someone standing right against a microphone, very close and intimate, long inhales and exhales, unhurried, not scared, no voice, loopable"],
+ "handling": [0.8, "a camcorder microphone rubbed and knocked by a hand as the camera is spun around fast"],
+ "vcr_clunk": [0.6, "a 1990s VCR jog shuttle control: one hard mechanical clunk and a quick whir of the tape heads"],
+ "glitch": [0.6, "a very short VHS tape tracking glitch: a warbling distorted electrical crackle and a brief buzz"],
+ "static": [2.0, "harsh analog VHS tape static, loud white noise hiss with crackle and a low hum, a tape ending on a blank channel"],
+ "tape_hiss": [8.0, "constant soft analog videotape hiss and faint mechanical motor whir, steady, loopable"],
+ "gasp": [0.8, "one short sharp frightened gasp of a man very close to a microphone, a quick intake of breath, no words"],
+ "cam_hit": [1.0, "something heavy slamming against a plastic security camera housing on a ceiling bracket, recorded by the camera's own tiny microphone: one dull heavy thump right on the microphone, a hard plastic crack and the metal bracket rattling, close, no voice"],
+ "duct_hum": [8.0, "a narrow concrete service corridor behind a shopping mall at night: a low steady ventilation duct hum and a faint electrical buzz, no people, no music, loopable"],
+ "paper": [1.5, "a large folded paper floor plan being unfolded and handled close to a microphone, crisp paper rustle, no voices"],
+ "step": [0.5, "one single footstep of a work boot on a hard polished stone floor in a large empty hall, close, with a short echo"],
+ "office_hum": [10.0, "a small windowless security office at night: the faint high whine of several old CRT monitors, a low steady air vent hum, very quiet room tone, no people, no music, loopable"],
+ "pen_write": [4.0, "a ballpoint pen writing steadily on the paper page of a notebook lying on a wooden desk, close to a microphone, scratchy pen strokes and small taps, no voices, no music"],
+ "pen_fast": [4.0, "a ballpoint pen scribbling very fast and very hard on a notebook page on a wooden desk, frantic scratching strokes pressing into the paper, close to a microphone, no voices, no music"],
+ "page_rip": [1.2, "a pen stabbing down and ripping violently through a notebook page on a desk, one loud sharp paper tear and a hard knock on the wood, very close to a microphone, no voices"],
+ "chair_creak": [1.0, "an old office swivel chair creaking as a man sits down in it, springs and a squeak, close, no voices"],
+ "page_turn": [0.8, "one notebook page turned and smoothed flat by a hand, close to a microphone, soft paper sound, no voices"]
+}

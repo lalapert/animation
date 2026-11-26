@@ -743,6 +743,21 @@
   "zoom": 1.15
  },
  {
+  "folder": "sr14-rule-9",
+  "t": 30.0,
+  "series": "sr",
+  "tape": "TAPE 14",
+  "lines": [
+   "WHO WROTE",
+   "THIS?"
+  ],
+  "focus": [
+   470,
+   860
+  ],
+  "zoom": 1.25
+ },
+ {
   "folder": "vm13-rewards-program",
   "t": 0.2,
   "series": "vm",
