@@ -190,9 +190,26 @@ function buildSheet() {
   g.textAlign = 'left'; g.font = '29px "Special Elite"';
   RULES.forEach((s, i) => g.fillText(s, 44, 256 + i * 70));
   g.font = '22px "Special Elite"'; g.fillStyle = 'rgb(90,86,80)'; g.textAlign = 'right'; g.fillText('REV. 11/99   - MGMT', w - 44, h - 46);
-  // the ninth, in his hand, big
-  inkLine(g, layout('9. KEEP', { x: 52, y: 965, h: 112, slant: .12, seed: 9 }), 1, INK, 8);
-  inkLine(g, layout('WRITING.', { x: 52, y: 1165, h: 112, slant: .12, seed: 19, rot: -.02 }), 1, INK, 8);
+  // the ninth, in his hand, big: written stroke by stroke over the first seconds (review 11/27), see sheetAt
+  SHEETBASE.getContext('2d').drawImage(SHEET, 0, 0);
+  sheetAt(99);
+}
+// "9. KEEP" / "WRITING." appear stroke by stroke over SHEET_W (no hand, no pen: the ink just comes); the pen-scratch cues follow
+// the same ink segments (sheetInkTimes)
+const SHEETBASE = mk(880, 1440), SHEET_W = [.2, 1.6], SHEET_GAP = .08;
+const SHEET_LAYS = [layout('9. KEEP', { x: 52, y: 965, h: 112, slant: .12, seed: 9 }), layout('WRITING.', { x: 52, y: 1165, h: 112, slant: .12, seed: 19, rot: -.02 })];
+const SHEET_T = (() => { const [a, b] = SHEET_W, L0 = SHEET_LAYS[0].L, L1 = SHEET_LAYS[1].L, m = a + (b - a - SHEET_GAP) * L0 / (L0 + L1); return [[a, m], [m + SHEET_GAP, b]]; })();
+let sheetP0 = -1;
+function sheetAt(t) {
+  const ps = SHEET_T.map(w => kOf(t, w)), key = ps[0] + ps[1] * 2;
+  if (key === sheetP0) return; sheetP0 = key;
+  const g = SHEET.getContext('2d'); g.setTransform(1, 0, 0, 1, 0, 0); g.drawImage(SHEETBASE, 0, 0);
+  SHEET_LAYS.forEach((lay, i) => { if (ps[i] > 0) inkLine(g, lay, ps[i], INK, 8); });
+}
+function sheetInkTimes() {
+  const out = [];
+  SHEET_LAYS.forEach((lay, i) => { const [a, b] = SHEET_T[i]; let acc = 0; for (const s of lay.segs) { const t0 = a + (b - a) * acc / lay.L; acc += s.len; if (s.ink) out.push([t0, a + (b - a) * acc / lay.L]); } });
+  return out;
 }
 const sheetP = (u, v) => [SHEET_C[0] - SW / 2 + u / 4000, SHEET_C[1] + SHT / 2 - v / 4000, SHEET_C[2]];
 
@@ -652,6 +669,7 @@ function openingFrame(t) {
 }
 function render(t) {
   t = clamp(t, 0, DUR - 1e-3);
+  sheetAt(t);
   const s = shotAt(t), inStatic = !s || TL.STATIC.some(([a, b]) => t >= a && t < b);
   const opening = !!(TL.OPEN && TL.OPEN.on && s && s[0] === 'cam1' && t < TL.OPEN.end);
   if (inStatic) TK.statics(WG, t, 1);
@@ -668,11 +686,14 @@ window.render = render;
 // his pen on the log, the page tearing under it, the desk under his fist. Close by him, from when the pen speeds up, a slow
 // calm breath that is not his (it is standing over him: CAM 02). CAM 02's own mic hears the room and the pen, far.
 // space: close (at his mic), shop (the office), tape / archive (after the recording chain)
+const PEN0_DB = -17;
 function buildEvents() {
   const EV = [], Q = TL.QUIET[0];
   EV.push(
     { type: 'bed', fx: 'office_hum', space: 'shop', t: 0, t1: SH.cam1[2], g: -33, fin: .01, fout: .01 },
     { type: 'bed', fx: 'breath_bed', space: 'close', t: .2, t1: SH.cam1[2], g: -40, fin: 1.0, fout: .02 },
+    // frame 1: the ninth rule writes itself on the sheet; a ballpoint scratching, close (review 11/27: audible on a phone by 1.5 s)
+    ...sheetInkTimes().map(([t0, t1]) => ({ type: 'bed', fx: 'pen_fast', space: 'close', t: t0, t1: Math.max(t1, t0 + .05), g: PEN0_DB, fin: .008, fout: .012 })),
     { type: 'rustle', t: TL.TO_LOG[0] + .05, g: .35 }, { type: 'rustle', t: TL.TO_SHEET[0] + .03, g: .3 }, { type: 'rustle', t: TL.BACK_LOG[0] + .05, g: .3 },
     // CAM 02 at 2:11: the room, his pen, far
     { type: 'vcr', t: SH.cctv1[1] },
@@ -682,7 +703,7 @@ function buildEvents() {
     { type: 'chair', t: SH.cam2[1] + .03, g: .8 }, { type: 'handling', t: SH.cam2[1] + .05, g: .35 },
     { type: 'bed', fx: 'office_hum', space: 'shop', t: SH.cam2[1], t1: Q, g: -33, fin: .01, fout: .2 },
     { type: 'bed', fx: 'breath_bed', space: 'close', t: SH.cam2[1] + .1, t1: Q, g: -38.5, fin: .4, fout: .05 },
-    { type: 'bed', fx: 'near_breath', space: 'close', t: 19.0, t1: Q, g: -39, fin: 2.5, fout: .02 },
+    { type: 'bed', fx: 'near_breath', space: 'close', t: 19.0, t1: Q, g: -30, fin: 2.5, fout: .02, env: [[19, 1], [20.4, 1], [20.55, .55], [22.75, .55], [22.9, 1], [24, 1]] },   // review 11/27: up from -39 to read as distinct; dips 5 dB under L4
     ...TL.WRITES.map(([, t0, t1], i) => ({ type: 'bed', fx: i === 0 ? 'pen_write' : 'pen_fast', space: 'close', t: t0, t1: Math.min(t1, Q), g: i === 0 ? -33 : -34.5 + i * .4, fin: .01, fout: .01 })),
     // the rip, the hand on the desk, his gasp; he jerks back
     { type: 'rip', t: TL.STING }, { type: 'thump', t: TL.STING + .03, g: .55 }, { type: 'gasp', t: TL.STING + .07 },
