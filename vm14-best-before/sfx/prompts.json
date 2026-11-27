@@ -1,0 +1,60 @@
+{
+ "store_tone": [
+  8.0,
+  "quiet late-night convenience store ambience, fluorescent light hum and a soft refrigerator compressor drone, no people, no music",
+  "copied from vm12-restock"
+ ],
+ "carton": [
+  0.5,
+  "a milk carton set down on a counter, a light cardboard tap",
+  "copied from vm05-dennis (the catch, the carton set down)"
+ ],
+ "carton_up": [
+  0.6,
+  "a full cardboard milk carton snatched up quickly and held up: a short cardboard rustle and a small slosh of milk inside, close, no music",
+  "copied from vm05-dennis (Pip picks it up)"
+ ],
+ "under_counter": [
+  1.2,
+  "a hand reaching under a shop counter: a small cupboard door clicks open and a hand rummages briefly on a shelf, close, indoors, no music",
+  "copied from vm05-dennis (Pip under the counter)"
+ ],
+ "sip": [
+  1.2,
+  "one long loud slurp of hot coffee from a mug, close",
+  "copied from vm01-first-shift"
+ ],
+ "powerdown": [
+  1.5,
+  "an electronic machine powering down: a falling whine and an old screen switching off, cartoon",
+  "copied from vl12-robo-cleo (the store's lights go down)"
+ ],
+ "flicker": [
+  2.0,
+  "a fluorescent tube light flickering on and off with sharp electrical clicks and a stuttering buzz",
+  "copied from sr03-pay-phone"
+ ],
+ "swish": [
+  0.6,
+  "a mop swung hard through the air, a wet swish",
+  "copied from vm04-zero-g-mop (the throw)"
+ ],
+ "fall": [
+  1.0,
+  "a heavy object falling fast from above, descending cartoon whistle, short",
+  "copied from vm02-exact-change (Pip drops under the counter)"
+ ],
+ "holo": [
+  0.8,
+  "a futuristic hologram display popping up, a bright digital shimmer",
+  "copied from vm09-secret-shopper (50% OFF, 99% OFF)"
+ ],
+ "star_out": [
+  0.5,
+  "a single tiny high glassy twinkle that cuts off abruptly, like a very small light going out with a soft plink, close, no music"
+ ],
+ "pour": [
+  1.2,
+  "milk glugging out of a cardboard carton into a ceramic coffee mug, a short steady pour, close, quiet room, no music"
+ ]
+}

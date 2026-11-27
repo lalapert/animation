@@ -802,5 +802,28 @@
    1160
   ],
   "drawn": true
+ },
+ {
+  "folder": "vm14-best-before",
+  "t": 0.5,
+  "series": "vm",
+  "ep": 14,
+  "lines": [
+   "GOOD TILL",
+   "TONIGHT?"
+  ],
+  "hl": [
+   "TONIGHT?"
+  ],
+  "focus": [
+   540,
+   1000
+  ],
+  "zoom": 1.2,
+  "place": [
+   540,
+   1150
+  ],
+  "drawn": true
  }
 ]

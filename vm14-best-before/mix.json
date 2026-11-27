@@ -1,0 +1,25 @@
+{
+ "room": {"src": "store_tone", "db": -55, "buzz_db": -70, "seed": 9},
+ "store_room": {"rt": 0.5, "mix": 0.22, "bright": 8000},
+ "music_db": -11,
+ "duck_db": -10,
+ "duck_pre": 0.15,
+ "duck_post": 0.3,
+ "foley_duck_db": -2,
+ "bed_duck_db": -6,
+ "plr_db": 11.0,
+ "foley": {
+  "pickup":  {"fx": "carton_up", "g": -28, "align": true},
+  "holo":    {"fx": "holo", "g": -31},
+  "star":    {"fx": "star_out", "g": -31, "align": true, "cents": 120, "gvar": 1.5},
+  "throw":   {"fx": "swish", "g": -29, "align": true, "shift": 200},
+  "catch":   {"fx": "carton", "g": -26, "align": true},
+  "pour":    {"fx": "pour", "g": -28, "dur": 0.95, "tail": 0.15},
+  "sip":     {"fx": "sip", "g": -27, "dur": 0.75, "tail": 0.15},
+  "flicker": {"fx": "flicker", "g": -31, "dur": 0.5, "tail": 0.1},
+  "dark":    {"fx": "powerdown", "g": -29},
+  "drop":    {"fx": "fall", "g": -31, "dur": 0.45, "tail": 0.1, "shift": 300},
+  "duck":    {"fx": "under_counter", "g": -31, "dur": 0.5, "tail": 0.15},
+  "down":    {"fx": "carton", "g": -28, "align": true, "shift": -150}
+ }
+}

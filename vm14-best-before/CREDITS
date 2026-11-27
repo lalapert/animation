@@ -1,0 +1,9 @@
+Void Mart, episode 14: "Best Before" (2026). Original characters, story, pictures and music.
+
+Pictures: drawn in code (canvas 2D) with the Void Mart toon kit (channel/brand/toon.js, channel/brand/vmkit.js, channel/brand/travel.js, channel/brand/sets.js). The milk carton and its date, the starfield going out behind the window, the sale holograms and the store going dark are drawn in film.js.
+Fonts: Bungee (The Bungee Project Authors) and Fredoka (The Fredoka Project Authors), SIL Open Font License 1.1.
+Voices: ElevenLabs text-to-speech, model eleven_v4.
+  Pip: "Win2" (owner's own designed voice). Rae: "Kar2" (owner's own designed voice, pitched 1.5 semitones down).
+  MAGS: "VM MAGS" (ElevenLabs Voice Design, made for this show).
+Sound effects: generated with ElevenLabs Sound Effects (prompts in sfx/prompts.json; two new, the star going out and the pour, the rest reused from earlier episodes as noted there).
+Music: original score for the house jazz trio (tools/band.py, tools/score.py) played with CC0 samples from VSCO 2 Community Edition, VCSL and FreePats.

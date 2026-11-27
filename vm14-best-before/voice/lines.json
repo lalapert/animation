@@ -1,0 +1,104 @@
+{
+ "model_id": "eleven_v4",
+ "cast": {
+  "PIP": {
+   "voice_id": "BiP91t4ozM9IZajOdSu2",
+   "name": "Win2",
+   "settings": {
+    "stability": 0.3,
+    "similarity_boost": 0.8,
+    "style": 0.65,
+    "speed": 1.05
+   }
+  },
+  "RAE": {
+   "voice_id": "oy557F0mOsPZZqdz8oK6",
+   "name": "Kar2",
+   "settings": {
+    "stability": 0.6,
+    "similarity_boost": 0.8,
+    "style": 0.2,
+    "speed": 0.9
+   },
+   "pitch": -1.5
+  },
+  "MAGS": {
+   "voice_id": "WkUURyKtbzB9IM50qGdP",
+   "name": "VM MAGS",
+   "settings": {
+    "stability": 0.45,
+    "similarity_boost": 0.8,
+    "style": 0.5,
+    "speed": 1.0
+   }
+  },
+  "CUST": {
+   "voice_id": "nPczCjzI2devNBz1zQrb",
+   "name": "Brian (stock), tired customer",
+   "settings": {
+    "stability": 0.4,
+    "similarity_boost": 0.8,
+    "style": 0.5,
+    "speed": 1.0
+   }
+  }
+ },
+ "lines": [
+  {
+   "id": "L1",
+   "who": "PIP",
+   "text": "[gasps, delighted] Rae! This milk is good till the end of the universe!",
+   "plain": "Rae! This milk is good till the end of the universe!",
+   "sub": "Rae! This milk is good till\nthe end of the universe!"
+  },
+  {
+   "id": "L2",
+   "who": "MAGS",
+   "text": "[bright, salesy] That's tonight! Milk is half off!",
+   "plain": "That's tonight! Milk is half off!",
+   "sub": "That's tonight!\nMilk is half off!"
+  },
+  {
+   "id": "L3",
+   "who": "PIP",
+   "text": "[shrieks] Tonight?!",
+   "plain": "Tonight?!",
+   "sub": "Tonight?!"
+  },
+  {
+   "id": "L4",
+   "who": "PIP",
+   "text": "[panicked] The stars are going out!",
+   "plain": "The stars are going out!",
+   "sub": "The stars are\ngoing out!"
+  },
+  {
+   "id": "L5",
+   "who": "RAE",
+   "text": "[deadpan] Then it's still good till midnight.",
+   "plain": "Then it's still good till midnight.",
+   "sub": "Then it's still good\ntill midnight."
+  },
+  {
+   "id": "L6",
+   "who": "MAGS",
+   "text": "[bright, glitchy] Milk is now ninety-nine percent off!",
+   "plain": "Milk is now ninety-nine percent off!",
+   "sub": "Milk is now\nninety-nine percent off!"
+  },
+  {
+   "id": "L7",
+   "who": "PIP",
+   "text": "[small, scared] Rae? Are we dead?",
+   "plain": "Rae? Are we dead?",
+   "sub": "Rae? Are we dead?"
+  },
+  {
+   "id": "L8",
+   "who": "RAE",
+   "text": "[deadpan] Milk's still good.",
+   "plain": "Milk's still good.",
+   "sub": "Milk's still good."
+  }
+ ]
+}
