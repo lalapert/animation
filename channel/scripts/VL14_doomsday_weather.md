@@ -103,4 +103,8 @@ Volt Labs, episode 14.
 
 ## 7. 결과
 
-(제작 후 채움)
+- 40.3초(엔드 카드 2.5초 포함, length_test current), -13.9 LUFS, true peak -2.9 dBTP, LRA 6.2, 대사 마진 최소 +20.3 dB, ElevenLabs STT 12/12줄(L10 "Wheeeee!"는 asr_final "Whee!"로 대조), blackdetect 없음, check_english 통과, shotlint ok, look2_audit exit 0(1212프레임, 실패 0, 최악 구간 0.041), 음악 18.8/40.3초, 히트 2개.
+- Look 2: ACT 16개, CLEO_CU x2, VERA_MED, INSERT(화면 TARGET: 8 BILLION PEOPLE과 출력 바늘), OTS_CLEO, VERA_PUSH("A villain does not go sledding."). 몸 가로지르기: 구름이 화면을 가로질러 난간 너머로, 클레오가 썰매를 눈더미에 눕힘, 썰매가 대각선으로 지붕에서 마당까지, 둘이 눈에 빠짐. 1프레임: 기계와 배너, 레버의 베라, 썰매를 든 클레오.
+- 표지 `channel/thumbs/vl14-doomsday-weather.jpg` "DOOM OR / SNOW DAY?"(DOOM 강조), 게시 문구 `channel/ig/posts/vl14-doomsday-weather.txt`, postlint READY, 첫 댓글 "Doom or snow day?", 끝 화면 TL.ASK "DOOM OR SNOW DAY?". 유튜브 제목 "Never aim a doomsday weather machine at 8 billion people | Volt Labs Ep 14 #shorts"(훅 83.2, yt-package 98).
+- Metricool 444768009(브랜드 7923229, 12/4 금 10:00 KST), precheck --stt PASS, static.metricool 사본 sha256이 커밋 파일과 일치(mp4 bb7883a2..., 표지 1fb27eef...).
+- 사람 귀로 확인할 것: 험/윙 소리와 음악 균형, "Wheeeee!" 연기, 슬로프 샷의 작은 인물, OTS 어깨와 자막 거리, 40.3초 끝의 클릭(믹스 통계).
