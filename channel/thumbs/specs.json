@@ -825,5 +825,29 @@
    1150
   ],
   "drawn": true
+ },
+ {
+  "folder": "vl14-doomsday-weather",
+  "t": 0.5,
+  "series": "vl",
+  "ep": 14,
+  "lines": [
+   "DOOM OR",
+   "SNOW DAY?"
+  ],
+  "hl": [
+   "DOOM"
+  ],
+  "focus": [
+   540,
+   960
+  ],
+  "zoom": 1.2,
+  "place": [
+   540,
+   1160
+  ],
+  "drawn": true,
+  "length_test": "current"
  }
 ]

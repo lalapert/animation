@@ -1,0 +1,31 @@
+{
+ "seed": 14,
+ "voice_db": 0,
+ "music_db": -9,
+ "duck_db": 12,
+ "tone_db": -50,
+ "hum_db": -61,
+ "plr_db": 11.0,
+ "min_margin_db": 8,
+ "pan": {"VERA": -0.15, "CLEO": 0.2},
+ "spans": {
+  "roof": {"fx": "street_day", "t0": 0, "t1": "SLOPE0", "db": -31, "skip": 0.4, "space": "dry", "mute_tone": true},
+  "snow": {"fx": "winter_air", "t0": "SLOPE0", "t1": 40.3, "db": -32, "skip": 0.2, "space": "dry", "mute_tone": true}
+ },
+ "grains": {
+  "cloth": {"len": 0.45, "merge": 0.3, "thr": 0.3}
+ },
+ "foley": {
+  "hum": {"fx": "hum", "g": -35, "space": "street", "loop": true, "fin": 0.002, "fout": 0.15, "duck": 6},
+  "cloth": {"grain": "cloth", "g": -22, "space": "close", "vary": 0.8},
+  "sled_tap": {"fx": "sled_tap", "g": -22, "space": "street", "align": true},
+  "lever": {"fx": "lever", "g": -18, "space": "street", "align": true},
+  "whir": {"fx": "whir", "g": -26, "space": "street", "fin": 0.05, "fout": 0.12, "duck": 6},
+  "puff": {"fx": "puff", "g": -21, "space": "street", "align": true},
+  "breeze": {"fx": "whoosh", "g": -27, "space": "street", "align": true},
+  "rumble": {"fx": "rumble", "g": -21, "space": "street", "duck": 5},
+  "crunch": {"fx": "snow_crunch", "g": -23, "space": "street", "align": true},
+  "slide": {"fx": "sled_slide", "g": -22, "space": "street", "fout": 0.1, "duck": 4},
+  "poof": {"fx": "snow_poof", "g": -19, "space": "street", "align": true}
+ }
+}

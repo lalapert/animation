@@ -145,7 +145,14 @@ def main():
         clean = lambda x: re.sub(r"[^a-z' ]+", " ", re.sub(r"\[[^\]]*\]", " ", re.sub(DASHES, " ", spell(x)))).split()
         # spaces dropped on both sides so a compound heard as one word or two still matches; the first 24 letters of
         # the line (asr > spoken > plain) must be heard in order
-        hw = "".join(clean(heard)); miss = [l["id"] for l in lines if "".join(clean(l.get("asr") or l.get("spoken") or l.get("plain") or l["text"]))[:24] not in hw]
+        # a line the film's timeline marks with "asr_final" (the same sound, spelled differently in the mix than in the take alone:
+        # "Wee!" / "Whee!") may be heard in either spelling; final_check.py uses the same field
+        try:
+            tlj = open(os.path.join(fdir, "timeline.js"), encoding="utf-8").read()
+            fin = {v["id"]: v["asr_final"] for v in json.loads(tlj.split("window.TL = ", 1)[1].split(";\nwindow.CHARS", 1)[0])["VO"] if v.get("asr_final")}
+        except Exception: fin = {}
+        hw = "".join(clean(heard))
+        miss = [l["id"] for l in lines if all("".join(clean(w))[:24] not in hw for w in [l.get("asr") or l.get("spoken") or l.get("plain") or l["text"]] + ([fin[l["id"]]] if l["id"] in fin else []))]
         say("PASS" if not miss else "FAIL", f"every line is heard in the published file" if not miss else f"not heard (check by ear): {miss}")
         print("    heard:", heard[:400])
 

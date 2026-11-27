@@ -1,0 +1,60 @@
+{
+ "hum": [
+  3.0,
+  "a sci-fi ray cannon idling: a low warm electrical hum with a soft sparkle",
+  "copied from vl01-day-one"
+ ],
+ "lever": [
+  0.8,
+  "a big heavy metal lever pulled down hard, a mechanical clunk",
+  "copied from vl04-laser-pointer"
+ ],
+ "cloth": [
+  3.0,
+  "four separate quick rustles of a stiff cotton lab coat sleeve as arms are thrown up, close, dry, pauses between, no voice",
+  "copied from vl04-laser-pointer"
+ ],
+ "puff": [
+  1.2,
+  "a small cartoon smoke puff, a soft poof with a little sputter",
+  "copied from vl06-lab-inspection"
+ ],
+ "whoosh": [
+  0.6,
+  "a quick soft cartoon whoosh swish",
+  "copied from vl03-help-wanted"
+ ],
+ "street_day": [
+  22.0,
+  "a quiet city street in the daytime: distant traffic, a car passing now and then, light wind, faraway footsteps, no voices, no music",
+  "copied from vl08-invisible"
+ ],
+ "whir": [
+  3.0,
+  "an old electric weather machine winding up: a motor whirr rising in pitch, rattling metal panels, a needle gauge buzzing, outdoors, no music, no voices"
+ ],
+ "rumble": [
+  2.5,
+  "a huge mass of soft snow surging upward fast: a deep soft whooshing rumble with powdery hiss, outdoors, no music, no voices"
+ ],
+ "sled_slide": [
+  2.2,
+  "a plastic toboggan sliding fast down a long snowy hill: a continuous hissing swish of snow under plastic, a few bumps, no music, no voices"
+ ],
+ "snow_poof": [
+  1.2,
+  "a person dropping into deep fresh powder snow: one soft heavy whumpf poof, outdoors, no music, no voices"
+ ],
+ "snow_crunch": [
+  1.0,
+  "a plastic sled laid down flat on packed snow: a short soft crunch, close, outdoors, no music"
+ ],
+ "sled_tap": [
+  0.8,
+  "a red plastic toboggan set down upright on a concrete rooftop: one hollow plastic tap, close, outdoors, no music"
+ ],
+ "winter_air": [
+  10.0,
+  "a quiet snowy back yard in winter: soft wind, very distant muffled traffic, snow falling, calm, loopable, no music, no voices"
+ ]
+}

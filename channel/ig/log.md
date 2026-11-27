@@ -31,3 +31,4 @@
 | 12/1 10:00 | vm13-rewards-program | 1 Cost Confession | Minus 4,000 points is what saying no thanks cost her | Do you have a rewards account? Join or no thanks? Tell me. (11/16 two-choice) | no |
 | 12/2 10:00 | vl13-the-evil-mirror | 2 Negative Command | Never let your evil twin pay the rent | Roommate pick: Vera or Evil Vera? Tell me. | no |
 | 12/3 10:00 | vm14-best-before | 2 Negative Command | Never buy the milk with a 100 trillion year date | The universe ends tonight. Drink the milk or run? Tell me. | no |
+| 12/4 10:00 | vl14-doomsday-weather | 2 Negative Command | Never aim a doomsday weather machine at 8 billion people | Doomsday machine: world domination or a snow day? Tell me. | no |

@@ -1,0 +1,112 @@
+{
+ "model_id": "eleven_v4",
+ "cast": {
+  "VERA": {
+   "voice_id": "buRySvQEB2e8Dcglym6i",
+   "name": "LAB Vera Volt",
+   "settings": {
+    "stability": 0.3,
+    "similarity_boost": 0.8,
+    "style": 0.7,
+    "speed": 1.0
+   }
+  },
+  "CLEO": {
+   "voice_id": "biUhGlVm4NoNe58piPit",
+   "name": "LAB Cleo",
+   "settings": {
+    "stability": 0.6,
+    "similarity_boost": 0.8,
+    "style": 0.25,
+    "speed": 0.92
+   }
+  }
+ },
+ "lines": [
+  {
+   "id": "L1",
+   "who": "VERA",
+   "text": "[grand, triumphant] Eternal winter. For all eight billion people.",
+   "plain": "Eternal winter. For all eight billion people.",
+   "sub": "Eternal winter.\nFor all eight billion people."
+  },
+  {
+   "id": "L2",
+   "who": "CLEO",
+   "text": "[deadpan] I brought a sled.",
+   "plain": "I brought a sled.",
+   "sub": "I brought a sled."
+  },
+  {
+   "id": "L3",
+   "who": "VERA",
+   "text": "[scoffing, then commanding] This is not a snow day, Cleo. This is DOOM.",
+   "plain": "This is not a snow day, Cleo. This is DOOM.",
+   "sub": "This is not a snow day, Cleo.\nThis is DOOM."
+  },
+  {
+   "id": "L4",
+   "who": "VERA",
+   "text": "[confused] Why is it so small?",
+   "plain": "Why is it so small?",
+   "sub": "Why is it so small?"
+  },
+  {
+   "id": "L5",
+   "who": "VERA",
+   "text": "[horrified] Not the yard! The PLANET!",
+   "plain": "Not the yard! The PLANET!",
+   "sub": "Not the yard!\nThe PLANET!"
+  },
+  {
+   "id": "L6",
+   "who": "CLEO",
+   "text": "[deadpan] It's a start.",
+   "plain": "It's a start.",
+   "sub": "It's a start."
+  },
+  {
+   "id": "L7",
+   "who": "VERA",
+   "text": "[furious, shouting] Maximum doom!",
+   "plain": "Maximum doom!",
+   "sub": "Maximum doom!"
+  },
+  {
+   "id": "L8",
+   "who": "CLEO",
+   "text": "[deadpan] Get in.",
+   "plain": "Get in.",
+   "sub": "Get in."
+  },
+  {
+   "id": "L9",
+   "who": "VERA",
+   "text": "[haughty, offended] A villain does not go sledding.",
+   "plain": "A villain does not go sledding.",
+   "sub": "A villain does not\ngo sledding."
+  },
+  {
+   "id": "L10",
+   "who": "VERA",
+   "text": "[screaming with joy] Wheeeee!",
+   "plain": "Wheeeee!",
+   "sub": "Wheeeee!",
+   "asr": "Wee!"
+  },
+  {
+   "id": "L11",
+   "who": "VERA",
+   "text": "[breathless, giddy] Again! Again! [catching herself, cool] I mean... phase two.",
+   "plain": "Again! Again! I mean... phase two.",
+   "sub": "Again! Again!\nI mean... phase two."
+  },
+  {
+   "id": "L12",
+   "who": "CLEO",
+   "text": "[deadpan] Sure.",
+   "plain": "Sure.",
+   "sub": "Sure."
+  }
+ ]
+}
