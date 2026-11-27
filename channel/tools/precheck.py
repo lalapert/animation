@@ -18,6 +18,7 @@ SCR = os.environ.get("PRECHECK_OUT") or tempfile.gettempdir()
 PLAN = {"vm": ("channel/SEASON1.md", "Void Mart"), "vl": ("channel/LAB_SERIES.md", "Volt Labs"), "sr": ("channel/HORROR_SERIES.md", "STILL RECORDING")}
 BRAND = {"vm": "7923229", "vl": "7923229", "sr": "7927149"}
 NETS = {"vm": {"instagram", "youtube", "tiktok"}, "vl": {"instagram", "youtube", "tiktok"}, "sr": {"instagram", "youtube", "tiktok"}}
+DASHES = r"[-\u2010\u2011\u2012\u2013\u2014\u2015\u2212]"
 HANGUL = re.compile("[ᄀ-ᇿ㄰-㆏ꥠ-꥿가-힯ힰ-퟿]")
 out, bad = [], 0
 
@@ -107,8 +108,11 @@ def main():
     # 4. subtitles = the lines (the srt is what YouTube can show; the burned-in ones come from the same timeline)
     srt = os.path.join(fdir, folder + ".srt"); lines = json.load(open(os.path.join(fdir, "voice", "lines.json")))["lines"]
     if os.path.exists(srt):
-        cues = srt_cues(srt); subs = [l.get("sub") or l.get("plain") or l["text"] for l in lines]
-        norm = lambda x: re.sub(r"\s+", " ", re.sub(r"\[[^\]]*\]", "", x)).strip().lower()
+        # 11/27 review session: a line cut off on purpose ("Happy Black Fri-") keeps its full text in sub/plain and the
+        # words as actually spoken in "spoken"; compare against "spoken" when present. Spaces, hyphens/dashes and case
+        # are normalised ("Door buster" == "Doorbuster", "Fri-" == "Fri—"); nothing else is loosened.
+        cues = srt_cues(srt); subs = [l.get("spoken") or l.get("sub") or l.get("plain") or l["text"] for l in lines]
+        norm = lambda x: re.sub(DASHES + r"|\s+", "", re.sub(r"\[[^\]]*\]", "", x)).lower()
         ok = [norm(a) for a in cues] == [norm(b) for b in subs]
         say("PASS" if ok else "FAIL", f"subtitles: {len(cues)} cues match the {len(subs)} script lines" if ok else f"subtitles differ from the lines: {[(a, b) for a, b in zip(cues, subs) if norm(a) != norm(b)][:3]}")
         for c in cues:
@@ -138,8 +142,10 @@ def main():
             x = re.sub(r"\d+", lambda m: " " + words(int(m.group())) + " " if int(m.group()) < 1000000 else m.group(), x)
             x = x.replace("%", " percent ")
             return re.sub(r"\b(ray|rey)\b", "rae", x)
-        clean = lambda x: re.sub(r"[^a-z' ]+", " ", re.sub(r"\[[^\]]*\]", " ", spell(x).replace("-", " "))).split()
-        hw = " ".join(clean(heard)); miss = [l["id"] for l in lines if " ".join(clean(l.get("asr", l.get("plain") or l["text"])))[:24] not in hw]
+        clean = lambda x: re.sub(r"[^a-z' ]+", " ", re.sub(r"\[[^\]]*\]", " ", re.sub(DASHES, " ", spell(x)))).split()
+        # spaces dropped on both sides so a compound heard as one word or two still matches; the first 24 letters of
+        # the line (asr > spoken > plain) must be heard in order
+        hw = "".join(clean(heard)); miss = [l["id"] for l in lines if "".join(clean(l.get("asr") or l.get("spoken") or l.get("plain") or l["text"]))[:24] not in hw]
         say("PASS" if not miss else "FAIL", f"every line is heard in the published file" if not miss else f"not heard (check by ear): {miss}")
         print("    heard:", heard[:400])
 
